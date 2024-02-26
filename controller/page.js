@@ -19,3 +19,6 @@ exports.projectheader = (req, res) => {
 exports.project = (req, res) => {
     res.render('project/home');
 };
+exports.mypage = (req, res) => {
+    res.render('mypage');
+};
