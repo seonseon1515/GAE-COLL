@@ -1,0 +1,20 @@
+* {
+    background-color: #ffda31;
+}
+#start-dog {
+    width: 25vw;
+    height: 25vh;
+}
+#email,
+#google,
+#kakao {
+    border-radius: 50%;
+    height: 5%;
+    width: 5%;
+}
+#email-write {
+    width: 15vw;
+    height: 10vh;
+    border-radius: 50%;
+    background-color: white;
+}
