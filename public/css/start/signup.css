@@ -1,0 +1,70 @@
+* {
+    background-color: #ffda31;
+}
+#contain {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+}
+#header {
+    display: flex;
+    width: 50vw;
+    justify-content: center;
+    align-items: baseline;
+}
+#header-text {
+    margin: 0;
+    font-weight: bolder;
+    font-size: 40px;
+}
+.header-text1 {
+    font-size: 70px;
+}
+
+#start-dog {
+    width: 8vw;
+    height: 8vw;
+}
+
+/* input 시작*/
+#main-text {
+    padding-top: 3vw;
+}
+.text-aria {
+    display: flex;
+    justify-content: center;
+    width: 25vw;
+    height: 3vw;
+    background-color: white;
+    border-radius: 40px;
+    margin-right: 2vw;
+}
+.password-div {
+    display: flex;
+    align-items: flex-end;
+}
+.input {
+    width: 20vw;
+    background-color: white;
+    border: none;
+}
+.button {
+    background-color: white;
+    height: 2vw;
+    border-radius: 40px;
+}
+#signup {
+    width: 20vw;
+    background-color: black;
+    text-align: center;
+    border-radius: 40px;
+    display: flex;
+    height: 3vw;
+    justify-content: center;
+    align-items: center;
+}

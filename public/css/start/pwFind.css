@@ -32,13 +32,9 @@
     height: 8vw;
 }
 
-/*아이디, 비밀번호 시작 */
-.input {
-    width: 20vw;
-    background-color: white;
-    border: none;
-}
-#login-text {
+/*비밀번호 찾기 시작*/
+
+#find-name {
     padding-top: 5vw;
 }
 .text-aria {
@@ -50,22 +46,35 @@
     border-radius: 40px;
     margin-right: 2vw;
 }
-#login {
+.input {
+    width: 20vw;
+    background-color: white;
+    border: none;
+}
+#contain-under {
+    width: 40vw;
+    display: flex;
+    justify-content: space-between;
+    height: 10vw;
+    align-items: center;
+}
+#find-login {
+    width: 15vw;
     background-color: black;
     color: white;
-    display: flex;
     border-radius: 40px;
-    width: 20vw;
-    height: 3.5vw;
+    height: 3vw;
+    display: flex;
     align-items: center;
     justify-content: center;
 }
-#find {
+#exit {
+    width: 15vw;
+    background-color: black;
+    color: white;
+    border-radius: 40px;
+    height: 3vw;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    align-content: center;
-    height: 5vw;
-    width: 25vw;
-    font-weight: bold;
+    justify-content: center;
 }
