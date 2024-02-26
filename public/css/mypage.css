@@ -1,0 +1,152 @@
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+main {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+}
+.profile_img_section {
+    width: 50%;
+    height: 100%;
+    background-color: #ffda31;
+    display: flex;
+    flex-direction: column;
+}
+.profile_img_top {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.profile_more {
+    margin-right: 30px;
+    width: 30px;
+    height: 30px;
+    border: 3px solid black;
+    border-radius: 50%;
+    position: relative;
+}
+.profile_more > img {
+    width: 100%;
+    height: 100%;
+}
+.profile_more > button {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: unset;
+    border-radius: 50%;
+    border: 0;
+    cursor: pointer;
+}
+.profile_img_middle {
+    width: 100%;
+    height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.profile_img_box {
+    width: 300px;
+    height: 300px;
+    background-color: white;
+    border: 4px solid #ebe6e6;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+}
+.profile_img_box > img {
+    width: 50%;
+}
+.profile_img_bottom {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+}
+.profile_select_box {
+    width: 200px;
+    height: 50px;
+    border-radius: 25px;
+    background-color: white;
+}
+.profile_select_box > button {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    background-color: unset;
+    border: 0;
+    cursor: pointer;
+    font-size: 18px;
+}
+.profile_detail_section {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.name_box {
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+.name_box > * {
+    height: 100%;
+}
+.name_box > *:first-child {
+    width: 10%;
+    font-size: 18px;
+    color: #888686;
+}
+.name_box > *:nth-child(2) {
+    width: 50%;
+    border: 0;
+    border-bottom: 3px solid #e4e3e3;
+}
+.email_box {
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+}
+.email_box > *:first-child {
+    width: 10%;
+    font-size: 18px;
+    color: #888686;
+}
+.email_box > *:nth-child(2) {
+    width: 50%;
+    border: 0;
+    border-bottom: 3px solid #e4e3e3;
+}
+.email_box > * {
+    height: 100%;
+}
+.update_box {
+    position: absolute;
+    right: 50px;
+    bottom: 50px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    background-color: #ffda31;
+}
+.update_box > button {
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    background-color: unset;
+    border: 0;
+    cursor: pointer;
+    font-size: 18px;
+}
