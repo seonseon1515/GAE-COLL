@@ -10,6 +10,15 @@ exports.login = (req, res) => {
 exports.signup = (req, res) => {
     res.render('start/signup');
 };
+exports.idFind = (req, res) => {
+    res.render('start/idFind');
+};
+exports.pwFind = (req, res) => {
+    res.render('start/pwFind');
+};
+exports.google = (req, res) => {
+    res.render('start/google');
+};
 exports.header = (req, res) => {
     res.render('common/header');
 };
@@ -18,4 +27,7 @@ exports.projectheader = (req, res) => {
 };
 exports.project = (req, res) => {
     res.render('project/home');
+};
+exports.mypage = (req, res) => {
+    res.render('mypage');
 };
