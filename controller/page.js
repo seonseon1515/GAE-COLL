@@ -31,3 +31,4 @@ exports.project = (req, res) => {
 exports.mypage = (req, res) => {
     res.render('mypage');
 };
+
