@@ -1,0 +1,57 @@
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+#header_wrap {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    line-height: 10vh;
+}
+
+#header {
+    z-index: 100;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 500;
+    position: fixed;
+    top: 0vh;
+    height: 10vh;
+    background-color: #d9e9bf;
+}
+
+.header_menu1 {
+    padding-left: 2vw;
+    display: flex;
+    /* line-height: 10vh; 왜 적용안됨? */
+}
+
+.header_menu3 {
+    padding-right: 2vw;
+}
+.header_menu2 {
+    padding-right: 8vw;
+    /* 가운데에 오게하는 코드? */
+}
+
+/* .mypage_logo{
+  background-color: black;
+  border-radius: 50%;
+} */
+.logo {
+    width: 5vw;
+    height: 5vh;
+}
+.header_img {
+    width: 2.5vw;
+    height: 5vh;
+    line-height: 10vh;
+    margin-top: 2vh;
+}
+
+.big_txt {
+    font-weight: 700;
+    font-size: 1.5rem;
+}
