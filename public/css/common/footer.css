@@ -1,0 +1,36 @@
+/*footer 화면 밑에다가 고정*/
+footer {
+    position: relative;
+    transform: translateY(100%);
+}
+#contain {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #d9e9bf;
+    height: 12vw;
+}
+/*오른쪽 text 설정*/
+#right {
+    display: flex;
+    align-items: center;
+}
+#US {
+    padding-left: 15px;
+}
+#email {
+    padding: 0 30px;
+}
+#email-img {
+    width: 3vw;
+    height: 3vw;
+}
+#phone-img {
+    width: 3vw;
+    height: 3vw;
+}
+
+/*왼쪽 text 설정*/
+#GAECO {
+    padding-right: 15px;
+}
