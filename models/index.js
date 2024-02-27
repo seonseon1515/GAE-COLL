@@ -1,41 +1,65 @@
 'use strict';
 
-const fs = require('fs');
-const path = require('path');
 const Sequelize = require('sequelize');
-const process = require('process');
-const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
+const config = require(__dirname + '/../config/config.js')[env];
 const db = {};
 
-let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
+let sequelize = new Sequelize(config.database, config.username, config.password, config);
 
-fs
-  .readdirSync(__dirname)
-  .filter(file => {
-    return (
-      file.indexOf('.') !== 0 &&
-      file !== basename &&
-      file.slice(-3) === '.js' &&
-      file.indexOf('.test.js') === -1
-    );
-  })
-  .forEach(file => {
-    const model = require(path.join(__dirname, file))(sequelize, Sequelize.DataTypes);
-    db[model.name] = model;
-  });
+//db table생성
+db.User = require('./user')(sequelize);
+db.Project = require('./project')(sequelize);
+db.ProjectMemeber = require('./project_member')(sequelize);
+db.ProjectFile = require('./project_file')(sequelize);
+db.Board = require('./board')(sequelize);
+db.BoardComment = require('./board_comment')(sequelize);
+db.Issue = require('./issue')(sequelize);
+db.IssueComment = require('./issue_comment')(sequelize);
 
-Object.keys(db).forEach(modelName => {
-  if (db[modelName].associate) {
-    db[modelName].associate(db);
-  }
-});
+//ProjectMember 외래키 설정 userId
+db.User.hasMany(db.ProjectMemeber, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.ProjectMemeber.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+
+//ProjectMember 외래키 설정 projectId
+db.Project.hasMany(db.ProjectMemeber, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+db.ProjectMemeber.belongsTo(db.Project, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+
+//ProjectFile 외래키 설정 projectId
+db.Project.hasMany(db.ProjectFile, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+db.ProjectFile.belongsTo(db.Project, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+
+//Board 외래키 설정 projectId
+db.Project.hasMany(db.Board, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+db.Board.belongsTo(db.Project, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+
+//Board 외래키 설정 userId
+db.User.hasMany(db.Board, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.Board.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+
+//BoardComment 외래키 설정 boardId
+db.Board.hasMany(db.BoardComment, { foreignKey: 'boardId', onDelete: 'CASCADE' });
+db.BoardComment.belongsTo(db.Board, { foreignKey: 'boardId', onDelete: 'CASCADE' });
+
+//BoardComment 외래키 설정 userId
+db.User.hasMany(db.BoardComment, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.BoardComment.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+
+//Issue 외래키 설정projectId
+db.Project.hasMany(db.Issue, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+db.Issue.belongsTo(db.Project, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+
+//Issue 외래키 설정 userId
+db.User.hasMany(db.Issue, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.Issue.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+
+//IssueComment 외래키 설정 userId
+db.User.hasMany(db.IssueComment, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.IssueComment.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+
+//IssueComment 외래키 설정 issueId
+db.Issue.hasMany(db.IssueComment, { foreignKey: 'issueId', onDelete: 'CASCADE' });
+db.IssueComment.belongsTo(db.Issue, { foreignKey: 'issueId', onDelete: 'CASCADE' });
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
