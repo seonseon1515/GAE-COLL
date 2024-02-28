@@ -13,4 +13,5 @@ router.get('/header', controller.header);
 router.get('/header/project', controller.projectheader);
 router.get('/project', controller.project);
 router.get('/mypage', controller.mypage);
+router.get('/project/board_write', controller.board_write);
 module.exports = router;

@@ -31,3 +31,6 @@ exports.project = (req, res) => {
 exports.mypage = (req, res) => {
     res.render('mypage');
 };
+exports.board_write = (req, res) => {
+    res.render('project/board_write');
+};

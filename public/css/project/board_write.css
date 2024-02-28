@@ -1,0 +1,15 @@
+* {
+  text-decoration: none;
+  margin: 0;
+  padding: 0;
+}
+
+.status_modify {
+  background-color: #b8b4b4;
+  border-radius: 2vw;
+  width: 10vw;
+  height: 3vw;
+  line-height: 3vw;
+  text-align: center;
+  font-weight: 700;
+}
