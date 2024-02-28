@@ -48,7 +48,10 @@
                 document.location.href =
                     'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=2fc7dcbf171bcbe73529d269bb610913&redirect_uri=http://localhost:8000/start/kakao';
             }
-            function googleLogin() {}
+            function googleLogin() {
+                document.location.href =
+                    'https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/drive.metadata.readonly&include_granted_scopes=true&response_type=token&state=state_parameter_passthrough_value&redirect_uri=http://localhost:8000/start/google&client_id=629071446303-beeb31pu6l2t8003h4lt42mcp01sc5au.apps.googleusercontent.com';
+            }
         </script>
     </body>
 </html>
