@@ -19,6 +19,9 @@ exports.pwFind = (req, res) => {
 exports.google = (req, res) => {
     res.render('start/google');
 };
+exports.kakao = (req, res) => {
+    res.render('start/kakao');
+};
 exports.header = (req, res) => {
     res.render('common/header');
 };

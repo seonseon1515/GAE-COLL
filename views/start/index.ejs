@@ -25,10 +25,14 @@
                         <a href="/start/signup"><img src="../../public/img/email-login.png" id="email-login" /></a>
                     </div>
                     <div id="google">
-                        <a href="/start/google"></a><img src="../../public/img/google-login.png" id="google-login" />
+                        <button onclick="googleLogin()">
+                            <img src="../../public/img/google-login.png" id="google-login" />
+                        </button>
                     </div>
                     <div id="kakao">
-                        <img src="../../public/img/kakao-login.png" id="kakao-login" />
+                        <button onclick="kakaoLogin()">
+                            <img src="../../public/img/kakao-login.png" id="kakao-login" />
+                        </button>
                     </div>
                 </div>
                 <a
@@ -39,5 +43,12 @@
                 >
             </div>
         </main>
+        <script>
+            function kakaoLogin() {
+                document.location.href =
+                    'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=2fc7dcbf171bcbe73529d269bb610913&redirect_uri=http://localhost:8000/start/kakao';
+            }
+            function googleLogin() {}
+        </script>
     </body>
 </html>

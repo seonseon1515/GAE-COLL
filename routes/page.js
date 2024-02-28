@@ -9,6 +9,7 @@ router.get('/start/signup', controller.signup);
 router.get('/start/pwFind', controller.pwFind);
 router.get('/start/idFind', controller.idFind);
 router.get('/start/google', controller.google);
+router.get('/start/kakao', controller.kakao);
 router.get('/header', controller.header);
 router.get('/header/project', controller.projectheader);
 router.get('/project', controller.project);
