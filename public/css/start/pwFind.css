@@ -58,7 +58,7 @@
     height: 10vw;
     align-items: center;
 }
-#find-login {
+.find-login {
     width: 15vw;
     background-color: black;
     color: white;
@@ -68,7 +68,7 @@
     align-items: center;
     justify-content: center;
 }
-#exit {
+.exit {
     width: 15vw;
     background-color: black;
     color: white;

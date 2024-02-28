@@ -31,4 +31,6 @@ exports.project = (req, res) => {
 exports.mypage = (req, res) => {
     res.render('mypage');
 };
-
+exports.footer = (req, res) => {
+    res.render('common/footer');
+};
