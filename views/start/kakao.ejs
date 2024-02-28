@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script
+            src="https://t1.kakaocdn.net/kakao_js_sdk/2.6.0/kakao.min.js"
+            integrity="sha384-6MFdIr0zOira1CHQkedUqJVql0YtcZA1P0nbPrQYJXVJZUkTk/oX4U9GhUIs3/z8"
+            crossorigin="anonymous"
+        ></script>
+        <script>
+            Kakao.init('273cd46861aad3f3e221d2cbf6720c5f');
+            Kakao.isInitialized();
+
+            console.log(Kakao.isInitialized());
+        </script>
+        <title>Document</title>
+    </head>
+    <body>
+        <script>
+            const code = document.location.href.split('code=')[1];
+            console.log(code);
+            (async function () {
+                const getTokenRes = await axios({
+                    method: 'POST',
+                    url: 'https://kauth.kakao.com/oauth/token',
+                    headers: {
+                        'Content-type': 'application/x-www-form-urlencoded',
+                    },
+                    data: {
+                        grant_type: 'authorization_code',
+                        client_id: '2fc7dcbf171bcbe73529d269bb610913',
+                        redirect_uri: 'http://localhost:8000/start/kakao',
+                        code,
+                    },
+                });
+                const getUserInfoRes = await axios({
+                    method: 'GET',
+                    url: 'https://kapi.kakao.com/v2/user/me',
+                    headers: {
+                        Authorization: `Bearer ${getTokenRes.data['access_token']}`,
+                        'Content-type': 'application/x-www-form-urlencoded',
+                    },
+                });
+                console.log(getUserInfoRes);
+            })();
+        </script>
+    </body>
+</html>
