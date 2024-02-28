@@ -2,6 +2,7 @@
     text-decoration: none;
     margin: 0;
     padding: 0;
+    pointer-events: auto;
 }
 
 .status_modify {
@@ -95,6 +96,8 @@
     margin-left: 2vw;
     padding-left: 1vw;
     padding-top: 1vw;
+    color: gray;
+    font-weight: 600;
 }
 
 .wrap_comment {
@@ -134,7 +137,7 @@ click {
     cursor: pointer;
 }
 
-.open_calender :hover,
+.open_calender:hover,
 click {
     background-color: hsl(0, 0%, 89%);
     cursor: pointer;
@@ -182,9 +185,4 @@ click {
 .select_project {
     line-height: 3vw;
     text-align: center;
-}
-
-.comment_area::placeholder {
-    color: gray;
-    padding-top: 1vw;
 }

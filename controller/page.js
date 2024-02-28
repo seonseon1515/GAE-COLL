@@ -34,12 +34,9 @@ exports.project = (req, res) => {
 exports.mypage = (req, res) => {
     res.render('mypage');
 };
-<<<<<<< HEAD
 exports.board_write = (req, res) => {
     res.render('project/board_write');
 };
-=======
 exports.footer = (req, res) => {
     res.render('common/footer');
 };
->>>>>>> a6e857bd0306dc237b6bafe3065cafe1645fbb98
