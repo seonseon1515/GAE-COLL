@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/signup', controller.signup);
 
 //로그인
-// router.post('/login/email', controller.loginEmail);
+router.post('/login/email', controller.loginEmail);
 // router.post('/login/kakao', controller.loginKakao);
 // router.post('/login/google', controller.loginGoogle);
 
@@ -17,4 +17,5 @@ router.post('/signup', controller.signup);
 //유저 프로필,비밀번호 수정
 //회원탈퇴
 //유저조회
+router.post('/find', controller.findUser);
 module.exports = router;
