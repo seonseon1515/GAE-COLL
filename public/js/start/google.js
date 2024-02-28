@@ -1,17 +1,40 @@
-const GOOGLE_CLIENT_ID = '629071446303-beeb31pu6l2t8003h4lt42mcp01sc5au.apps.googleusercontent.com';
-const GOOGLE_CLIENT_SECRET = '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';
-const GOOGLE_REDIRECT_URI = 'http://localhost:8000/start/google';
-
 (async function () {
     const token = document.location.href.split('access_token=')[1].split('&token')[0];
     console.log(token);
 
     const res = await axios({
         method: 'get',
-        url: 'www.googleapis.com',
+        url: 'https://www.googleapis.com/oauth2/v2/userinfo',
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
     console.log(res);
+    const { name: user_name, email, picture } = res.data;
+
+    //회원가입 여부 확인
+    const findUser = await axios({
+        method: 'POST',
+        url: '/api/user/find',
+        data: {
+            email,
+        },
+    });
+    //해당하는 email이 없으면 회원가입
+    if (findUser.data === null) {
+        const signupKakaoResult = await axios({
+            method: 'POST',
+            url: '/api/user/signup',
+            data: {
+                email,
+                user_name,
+                type: 'google',
+                profile_img: picture,
+                thumb_img: picture,
+            },
+        });
+        console.log(signupKakaoResult);
+    }
+    //회원가입 또는 로그인 완료시 메인페이지로 이동
+    document.location.href = '/';
 })();
