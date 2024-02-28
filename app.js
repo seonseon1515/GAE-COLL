@@ -21,6 +21,8 @@ const pageRouter = require('./routes/page');
 app.use('/', pageRouter);
 const userRouter = require('./routes/user');
 app.use('/api/user', userRouter);
+const projectRouter = require('./routes/project');
+app.use('/api/project', projectRouter);
 
 db.sequelize
     .sync({ force: true })
