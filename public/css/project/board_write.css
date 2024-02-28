@@ -6,6 +6,7 @@
 }
 
 .status_modify {
+    margin-top: 0.5vw;
     margin-left: 5vw;
     background-color: #b8b4b4;
     border-radius: 2vw;
@@ -23,8 +24,7 @@
     height: 0.2vw;
     background-color: hsl(0, 0%, 86%);
     border: 0;
-    position: relative;
-    bottom: 1vw;
+    bottom: 3vw;
 }
 
 .write_board_name {
@@ -41,7 +41,7 @@
     color: gray;
     font-weight: 700;
     margin-left: 5vw;
-    margin-top: 2vw;
+    margin-top: 3vw;
 }
 
 .write_explain {
@@ -131,6 +131,10 @@
     display: flex;
 }
 
+.manager_generate {
+    padding-left: 1vw;
+}
+
 .manager_generate:hover,
 click {
     background-color: hsl(0, 0%, 89%);
@@ -150,15 +154,16 @@ click {
 }
 
 .profile_empty {
-    width: 2.5vw;
-    height: 2.5vw;
+    width: 2vw;
+    height: 2vw;
     border-radius: 50%;
     border: gray dashed 2px;
     font-weight: 700;
     background-color: white;
     font-size: 1.5vw;
     text-align: center;
-    line-height: 2.5vw;
+    line-height: 2vw;
+    color: gray;
 }
 
 .name_empty {
@@ -168,7 +173,6 @@ click {
     width: 10vw;
 }
 
-.manager_generate,
 .open_calender,
 .select_project {
     width: 15vw;
@@ -185,4 +189,31 @@ click {
 .select_project {
     line-height: 3vw;
     text-align: center;
+}
+
+.back_icon {
+    color: gray;
+    font-weight: 800;
+    padding-left: 3vw;
+    width: 2vw;
+    height: 3vw;
+    object-fit: cover;
+}
+
+.top_bar {
+    display: flex;
+    justify-content: space-between;
+}
+.managers {
+    display: flex;
+    line-height: 2vw;
+    text-align: center;
+}
+
+.managers > .profile_empty {
+    margin-top: 0.3vw;
+}
+
+.right_wrap {
+    margin-right: 5vw;
 }
