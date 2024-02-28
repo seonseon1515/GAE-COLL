@@ -11,10 +11,12 @@
             <div id="contain">
                 <div id="header">
                     <div id="header-img">
-                        <a href="/start"> <img src="../../public/img/start-dog.png" id="start-dog" /></a>
+                        <a href="/start"><img src="../../public/img/start-dog.png" id="start-dog" /></a>
                     </div>
                     <p id="header-text">
-                        <span class="header-text1">개</span>린이 <span class="header-text1">콜</span>라보
+                        <a href="/start" style="text-decoration: none; color: black"
+                            ><span class="header-text1">개</span>린이 <span class="header-text1">콜</span>라보</a
+                        >
                     </p>
                 </div>
 
@@ -23,18 +25,30 @@
                         <a href="/start/signup"><img src="../../public/img/email-login.png" id="email-login" /></a>
                     </div>
                     <div id="google">
-                        <a href="/start/google"></a><img src="../../public/img/google-login.png" id="google-login" />
+                        <button onclick="googleLogin()">
+                            <img src="../../public/img/google-login.png" id="google-login" />
+                        </button>
                     </div>
                     <div id="kakao">
-                        <img src="../../public/img/kakao-login.png" id="kakao-login" />
+                        <button onclick="kakaoLogin()">
+                            <img src="../../public/img/kakao-login.png" id="kakao-login" />
+                        </button>
                     </div>
                 </div>
-                <div id="email-write">
-                    <a href="/start/signup" style="text-decoration: none; color: black; background-color: white"
-                        >이메일로 회원가입</a
-                    >
-                </div>
+                <a
+                    href="/start/signup"
+                    class="email-write"
+                    style="text-decoration: none; color: black; background-color: white"
+                    ><div class="email-write">이메일로 회원가입</div></a
+                >
             </div>
         </main>
+        <script>
+            function kakaoLogin() {
+                document.location.href =
+                    'https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=2fc7dcbf171bcbe73529d269bb610913&redirect_uri=http://localhost:8000/start/kakao';
+            }
+            function googleLogin() {}
+        </script>
     </body>
 </html>

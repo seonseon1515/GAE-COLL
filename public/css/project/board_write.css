@@ -1,15 +1,190 @@
 * {
-  text-decoration: none;
-  margin: 0;
-  padding: 0;
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
 }
 
 .status_modify {
-  background-color: #b8b4b4;
-  border-radius: 2vw;
-  width: 10vw;
-  height: 3vw;
-  line-height: 3vw;
-  text-align: center;
-  font-weight: 700;
+    margin-left: 5vw;
+    background-color: #b8b4b4;
+    border-radius: 2vw;
+    width: 7vw;
+    height: 2vw;
+    line-height: 2vw;
+    text-align: center;
+    font-weight: 700;
+    font-size: 0.8vw;
+}
+
+.top_bar_line1 {
+    color: hsl(0, 0%, 86%);
+    text-align: center;
+    height: 0.2vw;
+    background-color: hsl(0, 0%, 86%);
+    border: 0;
+    position: relative;
+    bottom: 1vw;
+}
+
+.write_board_name {
+    margin-top: 2vw;
+    color: gray;
+    margin-left: 5vw;
+}
+
+.board_manager,
+.board_deadline,
+.board_project,
+.board_explain {
+    width: 20vw;
+    color: gray;
+    font-weight: 700;
+    margin-left: 5vw;
+    margin-top: 2vw;
+}
+
+.write_explain {
+    margin-left: 5vw;
+    margin-top: 2vw;
+    font-weight: 700;
+    width: 90vw;
+    height: 20vw;
+    /* background-color: bisque; */
+    margin-bottom: 2vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
+    color: gray;
+    border: 0;
+}
+
+.write_explain:hover {
+    border: 0.1vw solid gray;
+    cursor: pointer;
+    border-radius: 1vw;
+}
+
+.top_bar_line2 {
+    color: hsl(0, 0%, 86%);
+    text-align: center;
+    height: 0.2vw;
+    background-color: hsl(0, 0%, 86%);
+    border: 0;
+}
+
+.board_comment {
+    background-color: hsl(0, 3%, 93%);
+    padding-bottom: 3.5vw;
+    padding-top: 2vw;
+    height: 10vw;
+    position: relative;
+}
+
+.member_profile_img {
+    background-color: blueviolet;
+    width: 3vw;
+    height: 3vw;
+    border-radius: 50%;
+}
+
+.comment_area {
+    border-radius: 1vw;
+    width: 78vw;
+    height: 8vw;
+    background-color: white;
+    border: 0.5px solid gray;
+    margin-left: 2vw;
+    padding-left: 1vw;
+    padding-top: 1vw;
+}
+
+.wrap_comment {
+    display: flex;
+}
+
+.member_profile_img {
+    margin-left: 5vw;
+}
+
+.wirte_button {
+    position: relative;
+    left: 91vw;
+    width: 4vw;
+    height: 2vw;
+    background-color: gray;
+}
+
+.board_menu_wrap1,
+.board_menu_wrap2,
+.board_menu_wrap3 {
+    display: flex;
+}
+
+.manager_generate,
+.open_calender,
+.select_project {
+    margin-left: 2vw;
+    margin-top: 2vw;
+    color: gray;
+    display: flex;
+}
+
+.manager_generate:hover,
+click {
+    background-color: hsl(0, 0%, 89%);
+    cursor: pointer;
+}
+
+.open_calender :hover,
+click {
+    background-color: hsl(0, 0%, 89%);
+    cursor: pointer;
+}
+
+.select_project:hover,
+click {
+    background-color: hsl(0, 0%, 89%);
+    cursor: pointer;
+}
+
+.profile_empty {
+    width: 2.5vw;
+    height: 2.5vw;
+    border-radius: 50%;
+    border: gray dashed 2px;
+    font-weight: 700;
+    background-color: white;
+    font-size: 1.5vw;
+    text-align: center;
+    line-height: 2.5vw;
+}
+
+.name_empty {
+    font-size: 1vw;
+    text-align: center;
+    line-height: 2.5vw;
+    width: 10vw;
+}
+
+.manager_generate,
+.open_calender,
+.select_project {
+    width: 15vw;
+    height: 3vw;
+    line-height: 3vw;
+    text-align: center;
+}
+
+.open_calender {
+    line-height: 3vw;
+    text-align: center;
+}
+
+.select_project {
+    line-height: 3vw;
+    text-align: center;
+}
+
+.comment_area::placeholder {
+    color: gray;
+    padding-top: 1vw;
 }

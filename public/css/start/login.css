@@ -50,7 +50,7 @@
     border-radius: 40px;
     margin-right: 2vw;
 }
-#login {
+.login {
     background-color: black;
     color: white;
     display: flex;

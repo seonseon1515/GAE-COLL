@@ -1,0 +1,206 @@
+/*전체 큰 틀*/
+body {
+    overflow-x: hidden;
+}
+#contain-home {
+    width: 96vw;
+    font-size: 1rem;
+    font-weight: 400;
+    position: absolute;
+    top: 18vw;
+    height: auto;
+    background-color: rgb(58, 55, 55);
+    border-radius: 1vw;
+    margin-left: 2vw;
+}
+/*project overview*/
+#overview-contain {
+    margin: 2vw 0 2vw 1vw;
+    background-color: white;
+    border-radius: 1vw;
+    width: 94vw;
+    height: auto;
+}
+#overview-header {
+    padding-left: 2vw;
+    padding-top: 1vw;
+}
+#pen-img-div {
+    width: 2vw;
+    height: 2vw;
+}
+#pen-img {
+    width: 100%;
+    height: 100%;
+}
+#overview-main {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 1vw;
+}
+
+/*member*/
+#member-contain {
+    margin: 2vw 0 2vw 1vw;
+    background-color: white;
+    border-radius: 1vw;
+    width: 94vw;
+    height: auto;
+}
+#member-header {
+    padding-left: 2vw;
+    padding-top: 1vw;
+}
+#pen-img-div {
+    width: 2vw;
+    height: 2vw;
+}
+#pen-img {
+    width: 100%;
+    height: 100%;
+}
+#member-main {
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: 1vw;
+}
+/*프로젝트 규칙, 이슈 노트, 기획, ERD구조, API 명세 큰 틀*/
+#project-big-contain {
+    display: flex;
+}
+
+/*프로젝트 규칙 시작*/
+#project-rule-contain {
+    margin: 2vw 0 0 1vw;
+    background-color: white;
+    border-radius: 1vw;
+    width: 65vw;
+    height: auto;
+    margin-bottom: 2vw;
+}
+.project-img-div {
+    width: 2vw;
+    height: 2vw;
+}
+.project-img {
+    width: 100%;
+    height: 100%;
+}
+#rule-contain {
+    display: flex;
+    padding: 1vw 0 2vw 2vw;
+    align-items: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+#project-rule {
+    padding: 0 1vw;
+}
+.li {
+    padding: 1vw 0;
+    font-size: 1.5vw;
+}
+#rule-li {
+    padding: 1vw 0 2vw 5vw;
+}
+/*파일 업로드 부분 큰 틀*/
+#file-upload-contain {
+    margin: 2vw 1vw 0 1vw;
+    background-color: white;
+    border-radius: 1vw;
+    width: 50vw;
+    height: auto;
+    margin-bottom: 2vw;
+}
+/*file 업로드 공통적인 부분*/
+.file-name {
+    display: flex;
+    padding: 1vw 0 2vw 2vw;
+    align-items: center;
+}
+.file-plus-div {
+    padding-left: 2vw;
+    width: 1.5vw;
+    height: 1.5vw;
+}
+.file-plus {
+    width: 100%;
+    height: 100%;
+}
+.file-upload-view {
+    display: flex;
+}
+.upload-name {
+    font-size: small;
+}
+/*기획의 큰 틀 시작*/
+#plan-text {
+    width: 30vw;
+    height: 15vw;
+}
+#erd-text {
+    width: 100%;
+    height: 15vw;
+}
+#api-text {
+    width: 100%;
+    height: 15vw;
+}
+
+/*issue-note 시작*/
+#issue-contain {
+    width: 50vw;
+    height: auto;
+}
+/*아래 큰 틀*/
+#under-contain {
+    display: flex;
+}
+#line {
+    height: 3px;
+    background-color: gray;
+    margin: 0 2vw;
+}
+/*팀 활동 시작*/
+#team-work-contain {
+    margin: 2vw 1vw 0 1vw;
+    background-color: white;
+    border-radius: 1vw;
+    width: 65vw;
+    height: 30vw;
+    margin-bottom: 2vw;
+}
+#team-work,
+#feedback {
+    display: flex;
+    padding: 2vw;
+    align-items: center;
+    font-size: xx-large;
+    font-weight: bold;
+}
+.team-work-list {
+    padding: 1vw 0 1vw 3vw;
+    display: flex;
+    align-items: center;
+}
+#team-work-list-text {
+    padding-left: 2vw;
+}
+
+/*피드백 요청 목록*/
+#feedback-work-contain {
+    margin: 2vw 1vw 0 1vw;
+    background-color: white;
+    border-radius: 1vw;
+    width: 50vw;
+    height: 30vw;
+    margin-bottom: 2vw;
+}
+.feedback-list {
+    padding: 1vw 0 1vw 3vw;
+    display: flex;
+    align-items: center;
+}
+#feedback-list-text {
+    padding-left: 2vw;
+}
