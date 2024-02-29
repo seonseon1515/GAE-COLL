@@ -1,0 +1,91 @@
+body {
+    height: 100vw;
+    background-color: #ffda31;
+}
+#newProject-contain {
+    width: 96vw;
+    position: absolute;
+    top: 18vw;
+    height: auto;
+    background-color: white;
+    border-radius: 1vw;
+    margin-left: 2vw;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+#form-project {
+    display: block;
+    margin: 10vw 0 5vw 0;
+}
+#newProject-name {
+    width: auto;
+    height: 10vw;
+    text-align: center;
+}
+.input {
+    background-color: #ffda31;
+    border: none;
+    border-radius: 40px;
+    width: 25vw;
+    height: 3vw;
+    text-align: center;
+    margin: 2vw 0;
+}
+#newProject-submit {
+    width: 14vw;
+    height: 5vw;
+    border-radius: 40px;
+    margin-bottom: 5vw;
+}
+
+/*멤버 초대 팝업*/
+.popup-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup-content {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    width: 50vw;
+    height: 20vw;
+}
+
+input[type='email'] {
+    width: 40vw;
+    margin-left: 2vw;
+    border: none;
+    width: 30vw;
+    border-bottom: solid gray;
+}
+input[type='text'] {
+    display: block;
+    margin: 2vw 0 0 0;
+}
+
+#member-invitation {
+    padding-top: 2vw;
+    display: flex;
+    width: auto;
+    height: auto;
+    align-items: baseline;
+}
+
+#member-invi-button-div {
+    height: 10vw;
+    text-align: end;
+}
+#member-invi-button {
+    margin-top: 3vw;
+}
