@@ -1,8 +1,9 @@
-const { Project, ProjectFile, Board } = require('../models');
+const { Project, ProjectFile, Board, ProjectMemeber } = require('../models');
 //프로젝트 생성
 exports.createProject = async (req, res) => {
     const { project_name, start_date, end_date, project_img, overview, rule, member_id } = req.body;
     try {
+        const result = [];
         const createProjectResult = await Project.create({
             project_name,
             start_date,
@@ -10,11 +11,21 @@ exports.createProject = async (req, res) => {
             project_img,
             overview,
             rule,
-            member_id,
         });
-        res.json(createProjectResult);
+        console.log('createProjectResult', createProjectResult.id);
+        for (let i = 0; i < member_id.length; i++) {
+            const addProjectMemberResult = await ProjectMemeber.create({
+                projectId: Number(createProjectResult.id),
+                userId: Number(member_id[i]),
+            });
+            //실패시 처리해야할 내용
+            //console.log('addProjectMemberResult', addProjectMemberResult);
+            //result.push(addProjectMemberResult);
+        }
+
+        res.json({ createProjectResult, result });
     } catch (error) {
-        res.json('실패!', error);
+        res.json(error);
     }
 };
 //내 프로젝트 조회
