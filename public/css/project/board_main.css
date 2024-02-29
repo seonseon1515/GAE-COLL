@@ -1,0 +1,240 @@
+.bg_color {
+    background-color: #f5f5f5;
+    width: 96vw;
+    height: 100vw;
+    margin-left: 2vw;
+    margin-left: 2vw;
+    margin-top: 11vw;
+    margin-bottom: 2vw;
+}
+
+.add {
+    background-color: hsl(0, 3%, 81%);
+    border: 0;
+    border-radius: 1vw;
+    width: 12vw;
+    height: 3.5vw;
+    line-height: 3.5vw;
+    text-align: center;
+    font-size: 1.1vw;
+    font-weight: 700;
+    margin-top: 2vw;
+    margin-left: 2vw;
+}
+
+.add:hover,
+click {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+table,
+th,
+td {
+    border: 1px solid gray;
+}
+table {
+    border-collapse: collapse;
+}
+
+.main_board_table {
+    width: 92vw;
+    margin-left: 2vw;
+    margin-top: 2vw;
+    border: 2px solid;
+}
+
+th {
+    font-size: 1vw;
+    color: black;
+    padding-top: 0.4vw;
+    padding-bottom: 0.4vw;
+    text-align: left;
+    padding-left: 1vw;
+    font-weight: 700;
+    border: 2px solid;
+}
+
+td {
+    font-size: 1vw;
+    color: black;
+    margin-top: 0.5vw;
+    margin-bottom: 0.5vw;
+    text-align: left;
+    /* padding-left: 1vw; */
+    font-weight: 700;
+    border: 2px solid;
+}
+
+button {
+    padding-left: 1vw;
+    font-size: 1vw;
+    font-weight: 700;
+    color: black;
+    text-align: left;
+}
+
+.th1,
+.td1 {
+    border-left: 2px solid #f5f5f5;
+    width: 45vw;
+}
+
+.th1 {
+    width: 47.5vw;
+}
+
+.th2,
+.td2 {
+    width: 18vw;
+}
+
+.th3,
+.td3 {
+    width: 11vw;
+}
+
+.th4,
+.td4 {
+    border-right: 2px solid #f5f5f5;
+    width: 18vw;
+}
+
+.toggle_open {
+    width: 0;
+    height: 0;
+    border-top: 1vw solid;
+    border-bottom: 1vw solid transparent;
+    border-left: 1vw solid transparent;
+    border-right: 1vw solid transparent;
+    margin-top: 0.5vw;
+}
+
+.toggle_open:hover,
+click {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.status_wrap {
+    display: flex;
+}
+
+.placement_status {
+    margin-left: 3vw;
+    margin-bottom: 1vw;
+    display: flex;
+    justify-content: center;
+    border-radius: 1vw;
+    width: 10vw;
+    height: 2vw;
+    line-height: 2vw;
+    align-items: center;
+}
+
+#bg_blue {
+    background-color: hsl(199, 74%, 85%);
+}
+
+#bg_yellow {
+    background-color: #f9f9c1;
+}
+
+#bg_purple {
+    background-color: #f8d6f8;
+}
+
+#bg_green {
+    background-color: #d2f5d2;
+}
+
+#bg_red {
+    background-color: #f8cfcf;
+}
+
+#bg_black {
+    background-color: #d1d0d0;
+}
+
+.circle {
+    border-radius: 50%;
+    width: 1vw;
+    height: 1vw;
+
+    margin-right: 0.5vw;
+}
+
+#blue {
+    background-color: hsl(198, 60%, 70%);
+}
+
+#yellow {
+    background-color: #eaea5e;
+}
+#purple {
+    background-color: purple;
+}
+#green {
+    background-color: #328d32;
+}
+#red {
+    background-color: #f25c5c;
+}
+#black {
+    background-color: #504e4e;
+}
+
+.status_txt {
+    font-size: 1vw;
+    font-weight: 700;
+}
+
+.working_table {
+    width: 92vw;
+    margin-left: 2vw;
+    margin-top: 2vw;
+    border: 2px solid;
+}
+
+.workboard {
+    margin-top: 5vw;
+}
+
+button {
+    border: 0;
+    background-color: transparent;
+}
+
+button:hover,
+click {
+    cursor: pointer;
+    opacity: 0.7;
+    font-weight: 700;
+    background-color: hsl(0, 7%, 92%);
+}
+
+.work_name {
+    height: 2vw;
+    width: 45vw;
+}
+
+.work_status {
+    height: 2vw;
+    width: 18vw;
+}
+
+.work_deadline {
+    height: 2vw;
+    width: 11vw;
+}
+
+.work_managers {
+    height: 2vw;
+    width: 18vw;
+}
+
+.placement_status:hover,
+click {
+    opacity: 0.6;
+    cursor: pointer;
+}
