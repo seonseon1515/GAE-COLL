@@ -4,6 +4,8 @@ exports.createProject = async (req, res) => {
     const { project_name, start_date, end_date, project_img, overview, rule, member_id } = req.body;
     try {
         const result = [];
+
+        //프로젝트 멤버DB에 추가
         const createProjectResult = await Project.create({
             project_name,
             start_date,
@@ -13,6 +15,8 @@ exports.createProject = async (req, res) => {
             rule,
         });
         console.log('createProjectResult', createProjectResult.id);
+
+        //프로젝트 멤버DB에 추가
         for (let i = 0; i < member_id.length; i++) {
             const addProjectMemberResult = await ProjectMemeber.create({
                 projectId: Number(createProjectResult.id),
@@ -22,8 +26,11 @@ exports.createProject = async (req, res) => {
             //console.log('addProjectMemberResult', addProjectMemberResult);
             //result.push(addProjectMemberResult);
         }
-
-        res.json({ createProjectResult, result });
+        //프로젝트 파일DB에 추가
+        const createProjectFileResult = await ProjectMemeber.create({
+            projectId: Number(createProjectResult.id),
+        });
+        res.json({ createProjectResult, result, createProjectFileResult });
     } catch (error) {
         res.json(error);
     }
