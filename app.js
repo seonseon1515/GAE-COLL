@@ -25,7 +25,7 @@ const projectRouter = require("./routes/project");
 app.use("/api/project", projectRouter);
 
 db.sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
         server.listen(PORT, () => {
             console.log(`http://localhost:${PORT}/start/`);
