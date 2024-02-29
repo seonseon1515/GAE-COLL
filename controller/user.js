@@ -26,8 +26,8 @@ exports.signup = async (req, res) => {
             user_name,
             user_img: profile_img,
         });
-        console.log(result);
-        res.json(result);
+        const token = jwt.sign({ id: result.id }, process.env.DEVEL_SECRET, { expiresIn: '1h' });
+        res.json({ success: true, result, token });
     }
 };
 
