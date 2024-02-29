@@ -16,7 +16,7 @@ exports.auth = (req, res, next) => {
             // 403 : 권한없음
             return res.status(403).json({ success: false });
         }
-        req.userId = decode;
+        req.userId = decode.id;
         next();
     });
 };
