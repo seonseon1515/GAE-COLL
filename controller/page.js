@@ -37,3 +37,6 @@ exports.mypage = (req, res) => {
 exports.footer = (req, res) => {
     res.render('common/footer');
 };
+exports.calender = (req, res) => {
+    res.render('project/calender');
+};
