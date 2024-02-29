@@ -33,6 +33,7 @@ console.log(code);
             url: '/api/user/find',
             data: {
                 email,
+                isSignup: true,
             },
         });
 

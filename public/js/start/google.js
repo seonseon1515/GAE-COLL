@@ -18,6 +18,7 @@
         url: '/api/user/find',
         data: {
             email,
+            isSignup: true,
         },
     });
     //해당하는 email이 없으면 회원가입
