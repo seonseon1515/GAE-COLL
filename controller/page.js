@@ -37,3 +37,9 @@ exports.mypage = (req, res) => {
 exports.footer = (req, res) => {
     res.render('common/footer');
 };
+exports.issue = (req, res) => {
+    res.render('project/issue_main');
+};
+exports.newProject = (req, res) => {
+    res.render('project/newProject');
+};

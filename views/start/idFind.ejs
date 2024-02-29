@@ -7,34 +7,49 @@
         <link rel="stylesheet" href="../../public/css/start/idFind.css" />
     </head>
     <body>
-       <main>
-        <div id="contain">
-            <!--header 시작-->
-            <div id="header">
-                <div id="header-img">
-                    <a href="/start"> <img src="../../public/img/start-dog.png" id="start-dog" /></a>
-                </div>
-                <p id="header-text">
-                    <a href="/start" style="text-decoration: none; color: black"
+        <main>
+            <div id="contain">
+                <!--header 시작-->
+                <div id="header">
+                    <div id="header-img">
+                        <a href="/start"> <img src="../../public/img/start-dog.png" id="start-dog" /></a>
+                    </div>
+                    <p id="header-text">
+                        <a href="/start" style="text-decoration: none; color: black"
                             ><span class="header-text1">개</span>린이 <span class="header-text1">콜</span>라보</a
                         >
-                </p>
+                    </p>
+                </div>
+                <form id="find-name">
+                    <div class="text-aria">
+                        <input type="text" id="name" placeholder="이름" class="input" required />
+                    </div>
+                    <br />
+                    <select name="ans" id="ans" class="text-aria">
+                        <option selected disabled hidden>이메일 확인 질문</option>
+                        <option class="ans" value="father">아버지의 성함은?</option>
+                        <option class="ans" value="school">초등학교 모교 이름?</option>
+                        <option class="ans" value="place">제일 기억에 남는 추억의 장소?</option>
+                    </select>
+                    <br />
+                    <div class="text-aria">
+                        <input type="text" placeholder="이메일 확인 답변" required class="input" />
+                    </div>
+                    <br />
+                </form>
+                <br />
+                <div class="exit">
+                    <div id="under-contain">
+                        <input type="submit" class="find-login" form="find-name" value="이메일 찾기" />
+                        <a
+                            href="/start/login"
+                            class="exit"
+                            style="text-decoration: none; color: white; background-color: black"
+                            >돌아가기</a
+                        >
+                    </div>
+                </div>
             </div>
-            <div id="find-name">
-                <div class="text-aria">
-                <input type="text" id="name" placeholder="이름" class="input">
-            </div>
-            <br>
-            <div class="text-aria">
-                <input type="email" id="emil" placeholder="이메일 " class="input">
-            </div>
-            <br>
-            </div>
-            <div id="contain-under">
-                <a href="" class="find-login" style="text-decoration: none; color: white; background-color: black"
-                    ><div class="find-login" >아이디 찾기</div></a>
-                    <div class="exit"><a href="/start/login" class="exit" style="text-decoration: none; color: white; background-color: black">돌아가기</a></div>
-            </div>
-       </main>
+        </main>
     </body>
 </html>
