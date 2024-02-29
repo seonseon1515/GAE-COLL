@@ -36,6 +36,14 @@ const UserModel = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
+        selected_question: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        answer: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
     });
 };
 
