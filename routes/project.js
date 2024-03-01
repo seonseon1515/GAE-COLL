@@ -4,8 +4,6 @@ const router = express.Router();
 
 //프로젝트 생성
 router.post("/create", controller.createProject);
-//내 작업 조회
-router.post("/board/mine", controller.getMyBoard);
 
 //내 프로젝트 조회
 router.post("/mine", controller.getMyProject);

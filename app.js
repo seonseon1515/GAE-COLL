@@ -23,6 +23,8 @@ const userRouter = require("./routes/user");
 app.use("/api/user", userRouter);
 const projectRouter = require("./routes/project");
 app.use("/api/project", projectRouter);
+const projectIssueRouter = require("./routes/project-issue");
+app.use("/api/project-issue", projectIssueRouter);
 
 db.sequelize
     .sync({ force: true })
