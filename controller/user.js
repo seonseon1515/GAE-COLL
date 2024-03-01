@@ -9,29 +9,31 @@ exports.signup = async (req, res) => {
 
     // 중복 검증 로직 추가하기
 
-    if (type === "email") {
-        //패스워드 암호화
-        const password = await bcrypt.hash(String(pw), 11);
+    try {
+        if (type === 'email') {
+            //패스워드 암호화
+            const password = await bcrypt.hash(String(pw), 11);
 
-        const result = await User.create({
-            email,
-            password,
-            type,
-            user_name,
-            selected_question,
-            answer,
-        });
-        console.log(result);
-        res.json(result);
-    } else if (type === "kakao" || type === "google") {
-        const result = await User.create({
-            email,
-            type,
-            user_name,
-            user_img: profile_img,
-        });
-        const token = jwt.sign({ id: result.id }, process.env.DEVEL_SECRET, { expiresIn: "1h" });
-        res.json({ success: true, result, token });
+            const result = await User.create({
+                email,
+                password,
+                type,
+                user_name,
+            });
+            console.log(result);
+            res.json(result);
+        } else if (type === 'kakao' || type === 'google') {
+            const result = await User.create({
+                email,
+                type,
+                user_name,
+                user_img: profile_img,
+            });
+            const token = jwt.sign({ id: result.id }, process.env.DEVEL_SECRET, { expiresIn: '1h' });
+            res.json({ success: true, result, token });
+        }
+    } catch (error) {
+        res.json(error);
     }
 };
 
@@ -52,9 +54,9 @@ exports.loginEmail = async (req, res) => {
         } else {
             res.json({ success: false, message: "비밀번호가 틀립니다" });
         }
-
-        res.json(loginResult);
-    } catch (error) {}
+    } catch (error) {
+        res.json(error);
+    }
 };
 
 //유저이메일을 이용한 유저조회
@@ -75,7 +77,21 @@ exports.findUser = async (req, res) => {
         } else {
             res.json({ findUserResult });
         }
-    } catch (error) {}
+    } catch (error) {
+        res.json(error);
+    }
+};
+
+//유저 프로필조회
+exports.getUserInfo = async (req, res) => {
+    const userId = req.userId;
+    console.log('유저프로필 조회', userId);
+    try {
+        const getUserInfoRes = await User.findOne({ where: { id: Number(userId) } });
+        res.json({ getUserInfoRes });
+    } catch (error) {
+        res.json(error);
+    }
 };
 
 //유저 프로필 수정
