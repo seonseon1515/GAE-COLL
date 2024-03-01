@@ -1,4 +1,5 @@
 const { Project, ProjectFile, Board, ProjectMemeber } = require('../models');
+
 //프로젝트 생성
 exports.createProject = async (req, res) => {
     const { project_name, start_date, end_date, project_img, overview, rule, member_id } = req.body;
@@ -32,7 +33,7 @@ exports.createProject = async (req, res) => {
         });
         res.json({ createProjectResult, result, createProjectFileResult });
     } catch (error) {
-        res.json(error);
+        res.json("실패!", error);
     }
 };
 //내 프로젝트 조회
@@ -46,7 +47,7 @@ exports.getProjectInfo = async (req, res) => {
         });
         res.json(getProjectInfotResult);
     } catch (error) {
-        res.json('실패!', error);
+        res.json("실패!", error);
     }
 };
 //프로젝트 파일 조회
@@ -58,7 +59,7 @@ exports.getProjectFile = async (req, res) => {
         });
         res.json(getProjectFileResult);
     } catch (error) {
-        res.json('실패!', error);
+        res.json("실패!", error);
     }
 };
 //프로젝트 로그 조회
@@ -70,6 +71,6 @@ exports.projectLog = async (req, res) => {
         });
         res.json(getBoardLogResult);
     } catch (error) {
-        res.json('실패!', error);
+        res.json("실패!", error);
     }
 };
