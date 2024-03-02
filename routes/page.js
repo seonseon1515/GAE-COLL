@@ -17,4 +17,5 @@ router.get('/mypage', controller.mypage);
 router.get('/footer', controller.footer);
 router.get('/project/issue_main', controller.issue);
 router.get('/project/newProject', controller.newProject);
+router.get('/project/issue_write', controller.issue_write);
 module.exports = router;
