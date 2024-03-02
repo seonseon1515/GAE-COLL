@@ -39,7 +39,7 @@
     border: none;
 }
 #login-text {
-    padding-top: 5vw;
+    padding-top: 2vw;
 }
 .text-aria {
     display: flex;
@@ -53,12 +53,10 @@
 .login {
     background-color: black;
     color: white;
-    display: flex;
     border-radius: 40px;
     width: 20vw;
     height: 3.5vw;
-    align-items: center;
-    justify-content: center;
+    margin: 1vw 3vw;
 }
 #find {
     display: flex;

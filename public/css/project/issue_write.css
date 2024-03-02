@@ -19,13 +19,12 @@ body {
 }
 
 form {
-  margin-left: 4vw;
-  margin-right: 4vw;
+    margin-left: 4vw;
+    margin-right: 4vw;
 }
 
-.title_write, .content_write {
-  width: 86vw;
-  border: 0;
+.title_write,
+.content_write {
+    width: 86vw;
+    border: 0;
 }
-
-top

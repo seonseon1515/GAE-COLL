@@ -39,4 +39,10 @@ exports.footer = (req, res) => {
 };
 exports.issue_write = (req, res) => {
     res.render('project/issue_write');
+}
+exports.issue = (req, res) => {
+    res.render('project/issue_main');
+};
+exports.newProject = (req, res) => {
+    res.render('project/newProject');
 };
