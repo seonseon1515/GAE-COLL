@@ -32,12 +32,12 @@
 }
 
 /* input 시작*/
-#main-text {
-    padding-top: 3vw;
+.main-text {
+    padding: 3vw 0 0 5vw;
 }
+
 .text-aria {
     display: flex;
-    justify-content: center;
     width: 25vw;
     height: 3vw;
     background-color: white;
@@ -49,22 +49,25 @@
     align-items: flex-end;
 }
 .input {
-    width: 20vw;
+    width: 100%;
     background-color: white;
     border: none;
+    border-radius: 40px;
+    text-align: center;
 }
 .button {
     background-color: white;
     height: 2vw;
     border-radius: 40px;
 }
-.signup {
-    width: 20vw;
+.ans {
+    background-color: white;
+}
+#signup-submit {
     background-color: black;
-    text-align: center;
+    color: white;
+    width: 20vw;
     border-radius: 40px;
-    display: flex;
     height: 3vw;
-    justify-content: center;
-    align-items: center;
+    margin-left: 2vw;
 }
