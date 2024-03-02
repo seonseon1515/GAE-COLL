@@ -28,3 +28,26 @@ form {
     width: 86vw;
     border: 0;
 }
+
+input::placeholder {
+  color:#ccd2d7
+  font-style: italic;
+}
+textarea::placeholder {
+  color: blue;
+  font-weight: bold;
+}
+
+
+.top_hr1 {
+    width: 86vw;
+    height: 0.5vw;
+    background-color: gray;
+    color: gray;
+}
+
+.title_write {
+  width: 86vw;
+  height: 3vw;
+}
+

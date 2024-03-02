@@ -12,11 +12,16 @@
         <form action="/api/project-issue/write" name="issue_write_form" method="post" enctype="multipart/form-data">
           <input class="title_write" name="issue_title" type="text" placeholder="제목을 입력하세요."></input>
           <hr class="top_hr1">
-          <img src="../../public/img/coding_box.png" alt="">  </br>
-          <textarea class="content_write" name="issue_content" placeholder="텍스트를 입력하세요"></textarea>  </br>
+          <img src="../../public/img/coding_box.png" alt="" onclick="open_box()">  </br>
+          <textarea class="content_write" name="issue_content" placeholder="텍스트를 입력하세요">
+            div
+          </textarea>  </br>
           <input type="file" name="issue_content_files">  </br>
           <button class="write_button" type="button" onclick="uplode_writing" >작성</button>
         </form>
       </div>
+    
+
+      <script src="../../public/js/project/issue_write.js"></script>
     </body>
 </html>
