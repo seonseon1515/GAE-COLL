@@ -19,7 +19,7 @@ router.post("/login/email", controller.loginEmail);
 router.patch("/update/info", middleware.auth, controller.updateUser);
 
 //유저 비밀번호 수정
-router.patch("/update/pw", middleware.auth, controller.updatePassword);
+router.patch("/update/pw", controller.updatePassword);
 //유저 이미지(경로만) 수정
 router.patch("/update/profileimg", middleware.auth, controller.updateUserImage);
 

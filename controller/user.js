@@ -50,7 +50,7 @@ exports.loginEmail = async (req, res) => {
             const token = jwt.sign({ id: loginResult.id }, process.env.DEVEL_SECRET, { expiresIn: "1h" });
             res.json({ success: true, token });
         } else {
-            res.json({ success: false, message: "비밀번호가 틀립니다" });
+            res.json({ success: false, message: error });
         }
 
         res.json(loginResult);
@@ -89,12 +89,12 @@ exports.updateUser = async (req, res) => {
         console.log(updatedResult);
         if (updatedResult[0] === 1) {
             // update()메소드 : 성공하면 1 반환
-            res.json({ success: true, message: "프로필 업데이트에 성공했습니다." });
+            res.json({ success: true });
         } else {
-            res.json({ success: false, message: "일치하는 회원 정보가 없어 프로필 업데이트에 실패했습니다" });
+            res.json({ success: false });
         }
     } catch (error) {
-        res.status(500).json({ success: false, message: "서버 오류로 프로필 업데이트에 실패했습니다." });
+        res.json({ success: false, result: error });
     }
 };
 
@@ -106,12 +106,10 @@ exports.updatePassword = async (req, res) => {
     try {
         // 새로운 비밀번호 해싱
         const hashedNewPassword = await bcrypt.hash(password, 11);
-
         await User.update({ password: hashedNewPassword }, { where: { id: userId } });
-
-        res.json({ success: true, message: "비밀번호가 성공적으로 업데이트되었습니다." });
+        res.json({ success: true });
     } catch (error) {
-        res.status(500).json({ success: false, message: "서버 오류로 비밀번호 업데이트에 실패했습니다." });
+        res.json({ success: false, result: error });
     }
 };
 
@@ -123,11 +121,11 @@ exports.updateUserImage = async (req, res) => {
     try {
         const updatedResult = await User.update({ user_img: user_img }, { where: { id: userId } });
         if (updatedResult[0] === 1) {
-            res.json({ success: true, message: "이미지 업데이트에 성공했습니다." });
+            res.json({ success: true });
         } else {
-            res.json({ success: false, message: "일치하는 회원 정보가 없어 이미지 업데이트에 실패했습니다" });
+            res.json({ success: false });
         }
     } catch (error) {
-        res.status(500).json({ success: false, message: "서버 오류로 이미지 업데이트에 실패했습니다." });
+        res.json({ success: false, result: error });
     }
 };
