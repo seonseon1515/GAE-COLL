@@ -18,6 +18,11 @@
     font-size: 0.8vw;
 }
 
+.status_modify:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
 .top_bar_line1 {
     color: hsl(0, 0%, 86%);
     text-align: center;
