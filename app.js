@@ -19,12 +19,18 @@ app.use(express.json());
 //라우터
 const pageRouter = require("./routes/page");
 app.use("/", pageRouter);
+
 const userRouter = require("./routes/user");
 app.use("/api/user", userRouter);
+
 const projectRouter = require("./routes/project");
 app.use("/api/project", projectRouter);
+
 const projectIssueRouter = require("./routes/project_issue");
 app.use("/api/project/issue", projectIssueRouter);
+
+const projectBoardRouter = require("./routes/project_board");
+app.use("/api/project/board", projectBoardRouter);
 
 db.sequelize
     .sync({ force: false })
