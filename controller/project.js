@@ -1,4 +1,4 @@
-const { Project, ProjectFile, Board, ProjectMember } = require('../models');
+const { Project, ProjectFile, Board, ProjectMember } = require("../models");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
     const file = req.file;
@@ -7,10 +7,10 @@ exports.createProject = async (req, res) => {
     let userId;
 
     //멤버가 object타입인지 string타입인지 구별 -> 포스트맨 테스트로 인해 처리
-    if (typeof member_id === 'object') {
+    if (typeof member_id === "object") {
         userId = member_id;
         console.log(userId.length);
-    } else if (typeof member_id === 'string') {
+    } else if (typeof member_id === "string") {
         userId = JSON.parse(member_id);
     }
 
@@ -44,9 +44,13 @@ exports.createProject = async (req, res) => {
         }
         res.json({ createProjectResult, result });
     } catch (error) {
-        res.json('실패!', error);
+        res.json("실패!", error);
     }
 };
+
+//내 보드 조회
+exports.getMyBoard = async (req, res) => {};
+
 //내 프로젝트 조회
 exports.getMyProject = async (req, res) => {};
 //프로젝트 정보 조회
@@ -158,9 +162,9 @@ exports.addProjectMember = async (req, res) => {
     let userId;
     let result = [];
 
-    if (typeof member_id === 'object') {
+    if (typeof member_id === "object") {
         userId = member_id;
-    } else if (typeof member_id === 'string') {
+    } else if (typeof member_id === "string") {
         userId = JSON.parse(member_id);
     }
 
@@ -181,7 +185,7 @@ exports.addProjectMember = async (req, res) => {
                     userId: Number(userId[i]),
                 });
                 result.push(addProjectMemberResult);
-                console.log('result');
+                console.log("result");
             }
         }
         res.json({ createProjectResult, result });
