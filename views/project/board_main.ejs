@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>board_main</title>
+        <link rel="stylesheet" href="../../public/css/project/board_main.css" />
+    </head>
+    <body>
+        <%- include('../common/header.ejs') %> <%- include('./header.ejs') %>
+
+        <div class="bg_color">
+            <button type="button" class="add">+ 작업추가</button>
+
+            <div class="work_board_th">
+              <table class="main_board_table" border="1" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th class="th1">작업</th>
+                        <th class="th2">상태</th>
+                        <th class="th3">마감일</th>
+                        <th class="th4">작업담당자</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </div>
+
+<!-- 작업 상태: 계획중 -->
+          <div id="planning_board" class="workboard">
+            
+              <table id="planning_table" class="working_table" border="1" cellspacing="0">
+                <caption>
+                  <div class="status_wrap">
+                    <div class="toggle_open"></div>
+                    <div class="select_box"> 
+                      <!-- left_wrap -->
+                      <button type="button" class="status_modify">작업상태 변경</button>
+                      <ul class="option_list">
+                          <li class="option_item">
+                          <div id="bg_blue" class="placement_status">
+                              <div id="blue" class="circle"></div>
+                              <div class="status_txt">계획중</div>
+                          </div>
+                          </li>
+                          <li class="option_item">
+                              <div id="bg_yellow" class="placement_status">
+                                  <div id="yellow" class="circle"></div>
+                                  <div class="status_txt">진행중</div>
+                              </div>
+            
+                          </li>
+                          <li class="option_item">
+                              <div id="bg_purple" class="placement_status">
+                                  <div id="purple" class="circle"></div>
+                                  <div class="status_txt">중단됨</div>
+                              </div>
+                          </li>
+                          <li class="option_item">
+                              <div id="bg_green" class="placement_status">
+                                  <div id="green" class="circle"></div>
+                                  <div class="status_txt">완료</div>
+                              </div>
+                          </li>
+                          <li class="option_item">                                
+                              <div id="bg_red" class="placement_status">
+                                  <div id="red" class="circle"></div>
+                                  <div class="status_txt">피드백 요청</div>
+                              </div>
+                          </li>
+                          <li class="option_item">
+                              <div id="bg_black" class="placement_status">
+                                  <div id="black" class="circle"></div>
+                                  <div class="status_txt">피드백 완료</div>
+                              </div>
+                          </li>
+                      </ul>
+                  </div>
+                </caption>
+                <thead>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
+                    <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                    <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
+                    <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
+                  </tr>
+                </tbody>
+            </div>
+          
+
+            <!-- 작업 상태: 진행중 -->
+            <div id="working_board" class="workboard">
+              
+              <table id="working_table" class="working_table" border="1" cellspacing="0">
+                <caption>
+                  <div class="status_wrap">
+                    <div class="toggle_open"></div>
+                    <div id="bg_yellow" class="placement_status">
+                      <div id="yellow" class="circle"></div>
+                      <div class="status_txt">진행중</div>
+                  </div>
+                </caption>
+                <thead>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
+                    <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                    <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
+                    <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
+                  </tr>
+                </tbody>
+            </div>
+          
+
+          <!-- 작업 상태: 중단 -->
+          <div id="stop_board" class="workboard">
+              
+            <table id="stop_table" class="working_table" border="1" cellspacing="0">
+              <caption>
+                <div class="status_wrap">
+                  <div class="toggle_open"></div>
+                  <div id="bg_purple" class="placement_status">
+                    <div id="purple" class="circle"></div>
+                    <div class="status_txt">중단됨</div>
+                </div>
+              </caption>
+              <thead>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
+                  <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                  <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
+                  <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
+                </tr>
+              </tbody>
+          </div>
+      
+
+       <!-- 작업 상태: 완료 -->
+          <div id="complete" class="workboard">
+                
+            <table id="complete_table" class="working_table" border="1" cellspacing="0">
+              <caption>
+                <div class="status_wrap">
+                  <div class="toggle_open"></div>
+                  <div id="bg_green" class="placement_status">
+                    <div id="green" class="circle"></div>
+                    <div class="status_txt">완료</div>
+                </div>
+              </caption>
+              <thead>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
+                  <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                  <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
+                  <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
+                </tr>
+              </tbody>
+          </div>
+    
+
+     <!-- 작업 상태: 피드백 요청 -->
+          <div id="request" class="workboard">
+                  
+            <table id="request_table" class="working_table" border="1" cellspacing="0">
+              <caption>
+                <div class="status_wrap">
+                  <div class="toggle_open"></div>
+                  <div id="bg_red" class="placement_status">
+                    <div id="red" class="circle"></div>
+                    <div class="status_txt">피드백 요청</div>
+                </div>
+              </caption>
+              <thead>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
+                  <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                  <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
+                  <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
+                </tr>
+              </tbody>
+          </div>
+  
+
+   <!-- 작업 상태: 피드백 완료 -->
+            <div id="request_ok" class="workboard">
+                      
+              <table id="ok_table" class="working_table" border="1" cellspacing="0">
+                <caption>
+                  <div class="status_wrap">
+                    <div class="toggle_open"></div>
+                    <div id="bg_black" class="placement_status">
+                      <div id="black" class="circle"></div>
+                      <div class="status_txt">피드백 완료</div>
+                  </div>
+                </caption>
+                <thead>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
+                    <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                    <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
+                    <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
+                  </tr>
+                </tbody>
+            </div>
+
+        </div>
+        <script src="../../public/js/project/board_main.js"></script>
+    </body>
+</html>

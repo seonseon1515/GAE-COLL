@@ -15,6 +15,7 @@ router.get('/header/project', controller.projectheader);
 router.get('/project/home', controller.project);
 router.get('/mypage', controller.mypage);
 router.get('/footer', controller.footer);
+router.get('/project/board_main', controller.board_main);
 router.get('/project/issue_main', controller.issue);
 router.get('/project/newProject', controller.newProject);
 router.get('/project/calender', controller.calender);
