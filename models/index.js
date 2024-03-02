@@ -10,7 +10,7 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
 //db table생성
 db.User = require('./user')(sequelize);
 db.Project = require('./project')(sequelize);
-db.ProjectMemeber = require('./project_member')(sequelize);
+db.ProjectMember = require('./project_member')(sequelize);
 db.ProjectFile = require('./project_file')(sequelize);
 db.Board = require('./board')(sequelize);
 db.BoardComment = require('./board_comment')(sequelize);
@@ -18,12 +18,12 @@ db.Issue = require('./issue')(sequelize);
 db.IssueComment = require('./issue_comment')(sequelize);
 
 //ProjectMember 외래키 설정 userId
-db.User.hasMany(db.ProjectMemeber, { foreignKey: 'userId', onDelete: 'CASCADE' });
-db.ProjectMemeber.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.User.hasMany(db.ProjectMember, { foreignKey: 'userId', onDelete: 'CASCADE' });
+db.ProjectMember.belongsTo(db.User, { foreignKey: 'userId', onDelete: 'CASCADE' });
 
 //ProjectMember 외래키 설정 projectId
-db.Project.hasMany(db.ProjectMemeber, { foreignKey: 'projectId', onDelete: 'CASCADE' });
-db.ProjectMemeber.belongsTo(db.Project, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+db.Project.hasMany(db.ProjectMember, { foreignKey: 'projectId', onDelete: 'CASCADE' });
+db.ProjectMember.belongsTo(db.Project, { foreignKey: 'projectId', onDelete: 'CASCADE' });
 
 //ProjectFile 외래키 설정 projectId
 db.Project.hasMany(db.ProjectFile, { foreignKey: 'projectId', onDelete: 'CASCADE' });

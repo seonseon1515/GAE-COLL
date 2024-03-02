@@ -21,41 +21,49 @@
                     </p>
                 </div>
                 <!--header 시작 후 회원가입-->
-                <div id="main-text">
-                    <div class="text-aria"><input type="text" id="name" placeholder="이름" class="input" /></div>
-                    <br />
-                    <div class="password-div">
-                        <div class="text-aria">
-                            <input type="email" id="email" placeholder="이메일" class="input" />
-                        </div>
-                        <button type="button" class="button">인증 번호 전송</button>
+                <form class="main-text">
+                    <div class="text-aria">
+                        <input type="text" id="name" placeholder="이름" class="input" required />
                     </div>
                     <br />
                     <div class="password-div">
                         <div class="text-aria">
-                            <input type="email" id="email-number" placeholder="이메일 확인" class="input" />
+                            <input type="email" id="email" placeholder="이메일" class="input" required />
                         </div>
-                        <button type="button" class="button">확인</button>
+                        <input type="submit" class="button" value="인증 번호 전송"></input>
+                    </div>
+                <br>
+                <form class="main-text">
+                    <div class="password-div">
+                        <div class="text-aria">
+                            <input type="email" id="email-number" placeholder="이메일 확인" class="input" required />
+                        </div>
+                        <input type="submit" class="button" value="확인"></input>
                     </div>
                     <br />
                     <div class="text-aria">
-                        <input type="password" id="password" placeholder="비밀번호" class="input" /><br />
+                        <input type="password" id="password" placeholder="비밀번호" class="input" required /><br />
                     </div>
                     <br />
                     <div class="text-aria">
-                        <input type="password" id="password-test" placeholder="비밀번호 확인" class="input" />
+                        <input type="password" id="password-test" placeholder="비밀번호 확인" class="input" required />
                     </div>
-                </div>
-                <br />
-                <div class="signup">
-                    <a
-                        href="/start/login"
-                        class="signup"
-                        style="text-decoration: none; color: white; background-color: black"
-                        >회원 가입 완료</a
-                    >
-                </div>
+                    <br />
+                        <select name="question" id="ans" class="text-aria">
+                            <option selected disabled hidden>이메일 확인 질문</option>
+                            <option class="ans" value="1">아버지의 성함은?</option>
+                            <option class="ans" value="2">초등학교 모교 이름?</option>
+                            <option class="ans" value="3">제일 기억에 남는 추억의 장소?</option>
+                        </select>
+                        <br />
+                        <div class="text-aria">
+                            <input type="text" placeholder="이메일 확인 답변" required class="input" />
+                        </div>
+                        <br>
+                        <input type="submit" value="회원 가입 완료" id="signup-submit">
+                    </form>
+                </form>
             </div>
         </main>
     </body>
-</html>
+</html> 

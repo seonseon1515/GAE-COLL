@@ -10,7 +10,7 @@
             crossorigin="anonymous"
         ></script>
         <script>
-            Kakao.init('273cd46861aad3f3e221d2cbf6720c5f');
+            Kakao.init(process.env.KAKAO_CLIENT_ID);
             Kakao.isInitialized();
 
             console.log(Kakao.isInitialized());

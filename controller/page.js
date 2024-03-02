@@ -40,3 +40,9 @@ exports.footer = (req, res) => {
 exports.board_main = (req, res) => {
     res.render('project/board_main');
 };
+exports.issue = (req, res) => {
+    res.render('project/issue_main');
+};
+exports.newProject = (req, res) => {
+    res.render('project/newProject');
+};
