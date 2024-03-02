@@ -8,14 +8,14 @@ router.post("/signup", controller.signup);
 
 //로그인
 
-router.post('/login/email', controller.loginEmail);
+router.post("/login/email", controller.loginEmail);
 // router.post('/login/kakao', controller.loginKakao);
 // router.post('/login/google', controller.loginGoogle);
 
 //아이디 찾기
 //비밀번호 찾기
 //유저프로필 조회
-router.post('/info', middleware.auth, controller.getUserInfo);
+router.post("/info", middleware.auth, controller.getUserInfo);
 
 //유저 프로필 수정
 router.patch("/update/info", middleware.auth, controller.updateUser);
