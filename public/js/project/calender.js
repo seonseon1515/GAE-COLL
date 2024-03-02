@@ -22,7 +22,7 @@ const make_calender = (now) => {
 
     const prev_month = now.getMonth();
     const prev_last_date = new Date(this_year, prev_month, 0).getDate();
-    let next_first_date = new Date(this_year, this_month, 1).getDate();
+    let next_first_date = new Date(this_year, this_month, 1).getDate()-1;
     let container = ``;
 
     for (let i = 0; i < first_day; i++) {
@@ -54,6 +54,8 @@ document.querySelector('.prev').onclick = () => {
 document.querySelector('.next').onclick = () => {
     make_calender(new Date(now.setMonth(now.getMonth() + 1)));
 };
+
+// 팝업 달력
 
 function pop_calender(){
     
