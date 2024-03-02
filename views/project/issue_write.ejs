@@ -5,19 +5,28 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>issue_write</title>
     </head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> 
     <link rel="stylesheet" href="../../public/css/project/issue_write.css" />
     <body>
         <%- include('../common/header.ejs')%>
-      <div class="bg_white">
+      <div class="bg_white" onkeydown="resize(this)" onkeyup="resize(this)">
         <form action="/api/project-issue/write" name="issue_write_form" method="post" enctype="multipart/form-data">
           <input class="title_write" name="issue_title" type="text" placeholder="제목을 입력하세요."></input>
           <hr class="top_hr1">
           <img src="../../public/img/coding_box.png" alt="" onclick="open_box()">  </br>
-          <textarea class="content_write" name="issue_content" placeholder="텍스트를 입력하세요">
-            div
-          </textarea>  </br>
-          <input type="file" name="issue_content_files">  </br>
-          <button class="write_button" type="button" onclick="uplode_writing" >작성</button>
+          <div class="content_write" contenteditable="true"
+          placeholder="내용을 입력하세요.">
+            <textarea class="code_box" style="display:none" onkeydown="resize(this)" onkeyup="resize(this)"></textarea>
+          </div></br>
+          <div class="filebox">
+            <label class="file_upload" for="file_upload"><div class="css">파일 선택</div></label>
+            <p id="origin_name" style="display : inline-block"></p>
+            <input type="file" id="file_upload" style="display: none;">
+            
+          </div>
+          <div class="right_wrap">
+          <button class="write_button" type="submit">작성</button>
+          </div>
         </form>
       </div>
     
