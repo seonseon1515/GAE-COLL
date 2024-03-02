@@ -32,9 +32,48 @@
                 <caption>
                   <div class="status_wrap">
                     <div class="toggle_open"></div>
-                    <div id="bg_blue" class="placement_status">
-                      <div id="blue" class="circle"></div>
-                      <div class="status_txt">계획중</div>
+                    <div class="select_box"> 
+                      <!-- left_wrap -->
+                      <button type="button" class="status_modify">작업상태 변경</button>
+                      <ul class="option_list">
+                          <li class="option_item">
+                          <div id="bg_blue" class="placement_status">
+                              <div id="blue" class="circle"></div>
+                              <div class="status_txt">계획중</div>
+                          </div>
+                          </li>
+                          <li class="option_item">
+                              <div id="bg_yellow" class="placement_status">
+                                  <div id="yellow" class="circle"></div>
+                                  <div class="status_txt">진행중</div>
+                              </div>
+            
+                          </li>
+                          <li class="option_item">
+                              <div id="bg_purple" class="placement_status">
+                                  <div id="purple" class="circle"></div>
+                                  <div class="status_txt">중단됨</div>
+                              </div>
+                          </li>
+                          <li class="option_item">
+                              <div id="bg_green" class="placement_status">
+                                  <div id="green" class="circle"></div>
+                                  <div class="status_txt">완료</div>
+                              </div>
+                          </li>
+                          <li class="option_item">                                
+                              <div id="bg_red" class="placement_status">
+                                  <div id="red" class="circle"></div>
+                                  <div class="status_txt">피드백 요청</div>
+                              </div>
+                          </li>
+                          <li class="option_item">
+                              <div id="bg_black" class="placement_status">
+                                  <div id="black" class="circle"></div>
+                                  <div class="status_txt">피드백 완료</div>
+                              </div>
+                          </li>
+                      </ul>
                   </div>
                 </caption>
                 <thead>
@@ -175,5 +214,6 @@
             </div>
 
         </div>
+        <script src="../../public/js/project/board_main.js"></script>
     </body>
 </html>

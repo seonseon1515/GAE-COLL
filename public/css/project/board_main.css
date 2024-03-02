@@ -121,8 +121,8 @@ click {
 }
 
 .placement_status {
-    margin-left: 3vw;
-    margin-bottom: 1vw;
+    margin-left: 1.5vw;
+    margin-bottom: 0.5vw;
     display: flex;
     justify-content: center;
     border-radius: 1vw;
@@ -200,6 +200,10 @@ click {
     margin-top: 5vw;
 }
 
+#request_ok {
+    margin-top: 5vw;
+}
+
 button {
     border: 0;
     background-color: transparent;
@@ -237,4 +241,83 @@ click {
 click {
     opacity: 0.6;
     cursor: pointer;
+}
+
+.select_box * {
+    box-sizing: border-box;
+}
+.select_box {
+    position: relative;
+    width: 10vw;
+    height: 2vw;
+    border-radius: 4px;
+    border: none;
+    background: transparent;
+    background-size: 20px;
+    cursor: pointer;
+}
+
+.status_modify {
+    margin-left: 1.5vw;
+    margin-bottom: 1vw;
+    background-color: #b8b4b4;
+    border-radius: 2vw;
+    width: 10vw;
+    height: 2vw;
+    line-height: 2vw;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    border: none;
+}
+.select_box .option_list {
+    position: absolute;
+    width: 13vw;
+    background: #bfbfbf;
+    color: black;
+    list-style: none;
+    padding-right: 2vw;
+    margin-left: 0vw;
+    border-radius: 6px;
+    overflow: hidden;
+    max-height: 0;
+    transition: 0.3s ease-in;
+}
+
+.select_box.active .option_list {
+    max-height: 500px;
+}
+
+.select_box .option_item {
+    border-bottom: 1px dashed black;
+    transition: 0.1s;
+    padding-top: 0.5vw;
+}
+
+.option_item {
+    padding-right: 5vw;
+    list-style: none;
+    padding-left: 0;
+}
+.option_item:hover {
+    opacity: 0.7;
+}
+
+.select_box .option_item:last-child {
+    border-bottom: 0 none;
+}
+
+/* 스크롤 커스텀 */
+.select_box .option_list::-webkit-scrollbar {
+    width: 6px;
+}
+.select_box .option_list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.select_box .option_list::-webkit-scrollbar-thumb {
+    background: #303030;
+    border-radius: 45px;
+}
+.select_box .option_list::-webkit-scrollbar-thumb:hover {
+    background: #303030;
 }
