@@ -24,22 +24,6 @@ const IssueModel = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: true,
         },
-        projectId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: "projects",
-                key: "id",
-            },
-        },
-        userId: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            references: {
-                model: "users",
-                key: "id",
-            },
-        },
     });
 };
 

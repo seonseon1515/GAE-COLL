@@ -6,19 +6,17 @@ const { Op } = require("sequelize");
 // 프로젝트 이슈 조회
 exports.getProjectIssues = async (req, res) => {
     try {
-        const { project_id } = req.body; // 프로젝트 ID
+        const { project_id: projectId } = req.body; // 프로젝트 ID
         const user_id = req.userId; // 작성자 ID
         console.log(project_id, user_id);
         // 프로젝트 멤버 여부 확인?
         // where user_id is project_id === projectId면 프로젝트 멤버
 
-        // 프론트에서 projectId로 보내주면 변수 새로 생성할 필요 없을 것
-        const projectId = project_id;
         const projectIssues = await Issue.findAll({ where: { projectId } });
         res.json({ success: true, projectIssues });
     } catch (error) {
         console.error("프로젝트 이슈 조회 오류:", error);
-        res.status(500).json({ success: false, message: "서버 오류로 인해 프로젝트 이슈 조회에 실패했습니다." });
+        res.status(500).json({ success: false });
     }
 };
 
