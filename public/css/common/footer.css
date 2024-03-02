@@ -1,11 +1,17 @@
 /*footer 화면 밑에다가 고정*/
-footer {
+html,
+body {
+    height: 100%;
     margin: 0;
     padding: 0;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative;
-    transform: translateY(100%);
+}
+
+.content {
+    min-height: calc(100% - 60px); /* 60px는 footer의 높이로 설정 */
+}
+
+.footer {
+    height: 60px;
 }
 
 #contain {

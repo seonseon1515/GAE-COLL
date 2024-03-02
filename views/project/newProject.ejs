@@ -13,7 +13,8 @@
                 <div id="newProject-name">
                     <h1>프로젝트 생성</h1>
                 </div>
-                <input type="text" placeholder="프로젝트 이름" class="input" required /><br />
+                <label>프로젝트 이름</label>
+                <input type="text" class="input" required /><br />
                 <input type="date" id="date" min="2012-06-05" max="2050-06-20" value="2024-06-15" class="input" /><br />
                 <input type="text" placeholder="프로젝트 멤버 초대" class="input" onclick="openPopup()" /><br />
                 <div class="popup-overlay" onclick="closePopup()"></div>
@@ -21,7 +22,6 @@
                     <h1>이메일을 적으세요</h1>
                     <div id="member-invitation">
                         <label style="padding-right: 5vw">이메일 : </label>
-
                         <input type="email" id="email-write" />
                     </div>
                     <div id="member-invi-button-div">
