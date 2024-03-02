@@ -46,3 +46,6 @@ exports.issue = (req, res) => {
 exports.newProject = (req, res) => {
     res.render('project/newProject');
 };
+exports.calender = (req, res) => {
+    res.render('project/calender');
+};
