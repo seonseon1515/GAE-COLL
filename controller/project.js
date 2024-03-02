@@ -162,15 +162,9 @@ exports.addProjectMember = async (req, res) => {
     let userId;
     let result = [];
 
-<<<<<<< HEAD
-    if (typeof member_id === 'object') {
-        userId = member_id;
-    } else if (typeof member_id === 'string') {
-=======
     if (typeof member_id === "object") {
         userId = member_id;
     } else if (typeof member_id === "string") {
->>>>>>> 769914122c98386dfd2ccbdfef40dccd3754d8a8
         userId = JSON.parse(member_id);
     }
 
@@ -191,11 +185,7 @@ exports.addProjectMember = async (req, res) => {
                     userId: Number(userId[i]),
                 });
                 result.push(addProjectMemberResult);
-<<<<<<< HEAD
-                console.log('result');
-=======
                 console.log("result");
->>>>>>> 769914122c98386dfd2ccbdfef40dccd3754d8a8
             }
         }
         res.json({ createProjectResult, result });
