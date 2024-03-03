@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="../../public/css/project/issue_content.css" />
+    </head>
+    <body>
+        <%-include('../../views/common/header.ejs') %>
+        <main>
+            <div class="bg_white" onkeydown="resize(this)" onkeyup="resize(this)">
+                <form action="/api/project-issue/write" name="issue_write_form" method="post" enctype="multipart/form-data">
+                    <div class="title" >제목 : <div id="title-con">1231241</div></div>
+                    <div class="writer">작성자 : <div></div> <div id="date">작성 일시 : </div></div>
+                    <hr class="top_hr1">
+                </div>
+        </main>
+    </body>
+    <script src="../../public/js/project/issue_content.js"></script>
+</html>
