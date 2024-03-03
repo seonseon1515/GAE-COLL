@@ -1,16 +1,27 @@
-const { Project, Issue, IssueComment, ProjectMember } = require("../models");
+const { Issue, IssueComment } = require("../models");
 const { Op } = require("sequelize");
+const fs = require("fs");
 
-// 프로젝트 이슈 조회 (모든 프로젝트 이슈)
-exports.getProjectIssues = async (req, res) => {
+// 프로젝트 이슈 작성 (글 + 파일)
+exports.createProjectIssue = async (req, res) => {
+    const files = req.files;
+    console.log("file", files);
+    const { title, content, projectId, issue_date } = req.body;
+    const userId = req.userId;
+
     try {
-        const { project_id: projectId } = req.body; // 프로젝트 ID
-        const userId = req.userId; // 작성자 ID
-        console.log(projectId, userId);
-        const projectIssues = await Issue.findAll({ where: { projectId } });
-        res.json({ success: true, result: projectIssues });
+        //각 파일들 이름 변경
+        const fileNames = files.map((file) => file.filename).join(", ");
+        console.log("파일 이름:", fileNames);
+        //파일 경로
+        // const filePath = files.map((file) => file.path);
+
+        const newProjectIssue = await Issue.create({ title, content, projectId, userId, issue_date, files: fileNames });
+
+        console.log("issue id:", newProjectIssue.id);
+        res.json({ success: true, result: newProjectIssue.id });
     } catch (error) {
-        console.error("이슈 조회 오류:", error);
+        console.error("이슈 작성 오류:", error);
         res.json({ success: false, result: error });
     }
 };
@@ -23,6 +34,20 @@ exports.searchProjectIssues = async (req, res) => {
         res.json({ success: true, result: projectIssues });
     } catch (error) {
         console.error("이슈 검색 오류:", error);
+        res.json({ success: false, result: error });
+    }
+};
+
+// 프로젝트 이슈 조회 (모든 프로젝트 이슈)
+exports.getProjectIssues = async (req, res) => {
+    try {
+        const { project_id: projectId } = req.body; // 프로젝트 ID
+        const userId = req.userId; // 작성자 ID
+        console.log(projectId, userId);
+        const projectIssues = await Issue.findAll({ where: { projectId } });
+        res.json({ success: true, result: projectIssues });
+    } catch (error) {
+        console.error("이슈 조회 오류:", error);
         res.json({ success: false, result: error });
     }
 };
@@ -45,40 +70,32 @@ exports.getProjectIssueDetail = async (req, res) => {
     }
 };
 
-// 프로젝트 이슈 작성 (글 + 파일)
-exports.createProjectIssue = async (req, res) => {
-    try {
-        const { title, content, project_id: projectId, files } = req.body;
-        const userId = req.userId;
-        const newProjectIssue = await Issue.create({ title, content, projectId, files });
-
-        //파일이 있으면 파일 업로드 (이건 미들웨어로 처리한다는 것 같은데 확인하기)
-
-        console.log("issue id:", newProjectIssue.id);
-        res.json({ success: true, result: newProjectIssue.id });
-    } catch (error) {
-        console.error("이슈 작성 오류:", error);
-        res.json({ success: false, result: error });
-    }
-};
-
 // 프로젝트 이슈 수정
 exports.updateProjectIssueDetail = async (req, res) => {
+    const files = req.files;
+    //id(이슈id), user_id(작성자), req.userId(현재 사용자)
+    const { id } = req.params;
+    const userId = req.userId;
+    const { title, content } = req.body;
+
+    //작성자 본인인지 확인
+    const issue = await Issue.findOne({ where: { id } });
+    console.log(issue.userId, userId, id);
+    if (issue.userId !== userId) {
+        return res.json({ success: false, result: "작성자만 수정할 수 있습니다." });
+    }
+
     try {
-        //작성자 본인인지 확인
-        //id(이슈id), user_id(작성자), req.userId(현재 사용자)
-        const { id } = req.params;
-        const userId = req.userId;
-        const { title, content, files } = req.body;
-
-        const issue = await Issue.findOne({ where: { id } });
-        if (issue.userId !== userId) {
-            return res.json({ sucess: false, result: "작성자만 수정할 수 있습니다." });
+        console.log(files);
+        let issueFiles = issue.files.split(" ");
+        //파일 편집할 수도 있고 안 할 수도 있고
+        if (files) {
+            const updatedFileNames = files.map((file) => file.filename).join(", ");
+            console.log("업데이트 한 파일명", updatedFileNames);
+            issueFiles.push(updatedFileNames);
         }
-
-        const updateResult = await Issue.update({ title, content, files }, { where: { id } });
-
-        // 파일 수정
+        let updatedIssueFiles = issueFiles.join(", ");
+        const updateResult = await Issue.update({ title, content, files: updatedIssueFiles }, { where: { id } });
 
         res.json({ success: true, result: updateResult });
     } catch (error) {
@@ -87,24 +104,75 @@ exports.updateProjectIssueDetail = async (req, res) => {
     }
 };
 
+exports.deleteProjectIssueFile = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userId = req.userId;
+        const { fileName } = req.body; // 삭제할 파일의 이름
+
+        // 작성자 본인인지 확인
+        const issue = await Issue.findOne({ where: { id } });
+        if (issue.userId !== userId) {
+            return res.json({ success: false, result: "작성자만 삭제할 수 있습니다." });
+        }
+
+        // DB에서 파일 가져오기 (문자열로 저장된 파일 이름들)
+        let issueFiles = issue.files.split(", ");
+
+        // 실제 파일 삭제
+        const filePath = "./public/uploads/issue/" + fileName;
+        if (fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath);
+            console.log("파일 삭제 성공");
+        } else {
+            console.log("파일이 이미 삭제되었거나 존재하지 않습니다.");
+        }
+
+        // 삭제할 파일의 이름을 파일 배열에서 제거
+        issueFiles = issueFiles.filter((file) => file.trim() !== fileName.trim());
+
+        // DB에 저장할 파일 배열을 다시 문자열로 변환
+        const updatedFiles = issueFiles.join(", ");
+
+        // DB 업데이트
+        const updatedFilesResult = await Issue.update({ files: updatedFiles }, { where: { id } });
+
+        res.json({ success: true, result: updatedFilesResult });
+    } catch (error) {
+        console.error("파일 삭제 오류:", error);
+        res.json({ success: false, result: error });
+    }
+};
+
 // 프로젝트 이슈 삭제
 exports.deleteProjectIssueDetail = async (req, res) => {
     //작성자 본인인지 확인
     try {
-        const { id: issueId } = req.params;
+        const { id } = req.params; //이슈Id
         const userId = req.userId;
 
-        const issue = await Issue.findOne({ where: { id } });
+        const issue = await Issue.findByPk(id);
         if (issue.userId !== userId) {
             return res.json({ sucess: false, result: "작성자만 삭제할 수 있습니다." });
         }
 
-        await Issue.destroy({ where: { issueId } });
+        //댓글 삭제
+        await IssueComment.destroy({ where: { issueId: issue.id } });
 
-        // 이슈가 삭제되면 해당 이슈 댓글들도 삭제?
-        // await IssueComment.destroy({ where: { issueId } });
+        let issueFilesName = issue.files.split(", ");
+        // 실제 파일 삭제
+        for (let i = 0; i < issueFilesName.length; i++) {
+            let filePath = "./public/uploads/issue/" + issueFilesName[i];
+            if (fs.existsSync(filePath)) {
+                fs.unlinkSync(filePath);
+                console.log("파일 삭제 성공");
+            } else {
+                console.log("파일이 이미 삭제되었거나 존재하지 않습니다.");
+            }
+        }
 
-        // 파일 수정
+        //마지막 이슈글 삭제
+        await Issue.destroy({ where: { id } });
 
         res.json({ success: true, result: "이슈가 삭제되었습니다." });
     } catch (error) {
@@ -131,7 +199,7 @@ exports.writeProjectIssueComment = async (req, res) => {
 exports.getProjectIssueComment = async (req, res) => {
     try {
         const { id: issueId } = req.params;
-        const getAllComment = await IssueComment.findAll(issueId);
+        const getAllComment = await IssueComment.findAll({ where: { issueId } });
         res.json({ success: true, result: getAllComment });
     } catch (error) {
         res.json({ success: false, result: error });
@@ -141,15 +209,16 @@ exports.getProjectIssueComment = async (req, res) => {
 //프로젝트 이슈 댓글 수정
 exports.updateProjectIssueComment = async (req, res) => {
     try {
-        //작성자 본인인지 확인
-        const { id } = req.body;
+        const { id, comment } = req.body; //댓글Id
         const userId = req.userId;
 
-        const issueComment = await IssueComment.findOne(id);
+        //작성자 본인인지 확인
+        const issueComment = await IssueComment.findByPk(id);
         if (issueComment.userId !== userId) {
             return res.json({ success: false, result: "작성자만 수정할 수 있습니다." });
         }
 
+        // 댓글 업데이트
         const updateCommentResult = await IssueComment.update({ comment }, { where: { id } });
         res.json({ success: true, result: updateCommentResult });
     } catch (error) {
@@ -166,7 +235,7 @@ exports.deleteProjectIssueComment = async (req, res) => {
 
         const issueComment = await IssueComment.findByPk(id);
         if (issueComment.userId !== userId) {
-            return res.json({ success: false, result: "작성자만 수정할 수 있습니다." });
+            return res.json({ success: false, result: "작성자만 삭제할 수 있습니다." });
         }
 
         await IssueComment.destroy({ where: { id } });
