@@ -43,3 +43,6 @@ exports.issue = (req, res) => {
 exports.newProject = (req, res) => {
     res.render('project/newProject');
 };
+exports.write = (req, res) => {
+    res.render('project/issue_write');
+};
