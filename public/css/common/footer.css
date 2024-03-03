@@ -16,10 +16,13 @@ footer {
     height: 12vw;
     width: 100vw;
 }
+#footer-div {
+    height: auto;
+}
 /*chat icon 설정*/
 #icon {
     position: fixed;
-    bottom: 2vw;
+    bottom: 13vw; /* footer의 높이와 같게 설정 */
     right: 4vw;
     border-radius: 50px;
     background-color: white;
@@ -27,9 +30,10 @@ footer {
     cursor: pointer;
     width: 3vw;
     height: 3vw;
-    /* z-index: 98; */
+    z-index: 100;
     transition: bottom 0.5s ease-out;
 }
+
 #icon-img {
     /* z-index: 99; */
     background-color: white;

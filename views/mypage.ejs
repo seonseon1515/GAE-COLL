@@ -10,11 +10,23 @@
         <main>
             <div class="profile_img_section">
                 <div class="profile_img_top">
-                    <div class="profile_more">
-                        <img src="../public/img/ellipsis-solid-2.svg" alt="더보기" />
-                        <button type="button"></button>
+                    <div  class="profile_more">
+                        <img src="../public/img/ellipsis-solid-2.svg" alt="더보기"/>
+                        <button type="button"  onclick="showPopup()" ></button>
                     </div>
-                </div>
+                
+                    <div id="popup">
+                        <form >
+                            <h2>프로필 수정</h2>
+                            <label>이름 : <input type="text" id="newName" required/></label><br />
+                            <label>이메일 : <input type="text" id="newEmail" required/></label><br />
+                            <input type="submit" class="profile-save" onclick="saveProfile()"></input>
+                            <button class="profile-save" onclick="closePopup()">닫기</button>
+                        </form>
+                    </div>
+                </div>  
+                
+                
                 <div class="profile_img_middle">
                     <div class="profile_img_box">
                         <img src="../public/img/user-solid.svg" alt="더보기" />
@@ -40,5 +52,6 @@
                 </div>
             </div>
         </main>
+        <script src="../public/js/mypage.js"></script>
     </body>
 </html>
