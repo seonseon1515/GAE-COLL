@@ -33,7 +33,7 @@ exports.searchProjectIssues = async (req, res) => {
         const { keyword } = req.query;
         const { type } = req.body;
         //제목이면 type = 0, 작성자면 type = 1
-        if (type === "") {
+        if (type !== "0" && type !== "1") {
             return res.json({ success: false, result: "올바른 검색 유형을 지정하세요." });
         }
         let projectIssues;
