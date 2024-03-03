@@ -1,16 +1,20 @@
 const { Board, BoardComment } = require("../models");
+const { Op } = require("sequelize");
 
 //보드 전체 조회
 exports.getBoardAll = async (req, res) => {
     try {
-        const { project_id } = req.params;
+        const { project_id: projectId } = req.query;
+        console.log(projectId);
 
         const getBoardAllResult = await Board.findAll({
             order: [["id", "DESC"]],
-            where: { project_id },
+            where: { projectId: Number(projectId) },
         });
-        res.json({ success: true, result: getBoardAllResult.data });
+
+        res.json({ success: true, result: getBoardAllResult });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
@@ -18,22 +22,24 @@ exports.getBoardAll = async (req, res) => {
 //보드작성
 exports.boardWrite = async (req, res) => {
     my_id = req.userId;
+    console.log(my_id);
     try {
-        const { project_id, board_title, board_description, user_id, status, deadline } = req.body;
+        const { project_id: projectId, title, description, user_id: userId, status, deadline } = req.body;
         let is_mine = false;
 
-        user_id.include(is_mine) ? (is_mine = true) : (is_mine = false);
+        //userId.include(my_id) ? (is_mine = true) : (is_mine = false);
+        userId == my_id ? (is_mine = true) : (is_mine = false);
 
         const boardWriteResult = await Board.create({
-            project_id,
-            board_title,
-            board_description,
-            user_id,
+            projectId: Number(projectId),
+            title,
+            description,
+            userId: Number(userId),
             status,
             deadline,
             is_mine,
         });
-        res.json({ success: true, result });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -41,55 +47,88 @@ exports.boardWrite = async (req, res) => {
 //보드 1개조회
 exports.getBoardDetail = async (req, res) => {
     try {
-        const { project_id, board_id: id } = req.params;
+        const { board_id: id } = req.query;
         const getBoardDatail = await Board.findOne({
             order: [["id", "DESC"]],
-            where: { id, project_id },
+            where: { id: Number(id) },
         });
-        res.json({ success: true, result: getBoardDatail.data });
+        res.json({ success: true, result: getBoardDatail });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
 //보드 월별조회
 exports.getBoardMonth = async (req, res) => {
     try {
-        const { project_id, YYYYMM } = req.params;
+        const { project_id: projectId, YYYYMM } = req.query;
 
         const getBoardAllResult = await Board.findAll({
             order: [["id", "DESC"]],
-            where: { project_id, deadline: { [Op.like]: `${YYYYMM}%` } },
+            where: { projectId, deadline: { [Op.like]: `${YYYYMM}%` } },
         });
-        res.json({ success: true, result: getBoardAllResult.data });
+        res.json({ success: true, result: getBoardAllResult });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
 //보드 수정
-exports.updateBoard = async (req, res) => {};
+exports.updateBoard = async (req, res) => {
+    my_id = req.userId;
+    try {
+        const { title, description, user_id: userId, status, deadline, board_id: id } = req.body;
+        let is_mine = false;
+
+        //userId.include(my_id) ? (is_mine = true) : (is_mine = false);
+        userId == my_id ? (is_mine = true) : (is_mine = false);
+
+        const boardWriteResult = await Board.update(
+            {
+                title,
+                description,
+                userId: Number(userId),
+                status,
+                deadline,
+                is_mine,
+            },
+            {
+                where: {
+                    id,
+                },
+            }
+        );
+
+        res.json({ success: true, result: "" });
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, result: error });
+    }
+};
 //보드 삭제
 exports.deleteBoard = async (req, res) => {
     try {
         my_id = req.userId;
-        const { board_id: boardId } = req.body;
-        const deleteBoardResult = await Board.delete({
+        const { board_id: id } = req.body;
+        const deleteBoardResult = await Board.destroy({
             where: {
-                boardId,
+                id,
             },
         });
         res.json({ success: true, result: "" });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
 //보드에 해당하는 댓글 가져오기
 exports.getComment = async (req, res) => {
     try {
-        const { project_id: projectId, board_id: id } = req.params;
+        const { board_id: id } = req.params;
 
         const getCommentAllResult = await BoardComment.findAll({
             order: [["id", "DESC"]],
-            where: { projectId, id },
+            where: { id },
         });
         res.json({ success: true, result: getCommentAllResult.data });
     } catch (error) {
@@ -100,15 +139,16 @@ exports.getComment = async (req, res) => {
 exports.writeCommnet = async (req, res) => {
     try {
         my_id = req.userId;
-        const { project_id: projectId, comment, board_id: boardId } = req.body;
+        console.log("myId", my_id);
+        const { comment, board_id: boardId } = req.body;
         const createCommentResult = await BoardComment.create({
-            projectId,
-            boardId,
+            boardId: Number(boardId),
+            userId: Number(my_id),
             comment,
-            user_id: my_id,
         });
         res.json({ success: true, result: "" });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
@@ -116,10 +156,10 @@ exports.writeCommnet = async (req, res) => {
 exports.deleteComment = async (req, res) => {
     try {
         my_id = req.userId;
-        const { board_id: boardId } = req.body;
-        const deleteCommentResult = await BoardComment.delete({
+        const { comment_id: id } = req.body;
+        const deleteCommentResult = await BoardComment.destroy({
             where: {
-                boardId,
+                id: Number(id),
             },
         });
         res.json({ success: true, result: "" });
