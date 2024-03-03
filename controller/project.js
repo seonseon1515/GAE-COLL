@@ -99,26 +99,28 @@ exports.getMyBoard = async (req, res) => {
         // }
 
         // 프로젝트 별로 보드 가져오기 (프로젝트Name과 보드 정보 합치기)
-        let projectMap = new Map();
-        let myBoards = [];
+        let getMyBoard = new Map();
         for (let i = 0; i < project_Id.length; i++) {
             let projectId = project_Id[i].projectId;
+            //프로젝트 테이블의 프로젝트 이름, 보드 정보(제목, 상태, 기한) 모두 같은 프로젝트Id로 조회
             let getProjectName = await Project.findByPk(projectId);
             let projectName = getProjectName.dataValues.project_name;
 
-            let boards = await Board.findAll({
+            let board = await Board.findAll({
                 where: { projectId },
                 attributes: ["id", "title", "status", "deadline"],
             });
-
-            if (!projectMap.has(projectId)) {
-                projectMap.set(projectId, {
+            //project에 projectId가 없으면
+            if (!getMyBoard.has(projectId)) {
+                //projectId, proejctName, myBoards 추가
+                getMyBoard.set(projectId, {
                     projectName,
-                    boards,
+                    board,
                 });
             }
         }
-        const result = Array.from(projectMap.values());
+        // 배열로 반환해서 결과에 저장
+        const result = Array.from(getMyBoard.values());
         console.log("result값 출력해보기:", result);
         res.json({ success: true, result });
     } catch (error) {
