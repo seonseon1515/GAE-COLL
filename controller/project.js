@@ -1,4 +1,4 @@
-const { Project, ProjectFile, Board, ProjectMember } = require("../models");
+const { Project, ProjectFile, Board, ProjectMember, User } = require("../models");
 var fs = require("fs");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
@@ -60,11 +60,113 @@ exports.createProject = async (req, res) => {
     }
 };
 
-//내 보드 조회
-exports.getMyBoard = async (req, res) => {};
+exports.getMyBoard = async (req, res) => {
+    try {
+        const userId = req.userId;
 
-//내 프로젝트 조회
-exports.getMyProject = async (req, res) => {};
+        // 사용자가 참여 중인 프로젝트 조회
+        const project_Id = await ProjectMember.findAll({
+            where: { userId },
+            attributes: ["projectId"],
+            order: [["projectId", "ASC"]],
+        });
+        // console.log("project_Id콘솔 찍기", project_Id[0].dataValues);
+
+        // 프로젝트 id에 매칭되는 프로젝트 이름이 있음
+        // let projectName = [];
+        // for (let i = 0; i < project_Id.length; i++) {
+        //     let id = project_Id[i].projectId;
+        //     // console.log("get프로젝트 이름 출력해보기:", getProjectName);
+        //     projectName.push([id, name]);
+        //     // console.log("프로젝트 이름 콘솔 찍어보기:", projectName);
+        // }
+
+        // console.log("projectName콘솔 찍기", projectName[0].dataValues);
+        // 각 프로젝트에서 보드 가져오기
+        // let myBoards = [];
+        // // 프로젝트 별로 보드 가져오기
+        // // 2차 배열 형태로 각 보드 정보 담기 (보드 타이틀, 상태, deadline)
+        // for (let i = 0; i < project_Id.length; i++) {
+        //     let id = project_Id[i].projectId;
+        //     // console.log("id:", id);
+        //     const getBoardResult = await Board.findByPk(id);
+        //     // console.log("get 보드 인포", getBoardResult);
+        //     let borad_title = getBoardResult.dataValues.title;
+        //     let board_staus = getBoardResult.dataValues.status;
+        //     let borad_deadline = getBoardResult.dataValues.deadline;
+        //     myBoards.push([id, borad_title, board_staus, borad_deadline]);
+        //     console.log("myBoards 콘솔 찍어보기", myBoards);
+        // }
+
+        // 프로젝트 별로 보드 가져오기 (프로젝트Name과 보드 정보 합치기)
+        let projectMap = new Map();
+        let myBoards = [];
+        for (let i = 0; i < project_Id.length; i++) {
+            let projectId = project_Id[i].projectId;
+            let getProjectName = await Project.findByPk(projectId);
+            let projectName = getProjectName.dataValues.project_name;
+
+            let boards = await Board.findAll({
+                where: { projectId },
+                attributes: ["id", "title", "status", "deadline"],
+            });
+
+            if (!projectMap.has(projectId)) {
+                projectMap.set(projectId, {
+                    projectName,
+                    boards,
+                });
+            }
+        }
+        const result = Array.from(projectMap.values());
+        console.log("result값 출력해보기:", result);
+        res.json({ success: true, result });
+    } catch (error) {
+        console.error("내 보드 조회 실패:", error);
+        res.json({ success: false, result: "내 보드 조회 실패" });
+    }
+};
+
+//사용자가 참여 중인 모든 프로젝트 조회
+exports.getMyProject = async (req, res) => {
+    try {
+        const id = req.userId;
+        const user = await User.findByPk(id);
+        const { user_name, github, blog } = user;
+        const projectId = await ProjectMember.findAll({
+            where: { userId: user.id },
+            attributes: ["projectId"],
+            order: [["projectId", "ASC"]],
+        });
+
+        const project_ids = projectId.map((project_member) => project_member.dataValues.projectId);
+        // console.log("proejct_ids 배열 찍어보기", project_ids);
+
+        let projectReuslt = [];
+        //2차 배열 형태로 각 프로젝트 정보 담기 (프로젝트 이름, 상태, 프로젝트 이미지)
+        for (let i = 0; i < project_ids.length; i++) {
+            let id = project_ids[i];
+            // console.log("id:", id);
+            const getProjectInfotResult = await Project.findOne({
+                where: { id },
+            });
+            // console.log("get프로젝트 인포", getProjectInfotResult);
+            let project_name = getProjectInfotResult.dataValues.project_name;
+            let status = getProjectInfotResult.dataValues.status;
+            let project_img = getProjectInfotResult.dataValues.project_img;
+
+            projectReuslt.push([id, project_name, status, project_img]);
+            // console.log("getProjectInfotResult 콘솔 찍어보기", projectReuslt);
+        }
+        res.json({ success: true, result: { user_name, github, blog, projectReuslt } });
+    } catch (error) {
+        res.json({ success: false, result: "프로젝트 조회 실패" });
+    }
+};
+
+//팀원 보드 조회 (사용자가 참여 중인 모든 프로젝트 멤버들의 보드)
+exports.getMyTeamBoard = async (req, res) => {};
+
 //프로젝트 정보 조회
 exports.getProjectInfo = async (req, res) => {
     const { project_id: id } = req.body;
@@ -72,7 +174,7 @@ exports.getProjectInfo = async (req, res) => {
         const getProjectInfotResult = await Project.findOne({
             where: { id },
         });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: getProjectInfotResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -349,3 +451,7 @@ async function deleteImg(projectId) {
         console.log(error);
     }
 }
+
+//내 모든 작업 조회
+
+//
