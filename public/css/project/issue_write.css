@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 body {
     background-color: #ffda31;
 }
@@ -137,4 +138,160 @@ body {
     align-items: center;
     left: 83vw;
     cursor: pointer;
+=======
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #ffda31;
+}
+
+.bg_white {
+    background-color: white;
+    border-radius: 1vw;
+    width: 96vw;
+    min-height: 60vw;
+    height: auto;
+    margin-left: 2vw;
+    margin-top: 9vw;
+    /* 9vw = 헤더 높이 + 여백(2) */
+    margin-bottom: 2vw;
+}
+
+form {
+    margin-left: 4vw;
+    margin-right: 4vw;
+    margin-top: 10vw;
+}
+
+.title_write,
+.content_write {
+    width: 86vw;
+    border: 0;
+}
+.title_write {
+    padding: 2vw 0.5vw 0.5vw 0.5vw;
+    height: 5vw;
+    font-size: 25px;
+    line-height: 5vw;
+}
+
+.title_write::placeholder {
+    color: #bfbfbf;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.content_write::placeholder {
+    color: #bfbfbf;
+    font-weight: 700;
+    font-size: 30px;
+}
+
+.top_hr1 {
+    width: 86vw;
+    height: 0.2vw;
+    background-color: gray;
+    color: gray;
+}
+
+.content_write {
+    padding: 2vw 2vw 2vw 2vw;
+    line-height: 40px;
+    font-size: 20px;
+    width: 70vw;
+    height: 40vw;
+    display: inline-block;
+}
+
+.content_write:hover,
+click {
+    opacity: 0.7;
+}
+
+.content_write:focus {
+    outline: none;
+}
+
+.title_write:focus {
+    outline: none;
+}
+
+img {
+    margin-top: 1vw;
+    width: 2vw;
+    height: 2vw;
+}
+
+img:hover,
+click {
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.code_box {
+    padding: 2vw 2vw 2vw 2vw;
+    width: 65vw;
+    margin-left: 7vw;
+    background-color: #bfbfbf;
+    outline: none;
+    border: none;
+    font-size: 15px;
+    line-height: 30px;
+    font-weight: 600;
+    border-radius: 1vw;
+    height: 1vw;
+}
+
+.write_button,
+.css {
+    width: 10vw;
+    height: 3vw;
+    font-weight: 700;
+    background-color: #ffda31;
+    font-size: 15px;
+    border: 0;
+    line-height: 3vw;
+    text-align: center;
+}
+
+.write_button {
+    border-radius: 1vw;
+}
+.css {
+    border-top-left-radius: 2vw;
+    border-bottom-left-radius: 2vw;
+}
+
+.filebox input[type='file'] {
+    opacity: 0;
+}
+
+.filebox {
+    margin-top: 5vw;
+    display: flex;
+    padding-bottom: 5vw;
+}
+
+#origin_name {
+    height: 3vw;
+    width: 76vw;
+    font-weight: 700;
+    background-color: hsl(0, 7%, 87%);
+    font-size: 15px;
+    border: 0;
+    border-top-right-radius: 2vw;
+    border-bottom-right-radius: 2vw;
+    line-height: 3vw;
+    padding-left: 2vw;
+    opacity: 0.8;
+}
+
+.right_wrap {
+    display: flex;
+    justify-content: end;
+    padding-bottom: 2vw;
+>>>>>>> 2dc8371439c5f63c973f92999bd0f4f9284f156d
 }
