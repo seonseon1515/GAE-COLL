@@ -1,4 +1,4 @@
-const { Issue, IssueComment } = require("../models");
+const { Issue, IssueComment, User } = require("../models");
 const { Op } = require("sequelize");
 const fs = require("fs");
 
@@ -16,9 +16,8 @@ exports.createProjectIssue = async (req, res) => {
             fileNames = files.map((file) => file.filename).join(", ");
             console.log("파일 이름:", fileNames);
         }
+
         const newProjectIssue = await Issue.create({ title, content, projectId, userId, issue_date, files: fileNames });
-        //파일 경로
-        // const filePath = files.map((file) => file.path);
 
         console.log("issue id:", newProjectIssue.id);
         res.json({ success: true, result: newProjectIssue.id });
@@ -32,7 +31,24 @@ exports.createProjectIssue = async (req, res) => {
 exports.searchProjectIssues = async (req, res) => {
     try {
         const { keyword } = req.query;
-        const projectIssues = await Issue.findAll({ where: { title: { [Op.like]: `%${keyword}%` } } });
+        const { type } = req.body;
+        //제목이면 type = 0, 작성자면 type = 1
+        if (type !== "0" && type !== "1") {
+            return res.json({ success: false, result: "올바른 검색 유형을 지정하세요." });
+        }
+        let projectIssues;
+        if (type === "0") {
+            projectIssues = await Issue.findAll({ where: { title: { [Op.like]: `%${keyword}%` } } });
+        }
+
+        if (type === "1") {
+            const user = await User.findOne({ where: { user_name: keyword } });
+            if (user) {
+                projectIssues = await Issue.findAll({ where: { userId: user.id } });
+            } else {
+                return res.json({ success: false, result: "존재하지 않는 회원입니다." });
+            }
+        }
         res.json({ success: true, result: projectIssues });
     } catch (error) {
         console.error("이슈 검색 오류:", error);
@@ -91,12 +107,12 @@ exports.updateProjectIssueDetail = async (req, res) => {
         console.log(files);
         let issueFiles = issue.files;
         //파일 편집할 수도 있고 안 할 수도 있고
+        //첨부한 파일이 있다면
         if (files) {
             const updatedFileNames = files.map((file) => file.filename).join(", ");
             console.log("업데이트 한 파일명", updatedFileNames);
+            //기존에 파일이 있다면 이어서 추가, 없다면 새로 추가
             issueFiles += issueFiles ? `, ${updatedFileNames}` : updatedFileNames;
-
-            // issueFiles.push(updatedFileNames);
         }
         const updateResult = await Issue.update({ title, content, files: issueFiles }, { where: { id } });
 
@@ -119,9 +135,6 @@ exports.deleteProjectIssueFile = async (req, res) => {
             return res.json({ success: false, result: "작성자만 삭제할 수 있습니다." });
         }
 
-        // DB에서 파일 가져오기 (문자열로 저장된 파일 이름들)
-        let issueFiles = issue.files.split(", ");
-
         // 실제 파일 삭제
         const filePath = "./public/uploads/issue/" + fileName;
         if (fs.existsSync(filePath)) {
@@ -131,11 +144,10 @@ exports.deleteProjectIssueFile = async (req, res) => {
             console.log("파일이 이미 삭제되었거나 존재하지 않습니다.");
         }
 
-        // 삭제할 파일의 이름을 파일 배열에서 제거
-        issueFiles = issueFiles.filter((file) => file.trim() !== fileName.trim());
-
-        // DB에 저장할 파일 배열을 다시 문자열로 변환
-        const updatedFiles = issueFiles.join(", ");
+        let updatedFiles = issue.files
+            .split(", ")
+            .filter((file) => file.trim() !== fileName.trim())
+            .join(", ");
 
         // DB 업데이트
         const updatedFilesResult = await Issue.update({ files: updatedFiles }, { where: { id } });
