@@ -11,12 +11,14 @@ exports.createProjectIssue = async (req, res) => {
 
     try {
         //각 파일들 이름 변경
-        const fileNames = files.map((file) => file.filename).join(", ");
-        console.log("파일 이름:", fileNames);
+        let fileNames = null;
+        if (files) {
+            fileNames = files.map((file) => file.filename).join(", ");
+            console.log("파일 이름:", fileNames);
+        }
+        const newProjectIssue = await Issue.create({ title, content, projectId, userId, issue_date, files: fileNames });
         //파일 경로
         // const filePath = files.map((file) => file.path);
-
-        const newProjectIssue = await Issue.create({ title, content, projectId, userId, issue_date, files: fileNames });
 
         console.log("issue id:", newProjectIssue.id);
         res.json({ success: true, result: newProjectIssue.id });
@@ -87,15 +89,16 @@ exports.updateProjectIssueDetail = async (req, res) => {
 
     try {
         console.log(files);
-        let issueFiles = issue.files.split(" ");
+        let issueFiles = issue.files;
         //파일 편집할 수도 있고 안 할 수도 있고
         if (files) {
             const updatedFileNames = files.map((file) => file.filename).join(", ");
             console.log("업데이트 한 파일명", updatedFileNames);
-            issueFiles.push(updatedFileNames);
+            issueFiles += issueFiles ? `, ${updatedFileNames}` : updatedFileNames;
+
+            // issueFiles.push(updatedFileNames);
         }
-        let updatedIssueFiles = issueFiles.join(", ");
-        const updateResult = await Issue.update({ title, content, files: updatedIssueFiles }, { where: { id } });
+        const updateResult = await Issue.update({ title, content, files: issueFiles }, { where: { id } });
 
         res.json({ success: true, result: updateResult });
     } catch (error) {
