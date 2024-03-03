@@ -70,33 +70,6 @@ exports.getMyBoard = async (req, res) => {
             attributes: ["projectId"],
             order: [["projectId", "ASC"]],
         });
-        // console.log("project_Id콘솔 찍기", project_Id[0].dataValues);
-
-        // 프로젝트 id에 매칭되는 프로젝트 이름이 있음
-        // let projectName = [];
-        // for (let i = 0; i < project_Id.length; i++) {
-        //     let id = project_Id[i].projectId;
-        //     // console.log("get프로젝트 이름 출력해보기:", getProjectName);
-        //     projectName.push([id, name]);
-        //     // console.log("프로젝트 이름 콘솔 찍어보기:", projectName);
-        // }
-
-        // console.log("projectName콘솔 찍기", projectName[0].dataValues);
-        // 각 프로젝트에서 보드 가져오기
-        // let myBoards = [];
-        // // 프로젝트 별로 보드 가져오기
-        // // 2차 배열 형태로 각 보드 정보 담기 (보드 타이틀, 상태, deadline)
-        // for (let i = 0; i < project_Id.length; i++) {
-        //     let id = project_Id[i].projectId;
-        //     // console.log("id:", id);
-        //     const getBoardResult = await Board.findByPk(id);
-        //     // console.log("get 보드 인포", getBoardResult);
-        //     let borad_title = getBoardResult.dataValues.title;
-        //     let board_staus = getBoardResult.dataValues.status;
-        //     let borad_deadline = getBoardResult.dataValues.deadline;
-        //     myBoards.push([id, borad_title, board_staus, borad_deadline]);
-        //     console.log("myBoards 콘솔 찍어보기", myBoards);
-        // }
 
         // 프로젝트 별로 보드 가져오기 (프로젝트Name과 보드 정보 합치기)
         let getMyBoard = new Map();
@@ -121,7 +94,7 @@ exports.getMyBoard = async (req, res) => {
         }
         // 배열로 반환해서 결과에 저장
         const result = Array.from(getMyBoard.values());
-        console.log("result값 출력해보기:", result);
+        // console.log("result값 출력해보기:", result);
         res.json({ success: true, result });
     } catch (error) {
         console.error("내 보드 조회 실패:", error);
@@ -167,7 +140,40 @@ exports.getMyProject = async (req, res) => {
 };
 
 //팀원 보드 조회 (사용자가 참여 중인 모든 프로젝트 멤버들의 보드)
-exports.getMyTeamBoard = async (req, res) => {};
+exports.getMyTeamBoard = async (req, res) => {
+    try {
+        const userId = req.userId;
+
+        // 현재 사용자가 참여 중인 프로젝트 조회
+        const projects = await ProjectMember.findAll({
+            where: { userId },
+            attributes: ["projectId"],
+        });
+
+        // 해당 프로젝트에 참여 중인 모든 팀원의 정보를 찾기
+        const projectMembers = await ProjectMember.findAll({
+            where: { projectId: projects.map((project) => project.projectId) },
+            include: { model: User, attributes: ["user_name"] }, // 멤버의 이름을 가져오기 위해 User 모델을 include
+        });
+
+        // 각 팀원별로 프로젝트의 보드를 조회하고 결과를 담을 배열 초기화
+        let teamBoards = [];
+
+        // 각 팀원별로 프로젝트의 보드 조회
+        for (let i = 0; i < projectMembers.length; i++) {
+            const member = projectMembers[i];
+            const boards = await Board.findAll({
+                where: { projectId: member.projectId },
+            });
+            teamBoards.push({ member, boards });
+        }
+
+        res.json({ success: true, result: teamBoards });
+    } catch (error) {
+        console.error("팀 보드 조회 실패:", error);
+        res.json({ success: false, result: "팀 보드 조회 실패" });
+    }
+};
 
 //프로젝트 정보 조회
 exports.getProjectInfo = async (req, res) => {
