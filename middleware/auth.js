@@ -6,7 +6,7 @@ exports.auth = (req, res, next) => {
 
         if (!header) {
             //header가 존재하지 않을 때(클라이언트 인증 오류)
-            return res.status(401).json({ success: false });
+            return res.status(401).json({ success: false, result: { message: "헤더가 존재하지 않습니다" } });
         }
 
         const [_, token] = header.split(" ");
