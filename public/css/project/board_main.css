@@ -1,22 +1,33 @@
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+    overflow-x: hidden;
+}
+
 .bg_color {
     background-color: #f5f5f5;
-    width: 96vw;
+    width: calc(100%-100px);
     height: 100vw;
-    margin-left: 2vw;
-    margin-left: 2vw;
-    margin-top: 11vw;
-    margin-bottom: 2vw;
+    margin-left: 50px;
+    margin-right: 50px;
+    margin-top: 160px;
+    margin-bottom: 40px;
 }
 
 .add {
     background-color: hsl(0, 3%, 81%);
     border: 0;
     border-radius: 1vw;
-    width: 12vw;
-    height: 3.5vw;
-    line-height: 3.5vw;
+    width: 170px;
+    height: 50px;
+    line-height: 50px;
     text-align: center;
-    font-size: 1.1vw;
+    font-size: 20px;
     font-weight: 700;
     margin-top: 2vw;
     margin-left: 2vw;
@@ -28,39 +39,45 @@ click {
     opacity: 0.5;
 }
 
-table,
-th,
-td {
+table {
     border: 1px solid gray;
+    width: 90vw;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-size: 20px;
+    height: 30px;
 }
 table {
     border-collapse: collapse;
 }
 
-.main_board_table {
-    width: 92vw;
-    margin-left: 2vw;
-    margin-top: 2vw;
+.main_board_table0 {
+    margin-left: 25px;
+    margin-top: 25px;
     border: 2px solid;
 }
 
 th {
-    font-size: 1vw;
+    font-size: 20px;
     color: black;
-    padding-top: 0.4vw;
-    padding-bottom: 0.4vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
     text-align: left;
-    padding-left: 1vw;
+    padding-left: 20px;
     font-weight: 700;
     border: 2px solid;
 }
 
 td {
-    font-size: 1vw;
+    font-size: 20px;
     color: black;
-    margin-top: 0.5vw;
-    margin-bottom: 0.5vw;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    line-height: 30px;
     text-align: left;
+    padding-left: 20px;
     /* padding-left: 1vw; */
     font-weight: 700;
     border: 2px solid;
@@ -68,36 +85,47 @@ td {
 
 button {
     padding-left: 1vw;
-    font-size: 1vw;
+    font-size: 20px;
     font-weight: 700;
     color: black;
     text-align: left;
+    width: fit-content;
+    height: fit-content;
 }
 
-.th1,
+tr {
+    border: 1px solid gray;
+    width: 90vw;
+    margin-left: 25px;
+    margin-right: 25px;
+    font-size: 20px;
+    height: 30px;
+}
+
+#th1,
 .td1 {
     border-left: 2px solid #f5f5f5;
-    width: 45vw;
+    width: 40%;
 }
 
-.th1 {
-    width: 47.5vw;
-}
+/* #th1 {
+    width: 400px;
+} */
 
-.th2,
+#th2,
 .td2 {
-    width: 18vw;
+    width: 20%;
 }
 
-.th3,
+#th3,
 .td3 {
-    width: 11vw;
+    width: 20%;
 }
 
-.th4,
+#th4,
 .td4 {
     border-right: 2px solid #f5f5f5;
-    width: 18vw;
+    width: 20%;
 }
 
 .toggle_open {
@@ -126,9 +154,9 @@ click {
     display: flex;
     justify-content: center;
     border-radius: 1vw;
-    width: 10vw;
-    height: 2vw;
-    line-height: 2vw;
+    width: 180px;
+    height: 50px;
+    line-height: 40px;
     align-items: center;
 }
 
@@ -185,18 +213,11 @@ click {
 }
 
 .status_txt {
-    font-size: 1vw;
+    font-size: 20px;
     font-weight: 700;
 }
 
-.working_table {
-    width: 92vw;
-    margin-left: 2vw;
-    margin-top: 2vw;
-    border: 2px solid;
-}
-
-.workboard {
+.status_wrap {
     margin-top: 5vw;
 }
 
@@ -217,24 +238,24 @@ click {
     background-color: hsl(0, 7%, 92%);
 }
 
-.work_name {
-    height: 2vw;
-    width: 45vw;
+.work_name_td {
+    width: fit-content;
+    height: fit-content;
 }
 
-.work_status {
-    height: 2vw;
-    width: 18vw;
+.work_status_td {
+    width: fit-content;
+    height: fit-content;
 }
 
-.work_deadline {
-    height: 2vw;
-    width: 11vw;
+.work_deadline_td {
+    width: fit-content;
+    height: fit-content;
 }
 
 .work_managers {
-    height: 2vw;
-    width: 18vw;
+    width: fit-content;
+    height: fit-content;
 }
 
 .placement_status:hover,
@@ -320,4 +341,10 @@ click {
 }
 .select_box .option_list::-webkit-scrollbar-thumb:hover {
     background: #303030;
+}
+
+@media screen and (max-width: 1298px) {
+    * {
+        font-size: 15px;
+    }
 }

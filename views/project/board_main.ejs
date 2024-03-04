@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>board_main</title>
         <link rel="stylesheet" href="../../public/css/project/board_main.css" />
+        <link rel="stylesheet" href="../../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
     <body>
         <%- include('../common/header.ejs') %> <%- include('./header.ejs') %>
@@ -13,13 +15,13 @@
             <button type="button" class="add">+ 작업추가</button>
 
             <div class="work_board_th">
-              <table class="main_board_table" border="1" cellspacing="0">
+              <table class="main_board_table0" border="1" cellspacing="0">
                 <thead>
                     <tr>
-                        <th class="th1">작업</th>
-                        <th class="th2">상태</th>
-                        <th class="th3">마감일</th>
-                        <th class="th4">작업담당자</th>
+                        <th id="th1" class="th1">작업</th>
+                        <th id="th2" class="th2">상태</th>
+                        <th id="th3" class="th3">마감일</th>
+                        <th id="th4" class="th4">작업담당자</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -32,9 +34,14 @@
                 <caption>
                   <div class="status_wrap">
                     <div class="toggle_open"></div>
+                    <div id="bg_blue" class="placement_status">
+                      <div id="blue" class="circle"></div>
+                      <div class="status_txt">계획중</div>
+                    </div>
                     <div class="select_box"> 
+                      
                       <!-- left_wrap -->
-                      <button type="button" class="status_modify">작업상태 변경</button>
+                      <!-- <button type="button" class="status_modify">작업상태 변경</button> -->
                       <ul class="option_list">
                           <li class="option_item">
                           <div id="bg_blue" class="placement_status">
@@ -104,11 +111,11 @@
                 <thead>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
-                    <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
-                    <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
-                    <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
+                  <tr id="tr1">
+                    <td id="td1" class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
+                    <td id="td2" class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                    <td id="td3" class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
+                    <td id="td4" class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
                   </tr>
                 </tbody>
             </div>
@@ -215,5 +222,6 @@
 
         </div>
         <script src="../../public/js/project/board_main.js"></script>
+        <!-- <%- include ('../common/footer.ejs') %> -->
     </body>
 </html>
