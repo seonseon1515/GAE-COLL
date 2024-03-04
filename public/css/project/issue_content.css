@@ -32,20 +32,20 @@ form {
     margin-right: 4vw;
     margin-top: 10vw;
 }
-.title,
-.writer {
-    padding: 2vw 0.5vw 0.5vw 0.5vw;
-    height: 50px;
-    line-height: 5vw;
-    width: 86vw;
-    border: 0;
-    font-weight: 700;
-    font-size: 30px;
-    display: flex;
+.title {
+    font-size: 20px;
 }
 .writer {
     margin-bottom: 1vw;
+    font-size: 20px;
 }
+
+.title {
+    display: flex;
+    /* justify-content: start; */
+    align-items: flex-start;
+}
+
 #title-con {
     font-weight: 700;
     font-size: 30px;
@@ -63,10 +63,22 @@ form {
     width: 50vw;
 }
 
-.img-div {
-    width: 40px;
-    height: 40px;
+.icon {
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    height: 20px;
 }
+
+.correction_icon {
+    background-image: url("/public/img/correction.png");
+}
+
+.delte_icon {
+    background-image: url("/public/img/trash-can.png");
+}
+
 #img-delete {
     margin: 0 50px;
 }
