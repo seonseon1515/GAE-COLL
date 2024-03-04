@@ -54,7 +54,7 @@ exports.createProject = async (req, res) => {
 
             result.push(addProjectMemberResult);
         }
-        res.json({ success: true, result });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: true, result: error });
     }
