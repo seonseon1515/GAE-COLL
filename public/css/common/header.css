@@ -9,42 +9,48 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 7vw;
+    height: 100px;
 }
 
 #header {
     z-index: 100;
     width: 100%;
-    font-size: 1rem;
+    font-size: 20px;
     font-weight: 500;
     position: fixed;
     top: 0vh;
-    height: 7vw;
+    height: 100px;
     background-color: #d9e9bf;
 }
 
 .header_menu1 {
-    padding-left: 2vw;
     display: flex;
     align-items: center;
+    width: 210px;
+    padding-left: 50px;
     /* line-height: 10vh; 왜 적용안됨? */
 }
 
-.header_menu3 {
-    padding-right: 2vw;
-}
 .header_menu2 {
-    padding-right: 2vw;
+    width: 210px;
+    text-align: center;
+
     /* 가운데에 오게하는 코드? */
+}
+.header_menu3 {
+    width: 210px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 50px;
 }
 
 .logo {
-    width: 4vw;
-    height: 4vw;
+    width: 50px;
+    height: 50px;
 }
 .mypage_logo {
-    width: 4vw;
-    height: 4vw;
+    width: 50px;
+    height: 50px;
 }
 .header_img {
     width: 100%;
@@ -53,5 +59,5 @@
 
 .big_txt {
     font-weight: 700;
-    font-size: 1.5rem;
+    font-size: 40px;
 }
