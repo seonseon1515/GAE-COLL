@@ -5,7 +5,7 @@ require("dotenv").config();
 const db = require("./models");
 
 const app = express();
-const PORT = 8000;
+const PORT = 8800;
 
 //http서버에 express, socketio연결
 const server = http.createServer(app);

@@ -10,43 +10,55 @@
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
     <body>
-        <%-include('../../views/common/header.ejs') %>
-        <%-include('../../views/project/header.ejs') %>
+        <%-include('../../views/common/header.ejs') %> <%-include('../../views/project/header.ejs') %>
         <main>
             <div class="bg_white">
-                <form
-                    name="issue_write_form"
-                    enctype="multipart/form-data"
-                >
-                    <div class="form_top">
+                <form name="issue_write_form" enctype="multipart/form-data">
+                    <div class="form_top" onmouseleave="hideDeleteIcon()">
                         <h1>프로젝트 이슈</h1>
                         <div id="title-con">
-                            <div id="img-corretion" class="icon correction_icon"></div>
-                            <div id="img-corretion" class="icon delte_icon"></div>
+                            <div id="img-corretion" class="icon delte_icon" onclick="deleteIssueFunc()"></div>
                         </div>
                     </div>
                     <!--제목 출력 위치-->
-                    <h2 class="title_box">오늘 새로운 사실을 발견했습니다.</h2>
+                    <div class="title_boxes">
+                        <div contenteditable id="title_box" class="title_box">오늘 새로운 사실을 발견했습니다.</div>
+                        <div id="img-corretion" class="icon correction_icon" onclick="editContentFunc()"></div>
+                    </div>
+
                     <div class="writer_date">
                         <!--  `작성자: ${홍길동}`  -->
                         <div class="writer_box">조아영</div>
                         <!-- `작성일: ${2024-02-03}` -->
                         <div class="date_box">2024-02-03</div>
                     </div>
-                    
-                    <hr>
+
+                    <hr />
                     <!--글 출력 위치-->
                     <div class="content_box">
+                        <div class="content_icon">
+                            <div class="icon coding_icon" onclick="codeBlockFunc()"></div>
+                            <div id="img-corrcetion" class="icon correction_icon" onclick="editContentFunc()"></div>
+                        </div>
                         <!-- `${<p></p>}` -->
-                        <p>본문입니다. 오늘의 이슈글 블라블라 <code>쉬고싶다Func()   divFile.classList.add('file');
-                            let p = document.createElement('p');
-
-                            for 반복문 돌려서 파일 하나씩 추가
-                            p.innerHTML = '파일명'
-                            divFile.appendChild('p')</code></p>
+                        <div class="content_box_inner" contenteditable>
+                            본문입니다. 오늘의 이슈글 블라블라
+                            <code
+                                >쉬고싶다Func() divFile.classList.add('file'); let p = document.createElement('p'); for
+                                반복문 돌려서 파일 하나씩 추가 p.innerHTML = '파일명' divFile.appendChild('p')</code
+                            >
+                            ""
+                        </div>
                     </div>
 
+                    <!--수정 아이콘을 누르면 파일 수정/추가-->
+                    <!-- <form onsubmit="upload(event)">
+                        <input type="file" id="files" multiple /><br />
+                        <button class="button_yellow_black" button="submit">업로드</button>
+                    </form> -->
+
                     <!--파일 출력 위치-->
+                    <!-- <div id="img-corretion" class="icon delte_icon" onclick="deleteCommentFunc()"></div> -->
                     <div class="file_box">
                         <!-- let divFile = document.createElement('div');
                              divFile.classList.add('file');
@@ -56,15 +68,15 @@
                              p.innerHTML = '파일명'
                              divFile.appendChild('p')
                          -->
-                        <div class="file"><p>1234567891011.png</p></div>
-                        <div class="file"><p>첨부 파일.doc</p></div>
+                        <div id="file1" class="file"><p>1234567891011.png</p></div>
+                        <div id="file2" class="file"><p>첨부 파일.doc</p></div>
                     </div>
-                    <hr>
+                    <hr />
 
-                    <!--댓글-->
+                    <!--댓글 출력, 수정, 삭제하는 곳-->
                     <div class="comment_box">
                         <ul class="comments">
-                                <!-- 
+                            <!-- 
                                     for 반복문 + 
                                     let li = document.createElement('li');
                                         li.innerHTML = `<div class="user_image" style="background-image: url('이미지경로.jpg');"></div>
@@ -72,20 +84,25 @@
 
                                         ul.appendChild(li)
                                 -->
-                                <li>
-                                    <div class=user_Image style="background-image: url(/public/img/user-solid.svg);"></div><p>이름 :</p> <p>댓글입니다 댓글 댓글</p>
-                                </li>
-                                <li>
-                                    <div class=user_Image style="background-image: url(/public/img/user-solid.svg);"></div><p>이름 :</p> <p>댓글입니다 댓글 댓글</p>
-                                </li>
+                            <li>
+                                <div class="user_Image" style="background-image: url(/public/img/user-solid.svg)"></div>
+                                <p>이름 :</p>
+                                <div contenteditable id="comment" class="comment">댓글입니다 댓글 댓글</div>
+
+                                <div id="img-corretion" class="icon correction_icon" onclick="editCommentFunc()"></div>
+                                <div id="img-corretion" class="icon delte_icon" onclick="deleteCommentFunc()"></div>
+                            </li>
                         </ul>
                     </div>
-                    <hr>
-                    <div class="writeComment_box"></div>
-                    <img src="../../public/img/coding_box.png" class="comment-code-img">  </br>
-                    <section id="comment-write-cont">
-                        <input type="text" placeholder="댓글을 입력해주세요" id="comment-write"><button type="submit" id="comment-write-submit" >작성</button>
-                    </section>
+                    <hr />
+
+                    <!--댓글 입력 하는 곳-->
+                    <div class="writeComment_box">
+                        <!-- <div class="icon coding_icon"></div> -->
+
+                        <div contenteditable placeholder="댓글을 입력해주세요" id="comment_write"></div>
+                        <button onclick="addCommentFunc()" class="button_yellow_black">작성</button>
+                    </div>
                 </form>
             </div>
         </main>
