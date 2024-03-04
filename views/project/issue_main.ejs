@@ -5,13 +5,16 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="../../public/css/project/issue_main.css" />
+        <link rel="stylesheet" href="../public/css/main.css" />
+        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
     <body>
         <%-include('../../views/common/header.ejs') %> <%-include('header.ejs')%>
         <main>
             <form id="issue-contain">
                 <div id="issue-search-contain">
-                    <select name="values" id="vules" class="">
+                    <select name="values" id="vules" class="search-values">
                         <option class="value" value="1">제목</option>
                         <option class="value" value="2">작성자</option>
                     </select>
@@ -19,22 +22,28 @@
                     <button type="submit" id="search">검색</button>
                 </div>
                 <div id="issue-contain-main">
-                    <div id="issue-contain-title">
-                        <div id="issue-number">No</div>
-                        <div id="issue-title">제목</div>
-                        <div class="issue">작성자</div>
-                        <div class="issue">작성시간</div>
-                    </div>
+                    <table>
+                        <thead>
+                            <tr id="issue-contain-title">
+                                <th id="issue-number">No</th>
+                                <th id="issue-title">제목</th>
+                                <th class="issue">작성자</th>
+                                <th class="issue">작성시간</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="issue-con">
+                                <td id="issue-number">10</td>
+                                <td id="issue-title">제목</td>
+                                <td class="issue">작성자</td>
+                                <td class="issue">작성시간</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div>
-                    <div id="issue">
-                        <div id="issue-number">10</div>
-                        <div id="issue-title">제목</div>
-                        <div class="issue">작성자</div>
-                        <div class="issue">작성시간</div>
-                    </div>
+                <div id="write">
+                    <a href="../../../project/issue_write" class="issue-write-a">글쓰기</a>
                 </div>
-                <a href="../../../project/issue_write"> <div id="write">글쓰기</div></a>
                 <div id="page-number">
                     <div class="page-img-div"><img class="page-img" src="../../public/img/first-page.png" /></div>
                     <div class="page-img-div"><img class="page-img" src="../../public/img/left-page.png" /></div>

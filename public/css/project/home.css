@@ -6,32 +6,30 @@ body {
 
 /*전체 큰 틀*/
 #contain-home {
-    width: 96vw;
-    font-size: 1rem;
-    font-weight: 400;
+    width: auto;
     position: relative;
     top: 200px;
     padding-top: 10px;
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
     height: auto;
-    background-color: rgb(58, 55, 55);
-    border-radius: 1vw;
-    margin-left: 2vw;
+    background-color: gray;
+    border-radius: 20px;
+    margin: 0 50px;
 }
 /*project overview*/
 #overview-contain {
-    margin: 30px 0 2vw 1vw;
+    margin: 20px;
     background-color: white;
-    border-radius: 1vw;
-    width: 94vw;
-    height: auto;
+    border-radius: 20px;
 }
 #overview-header {
-    padding: 1vw 0 1vw 2vw;
+    padding: 10px 0 0 15px;
+    font-size: 25px;
 }
 #pen-img-div {
-    width: 2vw;
-    height: 2vw;
+    width: 20px;
+    height: 20px;
+    padding-left: 10px;
 }
 #pen-img {
     width: 100%;
@@ -39,56 +37,46 @@ body {
 }
 #overview-main {
     display: flex;
-    align-items: flex-end;
-    padding-bottom: 2vw;
+    align-items: baseline;
+    padding: 10px 0 10px 30px;
+    font-size: 20px;
 }
 
 /*member*/
 #member-contain {
-    margin: 2vw 0 2vw 1vw;
+    margin: 20px;
     background-color: white;
-    border-radius: 1vw;
-    width: 94vw;
-    height: auto;
+    border-radius: 20px;
 }
 #member-header {
-    padding-left: 2vw;
-    padding-top: 1vw;
+    padding: 10px 0 0 15px;
+    font-size: 25px;
 }
 #pen-img-div {
-    width: 2vw;
-    height: 2vw;
+    width: 20px;
+    height: 20px;
+    padding-left: 10px;
 }
 #pen-img {
     width: 100%;
     height: 100%;
 }
-#member-main {
-    display: flex;
-    align-items: flex-end;
-    padding-bottom: 1vw;
-}
+
 /*프로젝트 규칙, 이슈 노트, 기획, ERD구조, API 명세 큰 틀*/
 #project-big-contain {
     display: flex;
 }
 
-#rule-issue {
-    width: 65vw;
-    height: auto;
-}
 /*프로젝트 규칙 시작*/
 #project-rule-contain,
 #project-issue-contain {
-    margin: 2vw 0 0 1vw;
+    margin: 20px 0 0 20px;
     background-color: white;
-    border-radius: 1vw;
-    height: auto;
-    margin-bottom: 2vw;
+    border-radius: 20px;
 }
 .project-img-div {
-    width: 2vw;
-    height: 2vw;
+    width: 20px;
+    height: 20px;
 }
 .project-img {
     width: 100%;
@@ -96,38 +84,45 @@ body {
 }
 #rule-contain {
     display: flex;
-    padding: 1vw 0 2vw 2vw;
-    align-items: center;
-    font-size: xx-large;
-    font-weight: bold;
+    padding: 10px 0 10px 10px;
+    font-size: 25px;
 }
 #project-rule {
-    padding: 0 1vw;
+    padding: 0 10px;
 }
 .li {
+    display: flex;
     position: relative;
-    padding: 1vw 0;
-    font-size: 1.5vw;
+    padding-bottom: 15px;
+    font-size: 20px;
     word-break: break-word; /* 텍스트가 너비를 초과할 경우 다음 줄로 내려감 */
-    max-width: 50vw;
 }
 #rule-li {
-    padding: 1vw 0 2vw 5vw;
-}
-.rule-icon {
-    display: none;
-    position: absolute;
-    top: 0;
-    right: 5vw; /* 아이콘을 텍스트 옆에 위치시키기 위한 값 */
+    padding: 20px 0 0 35px;
 }
 
-li:hover .rule-icon {
-    display: block;
+.rule-icon {
+    display: none;
+    position: relative;
+    width: 20px;
+    height: 20px;
 }
+ul {
+    list-style-type: disc;
+}
+
+.li:before {
+    content: '• ';
+    padding-right: 10px;
+}
+
 .rule-img {
     width: 3vw;
     height: 3vw;
     padding-right: 2vw;
+}
+.text-element:hover + .rule-icon {
+    display: flex; /* 텍스트에 마우스를 올리면 이미지 표시 */
 }
 /*파일 업로드 부분 큰 틀*/
 #file-upload-contain {
@@ -240,10 +235,8 @@ li:hover .rule-icon {
 #feedback,
 #issue-header {
     display: flex;
-    padding: 2vw;
-    align-items: center;
-    font-size: xx-large;
-    font-weight: bold;
+    padding: 10px 0 10px 10px;
+    font-size: 25px;
 }
 .team-work-list {
     padding: 1vw 0 1vw 3vw;

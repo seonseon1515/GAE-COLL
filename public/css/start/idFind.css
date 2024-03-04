@@ -1,6 +1,12 @@
 * {
     background-color: #ffda31;
+    padding: 0;
+    margin: 0;
 }
+body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
 #contain {
     display: flex;
     flex-direction: column;
@@ -13,10 +19,8 @@
 }
 #header {
     display: flex;
-    width: 50vw;
     justify-content: center;
-    align-items: baseline;
-    flex-wrap: wrap;
+    align-items: center;
 }
 #header-text {
     margin: 0;
@@ -28,56 +32,62 @@
 }
 
 #start-dog {
-    width: 8vw;
-    height: 8vw;
+    width: 100px;
+    height: 100px;
 }
-
+.start-img {
+    display: flex;
+    text-decoration: none;
+    color: black;
+    align-items: flex-end;
+}
 /*아이디 찾기 시작*/
 
-#find-name {
-    padding-top: 5vw;
+#find-user {
+    padding-top: 55px;
 }
 .text-aria {
     display: flex;
-    justify-content: center;
-    width: 25vw;
-    height: 3vw;
+    width: 330px;
+    height: 40px;
     background-color: white;
     border-radius: 40px;
-    margin-right: 2vw;
+    text-align: center;
 }
 .input {
-    width: 20vw;
+    width: 100%;
     background-color: white;
     border: none;
+    border-radius: 40px;
+    text-align: center;
+    height: 100%;
+}
+.ans {
+    background-color: white;
 }
 #contain-under {
-    width: 40vw;
     display: flex;
-    justify-content: space-between;
-    height: 10vw;
+    height: 150px;
     align-items: center;
 }
 .find-login {
-    width: 15vw;
+    width: 250px;
+    height: 40px;
     background-color: black;
     color: white;
     border-radius: 40px;
-    height: 3vw;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 15px;
+    margin-right: 20px;
+    cursor: pointer;
 }
 .exit {
-    width: 15vw;
-    background-color: black;
-    color: white;
     border-radius: 40px;
-    height: 3vw;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-left: 1vw;
 }
 #under-contain {
     display: flex;
