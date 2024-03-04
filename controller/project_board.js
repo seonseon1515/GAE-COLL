@@ -21,14 +21,10 @@ exports.getBoardAll = async (req, res) => {
 
 //보드작성
 exports.boardWrite = async (req, res) => {
-    my_id = req.userId;
-    console.log(my_id);
-    try {
-        const { project_id: projectId, title, description, user_id: userId, status, deadline } = req.body;
-        let is_mine = false;
+    userId = req.userId;
 
-        //userId.include(my_id) ? (is_mine = true) : (is_mine = false);
-        userId == my_id ? (is_mine = true) : (is_mine = false);
+    try {
+        const { project_id: projectId, title, description, status, deadline } = req.body;
 
         const boardWriteResult = await Board.create({
             projectId: Number(projectId),
@@ -37,7 +33,6 @@ exports.boardWrite = async (req, res) => {
             userId: Number(userId),
             status,
             deadline,
-            is_mine,
         });
         res.json({ success: true, result: "" });
     } catch (error) {
@@ -47,12 +42,20 @@ exports.boardWrite = async (req, res) => {
 //보드 1개조회
 exports.getBoardDetail = async (req, res) => {
     try {
+        userId = req.userId;
+
         const { board_id: id } = req.query;
+
         const getBoardDatail = await Board.findOne({
             order: [["id", "DESC"]],
             where: { id: Number(id) },
         });
-        res.json({ success: true, result: getBoardDatail });
+
+        let is_mine = false;
+
+        getBoardDatail.userId == userId ? (is_mine = true) : (is_mine = false);
+
+        res.json({ success: true, result: { data: getBoardDatail, is_mine } });
     } catch (error) {
         console.log(error);
         res.json({ success: false, result: error });
@@ -75,13 +78,9 @@ exports.getBoardMonth = async (req, res) => {
 };
 //보드 수정
 exports.updateBoard = async (req, res) => {
-    my_id = req.userId;
+    userId = req.userId;
     try {
-        const { title, description, user_id: userId, status, deadline, board_id: id } = req.body;
-        let is_mine = false;
-
-        //userId.include(my_id) ? (is_mine = true) : (is_mine = false);
-        userId == my_id ? (is_mine = true) : (is_mine = false);
+        const { title, description, status, deadline, board_id: id } = req.body;
 
         const boardWriteResult = await Board.update(
             {
@@ -90,7 +89,6 @@ exports.updateBoard = async (req, res) => {
                 userId: Number(userId),
                 status,
                 deadline,
-                is_mine,
             },
             {
                 where: {
@@ -108,7 +106,6 @@ exports.updateBoard = async (req, res) => {
 //보드 삭제
 exports.deleteBoard = async (req, res) => {
     try {
-        my_id = req.userId;
         const { board_id: id } = req.body;
         const deleteBoardResult = await Board.destroy({
             where: {
@@ -138,12 +135,12 @@ exports.getComment = async (req, res) => {
 //댓글 작성
 exports.writeCommnet = async (req, res) => {
     try {
-        my_id = req.userId;
-        console.log("myId", my_id);
+        userId = req.userId;
+
         const { comment, board_id: boardId } = req.body;
         const createCommentResult = await BoardComment.create({
             boardId: Number(boardId),
-            userId: Number(my_id),
+            userId: Number(userId),
             comment,
         });
         res.json({ success: true, result: "" });
@@ -155,7 +152,6 @@ exports.writeCommnet = async (req, res) => {
 //댓글 삭제
 exports.deleteComment = async (req, res) => {
     try {
-        my_id = req.userId;
         const { comment_id: id } = req.body;
         const deleteCommentResult = await BoardComment.destroy({
             where: {
