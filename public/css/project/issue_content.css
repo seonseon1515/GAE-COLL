@@ -4,20 +4,27 @@
     padding: 0;
 }
 body {
-    background-color: #ffda31;
+    /* background-color: #ffda31; */
+    font-family: "IBM Plex Sans KR", sans-serif;
 }
+
+/* .issueForm_bg {
+    background-color: #ffda31;
+    width: 100%;
+    height: 100px;
+} */
 
 .bg_white {
     background-color: white;
-    border-radius: 1vw;
-    width: 96vw;
-    min-height: 60vw;
-    height: auto;
-    margin-left: 2vw;
-    margin-top: 9vw;
-    /* 9vw = 헤더 높이 + 여백(2) */
-    margin-bottom: 2vw;
-    padding-bottom: 2vw;
+    /* border-radius: 10px; */
+    /* margin: 0 auto; */
+    border-radius: 24px;
+    width: auto;
+    height: 929px;
+    position: relative;
+    top: 170px;
+    padding: 25px;
+    margin: 0 50px;
 }
 
 .top_hr1 {
@@ -28,47 +35,148 @@ body {
 }
 
 form {
-    margin-left: 4vw;
-    margin-right: 4vw;
-    margin-top: 10vw;
+    padding: 25px 25px 40px 25px;
+    /* position: absolute; */
+    /* margin: 0; */
+    width: auto;
 }
-.title {
+h1 {
+    font-size: 25px;
+    font-weight: bold;
+    left: 0;
+}
+
+hr {
+    margin: 20px 0;
+}
+
+code {
+    display: inline-block;
+    background-color: #525252;
+    border-radius: 5px;
+    color: white;
+    width: auto;
+    padding: 20px 40px;
+    height: auto;
+    font-size: 18px;
+    line-height: 30px;
+}
+
+li {
+    list-style: none;
+    display: flex;
     font-size: 20px;
+    margin-bottom: 30px;
 }
-.writer {
-    margin-bottom: 1vw;
+li:last-child {
+    margin-bottom: 0;
+}
+
+.title_box {
+    font-size: 22.5px;
+    font-weight: bold;
+    margin: 22px 0;
+}
+
+.writer_date {
+    display: flex;
+}
+.writer_box {
+    font-size: 18px;
+    margin-right: 20px;
+    background-color: #ffda31;
+    border-radius: 10px;
+    width: 80px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.date_box {
+    font-size: 18px;
+    background-color: #d9e9bf;
+    border-radius: 10px;
+    width: 120px;
+    height: 30px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.content_box {
+    margin: 30px 0;
+    font-size: 20px;
+    line-height: 60px;
+}
+
+.file_box {
+    display: flex;
     font-size: 20px;
 }
 
-.title {
-    display: flex;
-    /* justify-content: start; */
-    align-items: flex-start;
+.file > p {
+    height: 50px;
+    width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    border-radius: 10px;
+    background-color: rgb(243, 244, 246);
+    margin-right: 30px;
+    text-align: center;
+    line-height: 40px;
+}
+
+.comment_box {
+    padding: 5px;
+}
+.comments > li > p {
+    padding-right: 26px;
+}
+
+.user_Image {
+    /* background-image: url("/public/img/user-solid.svg"); */
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 20px;
+    height: 20px;
+    /* margin: 0 20px 0 20px; */
+    margin: 0px 20px;
 }
 
 #title-con {
-    font-weight: 700;
-    font-size: 30px;
-    height: auto;
-    width: 60vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-#date {
+/* #date {
     font-weight: 700;
     font-size: 30px;
     color: #bfbfbf;
-}
+} */
 #writer-con {
     font-weight: 700;
     font-size: 30px;
     width: 50vw;
 }
 
+/* .form_top {
+    display: flex;
+    justify-content: space-between;
+} */
+
 .icon {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
+    opacity: 50%;
+    transition: all 0.3s;
+}
+
+.icon:hover {
+    opacity: 100%;
 }
 
 .correction_icon {
@@ -77,18 +185,17 @@ form {
 
 .delte_icon {
     background-image: url("/public/img/trash-can.png");
+    margin-left: 11px;
 }
 
-#img-delete {
-    margin: 0 50px;
+.coding_icon {
+    background-image: url("/public/img/coding_box.png");
 }
-.img {
-    width: 100%;
-    height: 100%;
-}
+
 #main-text {
     height: auto;
-    width: 96vw;
+    /*본문 가로 사이즈 조정하기*/
+    width: 100px;
     padding-bottom: 3vw;
 }
 #text-div {

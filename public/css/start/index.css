@@ -5,6 +5,15 @@
     padding: 0;
 }
 
+body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+#a-start {
+    display: flex;
+    text-decoration: none;
+    color: black;
+}
+
 #contain {
     display: flex;
     flex-direction: column;
@@ -13,6 +22,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    width: 100%;
 }
 #header {
     display: flex;
@@ -27,8 +37,8 @@
     font-size: 70px;
 }
 #start-dog {
-    width: 8vw;
-    height: 8vw;
+    width: 100px;
+    height: 100px;
 }
 
 /*아이콘 시작*/

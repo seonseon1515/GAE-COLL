@@ -1,7 +1,10 @@
-* {
+body {
     background-color: #ffda31;
+    font-family: 'IBM Plex Sans KR', sans-serif;
 }
+
 #contain {
+    border-radius: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -9,13 +12,13 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 100%;
+    background-color: #f5f5f5;
+    padding: 30px;
 }
 #header {
     display: flex;
-    width: 50vw;
-    justify-content: center;
-    align-items: baseline;
+    align-items: center;
+    padding-right: 100px;
 }
 #header-text {
     margin: 0;
@@ -27,24 +30,29 @@
 }
 
 #start-dog {
-    width: 8vw;
-    height: 8vw;
+    width: 100px;
+    height: 100px;
+    display: flex;
+}
+.signup-a {
+    text-decoration: none;
+    color: black;
 }
 
 /* input 시작*/
 .main-text {
-    padding: 3vw 0 0 5vw;
+    padding: 50px 0 0 50px;
 }
 
 .text-aria {
     display: flex;
-    width: 25vw;
-    height: 3vw;
+    width: 330px;
+    height: 40px;
     background-color: white;
     border-radius: 40px;
-    margin-right: 2vw;
+    margin-right: 20px;
 }
-.password-div {
+.email-div {
     display: flex;
     align-items: flex-end;
 }
@@ -57,17 +65,32 @@
 }
 .button {
     background-color: white;
-    height: 2vw;
+    height: 40px;
     border-radius: 40px;
+    width: 120px;
+    cursor: pointer;
+}
+.ans-button {
+    width: 50px;
+    background-color: white;
+    height: 40px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+#ans {
+    background-color: white;
+    text-align: center;
 }
 .ans {
     background-color: white;
+    cursor: pointer;
 }
 #signup-submit {
     background-color: black;
     color: white;
-    width: 20vw;
+    width: 200px;
+    margin-left: calc(130px / 2);
     border-radius: 40px;
-    height: 3vw;
-    margin-left: 2vw;
+    height: 40px;
+    cursor: pointer;
 }

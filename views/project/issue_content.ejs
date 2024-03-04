@@ -5,51 +5,83 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="../../public/css/project/issue_content.css" />
+        <link rel="stylesheet" href="../public/css/main.css" />
+        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
     <body>
         <%-include('../../views/common/header.ejs') %>
+        <%-include('../../views/project/header.ejs') %>
         <main>
             <div class="bg_white">
                 <form
-                    action="/api/project-issue/write"
                     name="issue_write_form"
-                    method="post"
                     enctype="multipart/form-data"
                 >
-                    <div class="title">
-                        <span>제목 :</span>
-                        <div id="title-con"></div>
-                        <div id="img-corretion" class="icon correction_icon"></div>
-                        <div id="img-corretion" class="icon delte_icon"></div>
-                    </div>
-                    <div class="writer">
-                        작성자 :
-                        <span id="writer-con"></span>
-                        <div id="date">작성 일시 :</div>
-                    </div>
-                    <hr class="top_hr1" />
-                    <div id="main-text">
-                        <div id="code-div">코드</div>
-                        <p> 
-                            <code>push()</code>
-                        </p>
-                        <div id="text-div">텍스트</div>
-                    </div>
-                    <nav id="save-file-contain">
-                        <div class="save-file">첨부 파일</div>
-                        <div class="save-file">첨부 파일</div>
-                    </nav>
-                    <hr class="top_hr1" />
-                    <nav id="comment-nav">
-                        <div class="comment-cont">
-                            <div class="comment-profile"><img src="" /></div>
-                            <div class="comment-text"></div>
-                            <div class="comment-img-div">
-                                <img src="../../public/img/trash-can.png" class="comment-img" />
-                            </div>
+                    <div class="form_top">
+                        <h1>프로젝트 이슈</h1>
+                        <div id="title-con">
+                            <div id="img-corretion" class="icon correction_icon"></div>
+                            <div id="img-corretion" class="icon delte_icon"></div>
                         </div>
-                    </nav>
-                    <hr class="top_hr1" />
+                    </div>
+                    <!--제목 출력 위치-->
+                    <h2 class="title_box">오늘 새로운 사실을 발견했습니다.</h2>
+                    <div class="writer_date">
+                        <!--  `작성자: ${홍길동}`  -->
+                        <div class="writer_box">조아영</div>
+                        <!-- `작성일: ${2024-02-03}` -->
+                        <div class="date_box">2024-02-03</div>
+                    </div>
+                    
+                    <hr>
+                    <!--글 출력 위치-->
+                    <div class="content_box">
+                        <!-- `${<p></p>}` -->
+                        <p>본문입니다. 오늘의 이슈글 블라블라 <code>쉬고싶다Func()   divFile.classList.add('file');
+                            let p = document.createElement('p');
+
+                            for 반복문 돌려서 파일 하나씩 추가
+                            p.innerHTML = '파일명'
+                            divFile.appendChild('p')</code></p>
+                    </div>
+
+                    <!--파일 출력 위치-->
+                    <div class="file_box">
+                        <!-- let divFile = document.createElement('div');
+                             divFile.classList.add('file');
+                             let p = document.createElement('p');
+
+                             for 반복문 돌려서 파일 하나씩 추가
+                             p.innerHTML = '파일명'
+                             divFile.appendChild('p')
+                         -->
+                        <div class="file"><p>1234567891011.png</p></div>
+                        <div class="file"><p>첨부 파일.doc</p></div>
+                    </div>
+                    <hr>
+
+                    <!--댓글-->
+                    <div class="comment_box">
+                        <ul class="comments">
+                                <!-- 
+                                    for 반복문 + 
+                                    let li = document.createElement('li');
+                                        li.innerHTML = `<div class="user_image" style="background-image: url('이미지경로.jpg');"></div>
+                                        <p>${user_name}</p> : <p>${comment}</p>`
+
+                                        ul.appendChild(li)
+                                -->
+                                <li>
+                                    <div class=user_Image style="background-image: url(/public/img/user-solid.svg);"></div><p>이름 :</p> <p>댓글입니다 댓글 댓글</p>
+                                </li>
+                                <li>
+                                    <div class=user_Image style="background-image: url(/public/img/user-solid.svg);"></div><p>이름 :</p> <p>댓글입니다 댓글 댓글</p>
+                                </li>
+                        </ul>
+                    </div>
+                    <hr>
+                    <div class="writeComment_box"></div>
                     <img src="../../public/img/coding_box.png" class="comment-code-img">  </br>
                     <section id="comment-write-cont">
                         <input type="text" placeholder="댓글을 입력해주세요" id="comment-write"><button type="submit" id="comment-write-submit" >작성</button>
