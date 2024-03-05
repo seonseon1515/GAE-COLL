@@ -22,9 +22,9 @@
                 isSignup: true,
             },
         });
-        console.log(findUser);
+
         //해당하는 email이 없으면 회원가입
-        if (!findUser.success) {
+        if (!findUser.data.success) {
             const signupKakaoResult = await axios({
                 method: "POST",
                 url: "/api/user/signup",
