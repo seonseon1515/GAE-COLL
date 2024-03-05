@@ -184,12 +184,27 @@ exports.updateUserImage = async (req, res) => {
 //아이디 찾기
 exports.findID = async (req, res) => {
     //질문에 대한 답하기
+    const { user_name, selected_question, answer } = req.body;
+    try {
+        const findIDresult = await User.findOne({
+            where: { user_name, selected_question: Number(selected_question), answer },
+        });
+        console.log("findIDresult", findIDresult);
+        if (findIDresult) {
+            res.json({ success: true, result: findIDresult.email });
+        } else {
+            res.json({ success: false, result: { message: "해당정보를 가진 유저가 없습니다." } });
+        }
+    } catch (error) {
+        console.log("아이디 찾기 오류", error);
+        res.json({ success: false, result: error });
+    }
 };
 //비밀번호 찾기
 exports.findPW = async (req, res) => {
     //유저 이메일 인증받기
 };
-//탈퇴
+//회원탈퇴
 exports.userDrop = async (req, res) => {
     const userId = req.userId;
     console.log(userId);
