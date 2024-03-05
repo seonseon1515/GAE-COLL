@@ -8,8 +8,6 @@ const { smtpTransport } = require("../config/email");
 exports.signup = async (req, res) => {
     const { email, type, user_name, password: pw, profile_img, thumb_img, selected_question, answer } = req.body;
 
-    // 중복 검증 로직 추가하기
-
     try {
         if (type === "email") {
             //패스워드 암호화
@@ -20,6 +18,8 @@ exports.signup = async (req, res) => {
                 password,
                 type,
                 user_name,
+                selected_question,
+                answer,
             });
             console.log(result);
             res.json(result);
@@ -34,7 +34,7 @@ exports.signup = async (req, res) => {
             res.json({ success: true, result, token });
         }
     } catch (error) {
-        res.json(error);
+        res.json({ success: false, result: error });
     }
 };
 //이메일 인증
@@ -69,7 +69,7 @@ exports.emailAuth = async (req, res) => {
 };
 
 //이메일 로그인
-exports.loginEmail = async (req, res) => {
+출처: https: exports.loginEmail = async (req, res) => {
     const { email, password: pw } = req.body;
 
     try {
@@ -86,7 +86,7 @@ exports.loginEmail = async (req, res) => {
             res.json({ success: false, message: error });
         }
     } catch (error) {
-        res.json(error);
+        res.json({ success: false, result: error });
     }
 };
 
@@ -97,7 +97,7 @@ exports.findUser = async (req, res) => {
         const findUserResult = await User.findOne({
             where: { email },
         });
-        console.log(findUserResult);
+
         if (findUserResult) {
             if (isSignup) {
                 const token = jwt.sign({ id: findUserResult.id }, process.env.DEVEL_SECRET, { expiresIn: "1h" });
@@ -106,10 +106,11 @@ exports.findUser = async (req, res) => {
                 res.json({ success: true, findUserResult });
             }
         } else {
-            res.json({ findUserResult });
+            res.json({ success: false });
         }
     } catch (error) {
-        res.json(error);
+        console.log(error);
+        res.json({ success: false, result: error });
     }
 };
 
@@ -119,9 +120,9 @@ exports.getUserInfo = async (req, res) => {
     console.log("유저프로필 조회", userId);
     try {
         const getUserInfoRes = await User.findOne({ where: { id: Number(userId) } });
-        res.json({ getUserInfoRes });
+        res.json({ success: true, result: getUserInfoRes });
     } catch (error) {
-        res.json(error);
+        res.json({ success: false, result: error });
     }
 };
 

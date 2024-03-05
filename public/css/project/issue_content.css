@@ -8,12 +8,6 @@ body {
     font-family: "IBM Plex Sans KR", sans-serif;
 }
 
-/* .issueForm_bg {
-    background-color: #ffda31;
-    width: 100%;
-    height: 100px;
-} */
-
 [placeholder]:empty:before {
     display: block;
     content: attr(placeholder);
