@@ -80,6 +80,10 @@ const kakaoOpt = {
     clientSecret: process.env.KAKAO_CLIENT_SECRET,
     redirectUri: process.env.KAKAO_REDIRECT_URI,
 };
+const googleOpt = {
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    redirectUri: process.env.GOOGLE_REDIRECT_URI,
+};
 //카카오 로그인
 exports.getKakaoAuth = async (req, res) => {
     const kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.redirectUri}&response_type=code`;
@@ -108,4 +112,9 @@ exports.getKakaoAuthCallback = async (req, res) => {
         console.log("에러1");
         res.send("에러1");
     }
+};
+
+exports.getGoogleAuth = (req, res) => {
+    const googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?scope=email profile&response_type=token&state=state_parameter_passthrough_value&redirect_uri=${googleOpt.redirectUri}&client_id=${googleOpt.clientId}`;
+    res.redirect(googleLoginURL);
 };

@@ -25,5 +25,6 @@ router.get("/project/issue_content", controller.issue_content);
 
 router.get("/auth/kakao", controller.getKakaoAuth);
 router.get("/auth/kakao/callback", controller.getKakaoAuthCallback);
+router.get("/auth/google", controller.getGoogleAuth);
 
 module.exports = router;

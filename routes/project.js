@@ -6,11 +6,11 @@ const { auth } = require("../middleware/auth");
 
 //프로젝트 생성
 router.post("/create", auth, uploadProjectImg, controller.createProject);
-//내 보드 조회 (사용자가 참여 중인 프로젝트에 있는 자신의 보드)
+//내 작업(보드) 조회 (사용자가 참여 중인 프로젝트에 있는 자신의 보드)
 router.post("/board/mine", auth, controller.getMyBoard);
 //사용자가 참여 중인 모든 프로젝트 조회
 router.post("/mine", auth, controller.getMyProject);
-//팀원 보드 조회 (사용자가 참여 중인 모든 프로젝트 멤버들의 보드)
+//팀원 활동(보드) 조회 (사용자가 참여 중인 모든 프로젝트 멤버들의 보드)
 router.post("/teamboard", auth, controller.getMyTeamBoard);
 //프로젝트 정보 조회
 router.post("/get/info", auth, controller.getProjectInfo);
