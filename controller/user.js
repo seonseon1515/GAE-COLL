@@ -2,6 +2,7 @@ const { User } = require("../models");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const { smtpTransport } = require("../config/email");
+var fs = require("fs");
 
 //회원가입
 //이메일, 카카오, 구글은 type으로 구분
@@ -77,6 +78,7 @@ exports.emailAuth = async (req, res) => {
             where: { email },
         });
         const password = await bcrypt.compare(pw, loginResult.password);
+
         //비밀번호 일치시
         if (password) {
             //jwt토큰 발행
@@ -165,19 +167,28 @@ exports.updatePassword = async (req, res) => {
     }
 };
 
-// 유저 이미지 파일 이름만 수정
+// 유저 이미지 파일 수정
 exports.updateUserImage = async (req, res) => {
-    const userId = req.userId;
-    const { user_img } = req.body;
+    const id = req.userId;
+    console.log(id, req.file);
+
+    const file = req.file;
+
+    if (file === undefined) {
+        res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
+        return;
+    }
+    deleteImg(id);
 
     try {
-        const updatedResult = await User.update({ user_img: user_img }, { where: { id: userId } });
+        const updatedResult = await User.update({ user_img: file.filename }, { where: { id } });
         if (updatedResult[0] === 1) {
             res.json({ success: true });
         } else {
             res.json({ success: false });
         }
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
@@ -202,7 +213,17 @@ exports.findID = async (req, res) => {
 };
 //비밀번호 찾기
 exports.findPW = async (req, res) => {
-    //유저 이메일 인증받기
+    //유저 이메일 인증되면
+    const { email, password } = req.body;
+
+    try {
+        // 새로운 비밀번호 해싱
+        const hashedNewPassword = await bcrypt.hash(password, 11);
+        await User.update({ password: hashedNewPassword }, { where: { email } });
+        res.json({ success: true });
+    } catch (error) {
+        res.json({ success: false, result: error });
+    }
 };
 //회원탈퇴
 exports.userDrop = async (req, res) => {
@@ -225,3 +246,17 @@ const generateRandomNumber = function (min, max) {
     var randNum = Math.floor(Math.random() * (max - min + 1)) + min;
     return randNum;
 };
+
+async function deleteImg(id) {
+    try {
+        const getProfileInfotResult = await User.findOne({
+            where: { id },
+        });
+        if (fs.existsSync("./public/uploads/profile/" + getProfileInfotResult.user_img)) {
+            // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+            fs.unlinkSync("./public/uploads/profile/" + getProfileInfotResult.user_img);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -2,6 +2,7 @@ const express = require("express");
 const controller = require("../controller/user");
 const router = express.Router();
 const middleware = require("../middleware/auth");
+const { uploadProfileImg } = require("../middleware/multer");
 
 //회원가입
 router.post("/signup", controller.signup);
@@ -25,8 +26,8 @@ router.patch("/update/info", middleware.auth, controller.updateUser);
 //유저 비밀번호 수정
 router.patch("/update/pw", middleware.auth, controller.updatePassword);
 
-//유저 이미지(경로만) 수정
-router.patch("/update/profileimg", middleware.auth, controller.updateUserImage);
+//유저 이미지 수정
+router.patch("/update/profileimg", middleware.auth, uploadProfileImg, controller.updateUserImage);
 
 //회원탈퇴
 router.delete("/drop", middleware.auth, controller.userDrop);
