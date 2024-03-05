@@ -1,7 +1,7 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
-const ProjectMemeberModel = (sequelize) => {
-    return sequelize.define('project_member', {
+const ProjectMemberModel = (sequelize) => {
+    return sequelize.define("project_member", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -11,4 +11,4 @@ const ProjectMemeberModel = (sequelize) => {
     });
 };
 
-module.exports = ProjectMemeberModel;
+module.exports = ProjectMemberModel;

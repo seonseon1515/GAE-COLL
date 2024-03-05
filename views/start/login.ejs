@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Gae-Call</title>
         <link rel="stylesheet" href="../../public/css/start/login.css">
+        <link rel="stylesheet" href="../public/css/main.css" />
+        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
     <body>
         <main>
@@ -20,22 +23,22 @@
                         >
                     </p>
                 </div>
-                    <div id="login-text">
+                <form id="login-text">
                     <div class="text-aria">
-                        <input type="text" id="id" placeholder="아이디"  class="input" required >
+                        <input type="text" id="id" placeholder="이메일"  class="input" required >
                     </div>
                     <br>
                     <div class="text-aria">
                         <input type="password" id="password" placeholder="비밀번호" class="input" required >
                     </div>
                     <br>
-                    <input type="checkbox"><label>로그인 상태 유지</label>
-                </div>
-                <br>
-                <a href="/" class="login" style="text-decoration: none; color: white; background-color: black"><div class="login">로그인</div></a>
+                    <input type="checkbox" class="login-check" id="login"><label for="login" class="login-check">로그인 상태 유지</label>
+                    <br>
+                        <input type="submit" value="로그인" class="login">
+                </form>
                 <div id="find">
                     <a href="/start/idFind" style="text-decoration: none; color: black;"
-                        ><div>아이디 찾기</div></a
+                        ><div>이메일 찾기</div></a
                     >
                     <a href="/start/pwFind" style="text-decoration: none; color: black;"
                         ><div>비밀번호 찾기</div></a

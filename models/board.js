@@ -1,7 +1,7 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 const BoardModel = (sequelize) => {
-    return sequelize.define('board', {
+    return sequelize.define("board", {
         id: {
             type: DataTypes.INTEGER,
             primaryKey: true,
@@ -15,19 +15,15 @@ const BoardModel = (sequelize) => {
         status: {
             type: DataTypes.STRING,
             allowNull: false,
-            defaultValue: 'planning',
+            defaultValue: "planning",
         },
         deadline: {
-            type: DataTypes.DATEONLY,
+            type: DataTypes.STRING(10),
             allowNull: false,
         },
         description: {
             type: DataTypes.TEXT,
             allowNull: true,
-        },
-        is_mine: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
         },
     });
 };

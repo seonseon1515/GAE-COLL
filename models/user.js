@@ -1,7 +1,7 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 const UserModel = (sequelize) => {
-    return sequelize.define('user', {
+    return sequelize.define("user", {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
@@ -24,6 +24,14 @@ const UserModel = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        selected_question: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        answer: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
         user_img: {
             type: DataTypes.STRING,
             allowNull: true,
@@ -33,6 +41,14 @@ const UserModel = (sequelize) => {
             allowNull: true,
         },
         blog: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        selected_question: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
+        },
+        answer: {
             type: DataTypes.STRING,
             allowNull: true,
         },

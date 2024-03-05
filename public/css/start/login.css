@@ -1,6 +1,9 @@
 * {
     background-color: #ffda31;
 }
+body {
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
 #contain {
     display: flex;
     flex-direction: column;
@@ -13,10 +16,7 @@
 }
 #header {
     display: flex;
-    width: 50vw;
-    justify-content: center;
-    align-items: baseline;
-    flex-wrap: wrap;
+    align-items: center;
 }
 #header-text {
     margin: 0;
@@ -28,37 +28,38 @@
 }
 
 #start-dog {
-    width: 8vw;
-    height: 8vw;
+    width: 100px;
+    height: 100px;
 }
 
 /*아이디, 비밀번호 시작 */
 .input {
-    width: 20vw;
+    width: 290px;
     background-color: white;
     border: none;
+    text-align: center;
 }
 #login-text {
-    padding-top: 5vw;
+    padding-top: 2vw;
 }
 .text-aria {
     display: flex;
     justify-content: center;
-    width: 25vw;
-    height: 3vw;
+    width: 330px;
+    height: 40px;
     background-color: white;
-    border-radius: 40px;
-    margin-right: 2vw;
+    border-radius: 20px;
 }
 .login {
-    background-color: black;
-    color: white;
     display: flex;
-    border-radius: 40px;
-    width: 20vw;
-    height: 3.5vw;
-    align-items: center;
     justify-content: center;
+    width: 330px;
+    height: 40px;
+    background-color: black;
+    border-radius: 20px;
+    cursor: pointer;
+    color: white;
+    margin: 10px 0;
 }
 #find {
     display: flex;
@@ -68,4 +69,8 @@
     height: 5vw;
     width: 25vw;
     font-weight: bold;
+    cursor: pointer;
+}
+.login-check {
+    cursor: pointer;
 }

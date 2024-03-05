@@ -3,32 +3,38 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <title>Gae-Call</title>
         <link rel="stylesheet" href="../../public/css/start/index.css" />
+        <link rel="stylesheet" href="../public/css/main.css" />
+        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
     <body>
         <main>
             <div id="contain">
                 <div id="header">
                     <div id="header-img">
-                        <a href="/start"><img src="../../public/img/start-dog.png" id="start-dog" /></a>
+                        <a href="/start" ><img src="../../public/img/start-dog.png" id="start-dog" /></a>
                     </div>
-                    <p id="header-text">
-                        <a href="/start" style="text-decoration: none; color: black"
-                            ><span class="header-text1">개</span>린이 <span class="header-text1">콜</span>라보</a
+                    <p id="header-text"><span class="header-text1">개</span>린이 <span class="header-text1">콜</span>라보</a
                         >
                     </p>
                 </div>
 
                 <div id="login-type">
                     <div id="email">
-                        <a href="/start/signup"><img src="../../public/img/email-login.png" id="email-login" /></a>
+                        <a href="/start/login" title="로그인 페이지로 이동"><img src="../../public/img/email-login.png" id="email-login" /></a>
                     </div>
                     <div id="google">
-                        <a href="/start/google"></a><img src="../../public/img/google-login.png" id="google-login" />
+                        <button onclick="googleLogin()">
+                            <img src="../../public/img/google-login.png" id="google-login" />
+                        </button>
                     </div>
                     <div id="kakao">
-                        <img src="../../public/img/kakao-login.png" id="kakao-login" />
+                        <button onclick="kakaoLogin()">
+                            <img src="../../public/img/kakao-login.png" id="kakao-login" />
+                        </button>
                     </div>
                 </div>
                 <a
@@ -39,5 +45,7 @@
                 >
             </div>
         </main>
+
+        <script src="../../public/js/start/index.js"></script>
     </body>
 </html>

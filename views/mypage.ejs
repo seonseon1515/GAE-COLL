@@ -4,17 +4,36 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="../public/css/mypage.css" />
+        <link rel="stylesheet" href="../public/css/main.css" />
+        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
         <title>mypage</title>
     </head>
+    <%-include('../views/common/header.ejs') %>
     <body>
         <main>
             <div class="profile_img_section">
                 <div class="profile_img_top">
                     <div class="profile_more">
                         <img src="../public/img/ellipsis-solid-2.svg" alt="더보기" />
-                        <button type="button"></button>
+                        <button type="button" onclick="showPopup()"></button>
                     </div>
+
+                    <div id="popup" style="display: none">
+                        <form>
+                            <ul>
+                                <li class="mypage-li" onclick="showPwdPopup()">비밀 번호 수정</li>
+                                <li class="mypage-li" onclick="showLogoutPopup()">로그 아웃</li>
+                                <li class="mypage-li" onclick="showDeletePopup()">회원 탈퇴</li>
+                            </ul>
+                        </form>
+                    </div>
+
+                    <div id="pwdPopup" style="display: none"></div>
+                    <div id="logoutPopup" style="display: none"></div>
+                    <div id="deletePopup" style="display: none"></div>
                 </div>
+
                 <div class="profile_img_middle">
                     <div class="profile_img_box">
                         <img src="../public/img/user-solid.svg" alt="더보기" />
@@ -40,5 +59,7 @@
                 </div>
             </div>
         </main>
+        <%-include('../views/common/footer.ejs') %>
+        <script src="../public/js/mypage.js"></script>
     </body>
 </html>
