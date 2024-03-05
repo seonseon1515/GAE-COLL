@@ -38,57 +38,66 @@
                       <div id="blue" class="circle"></div>
                       <div class="status_txt">계획중</div>
                     </div>
-                    <div class="select_box"> 
+                  </div>
+                    
                       
                       <!-- left_wrap -->
                       <!-- <button type="button" class="status_modify">작업상태 변경</button> -->
-                      <ul class="option_list">
-                          <li class="option_item">
-                          <div id="bg_blue" class="placement_status">
-                              <div id="blue" class="circle"></div>
-                              <div class="status_txt">계획중</div>
-                          </div>
-                          </li>
-                          <li class="option_item">
-                              <div id="bg_yellow" class="placement_status">
-                                  <div id="yellow" class="circle"></div>
-                                  <div class="status_txt">진행중</div>
-                              </div>
-            
-                          </li>
-                          <li class="option_item">
-                              <div id="bg_purple" class="placement_status">
-                                  <div id="purple" class="circle"></div>
-                                  <div class="status_txt">중단됨</div>
-                              </div>
-                          </li>
-                          <li class="option_item">
-                              <div id="bg_green" class="placement_status">
-                                  <div id="green" class="circle"></div>
-                                  <div class="status_txt">완료</div>
-                              </div>
-                          </li>
-                          <li class="option_item">                                
-                              <div id="bg_red" class="placement_status">
-                                  <div id="red" class="circle"></div>
-                                  <div class="status_txt">피드백 요청</div>
-                              </div>
-                          </li>
-                          <li class="option_item">
-                              <div id="bg_black" class="placement_status">
-                                  <div id="black" class="circle"></div>
-                                  <div class="status_txt">피드백 완료</div>
-                              </div>
-                          </li>
-                      </ul>
-                  </div>
+                     
+                          
                 </caption>
                 <thead>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
-                    <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                  <tr >
+                    <td class="td1"><a href="/project/board_write" class="work_name" onclick="">상태페이지 연결</a></td>
+                    <td class="td2">
+                      <div class="select_box"> 
+                      <button type="button" id="bg_blue" class="placement_status1">
+                        <div id="blue" class="circle1"></div>
+                        <div class="status_txt1">계획중</div>
+                    </button>
+                      <ul class="option_list">
+                        <li class="option_item">
+                                
+                        <div id="bg_blue" class="placement_status1">
+                                  <div id="blue" class="circle1"></div>
+                                  <div class="status_txt1">계획중</div>
+                              </div>
+                              </li>
+                              <li class="option_item">
+                                  <div id="bg_yellow" class="placement_status1">
+                                      <div id="yellow" class="circle1"></div>
+                                      <div class="status_txt1">진행중</div>
+                                  </div>
+                    
+                              </li>
+                              <li class="option_item">
+                                  <div id="bg_purple" class="placement_status1">
+                                      <div id="purple" class="circle1"></div>
+                                      <div class="status_txt1">중단됨</div>
+                                  </div>
+                              </li>
+                              <li class="option_item">
+                                  <div id="bg_green" class="placement_status1">
+                                      <div id="green" class="circle1"></div>
+                                      <div class="status_txt1">완료</div>
+                                  </div>
+                              </li>
+                              <li class="option_item">                                
+                                  <div id="bg_red" class="placement_status1">
+                                      <div id="red" class="circle1"></div>
+                                      <div class="status_txt1">피드백 요청</div>
+                                  </div>
+                              </li>
+                              <li class="option_item">
+                                  <div id="bg_black" class="placement_status1">
+                                      <div id="black" class="circle1"></div>
+                                      <div class="status_txt1">피드백 완료</div>
+                                  </div>
+                              </li>
+                          </ul>
+                      </div></td>
                     <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
                     <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
                   </tr>
@@ -107,14 +116,18 @@
                       <div id="yellow" class="circle"></div>
                       <div class="status_txt">진행중</div>
                   </div>
+                </div>
                 </caption>
                 <thead>
                 </thead>
                 <tbody>
                   <tr id="tr1">
                     <td id="td1" class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
-                    <td id="td2" class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
-                    <td id="td3" class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
+                    <td id="td2" class="td2"> <button type="button" id="bg_yellow" class="placement_status1">
+                      <div id="yellow" class="circle1"></div>
+                      <div class="status_txt1">진행중</div>
+                  </button></td>
+                    <td id="td3" class="td3"><button class="work_deadline" button type="button" onclick=""></button></td>
                     <td id="td4" class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
                   </tr>
                 </tbody>
@@ -132,13 +145,17 @@
                     <div id="purple" class="circle"></div>
                     <div class="status_txt">중단됨</div>
                 </div>
+              </div>
               </caption>
               <thead>
               </thead>
               <tbody>
                 <tr>
                   <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
-                  <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                  <td class="td2"> <div id="bg_purple" class="placement_status1">
+                    <div id="purple" class="circle1"></div>
+                    <div class="status_txt1">중단됨</div>
+                </div></td>
                   <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
                   <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
                 </tr>
@@ -157,13 +174,17 @@
                     <div id="green" class="circle"></div>
                     <div class="status_txt">완료</div>
                 </div>
+              </div>
               </caption>
               <thead>
               </thead>
               <tbody>
                 <tr>
                   <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
-                  <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                  <td class="td2">                               <div id="bg_green" class="placement_status1">
+                    <div id="green" class="circle1"></div>
+                    <div class="status_txt1">완료</div>
+                </div></td>
                   <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
                   <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
                 </tr>
@@ -182,13 +203,17 @@
                     <div id="red" class="circle"></div>
                     <div class="status_txt">피드백 요청</div>
                 </div>
+              </div>
               </caption>
               <thead>
               </thead>
               <tbody>
                 <tr>
                   <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
-                  <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                  <td class="td2"><div id="bg_red" class="placement_status1">
+                    <div id="red" class="circle1"></div>
+                    <div class="status_txt1">피드백 요청</div>
+                </div></td>
                   <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
                   <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
                 </tr>
@@ -207,21 +232,73 @@
                       <div id="black" class="circle"></div>
                       <div class="status_txt">피드백 완료</div>
                   </div>
+                </div>
                 </caption>
                 <thead>
                 </thead>
                 <tbody>
                   <tr>
                     <td class="td1"><button class="work_name" type="button" onclick="">상태페이지 연결</button></td>
-                    <td class="td2"><button class="work_status" type="button" onclick="">상태 선택 팝업</button></td>
+                    <td class="td2"><div id="bg_black" class="placement_status1">
+                      <div id="black" class="circle1"></div>
+                      <div class="status_txt1">피드백 완료</div>
+                  </div></td>
                     <td class="td3"><button class="work_deadline" button type="button" onclick="">달력 팝업</button></td>
                     <td class="td4"><button class="work_managers" type="button" onclick="">담당자 선정</button></td>
                   </tr>
                 </tbody>
             </div>
-
         </div>
+
+
+<!-- 테이블 셀 안 상태 모형 -->
+<div class="select_box"> 
+  <button type="button" id="bg_blue" class="placement_status1">
+    <div id="blue" class="circle1"></div>
+    <div class="status_txt1">계획중</div>
+</button>
+  <ul class="option_list">
+    <li class="option_item">
+            
+    <div id="bg_blue" class="placement_status1">
+              <div id="blue" class="circle1"></div>
+              <div class="status_txt1">계획중</div>
+          </div>
+          </li>
+          <li class="option_item">
+              <div id="bg_yellow" class="placement_status1">
+                  <div id="yellow" class="circle1"></div>
+                  <div class="status_txt1">진행중</div>
+              </div>
+
+          </li>
+          <li class="option_item">
+              <div id="bg_purple" class="placement_status1">
+                  <div id="purple" class="circle1"></div>
+                  <div class="status_txt1">중단됨</div>
+              </div>
+          </li>
+          <li class="option_item">
+              <div id="bg_green" class="placement_status1">
+                  <div id="green" class="circle1"></div>
+                  <div class="status_txt1">완료</div>
+              </div>
+          </li>
+          <li class="option_item">                                
+              <div id="bg_red" class="placement_status1">
+                  <div id="red" class="circle1"></div>
+                  <div class="status_txt1">피드백 요청</div>
+              </div>
+          </li>
+          <li class="option_item">
+              <div id="bg_black" class="placement_status1">
+                  <div id="black" class="circle1"></div>
+                  <div class="status_txt1">피드백 완료</div>
+              </div>
+          </li>
+      </ul>
+  </div>
         <script src="../../public/js/project/board_main.js"></script>
-        <%- include ('../common/footer.ejs') %>
+        <!-- <%- include ('../common/footer.ejs') %> -->
     </body>
 </html>
