@@ -6,6 +6,8 @@ const middleware = require("../middleware/auth");
 //회원가입
 router.post("/signup", controller.signup);
 
+//이메일 확인
+router.post("/emailAuth", controller.emailAuth);
 //로그인
 
 router.post("/login/email", controller.loginEmail);

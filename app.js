@@ -33,7 +33,7 @@ const projectBoardRouter = require("./routes/project_board");
 app.use("/api/project/board", projectBoardRouter);
 
 db.sequelize
-    .sync({ force: false })
+    .sync({ force: true })
     .then(() => {
         server.listen(PORT, () => {
             console.log(`http://localhost:${PORT}/start/`);
