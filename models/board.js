@@ -25,10 +25,6 @@ const BoardModel = (sequelize) => {
             type: DataTypes.TEXT,
             allowNull: true,
         },
-        is_mine: {
-            type: DataTypes.BOOLEAN,
-            allowNull: false,
-        },
     });
 };
 
