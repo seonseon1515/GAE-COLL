@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="../public/css/main.css" />
         <link rel="stylesheet" href="../public/css/common/font.css" />
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <title>mypage</title>
     </head>
     <%-include('../views/common/header.ejs') %>
@@ -46,14 +47,16 @@
                 </div>
             </div>
             <div class="profile_detail_section">
+                <% if (typeof user !== 'undefined') { %>
                 <div class="name_box">
                     <div>이름</div>
-                    <input type="text" id="username" />
+                    <input type="text" id="username" value="<%= user.name %>" />
                 </div>
                 <div class="email_box">
                     <div>이메일</div>
-                    <div id="useremail"></div>
+                    <div id="useremail"><%= user.email %></div>
                 </div>
+                <% } %>
                 <div class="update_box">
                     <button type="button">수정</button>
                 </div>
