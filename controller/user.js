@@ -93,10 +93,14 @@ exports.emailAuth = async (req, res) => {
 //유저이메일을 이용한 유저조회
 exports.findUser = async (req, res) => {
     const { email, isSignup } = req.body;
+    console.log("email", email, "isSignup", isSignup);
     try {
         const findUserResult = await User.findOne({
             where: { email },
         });
+        console.log(findUserResult);
+        console.log(findUserResult === true);
+        console.log(findUserResult === false);
 
         if (findUserResult) {
             if (isSignup) {
