@@ -5,7 +5,7 @@ require("dotenv").config();
 const db = require("./models");
 
 const app = express();
-const PORT = 8800;
+const PORT = 8000;
 
 //http서버에 express, socketio연결
 const server = http.createServer(app);
@@ -33,7 +33,7 @@ const projectBoardRouter = require("./routes/project_board");
 app.use("/api/project/board", projectBoardRouter);
 
 db.sequelize
-    .sync({ force: true })
+    .sync({ force: false })
     .then(() => {
         server.listen(PORT, () => {
             console.log(`http://localhost:${PORT}/start/`);

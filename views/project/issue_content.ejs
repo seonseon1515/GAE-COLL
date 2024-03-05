@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="../../public/css/project/issue_content.css" />
         <link rel="stylesheet" href="../public/css/main.css" />
         <link rel="stylesheet" href="../public/css/common/font.css" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
     <body>
@@ -14,16 +15,28 @@
         <main>
             <div class="bg_white">
                 <form name="issue_write_form" enctype="multipart/form-data">
-                    <div class="form_top" onmouseleave="hideDeleteIcon()">
+                    <div class="form_top">
                         <h1>프로젝트 이슈</h1>
                         <div id="title-con">
-                            <div id="img-corretion" class="icon delte_icon" onclick="deleteIssueFunc()"></div>
+                            <button
+                                type="button"
+                                id="img-corretion"
+                                class="icon delte_icon"
+                                onclick="deleteIssueFunc()"
+                            ></button>
+                            <button
+                                type="button"
+                                id="img-corrcetion"
+                                class="icon correction_icon"
+                                onclick="editIssueFunc()"
+                            ></button>
                         </div>
                     </div>
                     <!--제목 출력 위치-->
                     <div class="title_boxes">
-                        <div contenteditable id="title_box" class="title_box">오늘 새로운 사실을 발견했습니다.</div>
-                        <div id="img-corretion" class="icon correction_icon" onclick="editContentFunc()"></div>
+                        <div contenteditable="false" id="title_box" class="title_box">
+                            오늘 새로운 사실을 발견했습니다.
+                        </div>
                     </div>
 
                     <div class="writer_date">
@@ -38,10 +51,9 @@
                     <div class="content_box">
                         <div class="content_icon">
                             <div class="icon coding_icon" onclick="codeBlockFunc()"></div>
-                            <div id="img-corrcetion" class="icon correction_icon" onclick="editContentFunc()"></div>
                         </div>
                         <!-- `${<p></p>}` -->
-                        <div class="content_box_inner" contenteditable>
+                        <div class="content_box_inner" id="content" contenteditable="false">
                             본문입니다. 오늘의 이슈글 블라블라
                             <code
                                 >쉬고싶다Func() divFile.classList.add('file'); let p = document.createElement('p'); for
@@ -68,8 +80,8 @@
                              p.innerHTML = '파일명'
                              divFile.appendChild('p')
                          -->
-                        <div id="file1" class="file"><p>1234567891011.png</p></div>
-                        <div id="file2" class="file"><p>첨부 파일.doc</p></div>
+                        <div class="file"><p>1234567891011.png</p></div>
+                        <div class="file"><p>첨부 파일.doc</p></div>
                     </div>
                     <hr />
 
@@ -87,7 +99,7 @@
                             <li>
                                 <div class="user_Image" style="background-image: url(/public/img/user-solid.svg)"></div>
                                 <p>이름 :</p>
-                                <div contenteditable id="comment" class="comment">댓글입니다 댓글 댓글</div>
+                                <div contenteditable="false" id="comment" class="comment">댓글입니다 댓글 댓글</div>
 
                                 <div id="img-corretion" class="icon correction_icon" onclick="editCommentFunc()"></div>
                                 <div id="img-corretion" class="icon delte_icon" onclick="deleteCommentFunc()"></div>
@@ -100,7 +112,7 @@
                     <div class="writeComment_box">
                         <!-- <div class="icon coding_icon"></div> -->
 
-                        <div contenteditable placeholder="댓글을 입력해주세요" id="comment_write"></div>
+                        <div contenteditable="true" placeholder="댓글을 입력해주세요" id="comment_write"></div>
                         <button onclick="addCommentFunc()" class="button_yellow_black">작성</button>
                     </div>
                 </form>

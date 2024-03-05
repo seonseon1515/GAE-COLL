@@ -20,6 +20,11 @@ body {
     color: #a6a6a6;
 }
 
+.code_span {
+    background-color: none;
+    font-size: 20px;
+}
+
 div {
     border-style: none;
     font-size: 20px;
@@ -74,7 +79,7 @@ code {
     border-radius: 5px;
     color: white;
     width: auto;
-    padding: 20px 40px;
+    padding: 20px 10px;
     height: auto;
     font-size: 18px;
     line-height: 30px;
@@ -188,26 +193,29 @@ li:last-child {
 
 .form_top {
     display: flex;
-    justify-content: start;
+    justify-content: space-between;
 }
 
 .icon {
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
     opacity: 50%;
     transition: all 0.3s;
     padding-top: 8px;
-    margin-left: 10px;
+    margin-left: 20px;
+}
+button {
+    border-style: none;
 }
 
 .icon:hover {
     opacity: 100%;
 }
 
-.content_box > .content_icon > .correction_icon {
+#title-con > .correction_icon {
     background-image: url("/public/img/correction.png");
 }
 
@@ -215,14 +223,11 @@ li:last-child {
     margin-bottom: 15px;
 }
 
-.title_boxes > .correction_icon {
-    background-image: url("/public/img/correction.png");
-}
 .comment_box > .comments > li > .correction_icon {
     background-image: url("/public/img/correction.png");
 }
 
-.delte_icon {
+#title-con > .delte_icon {
     background-image: url("/public/img/trash-can.png");
     margin-left: 11px;
 }
@@ -357,27 +362,20 @@ li:last-child {
     font-weight: bold;
 }
 
-#title-con > .delte_icon {
+#title-con > .delte_icon,
+#title-con > .correction_icon {
     display: none;
 }
 
-.form_top:hover #title-con > .delte_icon {
+.bg_white:hover #title-con > .delte_icon,
+.bg_white:hover #title-con > .correction_icon {
     display: inline;
 }
 
-.title_boxes > .correction_icon {
-    display: none;
-}
-
-.title_boxes:hover > .correction_icon {
-    display: inline;
-}
-
-.content_icon > .correction_icon,
 .content_icon > .coding_icon {
     display: none;
 }
-.content_box:hover .content_icon > .correction_icon,
+
 .content_box:hover .content_icon > .coding_icon {
     display: inline;
 }
