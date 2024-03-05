@@ -1,0 +1,89 @@
+* {
+    text-decoration: none;
+    margin: 0;
+    padding: 0;
+}
+body {
+    background-color: #ffda31;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+}
+
+#project_header {
+    z-index: 99;
+    width: auto;
+    top: 140px;
+    position: relative;
+    height: 120px;
+    background-color: white;
+    border-radius: 20px;
+    margin: 0 50px;
+}
+
+.pro_header1 {
+    font-weight: bold;
+    font-size: 25px;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    /* line-height: 53px; */
+    align-items: center;
+}
+
+.left_wrap1 {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.pro_status {
+    margin-left: 2vw;
+}
+
+.mid_wrap1 {
+    display: flex;
+    align-items: center;
+}
+
+.right_wrap1 {
+    width: 3vw;
+    height: 3vw;
+}
+
+.pro_edit {
+    width: 2vw;
+    height: 2vw;
+    padding-left: 1vw;
+}
+
+.pro_github {
+    width: 100%;
+    height: 100%;
+}
+
+.pro_date {
+    padding-left: 1vw;
+}
+.pro_deadline {
+    padding-left: 1vw;
+}
+
+.pro_header2 {
+    font-size: 23px;
+    padding: 0 20px;
+    display: flex;
+    height: 60px;
+    align-items: center;
+}
+
+.pro_header2_link {
+    margin-right: 1vw;
+    color: black;
+}
+
+.pro_header2_link:active {
+    border-bottom: 2px solid;
+}
+
+.pro_header2_link:hover {
+    border-bottom: 2px solid;
+}
