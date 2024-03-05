@@ -13,7 +13,9 @@ router.post("/login/email", controller.loginEmail);
 // router.post('/login/google', controller.loginGoogle);
 
 //아이디 찾기
+router.post("/findID", controller.findID);
 //비밀번호 찾기
+router.post("/findPW", controller.findPW);
 //유저프로필 조회
 router.post("/info", middleware.auth, controller.getUserInfo);
 
@@ -27,6 +29,8 @@ router.patch("/update/pw", middleware.auth, controller.updatePassword);
 router.patch("/update/profileimg", middleware.auth, controller.updateUserImage);
 
 //회원탈퇴
+router.delete("/drop", middleware.auth, controller.userDrop);
+
 //유저조회
 router.post("/find", controller.findUser);
 

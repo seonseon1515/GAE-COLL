@@ -181,6 +181,30 @@ exports.updateUserImage = async (req, res) => {
         res.json({ success: false, result: error });
     }
 };
+//아이디 찾기
+exports.findID = async (req, res) => {
+    //질문에 대한 답하기
+};
+//비밀번호 찾기
+exports.findPW = async (req, res) => {
+    //유저 이메일 인증받기
+};
+//탈퇴
+exports.userDrop = async (req, res) => {
+    const userId = req.userId;
+    console.log(userId);
+    try {
+        const destroyResult = await User.destroy({ where: { id: Number(userId) } });
+        console.log(destroyResult);
+        if (destroyResult) {
+            res.json({ success: true });
+        } else {
+            res.json({ success: false });
+        }
+    } catch (error) {
+        res.json({ success: false, result: error });
+    }
+};
 
 const generateRandomNumber = function (min, max) {
     var randNum = Math.floor(Math.random() * (max - min + 1)) + min;
