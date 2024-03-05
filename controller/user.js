@@ -1,6 +1,6 @@
-const { User } = require("../models");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const { User } = require('../models');
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 //회원가입
 //이메일, 카카오, 구글은 type으로 구분
@@ -33,7 +33,7 @@ exports.signup = async (req, res) => {
             res.json({ success: true, result, token });
         }
     } catch (error) {
-        res.json(error);
+        res.json(console.log(error));
     }
 };
 
@@ -49,7 +49,7 @@ exports.loginEmail = async (req, res) => {
         //비밀번호 일치시
         if (password) {
             //jwt토큰 발행
-            const token = jwt.sign({ id: loginResult.id }, process.env.DEVEL_SECRET, { expiresIn: "1h" });
+            const token = jwt.sign({ id: loginResult.id }, process.env.DEVEL_SECRET, { expiresIn: '1h' });
             res.json({ success: true, token });
         } else {
             res.json({ success: false, message: error });
@@ -69,7 +69,7 @@ exports.findUser = async (req, res) => {
         console.log(findUserResult);
         if (findUserResult) {
             if (isSignup) {
-                const token = jwt.sign({ id: findUserResult.id }, process.env.DEVEL_SECRET, { expiresIn: "1h" });
+                const token = jwt.sign({ id: findUserResult.id }, process.env.DEVEL_SECRET, { expiresIn: '1h' });
                 res.json({ success: true, token });
             } else {
                 res.json({ success: true, findUserResult });
@@ -99,7 +99,7 @@ exports.updateUser = async (req, res) => {
     const userId = req.userId;
     // console.log("여러개", userId);
     const { user_name } = req.body;
-    console.log("유저네임 객체 ", user_name);
+    console.log('유저네임 객체 ', user_name);
     try {
         const updatedResult = await User.update({ user_name }, { where: { id: userId } });
         console.log(updatedResult);

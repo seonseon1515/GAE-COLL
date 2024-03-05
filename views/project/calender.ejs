@@ -5,6 +5,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>calender</title>
         <link rel="stylesheet" href="../../public/css/project/calender.css" />
+        <link rel="stylesheet" href="../../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+      
     </head>
     <body>
         <%- include('./header.ejs')%> <%- include('../common/header.ejs')%>
@@ -15,17 +18,15 @@
               <div class="select_calender">
               <div class="top_wrap">
                 <div class="top_left">
-                  <div class="calender_name">톡캘린더</div>
+                  <div class="calender_name">캘린더</div>
                 </div>
                 <div class="top_right">
-                  <div class="shape1">+</div>
-                  <div class="shape2">^</div>
                 </div>
               </div>  
               <div class="check_wrap">
                 <input id="private" type="checkbox"></input>
                 <label for="private">내 캘린더</label></br>
-                <input class="team" type="checkbox"></input>
+                <input id="team" class="team" type="checkbox"></input>
                 <label for="team">팀 캘린더</label>
               </div>
              </div>
@@ -37,11 +38,13 @@
               <div class="button_wrap">
                 <button class="prev" type="button"><</button>
                 <button class="next" type="button">></button>
-                <button class="today" type="button">오늘</button>
-                <button type="button" onclick="pop_calender()" class="calender_title"></button>
+                <button type="button" class="today">오늘</button>
+                <button type="button" id="openModalBtn" class="calender_title"></button>
+                
+                
               </div>
               <div class="right_wrap">
-                <button id="make_calender" class="prev" type="button">일정 만들기</button>
+                <button id="make_calender" class="prev" type="">일정 만들기</button>
               </div>
             </div>
 
@@ -64,9 +67,11 @@
         </div>
       
 <!-- 달력 팝업 띄우기 -->
-<div id="pop_info_1" class="pop_wrap" style="display:none;">
-  <div class="pop_inner">
-    <div class="top_wrap">
+<div id="pop_info_1" class="background" style="display:hidden;">
+  <div class="window">
+  <div class="popup">
+    <div class="modal-content">
+    <div class="modal-header">
       <select class="years_select">
         <option value=""></option>
       </select>
@@ -75,6 +80,7 @@
       <button class="next" type="button">></button>
     </div>
   </div>  
+  <div class="modal-body">
     <div class="month_wrap">
       <button type="button">1월</button>
       <button type="button">2월</button>
@@ -90,9 +96,17 @@
       <button type="button">12월</button>
     </div>  
   </div>
+  <div class="modal-footer">
+    <button type="button" class="close" onclick="closePop()">
+      X
+  </button>
+  </div>
 </div>
-
-        <script src="../../public/js/project/calender.js"></script>
+</div>
+</div>
+</div>
+      
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+      <script src="../../public/js/project/calender.js"></script>
     </body>
 </html>
-
