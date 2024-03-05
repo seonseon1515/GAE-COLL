@@ -9,9 +9,7 @@ router.post("/signup", controller.signup);
 //이메일 확인
 router.post("/emailAuth", controller.emailAuth);
 //로그인
-
 router.post("/login/email", controller.loginEmail);
-// router.post('/login/kakao', controller.loginKakao);
 // router.post('/login/google', controller.loginGoogle);
 
 //아이디 찾기
@@ -30,6 +28,6 @@ router.patch("/update/profileimg", middleware.auth, controller.updateUserImage);
 
 //회원탈퇴
 //유저조회
-router.post("/find", middleware.auth, controller.findUser);
+router.post("/find", controller.findUser);
 
 module.exports = router;
