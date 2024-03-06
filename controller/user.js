@@ -31,7 +31,7 @@ exports.signup = async (req, res) => {
                 user_name,
                 user_img: profile_img,
             });
-            const token = jwt.sign({ id: result.id }, process.env.DEVEL_SECRET, { expiresIn: "1h" });
+            const token = jwt.sign({ id: result.id }, process.env.DEVEL_SECRET, { expiresIn: "24h" });
             res.json({ success: true, result, token });
         }
     } catch (error) {
@@ -82,7 +82,7 @@ exports.emailAuth = async (req, res) => {
         //비밀번호 일치시
         if (password) {
             //jwt토큰 발행
-            const token = jwt.sign({ id: loginResult.id }, process.env.DEVEL_SECRET, { expiresIn: "1h" });
+            const token = jwt.sign({ id: loginResult.id }, process.env.DEVEL_SECRET, { expiresIn: "24h" });
             res.json({ success: true, token });
         } else {
             res.json({ success: false, message: error });
@@ -106,7 +106,7 @@ exports.findUser = async (req, res) => {
 
         if (findUserResult) {
             if (isSignup) {
-                const token = jwt.sign({ id: findUserResult.id }, process.env.DEVEL_SECRET, { expiresIn: "1h" });
+                const token = jwt.sign({ id: findUserResult.id }, process.env.DEVEL_SECRET, { expiresIn: "24h" });
                 res.json({ success: true, token });
             } else {
                 res.json({ success: true, findUserResult });
