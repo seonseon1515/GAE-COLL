@@ -225,14 +225,14 @@ exports.updateProjectName = async (req, res) => {
 exports.updateProjectImg = async (req, res) => {
     const { project_id: id } = req.body;
 
-    //이전에 올렸던 이미지 삭제
-    deleteImg(id);
-
     const file = req.file;
-    console.log(file);
+
     if (file === undefined) {
         res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
+        return;
     }
+    //이전에 올렸던 이미지 삭제
+    deleteImg(id);
     console.log(file);
     try {
         const updateProjectResult = await Project.update({ project_img: file.filename }, { where: { id } });
