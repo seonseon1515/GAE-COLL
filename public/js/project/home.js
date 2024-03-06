@@ -1,22 +1,24 @@
-var editIcons = document.querySelectorAll('.edit-icon');
-editIcons.forEach(function (icon) {
-    icon.addEventListener('click', function (event) {
-        var li = event.target.closest('li');
-        var textElement = li.querySelector('.text-element');
-        var newText = prompt('수정할 내용을 입력하세요.', textElement.textContent);
-        if (newText !== null) {
-            textElement.textContent = newText;
-        }
-    });
-});
+window.onload = function () {
+    var editIcons = document.querySelectorAll('.edit-icon');
+    var deleteIcons = document.querySelectorAll('.delete-icon');
 
-var deleteIcons = document.querySelectorAll('.delete-icon');
-deleteIcons.forEach(function (icon) {
-    icon.addEventListener('click', function (event) {
-        var li = event.target.closest('li');
-        li.remove();
-    });
-});
+    for (var i = 0; i < editIcons.length; i++) {
+        editIcons[i].addEventListener('click', function () {
+            var parentLi = this.closest('li');
+            var textElement = parentLi.querySelector('.text-element');
+
+            var newText = prompt('새로운 텍스트를 입력하세요', textElement.textContent);
+            if (newText != null && newText != '') {
+                textElement.textContent = newText;
+            }
+        });
+
+        deleteIcons[i].addEventListener('click', function () {
+            var parentLi = this.closest('li');
+            parentLi.remove();
+        });
+    }
+};
 
 /*파일 업로드*/
 // upload.js

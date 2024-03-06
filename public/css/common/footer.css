@@ -1,48 +1,19 @@
-/*footer 화면 밑에다가 고정*/
 body {
-    height: auto;
-    min-height: 100%;
-    padding-bottom: 500px;
-}
-footer {
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    box-sizing: border-box;
-    position: relative;
-    transform: translateY(100%);
-    height: 120px;
+    display: flex;
+    flex-direction: column; /* 요소들을 세로 방향으로 배열 */
 }
 
 #contain {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #d9e9bf;
+    height: 150px;
+    font-size: 20px;
 }
 #footer-div {
     height: auto;
-}
-/*chat icon 설정*/
-#icon {
-    position: fixed;
-    bottom: 13vw; /* footer의 높이와 같게 설정 */
-    right: 4vw;
-    border-radius: 50px;
-    background-color: white;
-    padding: 12px;
-    cursor: pointer;
-    width: 3vw;
-    height: 3vw;
-    z-index: 100;
-    transition: bottom 0.5s ease-out;
-}
-
-#icon-img {
-    /* z-index: 99; */
-    background-color: white;
-    width: 100%;
-    height: 100%;
 }
 
 /*왼쪽 text 설정*/
@@ -50,10 +21,9 @@ footer {
     display: flex;
     align-items: center;
     background-color: #d9e9bf;
-    margin-left: 2;
 }
 #US {
-    padding-left: 2vw;
+    margin-left: 50px;
     background-color: #d9e9bf;
 }
 #email {
@@ -61,13 +31,13 @@ footer {
     background-color: #d9e9bf;
 }
 #email-img {
-    width: 3vw;
-    height: 3vw;
+    width: 20px;
+    height: 20px;
     background-color: #d9e9bf;
 }
 #phone-img {
-    width: 3vw;
-    height: 3vw;
+    width: 20px;
+    height: 20px;
     background-color: #d9e9bf;
 }
 #phone {
@@ -80,17 +50,18 @@ footer {
     flex-direction: column;
     align-items: flex-end;
     background-color: #d9e9bf;
-    margin-right: 2vw;
+    padding-right: 50px;
 }
 #img {
-    padding-right: 2vw;
     background-color: #d9e9bf;
 }
 #git,
 #a {
+    display: flex;
     background-color: #d9e9bf;
+    width: 20px;
+    height: 20px;
 }
 #GAECO {
-    padding-right: 2vw;
     background-color: #d9e9bf;
 }

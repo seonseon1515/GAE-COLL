@@ -5,6 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Gae-Call</title>
         <link rel="stylesheet" href="../../public/css/start/pwFind.css" />
+        <link rel="stylesheet" href="../../public/css/main.css" />
+        <link rel="stylesheet" href="../../public/css/common/font.css" />
     </head>
     <body>
         <main>
@@ -12,17 +14,16 @@
                 <!--header 시작-->
                 <div id="header">
                     <div id="header-img">
-                        <a href="/start"> <img src="../../public/img/start-dog.png" id="start-dog" /></a>
+                        <a href="/start" class="start-img"> <img src="../../public/img/start-dog.png" id="start-dog" /></a>
                     </div>
                     <p id="header-text">
-                        <a href="/start" style="text-decoration: none; color: black"
-                            ><span class="header-text1">개</span>린이 <span class="header-text1">콜</span>라보</a
+                        <a href="/start" class="start-img"><span class="header-text1">개</span>린이 <span class="header-text1">콜</span>라보</a
                         >
                     </p>
                 </div>
-                <form id="find-name">
+                <form id="find-user">
                     <div class="text-aria">
-                    <input type="text" id="name" placeholder="이름" class="input" required>
+                    <input type="text" id="user" placeholder="이름" class="input" required>
                 </div>
                 <br>
 
@@ -31,8 +32,8 @@
                 </div>
             </form>
                 <div id="contain-under">
-                    <input type="submit" class="find-login" form="find-name" value="비밀번호 찾기" />
-                <a href="/start/login" class="exit" style="text-decoration: none; color: white; background-color: black"><div class="exit">돌아가기</div></a>
+                    <input type="submit" class="find-login" form="find-user" value="비밀번호 찾기" />
+                <a href="/start/login" class="find-login">돌아가기</a>
             </div>
            </main>
     </body>

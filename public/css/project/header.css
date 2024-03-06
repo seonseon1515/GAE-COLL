@@ -11,20 +11,18 @@ body {
 #project_header {
     z-index: 99;
     width: auto;
-    /* font-size: 1rem; */
-    /* font-weight: 400; */
-    position: relative;
     top: 140px;
+    position: relative;
     height: 120px;
     background-color: white;
     border-radius: 20px;
     margin: 0 50px;
+    padding: 0 25px;
 }
 
 .pro_header1 {
     font-weight: bold;
     font-size: 25px;
-    padding: 0 20px;
     display: flex;
     justify-content: space-between;
     height: 60px;
@@ -71,7 +69,6 @@ body {
 
 .pro_header2 {
     font-size: 23px;
-    padding: 0 20px;
     display: flex;
     height: 60px;
     align-items: center;

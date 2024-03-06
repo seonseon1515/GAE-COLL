@@ -1,21 +1,33 @@
-* {
+body {
     background-color: #ffda31;
+    font-family: "IBM Plex Sans KR", sans-serif;
+}
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    min-height: 100vh;
+    margin: 20px 0;
 }
 #contain {
+    border-radius: 60px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    position: absolute;
-    top: 50%;
+    /* position: absolute; */
+    height: fit-content;
+    /* top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
+    transform: translate(-50%, -50%); */
+    background-color: #f5f5f5;
+    padding: 30px;
 }
 #header {
+    width: 100%;
     display: flex;
-    width: 50vw;
-    justify-content: center;
-    align-items: baseline;
+    justify-content: end;
+    align-items: center;
 }
 #header-text {
     margin: 0;
@@ -27,24 +39,29 @@
 }
 
 #start-dog {
-    width: 8vw;
-    height: 8vw;
+    width: 100px;
+    height: 100px;
+    display: flex;
+}
+.signup-a {
+    text-decoration: none;
+    color: black;
 }
 
 /* input 시작*/
 .main-text {
-    padding: 3vw 0 0 5vw;
+    padding: 30px 0;
 }
 
 .text-aria {
     display: flex;
-    width: 25vw;
-    height: 3vw;
+    width: 330px;
+    height: 40px;
     background-color: white;
     border-radius: 40px;
-    margin-right: 2vw;
+    margin-right: 20px;
 }
-.password-div {
+.email-div {
     display: flex;
     align-items: flex-end;
 }
@@ -57,17 +74,36 @@
 }
 .button {
     background-color: white;
-    height: 2vw;
+    height: 40px;
     border-radius: 40px;
+    width: 100px;
+    cursor: pointer;
+}
+.ans-button {
+    width: 100px;
+    background-color: white;
+    height: 40px;
+    border-radius: 40px;
+    cursor: pointer;
+}
+#ans {
+    background-color: white;
+    text-align: center;
 }
 .ans {
     background-color: white;
+    cursor: pointer;
 }
 #signup-submit {
     background-color: black;
     color: white;
-    width: 20vw;
+    width: 200px;
+    margin-left: calc(130px / 2);
     border-radius: 40px;
-    height: 3vw;
-    margin-left: 2vw;
+    height: 40px;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
 }
