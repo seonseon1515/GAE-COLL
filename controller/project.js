@@ -1,8 +1,9 @@
-const { Project, ProjectFile, Board, ProjectMember, User } = require('../models');
-var fs = require('fs');
+const { Project, ProjectFile, Board, ProjectMember, User } = require("../models");
+var fs = require("fs");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
     const file = req.file;
+    const my_id = req.userId;
 
     const { project_name, start_date, end_date, overview, rule, member_id, send_img } = req.body;
     let userId;
@@ -10,17 +11,18 @@ exports.createProject = async (req, res) => {
     //사진을 보냈는데 이미지 파일이 아니면 보드 생성 실패
 
     if (send_img === true && file === undefined) {
-        res.json({ success: false, result: { message: '파일업로드에 실패하였습니다.' } });
+        res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
         return;
     }
 
     //멤버가 object타입인지 string타입인지 구별 -> 포스트맨 테스트로 인해 처리
-    if (typeof member_id === 'object') {
+    if (typeof member_id === "object") {
         userId = member_id;
         console.log(userId.length);
-    } else if (typeof member_id === 'string') {
+    } else if (typeof member_id === "string") {
         userId = JSON.parse(member_id);
     }
+    userId.push(my_id);
 
     try {
         const result = [];
@@ -65,8 +67,8 @@ exports.getMyBoard = async (req, res) => {
         // 사용자가 참여 중인 프로젝트 조회
         const project_Id = await ProjectMember.findAll({
             where: { userId },
-            attributes: ['projectId'],
-            order: [['projectId', 'ASC']],
+            attributes: ["projectId"],
+            order: [["projectId", "ASC"]],
         });
 
         // 프로젝트 별로 보드 가져오기 (프로젝트Name과 보드 정보 합치기)
@@ -79,7 +81,7 @@ exports.getMyBoard = async (req, res) => {
 
             let board = await Board.findAll({
                 where: { projectId },
-                attributes: ['id', 'title', 'status', 'deadline'],
+                attributes: ["id", "title", "status", "deadline"],
             });
             //project에 projectId가 없으면
             if (!getMyBoard.has(projectId)) {
@@ -95,8 +97,8 @@ exports.getMyBoard = async (req, res) => {
         // console.log("result값 출력해보기:", result);
         res.json({ success: true, result });
     } catch (error) {
-        console.error('내 보드 조회 실패:', error);
-        res.json({ success: false, result: '내 보드 조회 실패' });
+        console.error("내 보드 조회 실패:", error);
+        res.json({ success: false, result: "내 보드 조회 실패" });
     }
 };
 
@@ -108,8 +110,8 @@ exports.getMyProject = async (req, res) => {
         const { user_name, github, blog } = user;
         const projectId = await ProjectMember.findAll({
             where: { userId: user.id },
-            attributes: ['projectId'],
-            order: [['projectId', 'ASC']],
+            attributes: ["projectId"],
+            order: [["projectId", "ASC"]],
         });
 
         const project_ids = projectId.map((project_member) => project_member.dataValues.projectId);
@@ -133,7 +135,7 @@ exports.getMyProject = async (req, res) => {
         }
         res.json({ success: true, result: { user_name, github, blog, projectReuslt } });
     } catch (error) {
-        res.json({ success: false, result: '프로젝트 조회 실패' });
+        res.json({ success: false, result: "프로젝트 조회 실패" });
     }
 };
 
@@ -145,13 +147,13 @@ exports.getMyTeamBoard = async (req, res) => {
         // 현재 사용자가 참여 중인 프로젝트 조회
         const projects = await ProjectMember.findAll({
             where: { userId },
-            attributes: ['projectId'],
+            attributes: ["projectId"],
         });
 
         // 해당 프로젝트에 참여 중인 모든 팀원의 정보를 찾기
         const projectMembers = await ProjectMember.findAll({
             where: { projectId: projects.map((project) => project.projectId) },
-            include: { model: User, attributes: ['user_name'] }, // 멤버의 이름을 가져오기 위해 User 모델을 include
+            include: { model: User, attributes: ["user_name"] }, // 멤버의 이름을 가져오기 위해 User 모델을 include
         });
 
         // 각 팀원별로 프로젝트의 보드를 조회하고 결과를 담을 배열 초기화
@@ -168,8 +170,8 @@ exports.getMyTeamBoard = async (req, res) => {
 
         res.json({ success: true, result: teamBoards });
     } catch (error) {
-        console.error('팀 보드 조회 실패:', error);
-        res.json({ success: false, result: '팀 보드 조회 실패' });
+        console.error("팀 보드 조회 실패:", error);
+        res.json({ success: false, result: "팀 보드 조회 실패" });
     }
 };
 
@@ -192,7 +194,7 @@ exports.getProjectFile = async (req, res) => {
         const getProjectFileResult = await ProjectFile.findOne({
             where: { id },
         });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -204,7 +206,7 @@ exports.projectLog = async (req, res) => {
         const getBoardLogResult = await Board.findOne({
             where: { id },
         });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: true, result: error });
     }
@@ -215,7 +217,7 @@ exports.updateProjectName = async (req, res) => {
     const { project_id: id, project_name } = req.body;
     try {
         const updateProjectResult = await Project.update({ project_name }, { where: { id } });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -227,7 +229,7 @@ exports.updateProjectImg = async (req, res) => {
     const file = req.file;
 
     if (file === undefined) {
-        res.json({ success: false, result: { message: '파일업로드에 실패하였습니다.' } });
+        res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
         return;
     }
     //이전에 올렸던 이미지 삭제
@@ -235,7 +237,7 @@ exports.updateProjectImg = async (req, res) => {
     console.log(file);
     try {
         const updateProjectResult = await Project.update({ project_img: file.filename }, { where: { id } });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -245,7 +247,7 @@ exports.updateProjectStatus = async (req, res) => {
     const { project_id: id, status } = req.body;
     try {
         const updateProjectResult = await Project.update({ status }, { where: { id } });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -258,7 +260,7 @@ exports.updateProjectperiod = async (req, res) => {
             { start_date: String(start_date), end_date: String(end_date) },
             { where: { id } }
         );
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -268,7 +270,7 @@ exports.updateProjectOverview = async (req, res) => {
     const { project_id: id, overview } = req.body;
     try {
         const updateProjectResult = await Project.update({ overview }, { where: { id } });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -279,7 +281,7 @@ exports.updateProjectRule = async (req, res) => {
     console.log(req.body);
     try {
         const updateProjectResult = await Project.update({ rule: JSON.stringify(rule) }, { where: { id } });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -290,9 +292,9 @@ exports.addProjectMember = async (req, res) => {
     let userId;
     let result = [];
 
-    if (typeof member_id === 'object') {
+    if (typeof member_id === "object") {
         userId = member_id;
-    } else if (typeof member_id === 'string') {
+    } else if (typeof member_id === "string") {
         userId = JSON.parse(member_id);
     }
 
@@ -313,10 +315,10 @@ exports.addProjectMember = async (req, res) => {
                     userId: Number(userId[i]),
                 });
                 result.push(addProjectMemberResult);
-                console.log('result');
+                console.log("result");
             }
         }
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -331,7 +333,7 @@ exports.deleteProjectMember = async (req, res) => {
                 userId: Number(member_id),
             },
         });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -347,25 +349,25 @@ exports.updateProjectFile = async (req, res) => {
                 fileName.push(files[i].filename);
             }
         }
-        console.log('fileName', fileName);
-        console.log('1111', JSON.stringify(fileName));
+        console.log("fileName", fileName);
+        console.log("1111", JSON.stringify(fileName));
 
         let updateProjectFileResult;
-        if (type === 'erd') {
+        if (type === "erd") {
             updateProjectFileResult = await ProjectFile.update(
                 { erd: JSON.stringify(fileName) },
                 {
                     where: { projectId: Number(id) },
                 }
             );
-        } else if (type === 'plan') {
+        } else if (type === "plan") {
             updateProjectFileResult = await ProjectFile.update(
                 { plan: JSON.stringify(fileName) },
                 {
                     where: { projectId: Number(id) },
                 }
             );
-        } else if (type === 'api') {
+        } else if (type === "api") {
             updateProjectFileResult = await ProjectFile.update(
                 { api: JSON.stringify(fileName) },
                 {
@@ -374,7 +376,7 @@ exports.updateProjectFile = async (req, res) => {
             );
         }
 
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -385,7 +387,7 @@ exports.updateProjectGithub = async (req, res) => {
     const { project_id: id, github } = req.body;
     try {
         const updateProjectResult = await Project.update({ github }, { where: { id } });
-        res.json({ success: true, result: '' });
+        res.json({ success: true, result: "" });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -404,32 +406,32 @@ exports.deleteFile = async (req, res) => {
         let data = getProjectFiletResult[String(type)];
         data = JSON.parse(data);
         //파일이 존재하면 삭제
-        if (fs.existsSync('./public/uploads/project_file/' + data[Number(project_file)].trim())) {
-            fs.unlinkSync('./public/uploads/project_file/' + data[Number(project_file)].trim());
-            console.log('삭제');
+        if (fs.existsSync("./public/uploads/project_file/" + data[Number(project_file)].trim())) {
+            fs.unlinkSync("./public/uploads/project_file/" + data[Number(project_file)].trim());
+            console.log("삭제");
         } else {
-            console.log('노삭제');
+            console.log("노삭제");
         }
         //삭제한 파일 배열에서 삭제하고 다시 디비에 저장
         data.splice(Number(project_file), 1);
 
         data = JSON.stringify(data);
 
-        if (type === 'api') {
+        if (type === "api") {
             const updateProjectFileResult = await ProjectFile.update(
                 { api: data },
                 {
                     where: { projectId: id },
                 }
             );
-        } else if (type === 'erd') {
+        } else if (type === "erd") {
             const updateProjectFileResult = await ProjectFile.update(
                 { erd: data },
                 {
                     where: { projectId: id },
                 }
             );
-        } else if (type === 'plan') {
+        } else if (type === "plan") {
             const updateProjectFileResult = await ProjectFile.update(
                 { plan: data },
                 {
@@ -437,7 +439,7 @@ exports.deleteFile = async (req, res) => {
                 }
             );
         }
-        res.json({ success: true, result: '성공' });
+        res.json({ success: true, result: "성공" });
     } catch (error) {
         console.log(error);
         res.json({ success: false, result: error });
@@ -449,9 +451,9 @@ async function deleteImg(projectId) {
         const getProjectInfotResult = await Project.findOne({
             where: { id: projectId },
         });
-        if (fs.existsSync('./public/uploads/project/' + getProjectInfotResult.project_img)) {
+        if (fs.existsSync("./public/uploads/project/" + getProjectInfotResult.project_img)) {
             // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-            fs.unlinkSync('./public/uploads/project/' + getProjectInfotResult.project_img);
+            fs.unlinkSync("./public/uploads/project/" + getProjectInfotResult.project_img);
         }
     } catch (error) {
         console.log(error);

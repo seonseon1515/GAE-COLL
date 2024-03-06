@@ -56,9 +56,7 @@ async function createProject() {
     const projectImg = document.querySelector("#proImg");
     const projectOverview = document.querySelector("#proIntro").value;
 
-    const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzA5NzExNTYxLCJleHAiOjE3MDk3OTc5NjF9.EZ4F6xsAkh3Frbgzig93VY1EDTnhY3y2haLq0JxIU-g";
-    //const token = localStorage.getItem("token");
+    const token = localStorage.getItem("token");
 
     let imgSelected = false;
 
@@ -69,17 +67,18 @@ async function createProject() {
     const formData = new FormData();
     if (projectImg.files[0] !== undefined) {
         imgSelected = true;
-    } else {
         formData.append("project_img", projectImg.files[0]);
     }
 
     formData.append("project_name", projectName);
     formData.append("start_date", projectDateStart);
     formData.append("end_date", projectDateEnd);
-    formData.append("member_id", [1]);
+    formData.append("member_id", JSON.stringify(inviteUser));
     // 임의로 넣어준 값
     formData.append("send_img", imgSelected);
     formData.append("overview", projectOverview);
+    try {
+    } catch (error) {}
 
     const careateProjectResponse = await axios({
         method: "post",
@@ -95,7 +94,7 @@ async function createProject() {
     const { success, result } = careateProjectResponse.data;
 
     if (success) {
-        // document.location.href = `/project/home`;
+        document.location.href = `/project/home`;
     } else {
         alert("프로젝트 생성에 실패하였습니다.");
     }
@@ -121,7 +120,7 @@ async function addEmail() {
     const { success, result } = emailInviteRespond.data;
 
     if (success) {
-        inviteUser.push({ id: result.id, email: result.email });
+        inviteUser.push(result.id);
         const listItem = document.createElement("li");
         listItem.classList.add("liEmail");
         listItem.textContent = projectEmail;
@@ -133,7 +132,5 @@ async function addEmail() {
     }
 }
 
-console.log("23242");
-console.log(projectEmail);
 // const projectEmail = document.querySelectorAll(".liEmail").value;
 // console.log("projectEmail", projectEmail);
