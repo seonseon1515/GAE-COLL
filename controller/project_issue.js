@@ -109,7 +109,7 @@ exports.updateProjectIssueDetail = async (req, res) => {
         let issueFiles = issue.files;
         //파일 편집할 수도 있고 안 할 수도 있고
         //첨부한 파일이 있다면
-        if (files) {
+        if (files.length > 0) {
             const updatedFileNames = files.map((file) => file.filename).join(", ");
             console.log("업데이트 한 파일명", updatedFileNames);
             //기존에 파일이 있다면 이어서 추가, 없다면 새로 추가

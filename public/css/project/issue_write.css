@@ -125,6 +125,7 @@ li:last-child {
     align-items: center;
     justify-content: center;
     border-radius: 13px;
+    visibility: hidden;
 }
 
 #files {
@@ -132,7 +133,20 @@ li:last-child {
 }
 
 .uploadBox {
+    display: none;
+    position: absolute;
+    bottom: 110px;
+}
+
+.uploadInner {
     display: flex;
+    align-items: center;
+}
+
+#origin_name {
+    padding: 0 25px;
+    font-size: 13px;
+    color: rgb(56, 55, 55);
 }
 
 .title_box {
@@ -198,6 +212,7 @@ li:last-child {
 .file_box {
     display: flex;
     margin-top: 100px;
+    overflow: auto;
 }
 
 .file > p {

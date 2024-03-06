@@ -47,9 +47,8 @@
                     </div>
 
                     <div class="writer_date">
-                        <!--  `작성자: ${홍길동}`  -->
-                        <div class="writer_box">조아영</div>
-                        <!-- `작성일: ${2024-02-03}` -->
+                        <input type="text" class="userId" style="display: none" />
+                        <div class="writer_box"></div>
                         <div class="date_box">2024-02-03</div>
                     </div>
 
@@ -57,59 +56,36 @@
                     <!--글 출력 위치-->
                     <div class="content_box">
                         <div class="icon coding_icon" id="codingIcon" onclick="codeBlockFunc()"></div>
-                        <!-- `${<p></p>}` -->
-                        <div class="content_box_inner" id="content" contenteditable="false">
-                            본문입니다. 오늘의 이슈글 블라블라
-                            <code
-                                >쉬고싶다Func() divFile.classList.add('file'); let p = document.createElement('p'); for
-                                반복문 돌려서 파일 하나씩 추가 p.innerHTML = '파일명' divFile.appendChild('p')</code
-                            >
-                            ""
-                        </div>
+                        <div class="content_box_inner" id="content" contenteditable="false"></div>
                     </div>
 
                     <!-- <label for="file">
                         <div class="btn-upload">파일 업로드하기</div>
                     </label>
                     <input type="file" name="file" id="file" /> -->
-
-                    <div class="uploadBox">
-                        <form id="myForm" onsubmit="uploadFunc()">
-                            <label for="files">
-                                <span id="filesButt" class="button_white_yellow">파일 선택</span>
-                            </label>
-                            <p id="origin_name" style="display: inline-block"></p>
-                            <input id="files" type="file" name="issue_files" multiple />
-                            <br />
-                            <button id="fileSubmit" class="button_yellow_black" type="submit">업로드</button>
-                        </form>
-                    </div>
                     <div class="file_box">
                         <div class="file"><p>1234567891011.png</p></div>
                         <div class="file"><p>첨부 파일.doc</p></div>
                     </div>
 
+                    <div class="uploadBox">
+                        <div class="uploadInner">
+                            <label for="files">
+                                <span id="filesButt" class="button_white_yellow">파일 선택</span>
+                            </label>
+                            <span id="origin_name" style="display: inline-block"></span>
+                            <input id="files" type="file" name="issue_files" multiple />
+                        </div>
+                    </div>
+
                     <button type="button" id="saveButt" class="button_yellow_white" onclick="saveFunc()">
                         수정완료
                     </button>
+
                     <hr />
                     <!--댓글 출력, 수정, 삭제하는 곳-->
                     <div class="comment_box">
                         <ul class="comments">
-                            <!-- 
-                                    for 반복문 + 
-                                    let li = document.createElement('li');
-                                        li.innerHTML = `<div class="user_image" style="background-image: url('이미지경로.jpg');"></div>
-                                        <p>${user_name}</p> : <p>${comment}</p>`
-
-                                        ul.appendChild(li)
-
-                                     < for (let i = 0; i < list.length; i++) { >
-                                    <li>
-                                    <b>< list[i].userid </b>
-                                         <a href="/comment/<projectId[i].id> ">list[i].comment</a>
-                                    </li> 
-                            -->
                             <li>
                                 <div class="user_Image" style="background-image: url(/public/img/user-solid.svg)"></div>
                                 <p>이름 :</p>
