@@ -59,13 +59,14 @@ exports.searchProjectIssues = async (req, res) => {
 // 프로젝트 이슈 조회 (모든 프로젝트 이슈)
 exports.getProjectIssues = async (req, res) => {
     try {
-        const { project_id: projectId } = req.body; // 프로젝트 ID
+        const { id: projectId } = req.params; // 프로젝트 ID
+        console.log(req.params);
         const userId = req.userId; // 작성자 ID
         console.log(projectId, userId);
         const projectIssues = await Issue.findAll({ where: { projectId } });
         res.json({ success: true, result: projectIssues });
     } catch (error) {
-        console.error("이슈 조회 오류:", error);
+        console.log("이슈 조회 오류:", error);
         res.json({ success: false, result: error });
     }
 };
@@ -129,7 +130,9 @@ exports.deleteProjectIssueFile = async (req, res) => {
         const { id } = req.params;
         const userId = req.userId;
         const { fileName } = req.body; // 삭제할 파일의 이름
-
+        console.log("이슈아이디:", id);
+        console.log("유저아이디:", userId);
+        console.log("파일이름:", fileName);
         // 작성자 본인인지 확인
         const issue = await Issue.findOne({ where: { id } });
         if (issue.userId !== userId) {

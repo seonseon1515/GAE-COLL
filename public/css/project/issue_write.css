@@ -125,7 +125,6 @@ li:last-child {
     align-items: center;
     justify-content: center;
     border-radius: 13px;
-    visibility: hidden;
 }
 
 #files {
@@ -133,9 +132,8 @@ li:last-child {
 }
 
 .uploadBox {
-    display: none;
     position: absolute;
-    bottom: 110px;
+    bottom: 30px;
 }
 
 .uploadInner {

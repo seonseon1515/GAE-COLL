@@ -59,14 +59,8 @@
                         <div class="content_box_inner" id="content" contenteditable="false"></div>
                     </div>
 
-                    <!-- <label for="file">
-                        <div class="btn-upload">파일 업로드하기</div>
-                    </label>
-                    <input type="file" name="file" id="file" /> -->
-                    <div class="file_box">
-                        <div class="file"><p>1234567891011.png</p></div>
-                        <div class="file"><p>첨부 파일.doc</p></div>
-                    </div>
+                    <!--파일 출력 위치-->
+                    <div class="file_box"></div>
 
                     <div class="uploadBox">
                         <div class="uploadInner">
@@ -78,32 +72,19 @@
                         </div>
                     </div>
 
-                    <button type="button" id="saveButt" class="button_yellow_white" onclick="saveFunc()">
-                        수정완료
-                    </button>
+                    <div class="save_cancle_butt">
+                        <button type="button" id="saveButt" class="button_yellow_white" onclick="saveFunc()">
+                            저장
+                        </button>
+                        <button type="button" id="cancleButt" class="button_yellow_white" onclick="cancleFunc()">
+                            취소
+                        </button>
+                    </div>
 
                     <hr />
-                    <!--댓글 출력, 수정, 삭제하는 곳-->
+                    <!--댓글 출력, 삭제하는 곳-->
                     <div class="comment_box">
-                        <ul class="comments">
-                            <li>
-                                <div class="user_Image" style="background-image: url(/public/img/user-solid.svg)"></div>
-                                <p>이름 :</p>
-                                <div contenteditable="false" id="comment" class="comment">댓글입니다 댓글 댓글</div>
-                                <button
-                                    type="button"
-                                    id="commentEdit"
-                                    class="icon correction_icon"
-                                    onclick="editCommentFunc()"
-                                ></button>
-                                <button
-                                    type="button"
-                                    id="commentDelete"
-                                    class="icon delete_icon"
-                                    onclick="deleteCommentFunc()"
-                                ></button>
-                            </li>
-                        </ul>
+                        <ul class="comments"></ul>
                     </div>
                 </form>
             </div>

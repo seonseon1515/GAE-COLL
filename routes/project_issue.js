@@ -6,7 +6,7 @@ const middleware = require("../middleware/auth");
 
 // 프로젝트 이슈 작성 + 조회
 router.post("/", middleware.auth, uploadIssueFiles, controller.createProjectIssue);
-router.get("/", middleware.auth, controller.getProjectIssues);
+router.get("/:id", middleware.auth, controller.getProjectIssues);
 
 // 프로젝트 이슈 검색
 router.get("/search", middleware.auth, controller.searchProjectIssues);
