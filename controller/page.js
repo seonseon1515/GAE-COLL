@@ -66,7 +66,7 @@ exports.issue_write = (req, res) => {
 };
 
 exports.newProject = (req, res) => {
-    res.render("project/newProject");
+    res.render("project/newProject2");
 };
 exports.calender = (req, res) => {
     res.render("project/calender");
