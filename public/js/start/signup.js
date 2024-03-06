@@ -19,7 +19,7 @@ async function emailAuth() {
 
         emailAuthBtn.classList.remove("hidden");
     } else {
-        alert("인증번호 전송에 실패하였습니다.");
+        alert(result.message);
     }
 }
 //이메일 인증번호 확인
@@ -38,5 +38,48 @@ async function checkEmailAuthNum() {
 }
 
 //회원가입
-async function emailSignup() {}
+async function emailSignup() {
+    const user_name = document.querySelector("#user-name").value;
+    const email = document.querySelector("#email").value;
+    const password = document.querySelector("#password").value;
+    const passwordCheck = document.querySelector("#password-check");
+    const question = document.querySelector("#question");
+    const selectedQuestion = question.options[question.selectedIndex].value;
 
+    const questionAsw = document.querySelector("#answer").value;
+
+    if (
+        user_name === "" ||
+        (email === "") | (password === "") ||
+        selectedQuestion === "" ||
+        questionAsw === "" ||
+        isAuth === false
+    ) {
+        alert("모든 항목을 채워주세요");
+        return;
+    }
+    if (passwordCheck !== password) {
+        alert("비밀번호가 일치하지 않습니다.");
+    }
+
+    const signupResult = await axios({
+        method: "POST",
+        url: "/api/user/signup",
+        data: {
+            email,
+            password,
+            user_name,
+            type: "email",
+            selected_question: Number(selectedQuestion),
+            answer: questionAsw,
+        },
+    });
+    console.log(signupResult);
+    const { success } = signupResult.data;
+    if (success) {
+        alert("회원가입을 축하드립니다!");
+        document.location.href = "/start/login";
+    } else {
+        alert("회원가입에 실패하였습니다.");
+    }
+}

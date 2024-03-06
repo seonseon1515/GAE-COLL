@@ -30,14 +30,14 @@
                 <!--header 시작 후 회원가입-->
                 <form class="main-text">
                     <div class="text-aria">
-                        <input type="text" id="name" placeholder="이름" class="input" required />
+                        <input type="text" id="user-name" placeholder="이름" class="input" required />
                     </div>
                     <br />
                     <div class="email-div">
                         <div class="text-aria">
                             <input type="email" id="email" placeholder="이메일" class="input" required />
                         </div>
-                        <input type="button" class="button" value="인증번호 전송" onclick="emailAuth()" />
+                        <input type="button" class="button auth-btn" value="인증번호 전송" onclick="emailAuth()" />
                     </div>
                     <br />
                     <div class="email-div">
@@ -47,7 +47,7 @@
                         <input
                             type="button"
                             id="email-auth-btn"
-                            class="ans-button hidden"
+                            class="ans-button hidden auth-btn"
                             value="인증번호 확인"
                             onclick="checkEmailAuthNum()"
                         />
@@ -58,10 +58,10 @@
                     </div>
                     <br />
                     <div class="text-aria">
-                        <input type="password" id="password-test" placeholder="비밀번호 확인" class="input" required />
+                        <input type="password" id="password-check" placeholder="비밀번호 확인" class="input" required />
                     </div>
                     <br />
-                    <select name="question" id="ans" class="text-aria">
+                    <select name="question" id="question" class="text-aria">
                         <option selected disabled hidden>이메일 확인 질문</option>
                         <option class="ans" value="1">아버지의 성함은?</option>
                         <option class="ans" value="2">초등학교 모교 이름?</option>
@@ -69,10 +69,12 @@
                     </select>
                     <br />
                     <div class="text-aria">
-                        <input type="text" placeholder="이메일 확인 답변" required class="input" />
+                        <input type="text" id="answer" placeholder="이메일 확인 답변" required class="input" />
                     </div>
                     <br />
-                    <input type="button" value="회원 가입 완료" id="signup-submit" onclick="emailSignup()" />
+                    <div class="signup-btn-area">
+                        <input type="button" value="회원 가입 완료" id="signup-submit" onclick="emailSignup()" />
+                    </div>
                 </form>
             </div>
         </main>
