@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="../../public/css/project/issue_main.css" />
+        <link rel="stylesheet" href="../public/css/main.css" />
+        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+    </head>
+    <body>
+        <%-include('../../views/common/header.ejs') %> <%-include('header.ejs')%>
+        <main>
+            <form id="issue-contain">
+                <div id="issue-search-contain">
+                    <select name="values" id="vules" class="search-values">
+                        <option class="value" value="1">제목</option>
+                        <option class="value" value="2">작성자</option>
+                    </select>
+                    <input type="text" placeholder="검색" id="serch-text" />
+                    <button type="submit" id="search">검색</button>
+                </div>
+                <div id="issue-contain-main">
+                    <table>
+                        <thead>
+                            <tr id="issue-contain-title">
+                                <th id="issue-number">No</th>
+                                <th id="issue-title">제목</th>
+                                <th class="issue">작성자</th>
+                                <th class="issue">작성시간</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr id="issue-con">
+                                <td id="issue-number">10</td>
+                                <td id="issue-title">제목</td>
+                                <td class="issue">작성자</td>
+                                <td class="issue">작성시간</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="write">
+                    <a href="../../../project/issue_write" class="issue-write-a">글쓰기</a>
+                </div>
+                <div id="page-number">
+                    <div class="page-img-div2"><img class="page-img" src="../../public/img/backward-solid.svg" /></div>
+                    <div class="page-img-div">
+                        <img class="page-img" src="../../public/img/caret-left-solid.svg" />
+                    </div>
+                    <li class="li">1</li>
+                    <li class="li">2</li>
+                    <li class="li">3</li>
+                    <li class="li">4</li>
+                    <li class="li">5</li>
+                    <div class="page-img-div">
+                        <img class="page-img" src="../../public/img/caret-right-solid.svg" />
+                    </div>
+                    <div class="page-img-div2">
+                        <img class="page-img" src="../../public/img/forward-solid.svg" />
+                    </div>
+                </div>
+            </form>
+        </main>
+        <%-include('../../views/common/footer.ejs')%>
+    </body>
+    <script src="../../public/js/project/issue_main.js"></script>
+</html>
