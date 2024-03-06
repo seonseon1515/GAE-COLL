@@ -1,8 +1,8 @@
 const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5Njk4NTc2LCJleHAiOjE3MDk3MDIxNzZ9.zRBsM56r5ADc720ag_H4noQUH7j7Od0c6i2FbKZ1chg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzA5NTM4LCJleHAiOjE3MDk3OTU5Mzh9.19k54e46mtRxLcleMCGomka1IDJKcUpDQCg_tvP3jM0";
 // const ids = document.location.href.split("project/issue/detail/");
 // const id = ids[1];
-const id = 8;
+const id = 11; //이슈 아이디
 (function () {
     axios({
         method: "get",

@@ -27,11 +27,13 @@
                     </div>
                     <!--제목 출력 위치-->
                     <div class="title_boxes">
-                        <h3>제목</h3><div contenteditable="true" id="title_box" class="title_box">
+                        <h3>제목</h3>
+                        <div contenteditable="true" id="title_box" class="title_box">
                         </div>
                     </div>
 
                     <div class="writer_date">
+                        <input type="text" class="userId" style="display: none;"/>
                       <span>작성자</span><div class="writer_box" contenteditable="true"></div>
                       <span>작성일</span><input type="date" id="issue_date" class="issueDate">
                     </div>
@@ -45,7 +47,7 @@
                     </div>
 
                     <div class="uploadBox">
-                        <form id="myForm" onsubmit="uploadFunc()">
+                        <form id="myForm">
                             <label for="files">
                                 <span id="filesButt" class="button_white_yellow">파일 선택</span>
                             </label>
@@ -53,7 +55,7 @@
                             <input id="files" type="file" name="issue_files" multiple />
                         </form>
                     </div>
-                      <button type="button" id="saveButt" class="button_yellow_white" onclick="submitFunc()">
+                      <button type="button" id="submitButt" class="button_yellow_white" onclick="submitFunc()">
                         글쓰기
                     </button>
 

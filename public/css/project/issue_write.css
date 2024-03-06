@@ -108,14 +108,13 @@ li:last-child {
     margin-bottom: 0;
 }
 
-#saveButt {
+#submitButt {
     position: absolute;
     top: 50px;
     right: 0;
     margin-right: 50px;
     width: 100px;
     background-color: #ffb731;
-    display: none;
 }
 
 #filesButt {
@@ -137,8 +136,10 @@ li:last-child {
 }
 
 .title_box {
-    border-radius: 10px;
-    padding: 10px;
+    border-radius: 5px;
+    background-color: rgb(245, 245, 245);
+    width: 50vw;
+    padding: 5px;
     font-size: 20px;
     font-weight: bold;
     /* margin-right: 3px; */

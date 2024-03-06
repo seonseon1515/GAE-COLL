@@ -1,8 +1,23 @@
 const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5Njk4NTc2LCJleHAiOjE3MDk3MDIxNzZ9.zRBsM56r5ADc720ag_H4noQUH7j7Od0c6i2FbKZ1chg";
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzA5NTM4LCJleHAiOjE3MDk3OTU5Mzh9.19k54e46mtRxLcleMCGomka1IDJKcUpDQCg_tvP3jM0";
 // const ids = document.location.href.split("project/issue/detail/");
 // const id = ids[1];
 const id = 8;
+
+(function () {
+    axios({
+        method: "POST",
+        url: "/api/user/info",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    }).then((res) => {
+        console.log(res.data.result.user_name);
+        const { user_name, id } = res.data.result;
+        document.querySelector(".userId").value = id;
+        document.querySelector(".writer_box").innerHTML = user_name;
+    });
+})();
 
 //코드 블록
 async function codeBlockFunc() {
@@ -17,39 +32,44 @@ async function codeBlockFunc() {
     content.appendChild(span);
 }
 
-//생성 테스트는 성공
-// async function writeIssueFunc() {
-//     try {
-//         const content = document.getElementById("content").innerHTML;
-//         const issue_date_text = document.querySelector(".date_box").textContent;
-//         const issue_date = new Date(issue_date_text);
+async function submitFunc() {
+    try {
+        const content = document.getElementById("content").innerHTML;
+        const issue_date = document.querySelector(".issueDate").value;
+        const title = document.querySelector(".title_box").textContent;
+        const userId = document.querySelector(".userId").value;
+        // const files = document.querySelectorAll("origin_name").textContent;
 
-//         const title = document.querySelector(".title_box").textContent;
-//         const files = document.querySelectorAll(".file_box .file").textContent;
+        //파일 불러오기
+        const fileInput = document.getElementById("files");
+        const formData = new FormData();
 
-//         const temp = document.location.href.split("project/issue/detail/");
-//         const res = await axios({
-//             method: "POST",
-//             url: `/api/porject/issue/datail/${temp[1]}`,
-//             headers: {
-//                 Authorization: `Bearer ${token}`,
-//             },
-//             data: {
-//                 content,
-//                 issue_date,
-//                 title,
-//                 files,
-//                 projectId: "1", // 원래 params로
-//             },
-//             // params: {
-//             //     projectId: temp[1]
-//             // },
-//         });
-//         console.log(res);
-//     } catch (error) {
-//         console.error(error);
-//     }
-// }
+        formData.append("content", content);
+        formData.append("issue_date", issue_date);
+        formData.append("title", title);
+        formData.append("projectId", "1");
+        formData.append("userId", userId);
+
+        for (let i = 0; i < fileInput.files.length; i++) {
+            formData.append("issue_files", fileInput.files[i]);
+        }
+
+        console.log(fileInput.files[0]);
+
+        const res = await axios({
+            method: "POST",
+            url: "/api/project/issue",
+            data: formData, // 어디서 저장해서 어디서 가져오는거지..?
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+            },
+        });
+        console.log(res);
+    } catch (error) {
+        console.error(error);
+    }
+}
 
 async function saveFunc() {
     try {
