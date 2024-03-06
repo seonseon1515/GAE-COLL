@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <link rel="stylesheet" href="../../public/css/project/newProject2.css" />
+  <link rel="stylesheet" href="../../public/css/main.css" />
+  <link rel="stylesheet" href="../../public/css/common/font.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+</head>
+
+<body>
+  <%- include('../../views/common/header.ejs') %>
+    <div class="wrap_middle">
+      <div id="newProject-contain">
+        <form id="form-project">
+          <div id="newProject-name">
+            프로젝트
+            <hr class="bar" />
+          </div>
+
+          <div class="project-div">
+            <label class="subtxt" for="projectName">프로젝트 이름</label>
+            <input type="text" id="projectName" class="txtBox" required />
+          </div>
+          <br />
+          <div class="project-div">
+            <label class="subtxt" for="setProDate">프로젝트 날짜</label>
+
+            <input type="date" name="nowDateName" id="setProDate" min="2012-06-05" max="2050-06-20" class="txtBox" />
+          </div>
+          <br />
+          <div class="project-div">
+            <label class="subtxt" for="proInvite">프로젝트 멤버 초대</label>
+            <input type="text" id="proInvite" class="txtBox" onclick="openPopup()" />
+          </div>
+          <br />
+
+          <div class="popup-overlay">
+            <div class="popup-content">
+              <h1>이메일을 작성하세요</h1>
+              <form id="member-invitation">
+                <label for="email-write">이메일 : </label>
+                <input type="email" id="email-write" required />
+                <ul id="emailList"></ul>
+                <div id="member-invi-button-div">
+                  <button class="invi addButton" type="button" onclick="addEmail()">추가</button>
+                  <button type="submit" class="invi submitButton">전송</button>
+                  <button onclick="closePopup()" id="member-invi-button" class="invi closeButton">닫기</button>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="project-div">
+            <label class="subtxt" for="proImg">프로젝트 이미지
+              <span class="button_yellow_white">파일 선택</span></label style="display: inline">
+            <p id="origin_name" style="display: inline-block"></p>
+            <input id="proImg" type="file" class="txtBox" style="display: none" />
+          </div>
+          <br />
+          <div class="project-div">
+            <label class="subtxt" for="proIntro">프로젝트 소개</label>
+            <input type="text" id="proIntro" class="txtBox" />
+          </div>
+          <br />
+        </form>
+        <button type="submit" class="button_yellow_black" form="form-project" id="newProject-submit">생성</button>
+      </div>
+    </div>
+
+    <%-include('../../views/common/footer.ejs')%>
+</body>
+<script src="../../public/js/project/newProject2.js"></script>
+
+</html>
