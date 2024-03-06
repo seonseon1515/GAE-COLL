@@ -22,23 +22,34 @@
                     </div>
 
                     <div id="popup" style="display: none">
-                        <form>
-                            <ul>
-                                <li class="mypage-li" onclick="showPwdPopup()">비밀 번호 수정</li>
-                                <li class="mypage-li" onclick="showLogoutPopup()">로그 아웃</li>
-                                <li class="mypage-li" onclick="showDeletePopup()">회원 탈퇴</li>
-                            </ul>
-                        </form>
+                        <div class="close-btn-box">
+                            <div class="close-btn">
+                                <img src="../public/img/close.png" alt="" />
+                                <button onclick="closePopup()"></button>
+                            </div>
+                        </div>
+                        <ul>
+                            <li class="mypage-li" id="changePW" onclick="showPwdPopup()">비밀 번호 수정</li>
+                            <li class="mypage-li" onclick="showLogoutPopup()">로그 아웃</li>
+                            <li class="mypage-li" onclick="showDeletePopup()">회원 탈퇴</li>
+                        </ul>
                     </div>
-
                     <div id="pwdPopup" style="display: none">
-                        <div class="user-pwd">현재 비밀 번호</div>
-                        <input type="password" id="currentPwd" class="pwd-check" />
+                        <!-- <div class="user-pwd">현재 비밀 번호</div>
+                        <input type="password" id="currentPwd" class="pwd-check" /> -->
+                        <div class="close-btn-box">
+                            <div class="close-btn">
+                                <img src="../public/img/close.png" alt="" />
+                                <button onclick="closePwdPopup()"></button>
+                            </div>
+                        </div>
                         <div class="user-pwd">변경하고 싶은 비밀번호</div>
                         <input type="password" id="newPwd" class="pwd-check" />
                         <div class="user-pwd">비밀번호 확인</div>
                         <input type="password" id="confirmPwd" class="pwd-check" />
-                        <button type="button" onclick="updatePassword()" class="new-pwd-button">수정</button>
+                        <div class="button-box">
+                            <button type="button" onclick="updatePassword()" class="new-pwd-button">수정</button>
+                        </div>
                     </div>
                     <div id="logoutPopup" style="display: none"></div>
 
@@ -71,11 +82,11 @@
             </div>
             <form class="profile_detail_section">
                 <div class="name_box">
-                    <div>이름</div>
+                    <div class="padding">이름</div>
                     <input type="text" id="username" />
                 </div>
                 <div class="email_box">
-                    <div>이메일</div>
+                    <div class="padding">이메일</div>
                     <div id="useremail"></div>
                 </div>
                 <div class="update_box">

@@ -78,11 +78,13 @@ exports.write = (req, res) => {
 const kakaoOpt = {
     clientId: process.env.KAKAO_CLIENT_ID,
     clientSecret: process.env.KAKAO_CLIENT_SECRET,
-    redirectUri: process.env.KAKAO_REDIRECT_URI,
+    redirectUri: process.env.DEVEL_KAKAO_REDIRECT_URI,
+    //redirectUri: process.env.KAKAO_REDIRECT_URI,
 };
 const googleOpt = {
     clientId: process.env.GOOGLE_CLIENT_ID,
-    redirectUri: process.env.GOOGLE_REDIRECT_URI,
+    redirectUri: process.env.DEVEL_GOOGLE_REDIRECT_URI,
+    //redirectUri: process.env.GOOGLE_REDIRECT_URI,
 };
 //카카오 로그인
 exports.getKakaoAuth = async (req, res) => {
