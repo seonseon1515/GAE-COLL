@@ -89,20 +89,14 @@ body {
 }
 
 #email-write {
-    width: 290px;
+    width: 300px;
     font-size: 20px;
-}
-
-input[type='email'] {
-    width: 40vw;
-    margin-left: 2vw;
+    margin-left: 10px;
     border: none;
-    width: 30vw;
-    border-bottom: solid gray;
+    border-bottom: 2px solid gray;
 }
 
 #member-invitation {
-    padding-top: 2vw;
     display: flex;
     width: auto;
     height: auto;
@@ -110,11 +104,12 @@ input[type='email'] {
 }
 
 #member-invi-button-div {
-    display: flex;
-    justify-content: end;
-    margin-top: 30px;
+    text-align: end;
 }
 
+.h1Css {
+    margin-bottom: 20px;
+}
 .invi {
     background-color: #ffda31;
     color: white;
@@ -178,6 +173,36 @@ li {
     font-size: 13px;
     font-weight: 400;
     background-color: #ffda31;
-    border-radius: 5px;
+    width: auto;
+    height: 15px;
+    border-radius: 10px;
     margin-top: 1px;
+    list-style: none;
+    padding: none;
 }
+
+il:hover {
+    opacity: 0.7;
+}
+
+#member-invi-button-div {
+    margin-left: 80%;
+    display: flex;
+    margin-top: 20px;
+}
+
+.inviButton {
+    margin-left: 5px;
+}
+
+#setProDate,
+#projectName,
+#proIntro,
+#origin_name {
+    font-size: 15px;
+}
+
+@media screen and (max-width: 768px){  }
+
+
+

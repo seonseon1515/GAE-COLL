@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../../public/css/main.css" />
   <link rel="stylesheet" href="../../public/css/common/font.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -28,28 +29,29 @@
           </div>
           <br />
           <div class="project-div">
-            <label class="subtxt" for="setProDate">프로젝트 날짜</label>
-
-            <input type="date" name="nowDateName" id="setProDate" min="2012-06-05" max="2050-06-20" class="txtBox" />
+            <div class="subtxt" for="setProDate">프로젝트 날짜</div>
+            <label for="start_date">시작일</label>
+            <input type="date" name="nowDateName" id="start_date" min="2012-06-05" max="2050-06-20" class="txtBox" />
+            <label for="end_date">마감일</label>
+            <input type="date" name="nowDateName" id="end_date" min="2012-06-05" max="2050-06-20" class="txtBox" />
           </div>
           <br />
-          <div class="project-div">
-            <label class="subtxt" for="proInvite">프로젝트 멤버 초대</label>
-            <input type="text" id="proInvite" class="txtBox" onclick="openPopup()" />
-          </div>
+         
+            <span class="subtxt" for="proInvite">프로젝트 멤버 초대</span><button type="button" id="proInvite" class="invi inviButton" onclick="openPopup()" style="display: inline;">초대</button>
+          
+          <ul id="emailList2"></ul>
           <br />
 
           <div class="popup-overlay">
             <div class="popup-content">
-              <h1>이메일을 작성하세요</h1>
-              <form id="member-invitation">
+              <h1 class="h1Css">이메일을 작성하세요</h1>
+              <form name="email-write" id="member-invitation">
                 <label for="email-write">이메일 : </label>
-                <input type="email" id="email-write" required />
+                <input type="email" name="email-write" id="email-write"/>
                 <ul id="emailList"></ul>
                 <div id="member-invi-button-div">
-                  <button class="invi addButton" type="button" onclick="addEmail()">추가</button>
-                  <button type="submit" class="invi submitButton">전송</button>
-                  <button onclick="closePopup()" id="member-invi-button" class="invi closeButton">닫기</button>
+                  <button class="invi addButton" type="button" onclick="addEmail()" style="display: inline;">추가</button>
+                  <button onclick="closePopup()" id="member-invi-button" class="invi closeButton" style="display: inline;">닫기</button>
                 </div>
               </form>
             </div>
@@ -67,7 +69,7 @@
           </div>
           <br />
         </form>
-        <button type="submit" class="button_yellow_black" form="form-project" id="newProject-submit">생성</button>
+        <button type="button" class="button_yellow_black" onclick="createProject()" id="newProject-submit">생성</button>
       </div>
     </div>
 
