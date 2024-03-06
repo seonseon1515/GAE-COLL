@@ -39,3 +39,4 @@ async function checkEmailAuthNum() {
 
 //회원가입
 async function emailSignup() {}
+
