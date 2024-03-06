@@ -5,8 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="../../public/css/project/issue_content.css" />
-        <link rel="stylesheet" href="../public/css/main.css" />
-        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link rel="stylesheet" href="../../public/css/main.css" />
+        <link rel="stylesheet" href="../../public/css/common/font.css" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
@@ -20,15 +27,15 @@
                         <div id="title-con">
                             <button
                                 type="button"
-                                id="img-corretion"
-                                class="icon delte_icon"
-                                onclick="deleteIssueFunc()"
-                            ></button>
-                            <button
-                                type="button"
                                 id="img-corrcetion"
                                 class="icon correction_icon"
                                 onclick="editIssueFunc()"
+                            ></button>
+                            <button
+                                type="button"
+                                id="img-corretion"
+                                class="icon delete_icon"
+                                onclick="deleteIssueFunc()"
                             ></button>
                         </div>
                     </div>
@@ -49,9 +56,7 @@
                     <hr />
                     <!--글 출력 위치-->
                     <div class="content_box">
-                        <div class="content_icon">
-                            <div class="icon coding_icon" onclick="codeBlockFunc()"></div>
-                        </div>
+                        <div class="icon coding_icon" id="codingIcon" onclick="codeBlockFunc()"></div>
                         <!-- `${<p></p>}` -->
                         <div class="content_box_inner" id="content" contenteditable="false">
                             본문입니다. 오늘의 이슈글 블라블라
@@ -63,28 +68,31 @@
                         </div>
                     </div>
 
-                    <!--수정 아이콘을 누르면 파일 수정/추가-->
-                    <!-- <form onsubmit="upload(event)">
-                        <input type="file" id="files" multiple /><br />
-                        <button class="button_yellow_black" button="submit">업로드</button>
-                    </form> -->
+                    <!-- <label for="file">
+                        <div class="btn-upload">파일 업로드하기</div>
+                    </label>
+                    <input type="file" name="file" id="file" /> -->
 
-                    <!--파일 출력 위치-->
-                    <!-- <div id="img-corretion" class="icon delte_icon" onclick="deleteCommentFunc()"></div> -->
+                    <div class="uploadBox">
+                        <form id="myForm" onsubmit="uploadFunc()">
+                            <label for="files">
+                                <span id="filesButt" class="button_white_yellow">파일 선택</span>
+                            </label>
+                            <p id="origin_name" style="display: inline-block"></p>
+                            <input id="files" type="file" name="issue_files" multiple />
+                            <br />
+                            <button id="fileSubmit" class="button_yellow_black" type="submit">업로드</button>
+                        </form>
+                    </div>
                     <div class="file_box">
-                        <!-- let divFile = document.createElement('div');
-                             divFile.classList.add('file');
-                             let p = document.createElement('p');
-
-                             for 반복문 돌려서 파일 하나씩 추가
-                             p.innerHTML = '파일명'
-                             divFile.appendChild('p')
-                         -->
                         <div class="file"><p>1234567891011.png</p></div>
                         <div class="file"><p>첨부 파일.doc</p></div>
                     </div>
-                    <hr />
 
+                    <button type="button" id="saveButt" class="button_yellow_white" onclick="saveFunc()">
+                        수정완료
+                    </button>
+                    <hr />
                     <!--댓글 출력, 수정, 삭제하는 곳-->
                     <div class="comment_box">
                         <ul class="comments">
@@ -95,29 +103,44 @@
                                         <p>${user_name}</p> : <p>${comment}</p>`
 
                                         ul.appendChild(li)
-                                -->
+
+                                     < for (let i = 0; i < list.length; i++) { >
+                                    <li>
+                                    <b>< list[i].userid </b>
+                                         <a href="/comment/<projectId[i].id> ">list[i].comment</a>
+                                    </li> 
+                            -->
                             <li>
                                 <div class="user_Image" style="background-image: url(/public/img/user-solid.svg)"></div>
                                 <p>이름 :</p>
                                 <div contenteditable="false" id="comment" class="comment">댓글입니다 댓글 댓글</div>
-
-                                <div id="img-corretion" class="icon correction_icon" onclick="editCommentFunc()"></div>
-                                <div id="img-corretion" class="icon delte_icon" onclick="deleteCommentFunc()"></div>
+                                <button
+                                    type="button"
+                                    id="commentEdit"
+                                    class="icon correction_icon"
+                                    onclick="editCommentFunc()"
+                                ></button>
+                                <button
+                                    type="button"
+                                    id="commentDelete"
+                                    class="icon delete_icon"
+                                    onclick="deleteCommentFunc()"
+                                ></button>
                             </li>
                         </ul>
                     </div>
-                    <hr />
-
-                    <!--댓글 입력 하는 곳-->
-                    <div class="writeComment_box">
-                        <!-- <div class="icon coding_icon"></div> -->
-
-                        <div contenteditable="true" placeholder="댓글을 입력해주세요" id="comment_write"></div>
-                        <button onclick="addCommentFunc()" class="button_yellow_black">작성</button>
-                    </div>
                 </form>
             </div>
+
+            <!--댓글 입력 하는 곳-->
+            <div class="writeComment_box">
+                <!-- <div class="icon coding_icon"></div> -->
+
+                <div contenteditable="true" placeholder="댓글을 입력해주세요" id="comment_write"></div>
+                <button onclick="addCommentFunc()" id="submitComment" class="button_yellow_black">작성</button>
+            </div>
         </main>
+        <%-include('../../views/common/footer.ejs') %>
     </body>
     <script src="../../public/js/project/issue_content.js"></script>
 </html>

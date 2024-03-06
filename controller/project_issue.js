@@ -91,6 +91,7 @@ exports.getProjectIssueDetail = async (req, res) => {
 // 프로젝트 이슈 수정
 exports.updateProjectIssueDetail = async (req, res) => {
     const files = req.files;
+    console.log(files);
     //id(이슈id), user_id(작성자), req.userId(현재 사용자)
     const { id } = req.params;
     const userId = req.userId;

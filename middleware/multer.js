@@ -7,6 +7,7 @@ const upload = multer({
     storage: multer.diskStorage({
         destination(req, file, done) {
             const filename = file.fieldname.trim();
+            console.log("file확인:", file.fieldname);
 
             if (filename === "user_img") {
                 done(null, "./public/uploads/profile");

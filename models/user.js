@@ -24,14 +24,6 @@ const UserModel = (sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
-        selected_question: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
-        answer: {
-            type: DataTypes.STRING,
-            allowNull: false,
-        },
         user_img: {
             type: DataTypes.STRING,
             allowNull: true,

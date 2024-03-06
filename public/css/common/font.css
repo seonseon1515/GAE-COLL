@@ -67,6 +67,25 @@ height : 150px
     cursor: pointer;
 }
 
+.button_white_yellow {
+    width: 80px;
+    height: 40px;
+    border-radius: 10px;
+    border: 2px solid #ffda31;
+    color: #3c3c3c;
+    background-color: rgb(255, 255, 255);
+    font-size: 20px;
+    line-height: 25px;
+    text-align: center;
+}
+
+.button_white_yellow:hover {
+    border-style: none;
+    background-color: #3c3c3c;
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
 /* icon 이미지 꽉 채우는 css */
 .icon {
     background-size: contain;

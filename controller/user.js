@@ -69,7 +69,7 @@ exports.emailAuth = async (req, res) => {
 };
 
 //이메일 로그인
-출처: https: exports.loginEmail = async (req, res) => {
+exports.loginEmail = async (req, res) => {
     const { email, password: pw } = req.body;
 
     try {
