@@ -19,24 +19,25 @@
             <div id="overview-contain">
                 <div id="overview">
                     <div id="overview-header">
-                        Project Overview
+                      Project Overview
                     </div>
                     <div id="overview-main">
-                        안녕하세요
-                        <div id="pen-img-div"><img src="../../public/img/edit.png" id="pen-img" onclick="changeOverview()"/></div>
+                      <span id="overview-text">안녕하세요</span>
+                      <input type="text" id="overview-input" onkeydown="saveOverview(event)"/>
+                      <div id="pen-img-div"><img src="../../public/img/edit.png" id="pen-img" onclick="changeOverview()"/></div>
                     </div>
-                </div>
+                  </div>
             </div>
             <!--프로젝트 멤버 추가 시작-->
             <div id="member-contain">
                 <div id="member">
                     <div id="member-header">
                         Member<div class="project-img-div">
-                            <img src="../../public/img/plus.png" class="project-img" />
+                            <img src="../../public/img/plus.png" class="project-img" onclick="addMember() "value="addMember"/>
                         </div>
                     </div>
                     <div id="overview-main">
-                        <div id="pro-img-div"><img src="../../public/img/mypage.png" id="pen-img" /></div>
+                        <div id="pro-img-div"><img src="../../public/img/mypage.png"  id="pen-img" /></div>
                         남현경
                     </div>
                 </div>
@@ -51,11 +52,11 @@
                             </div>
                             <div id="project-rule">프로젝트 규칙</div>
                             <div class="project-img-div">
-                                <img src="../../public/img/plus.png" class="project-img" />
+                                <img src="../../public/img/plus.png" class="project-img" onclick="projectRuleGeneration()" />
                             </div>
                         </div>
                         <div id="rule-li">
-                            <ul>
+                            <ul id="rule-list">
                                 <li class="li">
                                     <span class="text-element">지각하지 않기</span>
                                     <span class="rule-icon">
@@ -72,13 +73,6 @@
                                 </li>
                                 <li class="li">
                                     <span class="text-element">모르면 질문하기</span>
-                                    <span class="rule-icon">
-                                        <img src="../../public/img/edit-right.jpg" class="rule-img edit-icon" />
-                                        <img src="../../public/img/trash.png" class="rule-img delete-icon" />
-                                    </span>
-                                </li>
-                                <li class="li">
-                                    <span class="text-element"></span>
                                     <span class="rule-icon">
                                         <img src="../../public/img/edit-right.jpg" class="rule-img edit-icon" />
                                         <img src="../../public/img/trash.png" class="rule-img delete-icon" />

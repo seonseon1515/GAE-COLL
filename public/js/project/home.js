@@ -1,31 +1,184 @@
-function changeOverview() {
-    const changeOver = document.querySelector(".pen-img");
-    for (let i = 0; i < changeOver.length; i++) {
-        changeOver[i].addEventListener("click", function () {});
+//project overview 수정
+let token =
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzE4OTE2LCJleHAiOjE3MDk4MDUzMTZ9.LYcuStdk6-yhIGhkji6LgcAMkg_Xgdu924M7ZvvuTtE";
+let projectId = "project ID";
+
+async function changeOverview() {
+    const text = document.getElementById("overview-text");
+    const input = document.getElementById("overview-input");
+    input.style.display = "inline";
+    input.value = text.textContent;
+    text.style.display = "none";
+    input.focus();
+}
+
+async function saveOverview(event) {
+    if (event.key !== "Enter") return;
+    const text = document.getElementById("overview-text");
+    const input = document.getElementById("overview-input");
+    text.textContent = input.value;
+    text.style.display = "inline";
+    input.style.display = "none";
+
+    try {
+        const response = await axios({
+            method: "PATCH",
+            url: "/api/project/update/overview",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                project_id: projectId,
+                overview: input.value,
+            },
+        });
+        console.log(response);
+        const { success, result } = response.data;
+        if (success) {
+            console.log("Overview updated:", result);
+        } else {
+            console.error("Failed to update overview");
+        }
+    } catch (error) {
+        console.error("Error while updating overview:", error);
     }
 }
 
-window.onload = function () {
-    var editIcons = document.querySelectorAll(".edit-icon");
-    var deleteIcons = document.querySelectorAll(".delete-icon");
+//member 추가
+function getMemberIds() {
+    const ids = prompt("추가할 멤버 ID를 쉼표로 구분하여 입력하세요.");
+    return ids.split(",").map((id) => id.trim());
+}
 
-    for (var i = 0; i < editIcons.length; i++) {
-        editIcons[i].addEventListener("click", function () {
-            var parentLi = this.closest("li");
-            var textElement = parentLi.querySelector(".text-element");
-
-            var newText = prompt("새로운 텍스트를 입력하세요", textElement.textContent);
-            if (newText != null && newText != "") {
-                textElement.textContent = newText;
-            }
+async function addMember() {
+    const memberId = getMemberIds();
+    const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzE4OTE2LCJleHAiOjE3MDk4MDUzMTZ9.LYcuStdk6-yhIGhkji6LgcAMkg_Xgdu924M7ZvvuTtE";
+    try {
+        const response = await axios({
+            method: "POST",
+            url: "/api/project/add/member",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                project_id: projectId,
+                member_id: memberId,
+            },
         });
-
-        deleteIcons[i].addEventListener("click", function () {
-            var parentLi = this.closest("li");
-            parentLi.remove();
-        });
+        console.log(response);
+        const { success, result } = response.data;
+        if (success) {
+            console.log("회원 추가 성공:", result);
+        } else {
+            console.log("회원 추가 실패");
+        }
+    } catch (error) {
+        console.error("회원 추가 중 에러 발생:", error);
     }
+}
+//project 규칙 추가
+window.onload = function () {
+    const lis = document.querySelectorAll("#rule-list .li");
+    lis.forEach((li) => {
+        const textElement = li.querySelector(".text-element");
+        const input = document.createElement("input");
+        input.type = "text";
+        input.style.display = "none";
+        input.onkeydown = function (event) {
+            if (event.key !== "Enter") return;
+            textElement.textContent = input.value;
+            input.style.display = "none";
+            textElement.style.display = "";
+        };
+        li.insertBefore(input, textElement);
+
+        const editIcon = li.querySelector(".edit-icon");
+        editIcon.onclick = function () {
+            input.value = textElement.textContent;
+            input.style.display = "";
+            textElement.style.display = "none";
+            input.focus();
+        };
+
+        const deleteIcon = li.querySelector(".delete-icon");
+        deleteIcon.onclick = function () {
+            li.parentNode.removeChild(li);
+        };
+    });
 };
+async function projectRuleGeneration() {
+    const list = document.getElementById("rule-list");
+    const li = document.createElement("li");
+    li.className = "li";
+
+    const textElement = document.createElement("span");
+    textElement.className = "text-element";
+    textElement.style.display = "none";
+
+    const input = document.createElement("input");
+    input.type = "text";
+    input.onkeydown = async function (event) {
+        if (event.key !== "Enter") return;
+        textElement.textContent = input.value;
+        textElement.style.display = "";
+        input.style.display = "none";
+        const rule = input.value;
+
+        const token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzE4OTE2LCJleHAiOjE3MDk4MDUzMTZ9.LYcuStdk6-yhIGhkji6LgcAMkg_Xgdu924M7ZvvuTtE";
+        let projectId = "project ID";
+        try {
+            const response = await axios({
+                method: "PATCH",
+                url: "/api/project/update/rule",
+                data: {
+                    rule,
+                    project_id: projectId,
+                },
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log(response);
+            const { success, result } = response.data;
+            if (success) {
+                console.log("규칙 추가 성공 : ", result);
+            } else {
+                console.log("규칙 추가 실패");
+            }
+        } catch (error) {
+            console.log("규칙 추가 중 에러 발생 : ", error);
+        }
+    };
+
+    const ruleIcon = document.createElement("span");
+    ruleIcon.className = "rule-icon";
+
+    const editIcon = document.createElement("img");
+    editIcon.src = "../../public/img/edit-right.jpg";
+    editIcon.className = "rule-img edit-icon";
+    editIcon.onclick = function () {
+        input.value = textElement.textContent;
+        input.style.display = "";
+        textElement.style.display = "none";
+        input.focus();
+    };
+
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = "../../public/img/trash.png";
+    deleteIcon.className = "rule-img delete-icon";
+    deleteIcon.onclick = function () {
+        li.parentNode.removeChild(li);
+    };
+
+    ruleIcon.appendChild(editIcon);
+    ruleIcon.appendChild(deleteIcon);
+
+    li.appendChild(input);
+    li.appendChild(textElement);
+    li.appendChild(ruleIcon);
+    list.appendChild(li);
+    input.focus();
+}
 
 /*파일 업로드*/
 // upload.js

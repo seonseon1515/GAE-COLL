@@ -173,3 +173,27 @@ function preview(input) {
 }
 
 //이름, 이메일 정보 불러오기
+window.addEventListener("load", async function () {
+    const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA9NzE4OTE2LCJleHAiOjE3MDk4MDUzMTZ9.LYcuStdk6-yhIGhkji6LgcAMkg_Xgdu924M7ZvvuTtE";
+
+    try {
+        const response = await axios({
+            method: "GET",
+            url: "/api/user/info",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                user_name,
+                email,
+            },
+        });
+        console.log(response);
+        const { user_name, email } = response.data; // 수정된 부분
+        document.getElementById("username").value = user_name;
+        document.getElementById("useremail").textContent = email;
+    } catch (error) {
+        console.error("사용자 정보를 가져오는 중 에러 발생:", error);
+    }
+});

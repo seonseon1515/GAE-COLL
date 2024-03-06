@@ -1,7 +1,7 @@
 body {
     position: relative;
 
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
 }
 main {
     position: relative;
@@ -296,4 +296,14 @@ li:hover .rule-icon {
 .img {
     width: 40px;
     height: 40px;
+}
+#overview-input {
+    display: none;
+    width: 400px;
+    height: 40px;
+    border-style: none;
+    border-bottom: #bfbfbf solid 2px;
+}
+#overview-input:focus {
+    outline: none;
 }
