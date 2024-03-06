@@ -1,9 +1,7 @@
 //project overview 수정
-let token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzE4OTE2LCJleHAiOjE3MDk4MDUzMTZ9.LYcuStdk6-yhIGhkji6LgcAMkg_Xgdu924M7ZvvuTtE";
-let projectId = "project ID";
-
-async function changeOverview() {
+let token = localStorage.getItem("token");
+let projectId = localStorage.getItem("project_id");
+async function changeOverview(e) {
     const text = document.getElementById("overview-text");
     const input = document.getElementById("overview-input");
     input.style.display = "inline";
@@ -35,25 +33,25 @@ async function saveOverview(event) {
         console.log(response);
         const { success, result } = response.data;
         if (success) {
-            console.log("Overview updated:", result);
+            console.log("Overview 업데이트에 성공하셨습니다. :", result);
         } else {
-            console.error("Failed to update overview");
+            console.error("overview 업데이트에 실패하셨습니다.");
         }
     } catch (error) {
-        console.error("Error while updating overview:", error);
+        console.error("overview 업데이트 도중 오류가 발생하였습니다. :", error);
     }
 }
 
 //member 추가
-function getMemberNames() {
-    const names = prompt("추가할 멤버의 사용자 이름을 쉼표로 구분하여 입력하세요.");
+function getProjectId() {
+    const names = prompt("추가할 멤버의 사용자 아이디를 쉼표로 구분하여 입력하세요.");
     return names.split(",").map((name) => name.trim());
 }
 
 async function addMember() {
-    const memberNames = getMemberNames();
-    const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzIzMzYyLCJleHAiOjE3MDk4MDk3NjJ9.cJN_d_xpiVX-2Ry8y0ASrDL2w5UDW9pKqM4ie6DpIgI";
+    const projectId = getProjectId();
+    let token = localStorage.getItem("token");
+    let memberIds = [];
     try {
         const response = await axios({
             method: "POST",
@@ -63,7 +61,7 @@ async function addMember() {
             },
             data: {
                 project_id: projectId,
-                user_name: memberNames,
+                member_id: memberIds,
             },
         });
         console.log(response);
@@ -127,8 +125,7 @@ async function projectRuleGeneration() {
         input.style.display = "none";
         const rule = input.value;
 
-        const token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzE4OTE2LCJleHAiOjE3MDk4MDUzMTZ9.LYcuStdk6-yhIGhkji6LgcAMkg_Xgdu924M7ZvvuTtE";
+        let token = localStorage.getItem("token");
         let projectId = "project ID";
         try {
             const response = await axios({
@@ -208,8 +205,7 @@ document.getElementById("fileInput").addEventListener("click", async function (e
         formData.append("type", "erd");
         formData.append("project_files", "your_project_files");
 
-        const token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzIzMzYyLCJleHAiOjE3MDk4MDk3NjJ9.cJN_d_xpiVX-2Ry8y0ASrDL2w5UDW9pKqM4ie6DpIgI";
+        let token = localStorage.getItem("token");
 
         try {
             const response = await axios({
