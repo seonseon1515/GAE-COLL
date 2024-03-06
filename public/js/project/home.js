@@ -1,3 +1,10 @@
+function changeOverview() {
+    const changeOver = document.querySelector(".pen-img");
+    for (let i = 0; i < changeOver.length; i++) {
+        changeOver[i].addEventListener("click", function () {});
+    }
+}
+
 window.onload = function () {
     var editIcons = document.querySelectorAll(".edit-icon");
     var deleteIcons = document.querySelectorAll(".delete-icon");
