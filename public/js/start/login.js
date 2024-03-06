@@ -1,7 +1,7 @@
 (async function () {
-    const token = localStorage.getItem("token");
+    const save = localStorage.getItem("save");
 
-    if (token) {
+    if (save === "true") {
         document.location.href = "/";
     }
 })();
@@ -27,8 +27,9 @@ async function emailLogin() {
     if (loginResult.data.success) {
         alert("환영합니다!");
         if (isMaintain) {
-            localStorage.setItem("token", loginResult.data.token);
+            localStorage.setItem("save", "true");
         }
+        localStorage.setItem("token", loginResult.data.token);
         document.location.href = "/";
     } else {
         alert("아이디 또는 비밀번호를 확인해 주세요.");
