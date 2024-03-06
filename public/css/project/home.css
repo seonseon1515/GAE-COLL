@@ -289,6 +289,7 @@ li:hover .rule-icon {
     padding: 1vw 0 1vw 3vw;
     display: flex;
     align-items: center;
+    cursor: pointer;
 }
 #feedback-list-text {
     padding-left: 2vw;

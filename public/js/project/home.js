@@ -45,15 +45,15 @@ async function saveOverview(event) {
 }
 
 //member 추가
-function getMemberIds() {
-    const ids = prompt("추가할 멤버 ID를 쉼표로 구분하여 입력하세요.");
-    return ids.split(",").map((id) => id.trim());
+function getMemberNames() {
+    const names = prompt("추가할 멤버의 사용자 이름을 쉼표로 구분하여 입력하세요.");
+    return names.split(",").map((name) => name.trim());
 }
 
 async function addMember() {
-    const memberId = getMemberIds();
+    const memberNames = getMemberNames();
     const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzE4OTE2LCJleHAiOjE3MDk4MDUzMTZ9.LYcuStdk6-yhIGhkji6LgcAMkg_Xgdu924M7ZvvuTtE";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzIzMzYyLCJleHAiOjE3MDk4MDk3NjJ9.cJN_d_xpiVX-2Ry8y0ASrDL2w5UDW9pKqM4ie6DpIgI";
     try {
         const response = await axios({
             method: "POST",
@@ -63,7 +63,7 @@ async function addMember() {
             },
             data: {
                 project_id: projectId,
-                member_id: memberId,
+                user_name: memberNames,
             },
         });
         console.log(response);
@@ -71,12 +71,14 @@ async function addMember() {
         if (success) {
             console.log("회원 추가 성공:", result);
         } else {
+            console.log(response);
             console.log("회원 추가 실패");
         }
     } catch (error) {
         console.error("회원 추가 중 에러 발생:", error);
     }
 }
+
 //project 규칙 추가
 window.onload = function () {
     const lis = document.querySelectorAll("#rule-list .li");
@@ -182,31 +184,55 @@ async function projectRuleGeneration() {
 
 /*파일 업로드*/
 // upload.js
-document.addEventListener("DOMContentLoaded", function () {
-    // 파일 업로드 버튼과 파일 이름 표시 영역에 대한 참조를 가져옵니다.
-    var uploadBtns = document.querySelectorAll(".file-plus");
-    var fileNameDisplays = [
-        document.getElementById("plan-file-name"),
-        document.getElementById("each-file-name"),
-        // 필요한 만큼 id를 추가해주세요.
-    ];
-
-    uploadBtns.forEach(function (btn, index) {
-        var fileInput = document.createElement("input");
-        fileInput.type = "file"; // input 요소를 파일 선택 요소로 만듭니다.
-
-        // 파일 업로드 버튼을 클릭하면 파일 선택창이 뜨도록 설정합니다.
-        btn.onclick = function () {
-            fileInput.click(); // 실제 파일 선택 창을 열습니다.
-        };
-
-        // 파일을 선택하면 그 정보를 화면에 표시합니다.
-        fileInput.onchange = function () {
-            var file = this.files[0];
-
-            // 파일의 이름을 해당하는 div에 추가합니다.
-            var existingText = fileNameDisplays[index].textContent;
-            fileNameDisplays[index].textContent = existingText + "\n선택된 파일: " + file.name;
-        };
+window.onload = function () {
+    document.getElementById("uploadBtn").addEventListener("click", function () {
+        document.getElementById("fileInput").click();
     });
+};
+document.getElementById("fileInput").addEventListener("click", async function (e) {
+    const file = e.target.files[0];
+    const fileContainers = document.querySelectorAll(".api-file-contain");
+
+    let targetDiv;
+    for (let i = 0; i < fileContainers.length; i++) {
+        if (!fileContainers[i].querySelector(".api-file-name").textContent) {
+            targetDiv = fileContainers[i].querySelector(".api-file-name");
+            break;
+        }
+    }
+
+    if (targetDiv) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("project_id", "your_project_id");
+        formData.append("type", "erd");
+        formData.append("project_files", "your_project_files");
+
+        const token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzIzMzYyLCJleHAiOjE3MDk4MDk3NjJ9.cJN_d_xpiVX-2Ry8y0ASrDL2w5UDW9pKqM4ie6DpIgI";
+
+        try {
+            const response = await axios({
+                method: "PATCH",
+                url: "/api/project/update/file",
+                data: formData,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    "Content-Type": "multipart/form-data",
+                },
+            });
+            console.log(response);
+            const { success, result } = response.data;
+            if (result) {
+                console.log("File uploaded successfully");
+                targetDiv.textContent = name;
+            } else {
+                console.log("Failed to upload file");
+            }
+        } catch (error) {
+            console.error("Error uploading file:", error);
+        }
+    } else {
+        console.log("All divs are filled. Please add more divs.");
+    }
 });

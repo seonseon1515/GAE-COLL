@@ -175,11 +175,11 @@ function preview(input) {
 //이름, 이메일 정보 불러오기
 window.addEventListener("load", async function () {
     const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA9NzE4OTE2LCJleHAiOjE3MDk4MDUzMTZ9.LYcuStdk6-yhIGhkji6LgcAMkg_Xgdu924M7ZvvuTtE";
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5NzIzMTA0LCJleHAiOjE3MDk4MDk1MDR9.hXhLX9MVQTqK6H1GokP1s5NZB9y7_LXepSB9daEbEbc";
 
     try {
         const response = await axios({
-            method: "GET",
+            method: "POST", // 수정된 부분
             url: "/api/user/info",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -190,7 +190,7 @@ window.addEventListener("load", async function () {
             },
         });
         console.log(response);
-        const { user_name, email } = response.data; // 수정된 부분
+        const { user_name, email } = response.data;
         document.getElementById("username").value = user_name;
         document.getElementById("useremail").textContent = email;
     } catch (error) {
