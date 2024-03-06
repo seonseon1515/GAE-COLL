@@ -43,15 +43,46 @@ async function saveOverview(event) {
 }
 
 //member 추가
-function getProjectId() {
-    const names = prompt("추가할 멤버의 사용자 아이디를 쉼표로 구분하여 입력하세요.");
-    return names.split(",").map((name) => name.trim());
+
+function changeOverview() {
+    const userId = prompt("추가할 멤버의 아이디를 입력하세요.");
+    if (userId) {
+        // 입력한 아이디를 localStorage에 저장
+        localStorage.setItem("userId", userId);
+    }
 }
 
 async function addMember() {
-    const projectId = getProjectId();
+    let projectId = "REAL_PROJECT_ID"; // 실제 프로젝트 ID로 변경
     let token = localStorage.getItem("token");
     let memberIds = [];
+
+    // localStorage에서 아이디를 가져옴
+    const userId = localStorage.getItem("userId");
+    if (userId) {
+        // 사용자 아이디가 존재하는지 확인
+        const user = await checkUserId(userId);
+        if (user) {
+            memberIds.push(user.id); // 데이터베이스에 존재하는 사용자의 아이디를 memberIds 배열에 추가
+
+            // 사용자 이름을 화면에 추가
+            const userNameDiv = document.getElementById("overview-main");
+            userNameDiv.innerHTML = `
+                <div id="pro-img-div">
+                    <img src="../../public/img/mypage.png" id="pen-img" />
+                </div>
+                ${user.name} // user 객체에서 사용자 이름을 가져옴
+            `;
+        } else {
+            console.log(`아이디 ${userId}은 존재하지 않습니다.`);
+            return;
+        }
+    } else {
+        console.log("유효한 아이디를 입력하세요");
+        alert("유효한 아이디를 입력하세요");
+        return;
+    }
+
     try {
         const response = await axios({
             method: "POST",
@@ -61,52 +92,55 @@ async function addMember() {
             },
             data: {
                 project_id: projectId,
-                member_id: memberIds,
+                member_id: memberIds[0], // 첫 번째 멤버의 ID만 전송
             },
         });
         console.log(response);
         const { success, result } = response.data;
         if (success) {
-            console.log("회원 추가 성공:", result);
+            console.log("회원 추가 성공", result);
         } else {
             console.log(response);
             console.log("회원 추가 실패");
         }
     } catch (error) {
-        console.error("회원 추가 중 에러 발생:", error);
+        console.error("회원 추가 중 에러 발생", error);
     }
 }
 
 //project 규칙 추가
+function attachEventHandlers(li) {
+    const textElement = li.querySelector(".text-element");
+    const input = li.querySelector("input");
+
+    input.onkeydown = function (event) {
+        if (event.key !== "Enter") return;
+        textElement.textContent = input.value;
+        input.style.display = "none";
+        textElement.style.display = "";
+    };
+
+    const editIcon = li.querySelector(".edit-icon");
+    editIcon.onclick = function () {
+        input.value = textElement.textContent;
+        input.style.display = "";
+        textElement.style.display = "none";
+        input.focus();
+    };
+
+    const deleteIcon = li.querySelector(".delete-icon");
+    deleteIcon.onclick = function () {
+        li.parentNode.removeChild(li);
+    };
+}
+
 window.onload = function () {
     const lis = document.querySelectorAll("#rule-list .li");
     lis.forEach((li) => {
-        const textElement = li.querySelector(".text-element");
-        const input = document.createElement("input");
-        input.type = "text";
-        input.style.display = "none";
-        input.onkeydown = function (event) {
-            if (event.key !== "Enter") return;
-            textElement.textContent = input.value;
-            input.style.display = "none";
-            textElement.style.display = "";
-        };
-        li.insertBefore(input, textElement);
-
-        const editIcon = li.querySelector(".edit-icon");
-        editIcon.onclick = function () {
-            input.value = textElement.textContent;
-            input.style.display = "";
-            textElement.style.display = "none";
-            input.focus();
-        };
-
-        const deleteIcon = li.querySelector(".delete-icon");
-        deleteIcon.onclick = function () {
-            li.parentNode.removeChild(li);
-        };
+        attachEventHandlers(li);
     });
 };
+
 async function projectRuleGeneration() {
     const list = document.getElementById("rule-list");
     const li = document.createElement("li");
@@ -118,15 +152,37 @@ async function projectRuleGeneration() {
 
     const input = document.createElement("input");
     input.type = "text";
+
+    const ruleIcon = document.createElement("span");
+    ruleIcon.className = "rule-icon";
+
+    const editIcon = document.createElement("img");
+    editIcon.src = "../../public/img/edit-right.jpg";
+    editIcon.className = "rule-img edit-icon";
+
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = "../../public/img/trash.png";
+    deleteIcon.className = "rule-img delete-icon";
+
+    ruleIcon.appendChild(editIcon);
+    ruleIcon.appendChild(deleteIcon);
+
+    li.appendChild(input);
+    li.appendChild(textElement);
+    li.appendChild(ruleIcon);
+    list.appendChild(li);
+
+    attachEventHandlers(li);
+    input.focus();
+
+    // 이하에는 서버에 규칙을 추가하는 로직이 들어가야 합니다.
     input.onkeydown = async function (event) {
         if (event.key !== "Enter") return;
-        textElement.textContent = input.value;
-        textElement.style.display = "";
-        input.style.display = "none";
+
         const rule = input.value;
 
         let token = localStorage.getItem("token");
-        let projectId = "project ID";
+        let projectId = "project ID"; // 실제 프로젝트 ID로 변경해야 합니다.
         try {
             const response = await axios({
                 method: "PATCH",
@@ -148,35 +204,6 @@ async function projectRuleGeneration() {
             console.log("규칙 추가 중 에러 발생 : ", error);
         }
     };
-
-    const ruleIcon = document.createElement("span");
-    ruleIcon.className = "rule-icon";
-
-    const editIcon = document.createElement("img");
-    editIcon.src = "../../public/img/edit-right.jpg";
-    editIcon.className = "rule-img edit-icon";
-    editIcon.onclick = function () {
-        input.value = textElement.textContent;
-        input.style.display = "";
-        textElement.style.display = "none";
-        input.focus();
-    };
-
-    const deleteIcon = document.createElement("img");
-    deleteIcon.src = "../../public/img/trash.png";
-    deleteIcon.className = "rule-img delete-icon";
-    deleteIcon.onclick = function () {
-        li.parentNode.removeChild(li);
-    };
-
-    ruleIcon.appendChild(editIcon);
-    ruleIcon.appendChild(deleteIcon);
-
-    li.appendChild(input);
-    li.appendChild(textElement);
-    li.appendChild(ruleIcon);
-    list.appendChild(li);
-    input.focus();
 }
 
 /*파일 업로드*/
