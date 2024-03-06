@@ -4,14 +4,15 @@
     padding: 0;
 }
 body {
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
 }
 main {
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 100px - 150px);
     display: flex;
     position: relative;
     padding-top: 100px;
+    white-space: nowrap;
 }
 .profile_img_section {
     width: 50%;
@@ -171,17 +172,25 @@ main {
     bottom: 0;
     margin: auto;
     background-color: #fefefe;
-    padding: 20px;
     border: 1px solid #888;
     font-size: 20px;
     border-radius: 10px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
+ul {
+    height: calc(300px - 20px - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: space-evenly;
+}
+
 .mypage-li {
     padding: 0;
     margin: 0;
-    padding: 10px 0;
     cursor: pointer;
 }
 
@@ -212,7 +221,8 @@ label {
     cursor: pointer;
 }
 #pwdPopup {
-    display: block;
+    flex-direction: column;
+    justify-content: center;
     position: fixed;
     width: 500px;
     height: 500px;
@@ -224,18 +234,21 @@ label {
     border: 1px solid rgb(136, 136, 136);
     font-size: 20px;
     border-radius: 10px;
-    padding: 25px;
+    padding: 0 50px;
+    box-sizing: border-box;
+}
+#pwdPopup > * {
+    width: 100%;
 }
 .user-pwd {
     padding: 0;
-    margin: 0;
+    margin-top: 20px;
     padding: 20px 0;
 }
 .pwd-check {
     border-style: none;
-    padding: 20px;
     border-bottom: #bcbcbc solid 3px;
-    width: 400px;
+    padding: 10px 0px;
 }
 .new-pwd-button {
     width: 100px;
@@ -246,7 +259,7 @@ label {
     font-size: 20px;
     margin-top: 25px;
     position: relative;
-    left: 340px;
+    right: 0;
     cursor: pointer;
 }
 #user_img {
@@ -289,4 +302,39 @@ label {
 }
 .pwd {
     padding-top: 35px;
+}
+
+#username,
+#useremail {
+    text-align: center;
+}
+
+.padding {
+    padding-right: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.button-box {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.close-btn-box {
+    width: 100%;
+    height: 20px;
+    position: relative;
+}
+.close-btn-box * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: unset;
+    border: 0;
+    cursor: pointer;
 }
