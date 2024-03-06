@@ -118,7 +118,7 @@ exports.findUser = async (req, res) => {
                 const token = jwt.sign({ id: findUserResult.id }, process.env.DEVEL_SECRET, { expiresIn: "24h" });
                 res.json({ success: true, token });
             } else {
-                res.json({ success: true, findUserResult });
+                res.json({ success: true, result: { id: findUserResult.id, email: findUserResult.email } });
             }
         } else {
             res.json({ success: false });
