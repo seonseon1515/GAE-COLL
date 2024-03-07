@@ -1,7 +1,7 @@
-const { DataTypes } = require("sequelize");
+const { DataTypes } = require('sequelize');
 
 const UserModel = (sequelize) => {
-    return sequelize.define("user", {
+    return sequelize.define('user', {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,
