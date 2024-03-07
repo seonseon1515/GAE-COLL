@@ -170,7 +170,6 @@ exports.getMyTeamBoard = async (req, res) => {
 
         res.json({ success: true, result: teamBoards });
     } catch (error) {
-        console.error("팀 보드 조회 실패:", error);
         res.json({ success: false, result: "팀 보드 조회 실패" });
     }
 };
