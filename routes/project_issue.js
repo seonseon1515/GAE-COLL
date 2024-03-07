@@ -4,12 +4,14 @@ const router = express.Router();
 const { uploadIssueFiles } = require("../middleware/multer");
 const middleware = require("../middleware/auth");
 
+//search = 검색 params
+// 프로젝트 이슈 검색
+
+// id = 프로젝트 아이디 params
 // 프로젝트 이슈 작성 + 조회
 router.post("/", middleware.auth, uploadIssueFiles, controller.createProjectIssue);
 router.get("/:id", middleware.auth, controller.getProjectIssues);
-
-// 프로젝트 이슈 검색
-router.get("/search", middleware.auth, controller.searchProjectIssues);
+router.get("/:id/search", middleware.auth, controller.searchProjectIssues);
 
 // 프로젝트 이슈 상세 조회 + 수정 + 삭제
 router.get("/detail/:id", middleware.auth, controller.getProjectIssueDetail);
