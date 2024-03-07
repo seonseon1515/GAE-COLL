@@ -5,8 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="../../public/css/project/issue_write.css" />
-        <link rel="stylesheet" href="../../public/css/main.css" />
         <link rel="stylesheet" href="../../public/css/common/font.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
         <script
             src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
             integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
@@ -27,22 +27,21 @@
                     </div>
                     <!--제목 출력 위치-->
                     <div class="title_boxes">
-                        <h3>제목</h3>
-                        <div contenteditable="true" id="title_box" class="title_box">
+                        <div contenteditable="true" id="title_box" class="title_box">제목을 작성해주세요.
                         </div>
                     </div>
 
                     <div class="writer_date">
                         <input type="text" class="userId" style="display: none;"/>
                       <span>작성자</span><div class="writer_box"></div>
-                      <span>작성일</span><input type="date" id="issue_date" class="issueDate">
+                      <label for="issue_date">작성일</label><input type="date" id="issue_date" class="issueDate">
                     </div>
 
                     <hr />
                     <!--글 출력 위치-->
                     <div class="content_box">
                         <div class="icon coding_icon" id="codingIcon" onclick="codeBlockFunc()"></div>
-                        <div class="content_box_inner" id="content" contenteditable="true">
+                        <div class="content_box_inner" id="content" contenteditable="true">내용을 작성해주세요.
                         </div>
                     </div>
 
