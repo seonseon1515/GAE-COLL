@@ -13,11 +13,20 @@
     console.log(getUserProfileResult);
 
     if (success) {
+        //이메일 보여주기
         document.getElementById("useremail").textContent = result.email;
+        //이름이 보여주기
         result.user_name === ""
             ? (document.getElementById("username").placeholder = "이름을 입력해주세요")
             : (document.getElementById("username").value = result.user_name);
-        console.log(`../../public/uploads/profile/${result.user_img}`);
+        //깃헙링크 보여주기
+        result.github === null
+            ? (document.getElementById("github").placeholder = "깃헙주소를 입력해주세요")
+            : (document.getElementById("github").value = result.user_name);
+        // 블로그 링크 보여주기
+        result.blog === null
+            ? (document.getElementById("blog").placeholder = "블로그주소를 입력해주세요")
+            : (document.getElementById("blog").value = result.user_name);
         console.log(result.type);
         if (result.type === "email") {
             result.user_img === null
@@ -156,11 +165,11 @@ async function changeProfile(e) {
     const newName = document.getElementById("username").value;
     const file = document.querySelector("#user_img");
     const token = localStorage.getItem("token");
+    const github = document.getElementById("github").value;
+    const blog = document.getElementById("blog").value;
 
     let imgFormData = new FormData();
-    for (let i = 0; i < file.files.length; i++) {
-        imgFormData.append("user_img", file.files[i]);
-    }
+    imgFormData.append("user_img", file.files[0]);
 
     try {
         const nameChangeResult = await axios({
@@ -168,6 +177,8 @@ async function changeProfile(e) {
             url: "/api/user/update/info",
             data: {
                 user_name: newName,
+                github,
+                blog,
             },
             headers: {
                 Authorization: `Bearer ${token}`,
