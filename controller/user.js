@@ -135,7 +135,8 @@ exports.getUserInfo = async (req, res) => {
     console.log("유저프로필 조회", userId);
     try {
         const getUserInfoRes = await User.findOne({ where: { id: Number(userId) } });
-        res.json({ success: true, result: getUserInfoRes });
+        const { email, user_name, user_img, github, blog } = getUserInfoRes;
+        res.json({ success: true, result: { email, user_name, user_img, github, blog } });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -145,10 +146,10 @@ exports.getUserInfo = async (req, res) => {
 exports.updateUser = async (req, res) => {
     const userId = req.userId;
     // console.log("여러개", userId);
-    const { user_name } = req.body;
+    const { user_name, github, blog } = req.body;
     console.log("유저네임 객체 ", user_name);
     try {
-        const updatedResult = await User.update({ user_name }, { where: { id: userId } });
+        const updatedResult = await User.update({ user_name, github, blog }, { where: { id: userId } });
         console.log(updatedResult);
         if (updatedResult[0] === 1) {
             // update()메소드 : 성공하면 1 반환
