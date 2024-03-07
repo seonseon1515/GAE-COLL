@@ -6,7 +6,7 @@
 
 body {
     background-color: #ffda31;
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
 }
 
 .hi {
@@ -31,7 +31,7 @@ body {
 }
 
 .blog_font {
-    font-family: 'Bebas Neue', sans-serif;
+    font-family: "Bebas Neue", sans-serif;
     font-weight: 800;
     font-style: normal;
     font-size: 2vw;

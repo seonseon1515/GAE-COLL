@@ -193,7 +193,7 @@ exports.getProjectFile = async (req, res) => {
         const getProjectFileResult = await ProjectFile.findOne({
             where: { id },
         });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: getProjectFileResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -205,7 +205,7 @@ exports.projectLog = async (req, res) => {
         const getBoardLogResult = await Board.findOne({
             where: { id },
         });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: getBoardLogResult });
     } catch (error) {
         res.json({ success: true, result: error });
     }
@@ -216,7 +216,7 @@ exports.updateProjectName = async (req, res) => {
     const { project_id: id, project_name } = req.body;
     try {
         const updateProjectResult = await Project.update({ project_name }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectName });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -236,7 +236,7 @@ exports.updateProjectImg = async (req, res) => {
     console.log(file);
     try {
         const updateProjectResult = await Project.update({ project_img: file.filename }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -246,7 +246,7 @@ exports.updateProjectStatus = async (req, res) => {
     const { project_id: id, status } = req.body;
     try {
         const updateProjectResult = await Project.update({ status }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -259,7 +259,7 @@ exports.updateProjectperiod = async (req, res) => {
             { start_date: String(start_date), end_date: String(end_date) },
             { where: { id } }
         );
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -269,7 +269,7 @@ exports.updateProjectOverview = async (req, res) => {
     const { project_id: id, overview } = req.body;
     try {
         const updateProjectResult = await Project.update({ overview }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -280,7 +280,7 @@ exports.updateProjectRule = async (req, res) => {
     console.log(req.body);
     try {
         const updateProjectResult = await Project.update({ rule: JSON.stringify(rule) }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -317,7 +317,7 @@ exports.addProjectMember = async (req, res) => {
                 console.log("result");
             }
         }
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: result });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -375,7 +375,7 @@ exports.updateProjectFile = async (req, res) => {
             );
         }
 
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectFileResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -386,7 +386,7 @@ exports.updateProjectGithub = async (req, res) => {
     const { project_id: id, github } = req.body;
     try {
         const updateProjectResult = await Project.update({ github }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }

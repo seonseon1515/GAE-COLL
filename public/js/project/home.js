@@ -1,7 +1,8 @@
+// 프로젝트 규칙, 멤버 조회, project overview 조회
 (async function loadProjectInfo() {
     const token =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
-    const project_id = 11;
+    const project_id = 10;
 
     try {
         const response = await axios({
@@ -17,13 +18,14 @@
         console.log(response);
         const { success, result } = response.data;
         if (success) {
-            document.getElementById("overview-main").textContent = result.overview;
+            document.getElementById("overview-text").textContent = result.overview;
             //document.getElementById("member-main").textContent =;
             const rule = JSON.parse(result.rule);
 
             for (let i = 0; i < rule.length; i++) {
-                const html = `
-                <li class="li">
+                let html = document.createElement("html");
+                html.innerHTML = `
+                <li class="li" style = "background : white;">
                     <span class="text-element">${rule[i]}</span>
                     <span class="rule-icon">
                     <img src="../../public/img/edit-right.jpg" class="rule-img edit-icon" />
@@ -31,7 +33,7 @@
                 </span>
                 </li>
                 `;
-                document.getElementById("rule-list").insertAdjacentHTML("afterend", html);
+                document.getElementById("rule-list").appendChild(html);
             }
         } else {
             console.error("API 요청 실패:", response.data);
@@ -41,26 +43,152 @@
     }
 })();
 
-(async function () {
-    const getProjectFile = await axios({
-        method: "POST",
-        url: "/api/project/get/file",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        data: {
-            project_id,
-        },
-    });
-    const {
-        success,
-        result: {
-            file: {},
-        },
-    } = getProjectFile.data;
-});
+//프로젝트 규칙 생성
+
+async function projectRuleGeneration() {
+    const list = document.getElementById("rule-list");
+    const li = document.createElement("li");
+    li.className = "li";
+
+    const textElement = document.createElement("span");
+    textElement.className = "text-element";
+    textElement.style.display = "none";
+
+    const input = document.createElement("input");
+    input.type = "text";
+
+    const ruleIcon = document.createElement("span");
+    ruleIcon.className = "rule-icon";
+
+    const editIcon = document.createElement("img");
+    editIcon.src = "../../public/img/edit-right.jpg";
+    editIcon.className = "rule-img edit-icon";
+
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = "../../public/img/trash.png";
+    deleteIcon.className = "rule-img delete-icon";
+
+    ruleIcon.appendChild(editIcon);
+    ruleIcon.appendChild(deleteIcon);
+
+    li.appendChild(input);
+    li.appendChild(textElement);
+    li.appendChild(ruleIcon);
+    list.appendChild(li);
+    input.focus();
+
+    input.onkeydown = async function (event) {
+        if (event.key !== "Enter") return;
+
+        const rule = input.value;
+        // let token = localStorage.getItem("token");
+        // let projectId = "project ID";
+        const token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
+        const project_id = 10;
+        try {
+            const response = await axios({
+                method: "PATCH",
+                url: "/api/project/update/rule",
+                data: {
+                    rule,
+                    project_id,
+                },
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log(response);
+            const { success, result } = response.data;
+            if (success) {
+                console.log("규칙 추가 성공 : ", result);
+            } else {
+                console.log("규칙 추가 실패");
+            }
+        } catch (error) {
+            console.log("규칙 추가 중 에러 발생 : ", error);
+        }
+    };
+}
+
+// async function projectRuleGeneration(projectData) {
+//     const token =
+//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
+
+//     try {
+//         const response = await axios({
+//             method: "PATCH",
+//             url: "/api/project/update/rule",
+//             headers: {
+//                 Authorization: `Bearer ${token}`,
+//             },
+//             data: {
+//                 rule,
+//             },
+//         });
+//         console.log(response);
+//     } catch (error) {
+//         console.error("API 요청 중 오류 발생:", error);
+//     }
+// }
+
+//파일 정보 조회
+// (async function () {
+//     const token =
+//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
+//     const project_id = 12;
+//     const getProjectFile = await axios({
+//         method: "POST",
+//         url: "/api/project/get/file",
+//         headers: {
+//             Authorization: `Bearer ${token}`,
+//         },
+//     });
+//     console.log(getProjectFile);
+//     const {
+//         success,
+//         result: {
+//             file: [],
+//         },
+//     } = getProjectFile.data;
+// })();
+// (async function () {
+//     const token =
+//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
+//     const project_id = 12;
+//     try {
+//         const response = await axios({
+//             method: "GET",
+//             url: "/api/project/issue",
+//             headers: {
+//                 Authorization: `Bearer ${token}`,
+//             },
+//         });
+//         console.log(response);
+//         const { success, result } = response.data;
+//         if (success) {
+//             const issue = result;
+//             for (let i = 0; i < issue.title.length; i++) {
+//                 const html = `
+//                     <div class="issue-text-day-contain">
+//                         <div class="issue-text">
+//                         </div>
+//                         <div class="issue-day"></div>
+//                     </div>
+//                 `;
+//                 const issueTextElements = document.getElementsByClassName("issue-text");
+//                 if (issueTextElements.length > 0) {
+//                     issueTextElements[0].insertAdjacentHTML("afterend", html);
+//                 }
+//             }
+//         } else {
+//             console.error("API 요청 실패:", response.data);
+//         }
+//     } catch (error) {
+//         console.error("API 요청 중 오류 발생:", error);
+//     }
+// })();
+
 //project overview 수정
-// let projectId = localStorage.getItem("project_id");
+let projectId = localStorage.getItem("project_id");
 async function changeOverview(e) {
     const text = document.getElementById("overview-text");
     const input = document.getElementById("overview-input");
@@ -70,7 +198,7 @@ async function changeOverview(e) {
     input.focus();
     const token =
         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
-    const project_id = 1;
+    const project_id = 10;
 }
 
 async function saveOverview(event) {
@@ -80,6 +208,9 @@ async function saveOverview(event) {
     text.textContent = input.value;
     text.style.display = "inline";
     input.style.display = "none";
+    const token =
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
+    const project_id = 10;
 
     try {
         const response = await axios({
@@ -169,104 +300,6 @@ async function saveOverview(event) {
 //     } catch (error) {
 //         console.error("회원 추가 중 에러 발생", error);
 //     }
-// }
-
-// //project 규칙 추가
-// function attachEventHandlers(li) {
-//     const textElement = li.querySelector(".text-element");
-//     const input = li.querySelector("input");
-
-//     input.onkeydown = function (event) {
-//         if (event.key !== "Enter") return;
-//         textElement.textContent = input.value;
-//         input.style.display = "none";
-//         textElement.style.display = "";
-//     };
-
-//     const editIcon = li.querySelector(".edit-icon");
-//     editIcon.onclick = function () {
-//         input.value = textElement.textContent;
-//         input.style.display = "";
-//         textElement.style.display = "none";
-//         input.focus();
-//     };
-
-//     const deleteIcon = li.querySelector(".delete-icon");
-//     deleteIcon.onclick = function () {
-//         li.parentNode.removeChild(li);
-//     };
-// }
-
-// window.onload = function () {
-//     const lis = document.querySelectorAll("#rule-list .li");
-//     lis.forEach((li) => {
-//         attachEventHandlers(li);
-//     });
-// };
-
-// async function projectRuleGeneration() {
-//     const list = document.getElementById("rule-list");
-//     const li = document.createElement("li");
-//     li.className = "li";
-
-//     const textElement = document.createElement("span");
-//     textElement.className = "text-element";
-//     textElement.style.display = "none";
-
-//     const input = document.createElement("input");
-//     input.type = "text";
-
-//     const ruleIcon = document.createElement("span");
-//     ruleIcon.className = "rule-icon";
-
-//     const editIcon = document.createElement("img");
-//     editIcon.src = "../../public/img/edit-right.jpg";
-//     editIcon.className = "rule-img edit-icon";
-
-//     const deleteIcon = document.createElement("img");
-//     deleteIcon.src = "../../public/img/trash.png";
-//     deleteIcon.className = "rule-img delete-icon";
-
-//     ruleIcon.appendChild(editIcon);
-//     ruleIcon.appendChild(deleteIcon);
-
-//     li.appendChild(input);
-//     li.appendChild(textElement);
-//     li.appendChild(ruleIcon);
-//     list.appendChild(li);
-
-//     attachEventHandlers(li);
-//     input.focus();
-
-//     // 이하에는 서버에 규칙을 추가하는 로직이 들어가야 합니다.
-//     input.onkeydown = async function (event) {
-//         if (event.key !== "Enter") return;
-
-//         const rule = input.value;
-
-//         let token = localStorage.getItem("token");
-//         let projectId = "project ID"; // 실제 프로젝트 ID로 변경해야 합니다.
-//         try {
-//             const response = await axios({
-//                 method: "PATCH",
-//                 url: "/api/project/update/rule",
-//                 data: {
-//                     rule,
-//                     project_id: projectId,
-//                 },
-//                 headers: { Authorization: `Bearer ${token}` },
-//             });
-//             console.log(response);
-//             const { success, result } = response.data;
-//             if (success) {
-//                 console.log("규칙 추가 성공 : ", result);
-//             } else {
-//                 console.log("규칙 추가 실패");
-//             }
-//         } catch (error) {
-//             console.log("규칙 추가 중 에러 발생 : ", error);
-//         }
-//     };
 // }
 
 // /*파일 업로드*/
