@@ -1,6 +1,4 @@
-//const token = localStorage.getItem('token');
-const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzIzNzIzLCJleHAiOjE3MDk4MTAxMjN9.GXibOJ_S8qiNJ4L2jTlPZNWjyWU-9WBLGP7i4Fayk_g";
+const token = localStorage.getItem("token");
 // const projectId = localStorage.getItem('porjectId')
 const projectId = 1;
 const tbody = document.querySelector("tbody");
@@ -43,3 +41,21 @@ const tbody = document.querySelector("tbody");
         }
     });
 })();
+
+async function searchFunc() {
+    const type = document.getElementById("type").value;
+    const keyword = document.getElementById("keyword").value;
+
+    console.log(type, keyword);
+    console.log("플젝ID", projectId);
+    //keyword를 서버에서는 req.query로 받는다고 했는데 어떻게 보내주지
+    const res = await axios({
+        method: "get",
+        url: `/api/project/issue/${projectId}/search?type=${type}&keyword=${keyword}`,
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    console.log("응답값", res.data.result);
+    //반복문으로 배열 풀어내기
+}
