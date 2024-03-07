@@ -18,6 +18,8 @@ router.post("/get/info", auth, controller.getProjectInfo);
 router.post("/get/file", auth, controller.getProjectFile);
 //프로젝트 로그 조회
 router.post("/get/log", auth, controller.projectLog);
+//프로젝트 이동시 token새로 발급
+router.post("/update/token", auth, controller.UpdateToken);
 
 //프로젝트 이름 수정
 router.patch("/update/name", auth, controller.updateProjectName);

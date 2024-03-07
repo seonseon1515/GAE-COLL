@@ -1,4 +1,6 @@
 const { Project, ProjectFile, Board, ProjectMember, User } = require("../models");
+const jwt = require("jsonwebtoken");
+
 var fs = require("fs");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
@@ -54,7 +56,11 @@ exports.createProject = async (req, res) => {
 
             result.push(addProjectMemberResult);
         }
-        res.json({ success: true, result: { project_id: createProjectResult.id } });
+        //토큰에 projectID까지 넣어주기.
+        const token = jwt.sign({ id: my_id, projectId: createProjectResult.id }, process.env.DEVEL_SECRET, {
+            expiresIn: "24h",
+        });
+        res.json({ success: true, result: "", token });
     } catch (error) {
         res.json({ success: true, result: error });
     }
@@ -117,7 +123,7 @@ exports.getMyProject = async (req, res) => {
         const project_ids = projectId.map((project_member) => project_member.dataValues.projectId);
         // console.log("proejct_ids 배열 찍어보기", project_ids);
 
-        let projectReuslt = [];
+        let projectResult = [];
         //2차 배열 형태로 각 프로젝트 정보 담기 (프로젝트 이름, 상태, 프로젝트 이미지)
         for (let i = 0; i < project_ids.length; i++) {
             let id = project_ids[i];
@@ -130,10 +136,10 @@ exports.getMyProject = async (req, res) => {
             let status = getProjectInfotResult.dataValues.status;
             let project_img = getProjectInfotResult.dataValues.project_img;
 
-            projectReuslt.push([id, project_name, status, project_img]);
-            // console.log("getProjectInfotResult 콘솔 찍어보기", projectReuslt);
+            projectResult.push([id, project_name, status, project_img]);
+            // console.log("getProjectInfotResult 콘솔 찍어보기", projectResult);
         }
-        res.json({ success: true, result: { user_name, github, blog, projectReuslt } });
+        res.json({ success: true, result: { user_name, github, blog, projectResult } });
     } catch (error) {
         res.json({ success: false, result: "프로젝트 조회 실패" });
     }
@@ -176,7 +182,7 @@ exports.getMyTeamBoard = async (req, res) => {
 
 //프로젝트 정보 조회
 exports.getProjectInfo = async (req, res) => {
-    const { project_id: id } = req.body;
+    const id = req.projectId;
     try {
         const getProjectInfotResult = await Project.findOne({
             where: { id },
@@ -188,7 +194,8 @@ exports.getProjectInfo = async (req, res) => {
 };
 //프로젝트 파일 조회
 exports.getProjectFile = async (req, res) => {
-    const { project_id: id } = req.body;
+    const id = req.projectId;
+
     try {
         const getProjectFileResult = await ProjectFile.findOne({
             where: { id },
@@ -200,7 +207,8 @@ exports.getProjectFile = async (req, res) => {
 };
 //프로젝트 로그 조회
 exports.projectLog = async (req, res) => {
-    const { project_id: id } = req.body;
+    const id = req.projectId;
+
     try {
         const getBoardLogResult = await Board.findOne({
             where: { id },
@@ -213,7 +221,9 @@ exports.projectLog = async (req, res) => {
 
 //프로젝트 이름 수정
 exports.updateProjectName = async (req, res) => {
-    const { project_id: id, project_name } = req.body;
+    const id = req.projectId;
+    const { project_name } = req.body;
+
     try {
         const updateProjectResult = await Project.update({ project_name }, { where: { id } });
         res.json({ success: true, result: updateProjectName });
@@ -223,7 +233,7 @@ exports.updateProjectName = async (req, res) => {
 };
 //프로젝트 이미지 수정
 exports.updateProjectImg = async (req, res) => {
-    const { project_id: id } = req.body;
+    const id = req.projectId;
 
     const file = req.file;
 
@@ -243,7 +253,9 @@ exports.updateProjectImg = async (req, res) => {
 };
 //프로젝트 상태 수정
 exports.updateProjectStatus = async (req, res) => {
-    const { project_id: id, status } = req.body;
+    const id = req.projectId;
+    const { status } = req.body;
+
     try {
         const updateProjectResult = await Project.update({ status }, { where: { id } });
         res.json({ success: true, result: updateProjectResult });
@@ -253,7 +265,8 @@ exports.updateProjectStatus = async (req, res) => {
 };
 //프로젝트 기간 수정
 exports.updateProjectperiod = async (req, res) => {
-    const { project_id: id, start_date, end_date } = req.body;
+    const id = req.projectId;
+    const { start_date, end_date } = req.body;
     try {
         const updateProjectResult = await Project.update(
             { start_date: String(start_date), end_date: String(end_date) },
@@ -266,7 +279,9 @@ exports.updateProjectperiod = async (req, res) => {
 };
 //프로젝트 overview 수정
 exports.updateProjectOverview = async (req, res) => {
-    const { project_id: id, overview } = req.body;
+    const id = req.projectId;
+    const { overview } = req.body;
+
     try {
         const updateProjectResult = await Project.update({ overview }, { where: { id } });
         res.json({ success: true, result: updateProjectResult });
@@ -276,7 +291,8 @@ exports.updateProjectOverview = async (req, res) => {
 };
 //프로젝트 규칙 수정
 exports.updateProjectRule = async (req, res) => {
-    const { project_id: id, rule } = req.body;
+    const id = req.projectId;
+    const { rule } = req.body;
     console.log(req.body);
     try {
         const updateProjectResult = await Project.update({ rule: JSON.stringify(rule) }, { where: { id } });
@@ -287,7 +303,9 @@ exports.updateProjectRule = async (req, res) => {
 };
 //프로젝트 멤버 추가
 exports.addProjectMember = async (req, res) => {
-    const { project_id: id, member_id } = req.body;
+    const id = req.projectId;
+    const { member_id } = req.body;
+
     let userId;
     let result = [];
 
@@ -324,7 +342,9 @@ exports.addProjectMember = async (req, res) => {
 };
 //프로젝트 멤버 삭제
 exports.deleteProjectMember = async (req, res) => {
-    const { project_id: id, member_id } = req.body;
+    const id = req.projectId;
+    const { member_id } = req.body;
+
     try {
         const addProjectMemberResult = await ProjectMember.destroy({
             where: {
@@ -339,7 +359,9 @@ exports.deleteProjectMember = async (req, res) => {
 };
 exports.updateProjectFile = async (req, res) => {
     const files = req.files;
-    const { project_id: id, type } = req.body;
+    const id = req.projectId;
+    const { type } = req.body;
+
     let fileName = [];
     try {
         if (files !== undefined) {
@@ -383,7 +405,9 @@ exports.updateProjectFile = async (req, res) => {
 
 //프로젝트 깃허브 수정
 exports.updateProjectGithub = async (req, res) => {
-    const { project_id: id, github } = req.body;
+    const id = req.projectId;
+    const { github } = req.body;
+
     try {
         const updateProjectResult = await Project.update({ github }, { where: { id } });
         res.json({ success: true, result: updateProjectResult });
@@ -393,7 +417,8 @@ exports.updateProjectGithub = async (req, res) => {
 };
 
 exports.deleteFile = async (req, res) => {
-    const { project_id: id, type, project_file } = req.body;
+    const id = req.projectId;
+    const { type, project_file } = req.body;
 
     try {
         //디비에서 file배열가져오기
@@ -462,3 +487,17 @@ async function deleteImg(projectId) {
 //내 모든 작업 조회
 
 //
+
+exports.UpdateToken = async (req, res) => {
+    const { projectId } = req.body;
+    console.log(projectId);
+    const my_id = req.userId;
+    try {
+        const token = jwt.sign({ id: my_id, projectId }, process.env.DEVEL_SECRET, {
+            expiresIn: "24h",
+        });
+        res.json({ success: true, result: "", token });
+    } catch (error) {
+        res.json({ success: true, result: error });
+    }
+};
