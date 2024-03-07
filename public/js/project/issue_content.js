@@ -222,7 +222,7 @@ async function deleteFileFunc(event) {
     }
 }
 
-// Patch
+// 편집 도구들 활성화 함수
 function editIssueFunc() {
     const content = document.getElementById("content");
     content.setAttribute("contenteditable", "true");
@@ -338,6 +338,28 @@ async function addCommentFunc() {
         console.log(res.data);
         return location.reload();
     } catch (error) {
+        console.log(error);
+    }
+}
+
+//게시글 삭제
+async function deleteIssueFunc() {
+    try {
+        if (!confirm("삭제하시겠습니까?")) {
+            return;
+        }
+        const res = await axios({
+            method: "delete",
+            url: `/api/project/issue/detail/${id}`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        console.log(res.data);
+        if (res.data.result.success) {
+            document.location.href = "issue_main";
+        }
+    } catch {
         console.log(error);
     }
 }

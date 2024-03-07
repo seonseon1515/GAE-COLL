@@ -1,6 +1,6 @@
-//const token = localStorage.getItem('token');
-const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzIzNzIzLCJleHAiOjE3MDk4MTAxMjN9.GXibOJ_S8qiNJ4L2jTlPZNWjyWU-9WBLGP7i4Fayk_g";
+const token = localStorage.getItem('token');
+// const token =
+    // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzIzNzIzLCJleHAiOjE3MDk4MTAxMjN9.GXibOJ_S8qiNJ4L2jTlPZNWjyWU-9WBLGP7i4Fayk_g";
 // const projectId = localStorage.getItem('porjectId')
 const projectId = 1;
 const tbody = document.querySelector("tbody");
