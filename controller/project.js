@@ -123,7 +123,7 @@ exports.getMyProject = async (req, res) => {
         const project_ids = projectId.map((project_member) => project_member.dataValues.projectId);
         // console.log("proejct_ids 배열 찍어보기", project_ids);
 
-        let projectReuslt = [];
+        let projectResult = [];
         //2차 배열 형태로 각 프로젝트 정보 담기 (프로젝트 이름, 상태, 프로젝트 이미지)
         for (let i = 0; i < project_ids.length; i++) {
             let id = project_ids[i];
@@ -136,10 +136,10 @@ exports.getMyProject = async (req, res) => {
             let status = getProjectInfotResult.dataValues.status;
             let project_img = getProjectInfotResult.dataValues.project_img;
 
-            projectReuslt.push([id, project_name, status, project_img]);
-            // console.log("getProjectInfotResult 콘솔 찍어보기", projectReuslt);
+            projectResult.push([id, project_name, status, project_img]);
+            // console.log("getProjectInfotResult 콘솔 찍어보기", projectResult);
         }
-        res.json({ success: true, result: { user_name, github, blog, projectReuslt } });
+        res.json({ success: true, result: { user_name, github, blog, projectResult } });
     } catch (error) {
         res.json({ success: false, result: "프로젝트 조회 실패" });
     }
@@ -487,3 +487,17 @@ async function deleteImg(projectId) {
 //내 모든 작업 조회
 
 //
+
+exports.UpdateToken = async (req, res) => {
+    const { projectId } = req.body;
+    console.log(projectId);
+    const my_id = req.userId;
+    try {
+        const token = jwt.sign({ id: my_id, projectId }, process.env.DEVEL_SECRET, {
+            expiresIn: "24h",
+        });
+        res.json({ success: true, result: "", token });
+    } catch (error) {
+        res.json({ success: true, result: error });
+    }
+};
