@@ -1,3 +1,5 @@
+/* 375최소 사이즈 */
+
 const now = new Date();
 
 const make_calender = (now) => {
@@ -14,7 +16,7 @@ const make_calender = (now) => {
     const first_day = now.getDay(1); // 요번 달 1일 되기 전 칸 수
     // 요번 달 마지막 날이 끝나고 칸 수가 남아 다음 달로 넘어가기 전 표시할 칸 수
     const current_last_day = current_last_date + first_day;
-    const current_next_day = Math.ceil(current_last_day / 7) * 7 + 7;
+    const current_next_day = Math.ceil(current_last_day / 7) * 7;
 
     // 일과 요일이 어떻게 매칭이 되는지?
     // 첫 줄 첫 칸과 가장 마지막 줄 마지막 칸을 어떻게 정할 것인가?
@@ -22,11 +24,11 @@ const make_calender = (now) => {
 
     const prev_month = now.getMonth();
     const prev_last_date = new Date(this_year, prev_month, 0).getDate();
-    let next_first_date = new Date(this_year, this_month, 1).getDate()-1;
+    let next_first_date = new Date(this_year, this_month, 1).getDate() - 1;
     let container = ``;
 
     for (let i = 0; i < first_day; i++) {
-        container += `<div class='no_color'>${prev_last_date - (first_day - 1 - i)}</div>`;
+        container += `<div class='no_color'></div>`;
     }
 
     for (let i = 1; i <= current_last_date; i++) {
@@ -34,7 +36,7 @@ const make_calender = (now) => {
     }
 
     for (let i = current_last_day; i < current_next_day; i++) {
-        container += `<div class='no_color'>${(next_first_date += 1)}</div>`;
+        container += `<div class='no_color'></div>`;
     }
 
     document.querySelector(`.date_board`).innerHTML = container;
@@ -55,9 +57,45 @@ document.querySelector('.next').onclick = () => {
     make_calender(new Date(now.setMonth(now.getMonth() + 1)));
 };
 
-// 팝업 달력
+//  팝업 달력
+// function openPop() {
+//     document.getElementById('pop_info_1').style.display = 'block';
+// }
 
-function pop_calender(){
-    
+// 팝업 닫기
+function closePop() {
+    document.getElementById('pop_info_1').style.display = 'none';
 }
 
+const openModalBtn = document.getElementById('openModalBtn');
+const modal = document.getElementById('pop_info_1');
+const closeBtn = document.getElementsByClassName('close')[0];
+
+openModalBtn.addEventListener('click', function () {
+    modal.style.display = 'block';
+});
+
+closeBtn.addEventListener('click', function () {
+    modal.style.display = 'none';
+});
+
+window.addEventListener('click', function (event) {
+    if (event.target == modal) {
+        modal.style.display = 'none';
+    }
+});
+
+// jQuery(document).ready(function () {
+//     $('#').show();
+// });
+// function closeModal() {
+//     $('.searchModal').hide();
+// }
+
+// 오늘로 이동
+// -> 요번달을 기준으로 하는 달력을 만드는 함수 + 오늘 날짜에 css 효과 추가
+let todayMark = now.getDate();
+
+document.querySelector('.today').onclick = () => {
+    make_calender(new Date(now.setMonth(now.getMonth())));
+};
