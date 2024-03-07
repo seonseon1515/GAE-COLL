@@ -91,9 +91,10 @@ async function createProject() {
     });
     console.log(careateProjectResponse);
 
-    const { success, result } = careateProjectResponse.data;
+    const { success, result, newToken } = careateProjectResponse.data;
 
     if (success) {
+        localStorage.setItem("token", newToken);
         document.location.href = `/project/home`;
     } else {
         alert("프로젝트 생성에 실패하였습니다.");
