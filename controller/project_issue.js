@@ -6,7 +6,8 @@ const fs = require("fs");
 exports.createProjectIssue = async (req, res) => {
     const files = req.files;
     console.log("file", files);
-    const { title, content, projectId, issue_date } = req.body;
+    const projectId = req.projectId;
+    const { title, content, issue_date } = req.body;
     const userId = req.userId;
 
     try {
