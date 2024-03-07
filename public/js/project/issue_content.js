@@ -356,8 +356,8 @@ async function deleteIssueFunc() {
             },
         });
         console.log(res.data);
-        if (res.data.result.success) {
-            document.location.href = "issue_main";
+        if (res.data.success) {
+            document.location.href = "/project/issue_main";
         }
     } catch {
         console.log(error);

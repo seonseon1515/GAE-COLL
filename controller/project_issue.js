@@ -1,6 +1,7 @@
 const { Issue, IssueComment, User } = require("../models");
 const { Op } = require("sequelize");
 const fs = require("fs");
+const { project } = require("./page");
 
 // 프로젝트 이슈 작성 (글 + 파일)
 exports.createProjectIssue = async (req, res) => {
@@ -30,25 +31,30 @@ exports.createProjectIssue = async (req, res) => {
 // 프로젝트 이슈 검색
 exports.searchProjectIssues = async (req, res) => {
     try {
-        const { keyword } = req.query;
-        const { type } = req.body;
+        const { keyword, type } = req.query;
+        const projectId = req.params.id;
+
         //제목이면 type = 0, 작성자면 type = 1
         if (type !== "0" && type !== "1") {
             return res.json({ success: false, result: "올바른 검색 유형을 지정하세요." });
         }
+
         let projectIssues;
         if (type === "0") {
-            projectIssues = await Issue.findAll({ where: { title: { [Op.like]: `%${keyword}%` } } });
+            projectIssues = await Issue.findAll({ where: { projectId, title: { [Op.like]: `%${keyword}%` } } });
+            return res.json({ success: true, result: projectIssues });
         }
 
         if (type === "1") {
-            const user = await User.findOne({ where: { user_name: keyword } });
+            const user = await User.findOne({ where: { user_name: { [Op.like]: `%${keyword}%` } } });
             if (user) {
-                projectIssues = await Issue.findAll({ where: { userId: user.id } });
+                projectIssues = await Issue.findAll({ where: { projectId, userId: user.id } });
+                return res.json({ success: true, result: projectIssues });
             } else {
                 return res.json({ success: false, result: "존재하지 않는 회원입니다." });
             }
         }
+        console.log("projectIssues결과 출력", projectIssues);
         res.json({ success: true, result: projectIssues });
     } catch (error) {
         console.error("이슈 검색 오류:", error);
@@ -179,18 +185,24 @@ exports.deleteProjectIssueDetail = async (req, res) => {
         await IssueComment.destroy({ where: { issueId: issue.id } });
 
         let issueFilesName = issue.files.split(", ");
-        // 실제 파일 삭제
-        for (let i = 0; i < issueFilesName.length; i++) {
-            let filePath = "./public/uploads/issue/" + issueFilesName[i];
-            if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath);
-                console.log("파일 삭제 성공");
-            } else {
-                console.log("파일이 이미 삭제되었거나 존재하지 않습니다.");
+        console.log(issueFilesName[0] === "");
+
+        //파일이 존재하면
+        if (issueFilesName.length === 1 && issueFilesName[0] === "") {
+        } else {
+            // 실제 파일 삭제
+            for (let i = 0; i < issueFilesName.length; i++) {
+                let filePath = "./public/uploads/issue/" + issueFilesName[i];
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                    console.log("파일 삭제 성공");
+                } else {
+                    console.log("파일이 이미 삭제되었거나 존재하지 않습니다.");
+                }
             }
         }
 
-        //마지막 이슈글 삭제
+        //마지막으로 이슈글 삭제
         await Issue.destroy({ where: { id } });
 
         res.json({ success: true, result: "이슈가 삭제되었습니다." });
