@@ -67,6 +67,7 @@ exports.createProject = async (req, res) => {
     }
 };
 
+// 내 모든 작업 조회
 exports.getMyBoard = async (req, res) => {
     try {
         const userId = req.userId;
@@ -96,6 +97,7 @@ exports.getMyBoard = async (req, res) => {
                 getMyBoard.set(projectId, {
                     projectName,
                     board,
+                    projectId,
                 });
             }
         }

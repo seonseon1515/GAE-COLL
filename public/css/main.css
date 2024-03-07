@@ -5,17 +5,19 @@
 }
 
 body {
+    background-color: #ffda31;
     font-family: "IBM Plex Sans KR", sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    padding-top: 140px;
 }
 
 .hi {
     font-weight: 700;
     font-size: 1.5em;
-    margin-top: 10vw;
     text-align: center;
-}
-main {
-    background-color: #ffda31;
 }
 
 .main_link {
@@ -50,16 +52,32 @@ main {
 .main_mywork {
     background-color: white;
     width: 47vw;
-    height: 25vw;
     border-radius: 1.5vw;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
+.main_mywork > * {
+    width: 100%;
+}
 .main_myproject {
     background-color: white;
     width: 47vw;
     border-radius: 1.5vw;
 }
-
+.main-mywork-txt-box {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 5px 0;
+}
+.main_status {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 0;
+}
 .profiles {
     padding: 20px;
     display: flex;
@@ -74,8 +92,6 @@ main {
 .main_mywork_txt {
     font-size: 2vw;
     font-weight: 700;
-    padding-left: 2vw;
-    padding-top: 1vw;
 }
 
 .main_myproject_projectTxt {
@@ -87,33 +103,17 @@ main {
 
 .main_status {
     display: flex;
-    padding-left: 1vw;
-    padding-top: 1vw;
 }
 
 .main_status_txt {
-    padding-left: 1vw;
+    cursor: pointer;
+    white-space: nowrap;
 }
-
 .main_board {
-    padding-top: 1vw;
-    padding-left: 2vw;
+    padding: 5px 0;
 }
-
 .main_board_table {
-    width: 42vw;
-}
-
-.th1 {
-    width: 24vw;
-}
-
-.th2 {
-    width: 8vw;
-}
-
-.th3 {
-    width: 9vw;
+    width: 100%;
 }
 
 .create_myproject_profile {
@@ -205,10 +205,36 @@ main {
 }
 
 .main_plus {
-    padding-top: 1vw;
+    padding-top: 10px;
     color: gray;
-    font-size: 0.9vw;
-    font-weight: 800;
+    font-size: 14px;
+    background-color: unset;
+    border: 0;
+    cursor: pointer;
+}
+.selected {
+    font-weight: bold;
+}
+thead th {
+    white-space: nowrap;
+}
+tbody td {
+    text-align: center;
+    white-space: nowrap;
+}
+.hidden {
+    display: none;
 }
 
-/* ------------------------------------------------여기까지 구조 작업 */
+.th1 {
+    width: 50%;
+}
+.th2 {
+    width: 25%;
+}
+.th3 {
+    width: 25%;
+}
+tr {
+    cursor: pointer;
+}

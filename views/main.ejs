@@ -22,9 +22,9 @@
 
             <div class="main_middle_block">
                 <div class="main_mywork">
-                    <div class="main_mywork_txt">내 작업</div>
+                    <div class="main-mywork-txt-box"><div class="main_mywork_txt">내 작업</div></div>
                     <div class="main_status">
-                        <div class="main_status_txt">계획 중</div>
+                        <div class="main_status_txt selected">계획 중</div>
                         <div class="main_status_txt">진행 중</div>
                         <div class="main_status_txt">피드백 요청</div>
                         <div class="main_status_txt">피드백 완료</div>
@@ -41,10 +41,10 @@
                                     <th class="th3">프로젝트명</th>
                                 </tr>
                             </thead>
-                            <tbody></tbody>
+                            <tbody id="my-job-tbody"></tbody>
                         </table>
-                        <div class="main_plus">+ 더보기</div>
                     </div>
+                    <div id="more-table"><button class="main_plus" onclick="showMoreJob()">+ 더보기</button></div>
                 </div>
 
                 <div class="main_myproject">
