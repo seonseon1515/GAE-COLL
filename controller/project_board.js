@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 //보드 전체 조회
 exports.getBoardAll = async (req, res) => {
     try {
-        const { project_id: projectId } = req.query;
+        const projectId = req.projectId;
         console.log(projectId);
 
         const getBoardAllResult = await Board.findAll({
@@ -22,9 +22,10 @@ exports.getBoardAll = async (req, res) => {
 //보드작성
 exports.boardWrite = async (req, res) => {
     userId = req.userId;
+    const projectId = req.projectId;
 
     try {
-        const { project_id: projectId, title, description, status, deadline } = req.body;
+        const { title, description, status, deadline } = req.body;
 
         const boardWriteResult = await Board.create({
             projectId: Number(projectId),
@@ -64,7 +65,8 @@ exports.getBoardDetail = async (req, res) => {
 //보드 월별조회
 exports.getBoardMonth = async (req, res) => {
     try {
-        const { project_id: projectId, YYYYMM } = req.query;
+        const projectId = req.projectId;
+        const { YYYYMM } = req.query;
 
         const getBoardAllResult = await Board.findAll({
             order: [["id", "DESC"]],

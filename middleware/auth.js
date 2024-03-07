@@ -23,6 +23,10 @@ exports.auth = (req, res, next) => {
                 }
             } else {
                 req.userId = decoded.id;
+                console.log("decoded.projectId : ", decoded.projectId);
+                if (decoded.projectId !== null || decoded.projectId !== undefined) {
+                    req.projectId = decoded.projectId;
+                }
                 next();
             }
         });
