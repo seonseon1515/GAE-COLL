@@ -10,7 +10,7 @@ const middleware = require("../middleware/auth");
 // id = 프로젝트 아이디 params
 // 프로젝트 이슈 작성 + 조회
 router.post("/", middleware.auth, uploadIssueFiles, controller.createProjectIssue);
-router.get("/:id", middleware.auth, controller.getProjectIssues);
+router.get("/", middleware.auth, controller.getProjectIssues);
 router.get("/:id/search", middleware.auth, controller.searchProjectIssues);
 
 // 프로젝트 이슈 상세 조회 + 수정 + 삭제
