@@ -91,10 +91,10 @@ code {
     color: rgb(255, 224, 110);
     width: auto;
     word-break: break-all;
-    padding: 10px 10px;
+    padding: 6px 6px;
     height: auto;
-    font-size: 14px;
-    line-height: 24px;
+    font-size: 13px;
+    line-height: 20px;
 }
 
 li {
@@ -104,6 +104,7 @@ li {
     margin-bottom: 30px;
     align-items: center;
 }
+
 li:last-child {
     margin-bottom: 0;
 }
@@ -179,6 +180,11 @@ li:last-child {
     height: 30px;
     text-align: center;
     line-height: 30px;
+}
+
+#content,
+#content > div {
+    font-size: 16px;
 }
 
 .content_box {
