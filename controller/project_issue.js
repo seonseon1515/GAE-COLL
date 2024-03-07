@@ -66,7 +66,7 @@ exports.searchProjectIssues = async (req, res) => {
 // 프로젝트 이슈 조회 (모든 프로젝트 이슈)
 exports.getProjectIssues = async (req, res) => {
     try {
-        const { id: projectId } = req.params; // 프로젝트 ID
+        const projectId = req.projectId;
         console.log(req.params);
         const userId = req.userId; // 작성자 ID
         console.log(projectId, userId);

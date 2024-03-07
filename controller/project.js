@@ -200,7 +200,7 @@ exports.getProjectFile = async (req, res) => {
         const getProjectFileResult = await ProjectFile.findOne({
             where: { id },
         });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: getProjectFileResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -213,7 +213,7 @@ exports.projectLog = async (req, res) => {
         const getBoardLogResult = await Board.findOne({
             where: { id },
         });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: getBoardLogResult });
     } catch (error) {
         res.json({ success: true, result: error });
     }
@@ -226,7 +226,7 @@ exports.updateProjectName = async (req, res) => {
 
     try {
         const updateProjectResult = await Project.update({ project_name }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectName });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -246,7 +246,7 @@ exports.updateProjectImg = async (req, res) => {
     console.log(file);
     try {
         const updateProjectResult = await Project.update({ project_img: file.filename }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -258,7 +258,7 @@ exports.updateProjectStatus = async (req, res) => {
 
     try {
         const updateProjectResult = await Project.update({ status }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -272,7 +272,7 @@ exports.updateProjectperiod = async (req, res) => {
             { start_date: String(start_date), end_date: String(end_date) },
             { where: { id } }
         );
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -284,7 +284,7 @@ exports.updateProjectOverview = async (req, res) => {
 
     try {
         const updateProjectResult = await Project.update({ overview }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -295,8 +295,12 @@ exports.updateProjectRule = async (req, res) => {
     const { rule } = req.body;
     console.log(req.body);
     try {
-        const updateProjectResult = await Project.update({ rule: JSON.stringify(rule) }, { where: { id } });
-        res.json({ success: true, result: "" });
+        const findProjectRule = await Project.findOne({ where: { id } });
+        const beforeRule = JSON.parse(findProjectRule.rule);
+        beforeRule.push(rule);
+        const updateProjectResult = await Project.update({ rule: JSON.stringify(beforeRule) }, { where: { id } });
+
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -335,7 +339,7 @@ exports.addProjectMember = async (req, res) => {
                 console.log("result");
             }
         }
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: result });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -357,6 +361,7 @@ exports.deleteProjectMember = async (req, res) => {
         res.json({ success: false, result: error });
     }
 };
+//프로젝트 파일 업로드
 exports.updateProjectFile = async (req, res) => {
     const files = req.files;
     const id = req.projectId;
@@ -364,6 +369,19 @@ exports.updateProjectFile = async (req, res) => {
 
     let fileName = [];
     try {
+        const getProjectFileResult = await ProjectFile.findOne({
+            where: { id },
+        });
+        console.log("first", getProjectFileResult[type]);
+        console.log(typeof getProjectFileResult[type]);
+        if (getProjectFileResult[type] !== "" && JSON.parse(getProjectFileResult[type]) !== null) {
+            const beforeFiles = JSON.parse(getProjectFileResult[type]);
+            console.log(typeof beforeFiles, beforeFiles);
+            for (let i = 0; i < beforeFiles.length; i++) {
+                fileName.push(beforeFiles[i]);
+            }
+        }
+
         if (files !== undefined) {
             for (let i = 0; i < files.length; i++) {
                 console.log(files[i].filename);
@@ -397,8 +415,9 @@ exports.updateProjectFile = async (req, res) => {
             );
         }
 
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectFileResult });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
@@ -410,7 +429,7 @@ exports.updateProjectGithub = async (req, res) => {
 
     try {
         const updateProjectResult = await Project.update({ github }, { where: { id } });
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
     }
