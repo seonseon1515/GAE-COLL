@@ -91,7 +91,7 @@ async function createProject() {
     });
     console.log(careateProjectResponse);
 
-    const { success, result, newToken } = careateProjectResponse.data;
+    const { success, result, token: newToken } = careateProjectResponse.data;
 
     if (success) {
         localStorage.setItem("token", newToken);
