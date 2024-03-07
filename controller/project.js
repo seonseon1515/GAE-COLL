@@ -16,15 +16,16 @@ exports.createProject = async (req, res) => {
         res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
         return;
     }
-
+    userId.push(my_id);
     //멤버가 object타입인지 string타입인지 구별 -> 포스트맨 테스트로 인해 처리
     if (typeof member_id === "object") {
         userId = member_id;
         console.log(userId.length);
     } else if (typeof member_id === "string") {
         userId = JSON.parse(member_id);
+    } else if (typeof member_id === "array") {
+        userId = member_id;
     }
-    userId.push(my_id);
 
     try {
         const result = [];
@@ -182,13 +183,49 @@ exports.getMyTeamBoard = async (req, res) => {
 
 //프로젝트 정보 조회
 exports.getProjectInfo = async (req, res) => {
-    const id = req.projectId;
     try {
+        const id = req.projectId;
+        const memberData = [];
         const getProjectInfotResult = await Project.findOne({
             where: { id },
         });
-        res.json({ success: true, result: getProjectInfotResult });
+        //프로젝트 멤버id, 이름 및 사진 보내기
+        const getProjectMembertResult = await ProjectMember.findAll({
+            where: { projectId: id },
+        });
+        console.log("getProjectMemebertResult", getProjectMembertResult.length);
+
+        for (let i = 0; i < getProjectMembertResult.length; i++) {
+            const getUserInfo = await User.findOne(
+                { attributes: ["user_name", "user_img"] },
+                { where: { id: getProjectMembertResult[i].id } }
+            );
+            console.log(getUserInfo);
+            const data = {
+                user_name: getUserInfo.user_name,
+                user_img: getUserInfo.user_img,
+                id: getProjectMembertResult[i].id,
+            };
+            console.log("userData : ", data);
+            memberData.push(data);
+        }
+        const { project_name, status, start_date, end_date, github, overview, rule, project_img } =
+            getProjectInfotResult;
+
+        const result = {
+            project_name,
+            status,
+            start_date,
+            end_date,
+            github,
+            overview,
+            rule,
+            project_img,
+            member: memberData,
+        };
+        res.json({ success: true, result });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
