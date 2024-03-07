@@ -36,11 +36,12 @@
                 },
             });
             console.log(signupKakaoResult);
+            localStorage.setItem("token", signupKakaoResult.data.token);
+        } else {
+            localStorage.setItem("token", findUser.data.token);
         }
         //회원가입 또는 로그인 완료시 메인페이지로 이동
         document.location.href = "/";
-        //res.send(alertmove("/start/kakaoLogin", email, name, profile));
-        //res.send(alertmove("/", `${user_name}님 로그인 되었습니다^^`));
     } catch (err) {
         console.log(err);
     }

@@ -1,4 +1,3 @@
-// import nodemailer from "nodemailer";
 const nodemailer = require("nodemailer");
 
 exports.smtpTransport = nodemailer.createTransport({
