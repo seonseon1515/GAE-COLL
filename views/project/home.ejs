@@ -5,7 +5,6 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Gae-Call</title>
         <link rel="stylesheet" href="../../public/css/project/home.css" />
-
         <link rel="stylesheet" href="../../public/css/common/font.css" />
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -92,16 +91,23 @@
                         <div class="file-contain">
                             <div class="file-name">
                                 기획
-                                <div class="file-plus-div" style="font-size: small">
-                                    <img src="../../public/img/plus.png" class="file-plus" />
-                                    <input type="file" id="fileInput" style="display: none" />
+                                <div class="file-plus-div">
+                                    <label for="file-upload" class="file-plus">
+                                        <img src="../../public/img/plus.png" class="file-plus" />
+                                        <div class="file-upload">파일 업로드</div>
+                                    </label>
+
+                                    <input
+                                        type="file"
+                                        id="file-upload"
+                                        style="display: none"
+                                        class="input-file-upload"
+                                    />
                                 </div>
-                                <div class="upload-name">파일 업로드</div>
+                                <button type="button" onclick="uploadPlan()">저장</button>
                             </div>
                             <div class="plan-text">
-                                <div class="plan-file-contain">
-                                    <div class="plan-file-name"></div>
-                                </div>
+                                <div class="plan-file-contain"></div>
                             </div>
                         </div>
 
@@ -110,21 +116,23 @@
                         <div class="file-contain">
                             <div class="file-name">
                                 ERD 구조
-                                <a href="javascript:void(0);" class="file-upload-view">
-                                    <div class="file-plus-div">
-                                        <img src="../../public/img/plus.png" class="file-plus" />
-                                    </div>
-                                    <div class="upload-name">파일 업로드</div>
-                                </a>
+                                <div class="file-plus-div">
+                                    <label for="file-upload" class="file-plus"
+                                        ><img src="../../public/img/plus.png" class="file-plus" />
+                                        <div class="file-upload">파일 업로드</div></label
+                                    >
+                                    <input
+                                        type="file"
+                                        id="file-upload"
+                                        style="display: none"
+                                        class="input-file-upload"
+                                    />
+                                </div>
+                                <button type="button" onclick="uploadERD()">저장</button>
                             </div>
 
                             <div class="erd-text">
-                                <div class="erd-file-contain">
-                                    <div class="erd-file-name"></div>
-                                </div>
-                                <div class="erd-file-contain">
-                                    <div class="erd-file-name"></div>
-                                </div>
+                                <div class="erd-file-contain"></div>
                             </div>
                         </div>
 
@@ -134,18 +142,21 @@
                             <div class="file-name">
                                 API 명세
                                 <div class="file-plus-div">
-                                    <img src="../../public/img/plus.png" class="file-plus" id="uploadBtn" />
+                                    <label for="file-upload" class="file-plus"
+                                        ><img src="../../public/img/plus.png" class="file-plus" />
+                                        <div class="file-upload">파일 업로드</div></label
+                                    >
+                                    <input
+                                        type="file"
+                                        id="file-upload"
+                                        style="display: none"
+                                        class="input-file-upload"
+                                    />
                                 </div>
-                                <div class="upload-name">파일 업로드</div>
+                                <button type="button" onclick="uploadAPI()">저장</button>
                             </div>
-                            <input type="file" id="fileInput" style="display: none" />
                             <div class="api-text">
-                                <div class="api-file-contain">
-                                    <div class="api-file-name"></div>
-                                </div>
-                                <div class="api-file-contain">
-                                    <div class="api-file-name"></div>
-                                </div>
+                                <div class="api-file-contain"></div>
                             </div>
                         </div>
                     </div>

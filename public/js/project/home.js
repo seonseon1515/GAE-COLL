@@ -14,21 +14,22 @@
         const { success, result } = response.data;
         if (success) {
             document.getElementById("overview-text").textContent = result.overview;
-            //document.getElementById("member-main").textContent =;
-            const rule = JSON.parse(result.rule);
-            console.log("프로젝트 규칙 : ", result.rule);
-
-            for (let i = 0; i < rule.length; i++) {
-                let html = document.createElement("html");
-                html.innerHTML = `
-                <li class="li" style = "background : white;">
-                    <span class="text-element">${rule[i]}</span>
-                    <span class="rule-icon">
-                    <img src="../../public/img/trash.png" class="rule-img delete-icon" onclick="deleteProjectRule()"/>
-                </span>
-                </li>
-                `;
-                document.getElementById("rule-list").appendChild(html);
+            // /document.getElementById("member-main").textContent =;
+            if (result.rule !== null && result.rule !== "") {
+                const rule = JSON.parse(result.rule);
+                console.log("프로젝트 규칙 : ", result.rule);
+                for (let i = 0; i < rule.length; i++) {
+                    let html = document.createElement("html");
+                    html.innerHTML = `
+                    <li class="li" style = "background : white;">
+                        <span class="text-element">${rule[i]}</span>
+                        <span class="rule-icon">
+                        <img src="../../public/img/trash.png" class="rule-img delete-icon" onclick="deleteProjectRule()"/>
+                    </span>
+                    </li>
+                    `;
+                    document.getElementById("rule-list").appendChild(html);
+                }
             }
         } else {
             console.error("API 요청 실패:", response.data);
@@ -50,14 +51,196 @@
     });
     console.log(getProjectFile);
     const { success, result } = getProjectFile.data;
+    console.log(result);
     if (success) {
         document.getElementsByClassName("plan-file-contain").textContent = result.plan;
+        if (result.plan !== null && result.plan !== "") {
+            const plan = JSON.parse(result.plan);
+            console.log("프로젝트 계획 : ", result.plan);
+            for (let i = 0; i < plan.length; i++) {
+                let div = document.createElement("div");
+                div.innerHTML = `
+            <div class="plan-file-name">
+                <div class="plan-file-img">
+                    <img src="../../public/img/file-icon.png" class="file-icon" />
+                </div>
+                <div>${plan[i]}</div>
+            </div>
+        `;
+                document.getElementsByClassName("plan-file-contain")[0].appendChild(div);
+            }
+        }
         document.getElementsByClassName("erd-file-contain").textContent = result.erd;
+        if (result.erd !== null && result.erd !== "") {
+            const erd = JSON.parse(result.erd);
+            console.log("프로젝트 erd : ", result.erd);
+            for (let i = 0; i < erd.length; i++) {
+                let div = document.createElement("div");
+                div.innerHTML = `
+            <div class="erd-file-name">
+                <div class="erd-file-img">
+                    <img src="../../public/img/file-icon.png" class="file-icon" />
+                    </div>
+                    <div>${erd[i]}</div>
+            </div>
+            `;
+                document.getElementsByClassName("erd-file-contain")[0].appendChild(div);
+            }
+        }
         document.getElementsByClassName("api-file-contain").textContent = result.api;
+        if (result.api !== null && result.api !== "") {
+            const api = JSON.parse(result.api);
+            console.log("프로젝트 api : ", result.api);
+            for (let i = 0; i < api.length; i++) {
+                let div = document.createElement("div");
+                div.innerHTML = `
+            <div class="api-file-name">
+                <div class="api-file-img">
+                    <img src="../../public/img/file-icon.png" class="file-icon" />
+                    </div>
+                    <div>${api[i]}</div>
+            </div>
+            `;
+                document.getElementsByClassName("api-file-contain")[0].appendChild(div);
+            }
+        }
     }
 })();
 
-//이슈 노트
+//파일 업로드
+async function uploadPlan() {
+    const fileInput = document.getElementById("file-upload");
+    const file = fileInput.files[0];
+    const token = localStorage.getItem("token");
+
+    if (!file) {
+        alert("파일을 선택해주세요");
+        console.log("파일을 선택해주세요.");
+        return;
+    }
+    console.log(file);
+    const formData = new FormData();
+    formData.append("project_files", file);
+    const type = "plan";
+    formData.append("type", type);
+    console.log(type);
+    const response = await axios({
+        method: "PATCH",
+        url: "/api/project/update/file",
+        data: formData,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+    const { result, success } = response.data;
+    console.log(response);
+    if (success) {
+        let div = document.createElement("div");
+        div.innerHTML = `
+                <div class="plan-file-name">
+                    <div class="plan-file-img">
+                        <img src="../../public/img/file-icon.png" class="file-icon" />
+                    </div>
+                    <div>${file.name}</div>
+                </div>
+            `;
+        document.getElementsByClassName("plan-file-contain")[0].appendChild(div);
+    } else {
+        console.log("파일 업로드에 실패하였습니다.");
+    }
+}
+//파일 업로드(ERD)
+async function uploadERD() {
+    const fileInput = document.getElementById("file-upload");
+    const file = fileInput.files[0];
+    const token = localStorage.getItem("token");
+
+    if (!file) {
+        alert("파일을 선택해주세요");
+        console.log("파일을 선택해주세요.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("project_files", file);
+    const type = "erd";
+    formData.append("type", type);
+    console.log(type);
+    const response = await axios({
+        method: "PATCH",
+        url: "/api/project/update/file",
+        data: formData,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+    const { result, success } = response.data;
+    console.log(response);
+    if (success) {
+        let div = document.createElement("div");
+        div.innerHTML = `
+                <div class="erd-file-name">
+                    <div class="erd-file-img">
+                        <img src="../../public/img/file-icon.png" class="file-icon" />
+                    </div>
+                    <div>${file.name}</div>
+                </div>
+            `;
+        document.getElementsByClassName("erd-file-contain")[0].appendChild(div);
+    } else {
+        console.log("파일 업로드에 실패하였습니다.");
+    }
+}
+//파일 업로드(API)
+async function uploadAPI() {
+    const fileInput = document.getElementById("file-upload");
+    const file = fileInput.files[0];
+    const token = localStorage.getItem("token");
+
+    if (!file) {
+        alert("파일을 선택해주세요");
+        console.log("파일을 선택해주세요.");
+        return;
+    }
+
+    const formData = new FormData();
+    formData.append("project_files", file);
+    const type = "api";
+    formData.append("type", type);
+    console.log(type);
+    const response = await axios({
+        method: "PATCH",
+        url: "/api/project/update/file",
+        data: formData,
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+        },
+    });
+
+    const { result, success } = response.data;
+    console.log(response);
+    if (success) {
+        let div = document.createElement("div");
+        div.innerHTML = `
+                <div class="api-file-name">
+                    <div class="api-file-img">
+                        <img src="../../public/img/file-icon.png" class="file-icon" />
+                    </div>
+                    <div>${file.name}</div>
+                </div>
+            `;
+        document.getElementsByClassName("api-file-contain")[0].appendChild(div);
+    } else {
+        console.log("파일 업로드에 실패하였습니다.");
+    }
+}
+
+//이슈 노트 가져오기
 (async function () {
     const token = localStorage.getItem("token");
     try {
@@ -70,31 +253,31 @@
         });
         console.log(response);
         const { success, result } = response.data;
-        if (success) {
-            const issue = result;
-            for (let i = 0; i < issue.title.length; i++) {
-                const html = `
-                    <div class="issue-text-day-contain">
-                        <div class="issue-text">
-                        </div>
-                        <div class="issue-day"></div>
-                    </div>
-                `;
-                const issueTextElements = document.getElementsByClassName("issue-text");
-                if (issueTextElements.length > 0) {
-                    issueTextElements[0].insertAdjacentHTML("afterend", html);
-                }
-            }
-        } else {
-            console.error("API 요청 실패:", response.data);
-        }
+        console.log(result);
+        // if (success) {
+        //     const issue = result;
+        //     for (let i = 0; i < issue.title.length; i++) {
+        //         const html = `
+        //             <div class="issue-text-day-contain">
+        //                 <div class="issue-text">
+        //                 </div>
+        //                 <div class="issue-day"></div>
+        //             </div>
+        //         `;
+        //         const issueTextElements = document.getElementsByClassName("issue-text");
+        //         if (issueTextElements.length > 0) {
+        //             issueTextElements[0].insertAdjacentHTML("afterend", html);
+        //         }
+        //     }
+        // } else {
+        //     console.error("API 요청 실패:", response.data);
+        // }
     } catch (error) {
         console.error("API 요청 중 오류 발생:", error);
     }
 })();
 
-// //프로젝트 규칙 생성
-
+//프로젝트 규칙 생성
 async function projectRuleGeneration() {
     const list = document.getElementById("rule-list");
     const li = document.createElement("li");
@@ -142,7 +325,7 @@ async function projectRuleGeneration() {
             const { success, result } = response.data;
             if (success) {
                 console.log("규칙 추가 성공 : ", result);
-                document.location.reload();
+                location.reload(true);
             } else {
                 console.log("규칙 추가 실패");
             }
@@ -234,122 +417,3 @@ async function saveBlurOverview(event) {
         console.error("overview 업데이트 도중 오류가 발생하였습니다. :", error);
     }
 }
-// //member 추가
-
-// function addMember() {
-//     const userId = prompt("추가할 멤버의 아이디를 입력하세요.");
-//     if (userId) {
-//         // 입력한 아이디를 localStorage에 저장
-//         localStorage.setItem("userId", userId);
-//     }
-// }
-
-// async function addMember() {
-//     let projectId = "REAL_PROJECT_ID"; // 실제 프로젝트 ID로 변경
-//     let token = localStorage.getItem("token");
-//     let memberIds = [];
-
-//     // localStorage에서 아이디를 가져옴
-//     const userId = localStorage.getItem("userId");
-//     if (userId) {
-//         // 사용자 아이디가 존재하는지 확인
-//         const user = await checkUserId(userId);
-//         if (user) {
-//             memberIds.push(user.id); // 데이터베이스에 존재하는 사용자의 아이디를 memberIds 배열에 추가
-
-//             // 사용자 이름을 화면에 추가
-//             const userNameDiv = document.getElementById("overview-main");
-//             userNameDiv.innerHTML = `
-//                 <div id="pro-img-div">
-//                     <img src="../../public/img/mypage.png" id="pen-img" />
-//                 </div>
-//                 ${user.name} // user 객체에서 사용자 이름을 가져옴
-//             `;
-//         } else {
-//             console.log(`아이디 ${userId}은 존재하지 않습니다.`);
-//             return;
-//         }
-//     } else {
-//         console.log("유효한 아이디를 입력하세요");
-//         alert("유효한 아이디를 입력하세요");
-//         return;
-//     }
-
-//     try {
-//         const response = await axios({
-//             method: "POST",
-//             url: "/api/project/add/member",
-//             headers: {
-//                 Authorization: `Bearer ${token}`,
-//             },
-//             data: {
-//                 project_id: projectId,
-//                 member_id: memberIds[0], // 첫 번째 멤버의 ID만 전송
-//             },
-//         });
-//         console.log(response);
-//         const { success, result } = response.data;
-//         if (success) {
-//             console.log("회원 추가 성공", result);
-//         } else {
-//             console.log(response);
-//             console.log("회원 추가 실패");
-//         }
-//     } catch (error) {
-//         console.error("회원 추가 중 에러 발생", error);
-//     }
-// }
-
-// /*파일 업로드*/
-// // upload.js
-// window.onload = function () {
-//     document.getElementById("uploadBtn").addEventListener("click", function () {
-//         document.getElementById("fileInput").click();
-//     });
-// };
-// document.getElementById("fileInput").addEventListener("click", async function (e) {
-//     const file = e.target.files[0];
-//     const fileContainers = document.querySelectorAll(".api-file-contain");
-
-//     let targetDiv;
-//     for (let i = 0; i < fileContainers.length; i++) {
-//         if (!fileContainers[i].querySelector(".api-file-name").textContent) {
-//             targetDiv = fileContainers[i].querySelector(".api-file-name");
-//             break;
-//         }
-//     }
-
-//     if (targetDiv) {
-//         const formData = new FormData();
-//         formData.append("file", file);
-//         formData.append("project_id", "your_project_id");
-//         formData.append("type", "erd");
-//         formData.append("project_files", "your_project_files");
-
-//         let token = localStorage.getItem("token");
-
-//         try {
-//             const response = await axios({
-//                 method: "PATCH",
-//                 url: "/api/project/update/file",
-//                 data: formData,
-//                 headers: {
-//                     Authorization: `Bearer ${token}`,
-//                     "Content-Type": "multipart/form-data",
-//                 },
-//             });
-//             console.log(response);
-//             const { success, result } = response.data;
-//             if (result) {
-//                 console.log("File uploaded successfully");
-//                 targetDiv.textContent = name;
-//             } else {
-//                 console.log("Failed to upload file");
-//             }
-//         } catch (error) {
-//             console.error("Error uploading file:", error);
-//         }
-//     } else {
-//         console.log("All divs are filled. Please add more divs.");
-//     }
-// });

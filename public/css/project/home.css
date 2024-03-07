@@ -163,22 +163,24 @@ li:hover .rule-icon {
     font-weight: bold;
 }
 .file-plus-div {
+    font-size: 20px;
     padding: 0 20px;
-    width: 20px;
-    height: 20px;
+    height: 30px;
 }
 .file-plus {
-    width: 100%;
-    height: 100%;
-}
-.file-upload-view {
+    padding-right: 10px;
     display: flex;
-    text-decoration: none;
-    color: black;
     cursor: pointer;
+    /* width: 100%; */
+    height: 100%;
+    align-items: center;
 }
-.upload-name {
-    font-size: 20px;
+.file-upload-upload {
+    display: flex;
+}
+.file-upload {
+    width: 120px;
+    height: 20px;
 }
 
 .file-contain {
@@ -189,17 +191,47 @@ li:hover .rule-icon {
 .plan-text,
 .erd-text,
 .api-text {
-    display: flex;
-    padding: 20px 0;
+    padding: 20px;
+    height: auto;
 }
 .plan-file-contain,
 .erd-file-contain,
 .api-file-contain {
-    width: 200px;
-    height: 100px;
-    background-color: gray;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: overlay;
+    height: auto;
+    background-color: #ffda31;
     border-radius: 30px;
-    margin-left: 50px;
+    padding: 20px 20px 50px 20px;
+    margin: 10px;
+}
+.plan-file-img,
+.api-file-img,
+.erd-file-img {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    margin-right: 5px;
+}
+.plan-file-name,
+.api-file-name,
+.erd-file-name {
+    height: 50px;
+    width: 150px;
+    /* background: beige; */
+    border-radius: 10px;
+    display: flex;
+    margin-bottom: 10px;
+    align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
+    margin-right: 20px;
+}
+.file-icon {
+    height: 100%;
 }
 /*erd 구조*/
 #erd-text {

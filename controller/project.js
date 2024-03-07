@@ -361,6 +361,7 @@ exports.deleteProjectMember = async (req, res) => {
         res.json({ success: false, result: error });
     }
 };
+//프로젝트 파일 업로드
 exports.updateProjectFile = async (req, res) => {
     const files = req.files;
     const id = req.projectId;
@@ -368,6 +369,19 @@ exports.updateProjectFile = async (req, res) => {
 
     let fileName = [];
     try {
+        const getProjectFileResult = await ProjectFile.findOne({
+            where: { id },
+        });
+        console.log("first", getProjectFileResult[type]);
+        console.log(typeof getProjectFileResult[type]);
+        if (getProjectFileResult[type] !== "" && JSON.parse(getProjectFileResult[type]) !== null) {
+            const beforeFiles = JSON.parse(getProjectFileResult[type]);
+            console.log(typeof beforeFiles, beforeFiles);
+            for (let i = 0; i < beforeFiles.length; i++) {
+                fileName.push(beforeFiles[i]);
+            }
+        }
+
         if (files !== undefined) {
             for (let i = 0; i < files.length; i++) {
                 console.log(files[i].filename);
@@ -403,6 +417,7 @@ exports.updateProjectFile = async (req, res) => {
 
         res.json({ success: true, result: updateProjectFileResult });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
