@@ -20,13 +20,13 @@
             ? (document.getElementById("username").placeholder = "이름을 입력해주세요")
             : (document.getElementById("username").value = result.user_name);
         //깃헙링크 보여주기
-        result.github === null
+        result.github === null || result.github === ""
             ? (document.getElementById("github").placeholder = "깃헙주소를 입력해주세요")
-            : (document.getElementById("github").value = result.user_name);
+            : (document.getElementById("github").value = result.github);
         // 블로그 링크 보여주기
-        result.blog === null
+        result.blog === null || result.blog === ""
             ? (document.getElementById("blog").placeholder = "블로그주소를 입력해주세요")
-            : (document.getElementById("blog").value = result.user_name);
+            : (document.getElementById("blog").value = result.blog);
         console.log(result.type);
         if (result.type === "email") {
             result.user_img === null
