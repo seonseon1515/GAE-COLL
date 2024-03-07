@@ -1,8 +1,6 @@
 // 프로젝트 규칙, 멤버 조회, project overview 조회
 (async function loadProjectInfo() {
-    const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
-    const project_id = 10;
+    const token = localStorage.getItem("token");
 
     try {
         const response = await axios({
@@ -11,9 +9,6 @@
             headers: {
                 Authorization: `Bearer ${token}`,
             },
-            data: {
-                project_id,
-            },
         });
         console.log(response);
         const { success, result } = response.data;
@@ -21,6 +16,7 @@
             document.getElementById("overview-text").textContent = result.overview;
             //document.getElementById("member-main").textContent =;
             const rule = JSON.parse(result.rule);
+            console.log("프로젝트 규칙 : ", result.rule);
 
             for (let i = 0; i < rule.length; i++) {
                 let html = document.createElement("html");
@@ -28,8 +24,7 @@
                 <li class="li" style = "background : white;">
                     <span class="text-element">${rule[i]}</span>
                     <span class="rule-icon">
-                    <img src="../../public/img/edit-right.jpg" class="rule-img edit-icon" />
-                    <img src="../../public/img/trash.png" class="rule-img delete-icon" />
+                    <img src="../../public/img/trash.png" class="rule-img delete-icon" onclick="deleteProjectRule()"/>
                 </span>
                 </li>
                 `;
@@ -43,7 +38,62 @@
     }
 })();
 
-//프로젝트 규칙 생성
+//파일 정보 조회
+(async function () {
+    const token = localStorage.getItem("token");
+    const getProjectFile = await axios({
+        method: "POST",
+        url: "/api/project/get/file",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    console.log(getProjectFile);
+    const { success, result } = getProjectFile.data;
+    if (success) {
+        document.getElementsByClassName("plan-file-contain").textContent = result.plan;
+        document.getElementsByClassName("erd-file-contain").textContent = result.erd;
+        document.getElementsByClassName("api-file-contain").textContent = result.api;
+    }
+})();
+
+//이슈 노트
+(async function () {
+    const token = localStorage.getItem("token");
+    try {
+        const response = await axios({
+            method: "GET",
+            url: "/api/project/issue",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        console.log(response);
+        const { success, result } = response.data;
+        if (success) {
+            const issue = result;
+            for (let i = 0; i < issue.title.length; i++) {
+                const html = `
+                    <div class="issue-text-day-contain">
+                        <div class="issue-text">
+                        </div>
+                        <div class="issue-day"></div>
+                    </div>
+                `;
+                const issueTextElements = document.getElementsByClassName("issue-text");
+                if (issueTextElements.length > 0) {
+                    issueTextElements[0].insertAdjacentHTML("afterend", html);
+                }
+            }
+        } else {
+            console.error("API 요청 실패:", response.data);
+        }
+    } catch (error) {
+        console.error("API 요청 중 오류 발생:", error);
+    }
+})();
+
+// //프로젝트 규칙 생성
 
 async function projectRuleGeneration() {
     const list = document.getElementById("rule-list");
@@ -60,15 +110,10 @@ async function projectRuleGeneration() {
     const ruleIcon = document.createElement("span");
     ruleIcon.className = "rule-icon";
 
-    const editIcon = document.createElement("img");
-    editIcon.src = "../../public/img/edit-right.jpg";
-    editIcon.className = "rule-img edit-icon";
-
     const deleteIcon = document.createElement("img");
     deleteIcon.src = "../../public/img/trash.png";
     deleteIcon.className = "rule-img delete-icon";
 
-    ruleIcon.appendChild(editIcon);
     ruleIcon.appendChild(deleteIcon);
 
     li.appendChild(input);
@@ -81,18 +126,15 @@ async function projectRuleGeneration() {
         if (event.key !== "Enter") return;
 
         const rule = input.value;
-        // let token = localStorage.getItem("token");
-        // let projectId = "project ID";
-        const token =
-            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
-        const project_id = 10;
+        console.log("rule", rule);
+        const token = localStorage.getItem("token");
+
         try {
             const response = await axios({
                 method: "PATCH",
                 url: "/api/project/update/rule",
                 data: {
                     rule,
-                    project_id,
                 },
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -100,6 +142,7 @@ async function projectRuleGeneration() {
             const { success, result } = response.data;
             if (success) {
                 console.log("규칙 추가 성공 : ", result);
+                document.location.reload();
             } else {
                 console.log("규칙 추가 실패");
             }
@@ -108,84 +151,11 @@ async function projectRuleGeneration() {
         }
     };
 }
-
-// async function projectRuleGeneration(projectData) {
-//     const token =
-//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
-
-//     try {
-//         const response = await axios({
-//             method: "PATCH",
-//             url: "/api/project/update/rule",
-//             headers: {
-//                 Authorization: `Bearer ${token}`,
-//             },
-//             data: {
-//                 rule,
-//             },
-//         });
-//         console.log(response);
-//     } catch (error) {
-//         console.error("API 요청 중 오류 발생:", error);
-//     }
-// }
-
-//파일 정보 조회
-// (async function () {
-//     const token =
-//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
-//     const project_id = 12;
-//     const getProjectFile = await axios({
-//         method: "POST",
-//         url: "/api/project/get/file",
-//         headers: {
-//             Authorization: `Bearer ${token}`,
-//         },
-//     });
-//     console.log(getProjectFile);
-//     const {
-//         success,
-//         result: {
-//             file: [],
-//         },
-//     } = getProjectFile.data;
-// })();
-// (async function () {
-//     const token =
-//         "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
-//     const project_id = 12;
-//     try {
-//         const response = await axios({
-//             method: "GET",
-//             url: "/api/project/issue",
-//             headers: {
-//                 Authorization: `Bearer ${token}`,
-//             },
-//         });
-//         console.log(response);
-//         const { success, result } = response.data;
-//         if (success) {
-//             const issue = result;
-//             for (let i = 0; i < issue.title.length; i++) {
-//                 const html = `
-//                     <div class="issue-text-day-contain">
-//                         <div class="issue-text">
-//                         </div>
-//                         <div class="issue-day"></div>
-//                     </div>
-//                 `;
-//                 const issueTextElements = document.getElementsByClassName("issue-text");
-//                 if (issueTextElements.length > 0) {
-//                     issueTextElements[0].insertAdjacentHTML("afterend", html);
-//                 }
-//             }
-//         } else {
-//             console.error("API 요청 실패:", response.data);
-//         }
-//     } catch (error) {
-//         console.error("API 요청 중 오류 발생:", error);
-//     }
-// })();
+async function deleteProjectRule() {
+    const deleteIcon = document.createElement("img");
+    deleteIcon.src = "../../public/img/trash.png";
+    deleteIcon.className = "rule-img delete-icon";
+}
 
 //project overview 수정
 let projectId = localStorage.getItem("project_id");
@@ -196,9 +166,7 @@ async function changeOverview(e) {
     input.value = text.textContent;
     text.style.display = "none";
     input.focus();
-    const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
-    const project_id = 10;
+    const token = localStorage.getItem("token");
 }
 
 async function saveOverview(event) {
@@ -208,8 +176,39 @@ async function saveOverview(event) {
     text.textContent = input.value;
     text.style.display = "inline";
     input.style.display = "none";
-    const token =
-        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiaWF0IjoxNzA5Nzc1MjgxLCJleHAiOjE3MDk4NjE2ODF9.CT85wTPL9HD_ofa0lV8cCU6zegiK0SKddI9DiAjjuUQ";
+    const token = localStorage.getItem("token");
+
+    try {
+        const response = await axios({
+            method: "PATCH",
+            url: "/api/project/update/overview",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                overview: input.value,
+            },
+        });
+        console.log(response);
+        const { success, result } = response.data;
+        if (success) {
+            console.log("Overview 업데이트에 성공하셨습니다. :", result);
+        } else {
+            console.error("overview 업데이트에 실패하셨습니다.");
+        }
+    } catch (error) {
+        console.error("overview 업데이트 도중 오류가 발생하였습니다. :", error);
+    }
+}
+async function saveBlurOverview(event) {
+    const text = document.getElementById("overview-text");
+    const input = document.getElementById("overview-input");
+    text.textContent = input.value;
+    text.style.display = "inline";
+    input.style.display = "none";
+
+    const token = localStorage.getItem("token");
+
     const project_id = 10;
 
     try {
@@ -235,7 +234,6 @@ async function saveOverview(event) {
         console.error("overview 업데이트 도중 오류가 발생하였습니다. :", error);
     }
 }
-
 // //member 추가
 
 // function addMember() {
