@@ -3,10 +3,11 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
         <title>Gae-Call</title>
         <link rel="stylesheet" href="../../public/css/start/index.css" />
-        <link rel="stylesheet" href="../public/css/main.css" />
-        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link rel="stylesheet" href="../../public/css/main.css" />
+        <link rel="stylesheet" href="../../public/css/common/font.css" />
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
     </head>
     <body>
@@ -44,13 +45,7 @@
                 >
             </div>
         </main>
-        <script>
-            function kakaoLogin() {
-                document.location.href = `https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=<%= process.env.KAKAO_CLIENT_ID%>&redirect_uri=<%= process.env.KAKAO_REDIRECT_URI%>`;
-            }
-            function googleLogin() {
-                document.location.href = `https://accounts.google.com/o/oauth2/v2/auth?scope=email profile&response_type=token&state=state_parameter_passthrough_value&redirect_uri=<%= process.env.GOOGLE_REDIRECT_URI%>&client_id=<%= process.env.GOOGLE_CLIENT_ID%>`;
-            }
-        </script>
+
+        <script src="../../public/js/start/index.js"></script>
     </body>
 </html>

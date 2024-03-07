@@ -1,5 +1,5 @@
 body {
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
 }
 #issue-contain {
     height: auto;
@@ -12,6 +12,31 @@ body {
     border-radius: 20px;
     margin: 0 50px 240px 50px;
 }
+
+#issue-contain-main {
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+    margin: 0 5px; /* 좌우 간격 설정 */
+}
+
+table {
+    border-collapse: collapse; /* 테이블 셀 경계를 합침 */
+    width: 100%; /* 테이블이 부모 요소에 꽉 차게 함 */
+}
+th,
+td {
+    padding: 5px; /* 위아래 패딩 설정 */
+    text-align: left; /* th 제목 왼쪽 정렬 */
+    border-bottom: 1px solid #ddd; /* 셀 아래 경계선 설정 */
+}
+th#issue-number {
+    width: 50px; /* No 열 너비 설정 */
+}
+th#issue-title {
+    width: 50%; /* 제목 열 너비 설정 */
+}
+
 #issue-search-contain {
     display: flex;
     justify-content: flex-end;
@@ -29,31 +54,9 @@ body {
     margin: 0 10px;
     width: 450px;
 }
-#issue-contain-title {
-    margin: 25px 25px 0 25px;
-    width: calc(100% - 50px);
-    height: 60px;
-    border-top: solid black;
-    border-bottom: solid gray;
-    display: flex;
-    justify-content: space-between;
-    font-size: 20px;
-}
+
 table {
-    width: 100%;
-}
-
-#issue-title {
-    width: 50%; /* width를 500px에서 50%로 변경 */
-    text-align: center;
-    padding-top: 15px;
-}
-
-#issue-number {
-    height: 50px;
-    width: 20%; /* width를 100px에서 20%로 변경 */
-    text-align: center;
-    padding-top: 15px;
+    width: auto;
 }
 
 #issue-con {
@@ -66,24 +69,6 @@ table {
     cursor: pointer;
 }
 
-.issue {
-    height: auto;
-    width: 15%; /* width를 200px에서 15%로 변경 */
-    text-align: center;
-    padding-top: 15px;
-}
-
-#issue-title {
-    width: 50vw;
-    text-align: center;
-    padding-top: 15px;
-}
-
-#issue-content {
-    width: 100%; /* width를 auto에서 100%로 변경 */
-    height: 100vw;
-}
-
 #page-number {
     width: 100%;
     height: auto;
@@ -92,8 +77,12 @@ table {
     align-items: center;
 }
 .page-img-div {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
+}
+.page-img-div2 {
+    width: 30px;
+    height: 30px;
 }
 .page-img {
     width: 100%;

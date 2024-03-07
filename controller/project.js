@@ -2,16 +2,15 @@ const { Project, ProjectFile, Board, ProjectMember, User } = require("../models"
 var fs = require("fs");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
-    //파일이 null이면 데이터 안보냈을수도있는건데 ㅇㅂㅇ ... ? 어쩌지 ㅇㅂㅇ ....
-
     const file = req.file;
+    const my_id = req.userId;
 
     const { project_name, start_date, end_date, overview, rule, member_id, send_img } = req.body;
     let userId;
 
     //사진을 보냈는데 이미지 파일이 아니면 보드 생성 실패
 
-    if (send_img && file === undefined) {
+    if (send_img === true && file === undefined) {
         res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
         return;
     }
@@ -23,6 +22,7 @@ exports.createProject = async (req, res) => {
     } else if (typeof member_id === "string") {
         userId = JSON.parse(member_id);
     }
+    userId.push(my_id);
 
     try {
         const result = [];
@@ -54,7 +54,7 @@ exports.createProject = async (req, res) => {
 
             result.push(addProjectMemberResult);
         }
-        res.json({ success: true, result: "" });
+        res.json({ success: true, result: { project_id: createProjectResult.id } });
     } catch (error) {
         res.json({ success: true, result: error });
     }
@@ -170,7 +170,6 @@ exports.getMyTeamBoard = async (req, res) => {
 
         res.json({ success: true, result: teamBoards });
     } catch (error) {
-        console.error("팀 보드 조회 실패:", error);
         res.json({ success: false, result: "팀 보드 조회 실패" });
     }
 };
@@ -226,14 +225,14 @@ exports.updateProjectName = async (req, res) => {
 exports.updateProjectImg = async (req, res) => {
     const { project_id: id } = req.body;
 
-    //이전에 올렸던 이미지 삭제
-    deleteImg(id);
-
     const file = req.file;
-    console.log(file);
+
     if (file === undefined) {
         res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
+        return;
     }
+    //이전에 올렸던 이미지 삭제
+    deleteImg(id);
     console.log(file);
     try {
         const updateProjectResult = await Project.update({ project_img: file.filename }, { where: { id } });

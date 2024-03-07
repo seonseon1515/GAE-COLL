@@ -5,9 +5,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="../../public/css/project/issue_main.css" />
-        <link rel="stylesheet" href="../public/css/main.css" />
-        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link rel="stylesheet" href="../../public/css/main.css" />
+        <link rel="stylesheet" href="../../public/css/common/font.css" />
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
     <body>
         <%-include('../../views/common/header.ejs') %> <%-include('header.ejs')%>
@@ -31,30 +39,30 @@
                                 <th class="issue">작성시간</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr id="issue-con">
-                                <td id="issue-number">10</td>
-                                <td id="issue-title">제목</td>
-                                <td class="issue">작성자</td>
-                                <td class="issue">작성시간</td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
+
                 <div id="write">
                     <a href="../../../project/issue_write" class="issue-write-a">글쓰기</a>
                 </div>
+
+                <!--페이지네이션-->
                 <div id="page-number">
-                    <div class="page-img-div"><img class="page-img" src="../../public/img/first-page.png" /></div>
-                    <div class="page-img-div"><img class="page-img" src="../../public/img/left-page.png" /></div>
+                    <div class="page-img-div2"><img class="page-img" src="../../public/img/backward-solid.svg" /></div>
+                    <div class="page-img-div">
+                        <img class="page-img" src="../../public/img/caret-left-solid.svg" />
+                    </div>
                     <li class="li">1</li>
                     <li class="li">2</li>
                     <li class="li">3</li>
                     <li class="li">4</li>
                     <li class="li">5</li>
-                    <div class="page-img-div"><img class="page-img" src="../../public/img/right-page.png" /></div>
                     <div class="page-img-div">
-                        <img class="page-img" src="../../public/img/last-page.png" />
+                        <img class="page-img" src="../../public/img/caret-right-solid.svg" />
+                    </div>
+                    <div class="page-img-div2">
+                        <img class="page-img" src="../../public/img/forward-solid.svg" />
                     </div>
                 </div>
             </form>

@@ -4,14 +4,15 @@
     padding: 0;
 }
 body {
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
 }
 main {
     width: 100%;
-    height: calc(100vh - 100px);
+    min-height: calc(100vh - 100px - 150px);
     display: flex;
     position: relative;
     padding-top: 100px;
+    white-space: nowrap;
 }
 .profile_img_section {
     width: 50%;
@@ -65,9 +66,12 @@ main {
     border-radius: 50%;
     display: flex;
     justify-content: center;
+    align-items: flex-end;
 }
 .profile_img_box > img {
-    width: 50%;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
 }
 .profile_img_bottom {
     width: 100%;
@@ -139,20 +143,20 @@ main {
     height: 100%;
 }
 .update_box {
-    position: absolute;
-    right: 50px;
-    bottom: 50px;
-    padding: 10px 20px;
+    position: relative;
     border-radius: 10px;
-    background-color: #ffda31;
-    width: 50px;
-    height: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+    align-items: center;
 }
 .update_box > button {
-    width: 100%;
-    height: 100%;
+    background-color: #ffda31;
+    margin-right: 20px;
+    width: 90px;
+    height: 45px;
+    padding: 10px 20px;
     border-radius: 10px;
-    background-color: unset;
     border: 0;
     cursor: pointer;
     font-size: 20px;
@@ -168,17 +172,25 @@ main {
     bottom: 0;
     margin: auto;
     background-color: #fefefe;
-    padding: 20px;
     border: 1px solid #888;
     font-size: 20px;
     border-radius: 10px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    padding: 20px;
 }
+ul {
+    height: calc(300px - 20px - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    justify-content: space-evenly;
+}
+
 .mypage-li {
     padding: 0;
     margin: 0;
-    padding: 10px 0;
     cursor: pointer;
 }
 
@@ -207,4 +219,126 @@ label {
     border-radius: 25px;
     background-color: #ffda31;
     cursor: pointer;
+}
+#pwdPopup {
+    flex-direction: column;
+    justify-content: center;
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    z-index: 1;
+    inset: 0px;
+    margin: auto;
+    background-color: rgb(254, 254, 254);
+    padding: 20px;
+    border: 1px solid rgb(136, 136, 136);
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 0 50px;
+    box-sizing: border-box;
+}
+#pwdPopup > * {
+    width: 100%;
+}
+.user-pwd {
+    padding: 0;
+    margin-top: 20px;
+    padding: 20px 0;
+}
+.pwd-check {
+    border-style: none;
+    border-bottom: #bcbcbc solid 3px;
+    padding: 10px 0px;
+}
+.new-pwd-button {
+    width: 100px;
+    height: 50px;
+    background-color: #ffda31;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    margin-top: 25px;
+    position: relative;
+    right: 0;
+    cursor: pointer;
+}
+#user_img {
+    display: none;
+}
+
+#deletePopup {
+    display: block;
+    position: fixed;
+    width: 300px;
+    height: 300px;
+    z-index: 1;
+    inset: 0px;
+    margin: auto;
+    background-color: rgb(254, 254, 254);
+    padding: 20px;
+    border: 1px solid rgb(136, 136, 136);
+    font-size: 20px;
+    border-radius: 10px;
+    padding: 25px;
+}
+.pwd-now {
+    border-style: none;
+    padding: 20px;
+    border-bottom: #bcbcbc solid 3px;
+    width: 200px;
+}
+.exit-pwd-button {
+    width: 100px;
+    height: 50px;
+    background-color: #ffda31;
+    border-radius: 10px;
+    padding: 10px;
+    font-size: 20px;
+    margin-top: 25px;
+    position: relative;
+    left: 200px;
+    cursor: pointer;
+    top: 100px;
+}
+.pwd {
+    padding-top: 35px;
+}
+
+#username,
+#useremail {
+    text-align: center;
+}
+
+.padding {
+    padding-right: 20px;
+}
+
+.hidden {
+    display: none;
+}
+
+.button-box {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: end;
+}
+.close-btn-box {
+    width: 100%;
+    height: 20px;
+    position: relative;
+}
+.close-btn-box * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background-color: unset;
+    border: 0;
+    cursor: pointer;
+}
+
+input {
+    text-align: center;
 }

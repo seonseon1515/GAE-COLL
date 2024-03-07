@@ -59,13 +59,14 @@ exports.searchProjectIssues = async (req, res) => {
 // 프로젝트 이슈 조회 (모든 프로젝트 이슈)
 exports.getProjectIssues = async (req, res) => {
     try {
-        const { project_id: projectId } = req.body; // 프로젝트 ID
+        const { id: projectId } = req.params; // 프로젝트 ID
+        console.log(req.params);
         const userId = req.userId; // 작성자 ID
         console.log(projectId, userId);
         const projectIssues = await Issue.findAll({ where: { projectId } });
         res.json({ success: true, result: projectIssues });
     } catch (error) {
-        console.error("이슈 조회 오류:", error);
+        console.log("이슈 조회 오류:", error);
         res.json({ success: false, result: error });
     }
 };
@@ -91,6 +92,7 @@ exports.getProjectIssueDetail = async (req, res) => {
 // 프로젝트 이슈 수정
 exports.updateProjectIssueDetail = async (req, res) => {
     const files = req.files;
+    console.log(files);
     //id(이슈id), user_id(작성자), req.userId(현재 사용자)
     const { id } = req.params;
     const userId = req.userId;
@@ -108,7 +110,7 @@ exports.updateProjectIssueDetail = async (req, res) => {
         let issueFiles = issue.files;
         //파일 편집할 수도 있고 안 할 수도 있고
         //첨부한 파일이 있다면
-        if (files) {
+        if (files.length > 0) {
             const updatedFileNames = files.map((file) => file.filename).join(", ");
             console.log("업데이트 한 파일명", updatedFileNames);
             //기존에 파일이 있다면 이어서 추가, 없다면 새로 추가
@@ -128,7 +130,9 @@ exports.deleteProjectIssueFile = async (req, res) => {
         const { id } = req.params;
         const userId = req.userId;
         const { fileName } = req.body; // 삭제할 파일의 이름
-
+        console.log("이슈아이디:", id);
+        console.log("유저아이디:", userId);
+        console.log("파일이름:", fileName);
         // 작성자 본인인지 확인
         const issue = await Issue.findOne({ where: { id } });
         if (issue.userId !== userId) {
