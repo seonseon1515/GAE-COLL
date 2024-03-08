@@ -276,11 +276,6 @@ li:hover .rule-icon {
     display: flex;
     width: 100%;
 }
-#line {
-    height: 3px;
-    background-color: gray;
-    margin: 0 20px;
-}
 
 /*팀 활동 시작*/
 #team-work-contain {
@@ -302,26 +297,38 @@ li:hover .rule-icon {
     font-size: 25px;
     font-weight: bold;
 }
-.team-work-list {
+.team-work-list,
+.feedback-list {
     padding: 10px 0 10px 25px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    cursor: pointer;
     width: calc(100% - 100px);
     border-bottom: solid gray;
     /* padding: 11px; */
     margin-left: 35px;
+    font-size: 20px;
 }
 #team-work-list-text,
 #feedback-list-text {
     padding-left: 20px;
     width: 80%;
+    /* border-left: solid; */
     text-align: center;
 }
-.teamDiv {
+.teamDiv,
+.needFeedDiv {
     display: flex;
     width: 100%;
     align-items: center;
+    padding-bottom: 20px;
+    /* text-align: center; */
+    height: 60px;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 3px 5px #c4c4c4;
+    margin-bottom: 7px;
 }
 /*피드백 요청 목록*/
 #feedback-work-contain {
@@ -330,12 +337,6 @@ li:hover .rule-icon {
     border-radius: 30px;
     width: 50%;
     height: auto;
-}
-.feedback-list {
-    padding: 1vw 0 1vw 3vw;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
 }
 .img {
     width: 40px;

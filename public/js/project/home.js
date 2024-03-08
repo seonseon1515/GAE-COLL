@@ -14,16 +14,19 @@
         const { success, result } = response.data;
         if (success) {
             document.getElementById("overview-text").textContent = result.overview;
-            // /document.getElementById("member-main").textContent =;
+            // document.getElementById("member-main").textContent = result.;
             if (result.rule !== null && result.rule !== "") {
-                const rule = JSON.parse(result.rule);
-                console.log("프로젝트 규칙 : ", result.rule);
+                // const rule = JSON.parse(result.rule);
+                const rule = result.rule.split(" ");
+
+                console.log("프로젝트 규칙 : ", rule);
                 for (let i = 0; i < rule.length; i++) {
                     let div = document.createElement("div");
+                    div.id = `ruleList${i}`;
                     div.innerHTML = `
                     <li class="li" style = "background : white;">
-                        <span class="text-element">${rule[i]}</span>
-                        <span onclick="${deleteProjectRule(e)}" class="rule-icon">
+                        <span class="text-element" >${rule[i]}</span>
+                        <span class="rule-icon" onclick="deleteProjectRuleFunc(i)">
                         <img src="../../public/img/trash.png" class="rule-img delete-icon" />
                     </span>
                     </li>
@@ -49,14 +52,11 @@
             Authorization: `Bearer ${token}`,
         },
     });
-    console.log(getProjectFile);
     const { success, result } = getProjectFile.data;
-    console.log(result);
     if (success) {
         document.getElementsByClassName("plan-file-contain").textContent = result.plan;
         if (result.plan !== null && result.plan !== "") {
             const plan = JSON.parse(result.plan);
-            console.log("프로젝트 계획 : ", result.plan);
             for (let i = 0; i < plan.length; i++) {
                 let div = document.createElement("div");
                 div.innerHTML = `
@@ -73,7 +73,6 @@
         document.getElementsByClassName("erd-file-contain").textContent = result.erd;
         if (result.erd !== null && result.erd !== "") {
             const erd = JSON.parse(result.erd);
-            console.log("프로젝트 erd : ", result.erd);
             for (let i = 0; i < erd.length; i++) {
                 let div = document.createElement("div");
                 div.innerHTML = `
@@ -90,7 +89,6 @@
         document.getElementsByClassName("api-file-contain").textContent = result.api;
         if (result.api !== null && result.api !== "") {
             const api = JSON.parse(result.api);
-            console.log("프로젝트 api : ", result.api);
             for (let i = 0; i < api.length; i++) {
                 let div = document.createElement("div");
                 div.innerHTML = `
@@ -118,9 +116,7 @@
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(response);
         const { success, result } = response.data;
-        console.log(result);
         if (success) {
             for (let i = 0; i < result.length; i++) {
                 let tr = document.createElement("tr");
@@ -140,6 +136,90 @@
         console.error("API 요청 중 오류 발생:", error);
     }
 })();
+
+//팀 활동, 피드백 요청 목록
+(async function () {
+    const token = localStorage.getItem("token");
+    try {
+        const response = await axios({
+            method: "post",
+            url: "/api/project/get/log",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        const { result, success } = response.data;
+        let organizedTeamLog = result.sort((a, b) => {
+            if (a.updatedAt > b.updatedAt) return 1;
+            if (a.updatedAt < b.updatedAt) return -1;
+            return 0;
+        });
+
+        if (success) {
+            for (let i = 0; i < organizedTeamLog.length; i++) {
+                console.log(organizedTeamLog);
+                // `${changeStatusKor(organizedTeamLog[i].boardStatus)}`가 '피드백 요청'이 아닌 경우에만 div를 생성하고 추가합니다.
+                if (changeStatusKor(organizedTeamLog[i].boardStatus) !== "피드백 요청") {
+                    let div = document.createElement("div");
+                    div.classList.add("teamDiv");
+                    div.innerHTML = `
+                                ${organizedTeamLog[i].user_img}
+                                <div id="team-work-list-text">${organizedTeamLog[i].user_name}님이 ${
+                        organizedTeamLog[i].title
+                    }을 ${changeStatusKor(organizedTeamLog[i].boardStatus)}으로 변경하였습니다.</div>
+                                `;
+                    document.getElementsByClassName("team-work-list")[0].appendChild(div);
+                }
+
+                if (organizedTeamLog[i].boardStatus === "needFeedback") {
+                    let div = document.createElement("div");
+                    div.classList.add("needFeedDiv");
+                    div.innerHTML = `
+                    
+                    ${organizedTeamLog[i].user_img}
+                    <a href="/project/issue_content/${result[i].id}><div id="feedback-list-text">${
+                        organizedTeamLog[i].user_name
+                    }님이 ${organizedTeamLog[i].title}을 ${changeStatusKor(
+                        organizedTeamLog[i].boardStatus
+                    )}으로 변경하였습니다.</div></a>
+                        `;
+                    document.getElementsByClassName("feedback-list")[0].appendChild(div);
+                    if (organizedTeamLog.length.length === 5) {
+                        break;
+                    }
+                }
+            }
+        } else {
+            console.error("팀 활동 요청 실패 : ", response.data);
+        }
+    } catch (error) {
+        console.error("팀 활동 요청 중 오류 발생 : ", error);
+    }
+})();
+function changeStatusKor(selectedProjectStatus) {
+    let statusKor = "";
+    switch (selectedProjectStatus) {
+        case "planning":
+            statusKor = "계획 중";
+            break;
+        case "progress":
+            statusKor = "진행 중";
+            break;
+        case "needFeedback":
+            statusKor = "피드백 요청";
+            break;
+        case "finishFeedback":
+            statusKor = "피드백 완료";
+            break;
+        case "suspend":
+            statusKor = "중단됨";
+            break;
+        case "finish":
+            statusKor = "완료";
+            break;
+    }
+    return statusKor;
+}
 
 //프로젝트 규칙 생성
 async function projectRuleGeneration() {
@@ -171,123 +251,58 @@ async function projectRuleGeneration() {
 
     input.onkeydown = async function (event) {
         if (event.key !== "Enter") return;
-        const deleteProjectRule = (e) => {};
         const rule = input.value;
-        console.log("rule", rule);
         const token = localStorage.getItem("token");
-        const deleteProjectRule = document.querySelector(".rule-icon").addEventListener("click", function (e) {
-            deleteProjectRule(e);
-        });
-
-        async function deleteProjectRule(e) {
-            event.target.parentNode.parentNode.remove();
-            try {
-                const response = await axios({
-                    method: "PATCH",
-                    url: "/api/project/update/rule",
-                    data: {
-                        rule,
-                    },
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-                console.log(response);
-                const { success, result } = response.data;
-                if (success) {
-                    console.log("규칙 추가 성공 : ", result);
-                    location.reload(true);
-                } else {
-                    console.log("규칙 추가 실패");
-                }
-            } catch (error) {
-                console.log("규칙 추가 중 에러 발생 : ", error);
+        try {
+            const response = await axios({
+                method: "PATCH",
+                url: "/api/project/update/rule",
+                data: {
+                    rule,
+                },
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            console.log(response);
+            const { success, result } = response.data;
+            if (success) {
+                console.log("규칙 추가 성공 : ", result);
+                location.reload(true);
+            } else {
+                console.log("규칙 추가 실패");
             }
+        } catch (error) {
+            console.log("규칙 추가 중 에러 발생 : ", error);
         }
     };
 }
-// 프로젝트 규칙 삭제
-
-//팀 활동 (보드 수정)
-(async function () {
+//규칙 삭제
+async function deleteProjectRuleFunc(i) {
+    const divTag = document.querySelector(`#ruleList${[i]}`);
+    divTag.remove();
+    const rule = document.querySelector("#rule-list");
+    console.log(divTag);
     const token = localStorage.getItem("token");
-    const project_id = localStorage.getItem("project_id");
     try {
         const response = await axios({
-            method: "GET",
-            url: "/api/project/board/get",
-            headers: {
-                Authorization: `Bearer ${token}`,
+            method: "PATCH",
+            url: "/api/project/update/rule",
+            data: {
+                rule,
             },
-            params: {
-                project_id,
-            },
+            headers: { Authorization: `Bearer ${token}` },
         });
-        const { result, success } = response.data;
+        console.log(response);
+        const { success, result } = response.data;
         if (success) {
-            if (result.data !== null && result.data !== "") {
-                for (let i = 0; i < result.length; i++) {
-                    const userId = result[i].userId;
-                    const email = localStorage.getItem("email");
-
-                    const responseUser = await axios({
-                        method: "POST",
-                        url: "/api/user/find",
-                        headers: {
-                            Authorization: `Bearer ${token}`,
-                        },
-                        data: {
-                            userId,
-                            email,
-                        },
-                    });
-                    console.log(responseUser);
-
-                    let div = document.createElement("div");
-                    div.classList.add("teamDiv");
-                    div.innerHTML = `
-                        <img src="../../public/img/kakao-login.png" class="img""/>
-                        <div id="team-work-list-text">${username}님이 작업을 ${result[i].status}으로 변경하였습니다.</div>
-                    `;
-                    document.getElementsByClassName("team-work-list")[0].appendChild(div);
-                }
-            }
-            console.log("팀활동 : ", response);
+            console.log("규칙 추가 성공 : ", result);
+            // location.reload(true);
         } else {
-            console.error("팀 활동 요청 실패 : ", response.data);
+            console.log("규칙 추가 실패");
         }
     } catch (error) {
-        console.error("팀 활동 요청 중 오류 발생 : ", error);
+        console.log("규칙 추가 중 에러 발생 : ", error);
     }
-})();
-
-//피드백 요청
-(async function () {
-    const token = localStorage.getItem("token");
-    const project_id = localStorage.getItem("project_id");
-    try {
-        const response = await axios({
-            method: "GET",
-            url: "/api/project/board/get",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
-            params: {
-                project_id,
-            },
-        });
-        console.log("팀활동 : ", response);
-        const { result, success } = response.data;
-        if (success) {
-            for (i = 0; i < result.length; i++) {
-                let div = document.createElement("div");
-                div.innerHTML = ``;
-                //user_name, title, board_id,
-                document.getElementById("").appendChild(div);
-            }
-        }
-    } catch (error) {
-        console.error("팀 활동 요청 중 오류 발생 : ", error);
-    }
-})();
+}
 
 //파일 업로드
 async function uploadPlan() {
@@ -305,7 +320,6 @@ async function uploadPlan() {
     formData.append("project_files", file);
     const type = "plan";
     formData.append("type", type);
-    console.log(type);
     const response = await axios({
         method: "PATCH",
         url: "/api/project/update/file",
@@ -315,9 +329,7 @@ async function uploadPlan() {
             "Content-Type": "multipart/form-data",
         },
     });
-
     const { result, success } = response.data;
-    console.log(response);
     if (success) {
         let div = document.createElement("div");
         div.innerHTML = `
@@ -349,7 +361,6 @@ async function uploadERD() {
     formData.append("project_files", file);
     const type = "erd";
     formData.append("type", type);
-    console.log(type);
     const response = await axios({
         method: "PATCH",
         url: "/api/project/update/file",
@@ -393,7 +404,6 @@ async function uploadAPI() {
     formData.append("project_files", file);
     const type = "api";
     formData.append("type", type);
-    console.log(type);
     const response = await axios({
         method: "PATCH",
         url: "/api/project/update/file",
@@ -405,7 +415,6 @@ async function uploadAPI() {
     });
 
     const { result, success } = response.data;
-    console.log(response);
     if (success) {
         let div = document.createElement("div");
         div.innerHTML = `
@@ -421,6 +430,45 @@ async function uploadAPI() {
         console.log("파일 업로드에 실패하였습니다.");
     }
 }
+
+//멤버 추가
+async function addMember() {
+    let newMemberId = prompt("회원님의 아이디를 입력해주세요:");
+    if (!newMemberId) {
+        return;
+    }
+
+    let member_id = [newMemberId];
+    console.log(member_id);
+    const token = localStorage.getItem("token");
+    try {
+        const response = await axios({
+            method: "POST",
+            url: "/api/project/add/member",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                member_id,
+            },
+        });
+        console.log("post", response);
+        const { result, success } = response.data;
+        if (success) {
+            let div = document.createElement("div");
+            div.innerHTML = `
+                    <div id="pro-img-div"><img src="../../public/img/mypage.png" id="pen-img" /></div>
+                    ${result.member_id}`;
+            document.getElementById("member-main").appendChild(div);
+            console.log(result);
+            console.log("멤버 추가 성공 : ", result);
+        }
+    } catch (error) {
+        console.error("멤버 추가 도중에 오류가 발생하였습니다. ", error);
+    }
+}
+
+//멤버 강퇴
 
 //project overview 수정
 let projectId = localStorage.getItem("project_id");
@@ -454,7 +502,6 @@ async function saveOverview(event) {
                 overview: input.value,
             },
         });
-        console.log(response);
         const { success, result } = response.data;
         if (success) {
             console.log("Overview 업데이트에 성공하셨습니다. :", result);
@@ -488,7 +535,6 @@ async function saveBlurOverview(event) {
                 overview: input.value,
             },
         });
-        console.log(response);
         const { success, result } = response.data;
         if (success) {
             console.log("Overview 업데이트에 성공하셨습니다. :", result);
@@ -499,14 +545,3 @@ async function saveBlurOverview(event) {
         console.error("overview 업데이트 도중 오류가 발생하였습니다. :", error);
     }
 }
-// 멤버 추가 및 삭제
-// async function addMember() {
-//     const div = document.getElementById("member-main");
-//     const Userimg = document.createElement("img");
-//     Userimg.src = "../../public/img/edit.png";
-//     Userimg.id = "pen-img";
-
-//     input.onkeydown = async function (event) {
-//         if (event.key !== "Enter") return;
-//     };
-// }
