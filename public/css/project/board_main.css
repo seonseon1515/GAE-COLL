@@ -5,32 +5,44 @@
 }
 
 body {
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
     overflow-x: hidden;
 }
-
-.bg_color {
-    background-color: #f5f5f5;
-    width: calc(100%-100px);
-    height: 100vw;
-    margin-left: 50px;
-    margin-right: 50px;
-    margin-top: 160px;
-    margin-bottom: 40px;
+main {
+    padding-top: 140px;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 50px;
 }
 
-.add {
+.board-box {
+    box-sizing: border-box;
+    border-radius: 30px;
+    margin: 30px 0px;
+    padding: 30px 30px;
+    background-color: #f5f5f5;
+    width: 100%;
+    min-height: 100vw;
+}
+.bg_color > * {
+    width: 100%;
+}
+
+.addJob {
     background-color: hsl(0, 3%, 81%);
     border: 0;
-    border-radius: 1vw;
-    width: 180px;
-    height: 50px;
-    line-height: 50px;
+    border-radius: 10px;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
     text-align: center;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 700;
-    margin-top: 25px;
-    margin-left: 60px;
+    padding: 0;
+    margin-bottom: 20px;
 }
 
 .add:hover,
@@ -38,12 +50,16 @@ click {
     cursor: pointer;
     opacity: 0.5;
 }
+.work_board_th {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 table {
+    width: 100%;
     border: 1px solid gray;
-    width: 90vw;
-    margin-left: 25px;
-    margin-right: 25px;
     font-size: 20px;
     height: 30px;
 }
@@ -52,20 +68,26 @@ table {
 }
 
 .main_board_table0 {
-    margin-left: 25px;
-    margin-top: 25px;
     border: 2px solid;
 }
 
-th {
+th:not(.th1) {
     font-size: 20px;
     color: black;
-    padding-top: 5px;
-    padding-bottom: 5px;
     text-align: left;
-    padding-left: 20px;
     font-weight: 700;
     border: 2px solid;
+    text-align: center;
+}
+.th1 {
+    font-size: 20px;
+    color: black;
+    text-align: left;
+    font-weight: 700;
+    border: 2px solid;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 20px;
 }
 
 td {
@@ -73,33 +95,31 @@ td {
     color: black;
     padding-top: 5px;
     padding-bottom: 5px;
-    margin-top: 20px;
-    margin-bottom: 20px;
     line-height: 30px;
     text-align: left;
-    padding-left: 20px;
     /* padding-left: 1vw; */
     font-weight: 700;
     border: 2px solid;
 }
-
 button {
-    padding-left: 1vw;
-    font-size: 20px;
+    font-size: 15px;
     font-weight: 700;
     color: black;
     text-align: left;
     width: fit-content;
     height: fit-content;
 }
+.td1,
+th1 {
+    padding-left: 20px;
+}
 
 tr {
     border: 1px solid gray;
-    width: 90vw;
     margin-left: 25px;
     margin-right: 25px;
     font-size: 20px;
-    height: 30px;
+    height: 50px;
 }
 
 #th1,
@@ -107,10 +127,13 @@ tr {
     border-left: 2px solid #f5f5f5;
     width: 40%;
 }
-
-/* #th1 {
-    width: 400px;
-} */
+.button-wrap {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+}
 
 #th2,
 .td2 {
@@ -127,15 +150,25 @@ tr {
     border-right: 2px solid #f5f5f5;
     width: 20%;
 }
+.td3 > button {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+}
+.td4 > button {
+    width: 100%;
+    text-align: center;
+    padding: 0;
+}
 
 .toggle_open {
     width: 0;
     height: 0;
-    border-top: 1vw solid;
-    border-bottom: 1vw solid transparent;
-    border-left: 1vw solid transparent;
-    border-right: 1vw solid transparent;
-    margin-top: 0.5vw;
+    border-top: 12px solid;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent;
+    margin-right: 10px;
 }
 
 .toggle_open:hover,
@@ -149,15 +182,38 @@ click {
 }
 
 .placement_status {
-    margin-left: 1.5vw;
-    margin-bottom: 0.5vw;
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 10px;
+    min-width: 120px;
+    height: 30px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 10px;
     display: flex;
-    justify-content: center;
-    border-radius: 1vw;
-    width: 180px;
-    height: 50px;
-    line-height: 40px;
+    justify-content: space-between;
     align-items: center;
+}
+.placement_status_inner {
+    box-sizing: border-box;
+    border: 0;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 140px;
+    height: 80%;
+    min-height: 20px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.placement_status_inner > * {
+    font-size: 15px;
+    white-space: nowrap;
 }
 
 #bg_blue {
@@ -186,8 +242,8 @@ click {
 
 .circle {
     border-radius: 50%;
-    width: 1vw;
-    height: 1vw;
+    width: 15px;
+    height: 15px;
 
     margin-right: 0.5vw;
 }
@@ -215,10 +271,11 @@ click {
 .status_txt {
     font-size: 20px;
     font-weight: 700;
+    white-space: nowrap;
 }
 
 .status_wrap {
-    margin-top: 5vw;
+    margin: 50px 0 10px 0;
 }
 
 button {
@@ -243,6 +300,10 @@ click {
     width: fit-content;
     height: fit-content;
 }
+.work_deadline {
+    width: 100%;
+    height: 100%;
+}
 
 .work_deadline_td {
     width: fit-content;
@@ -252,12 +313,6 @@ click {
 .work_managers {
     width: fit-content;
     height: fit-content;
-}
-
-.placement_status:hover,
-click {
-    opacity: 0.6;
-    cursor: pointer;
 }
 
 .select_box * {
@@ -305,16 +360,8 @@ click {
     max-height: 500px;
 }
 
-.select_box .option_item {
-    border-bottom: 1px dashed black;
-    transition: 0.1s;
-    padding-top: 0.5vw;
-}
-
 .option_item {
-    padding-right: 5vw;
     list-style: none;
-    padding-left: 0;
 }
 .option_item:hover {
     opacity: 0.7;
@@ -339,25 +386,10 @@ click {
     background: #303030;
 }
 
-/* table 안에서 활용할 css */
-.placement_status1 {
-    margin-left: 10px;
-    /* margin-bottom: 0.5vw; */
-    display: flex;
-    justify-content: center;
-    border-radius: 11px;
-    width: 200px;
-    height: 30px;
-    line-height: 30px;
-    align-items: center;
-}
-
 .circle1 {
     border-radius: 50%;
     width: 15px;
     height: 15px;
-
-    margin-right: 3px;
 }
 
 .status_txt {
@@ -367,10 +399,80 @@ click {
 
 .work_name {
     /* a 링크 셀 전체 클릭 가능하게, 해당하는 상세페이지로 가게끔 */
+    width: 100%;
+    height: 100%;
 }
 
 @media screen and (max-width: 1298px) {
     * {
         font-size: 15px;
     }
+}
+.hidden {
+    display: none;
+}
+.closeToggle {
+    width: 0;
+    height: 0;
+    border-top: 12px solid transparent;
+    border-bottom: 12px solid transparent;
+    border-left: 12px solid;
+    border-right: 12px solid transparent;
+    margin-right: 10px;
+}
+
+#dialog {
+    width: 300px;
+    height: 400px;
+    padding: 20px 10px 0 10px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.modal-btn {
+    width: fit-content;
+    padding: 0;
+}
+dialog > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px 20px 10px;
+    font-size: 20px;
+    font-weight: bold;
+}
+form > ul {
+    width: 100%;
+}
+form > ul > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.workboard {
+    width: 100%;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+.td1 > input {
+    width: 100%;
+    border: 0;
+    height: 100%;
+    background-color: unset;
 }

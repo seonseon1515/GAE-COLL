@@ -27,9 +27,9 @@
         result.blog === null || result.blog === ""
             ? (document.getElementById("blog").placeholder = "블로그주소를 입력해주세요")
             : (document.getElementById("blog").value = result.blog);
-        console.log(result.type);
+
         if (result.type === "email") {
-            result.user_img === null
+            result.user_img === null || result.user_img === ""
                 ? (document.getElementById("profileImageDisplay").src = `../../public/img/user-solid.svg`)
                 : (document.getElementById(
                       "profileImageDisplay"

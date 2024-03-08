@@ -1,4 +1,4 @@
-const { Board, BoardComment } = require("../models");
+const { Board, BoardComment, User } = require("../models");
 const { Op } = require("sequelize");
 
 //보드 전체 조회
@@ -11,8 +11,28 @@ exports.getBoardAll = async (req, res) => {
             order: [["id", "DESC"]],
             where: { projectId: Number(projectId) },
         });
+        const teamBoards = [];
+        for (let boardResult of getBoardAllResult) {
+            const userInfoResult = await User.findOne({
+                where: { id: projectId },
+                attributes: ["user_name"],
+            });
 
-        res.json({ success: true, result: getBoardAllResult });
+            const board = {
+                deadline: boardResult.deadline,
+                description: boardResult.description,
+                id: boardResult.id,
+                projectId: boardResult.projectId,
+                status: boardResult.status,
+                title: boardResult.title,
+                userId: boardResult.userId,
+                user_name: userInfoResult.user_name,
+                updatedAt: boardResult.updatedAt,
+            };
+            teamBoards.push(board);
+        }
+
+        res.json({ success: true, result: teamBoards });
     } catch (error) {
         console.log(error);
         res.json({ success: false, result: error });
@@ -98,7 +118,7 @@ exports.updateBoard = async (req, res) => {
                 },
             }
         );
-
+        console.log(boardWriteResult);
         res.json({ success: true, result: "" });
     } catch (error) {
         console.log(error);

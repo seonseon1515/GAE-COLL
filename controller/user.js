@@ -136,8 +136,8 @@ exports.getUserInfo = async (req, res) => {
     console.log("유저프로필 조회", userId);
     try {
         const getUserInfoRes = await User.findOne({ where: { id: Number(userId) } });
-        const { email, user_name, user_img, github, blog } = getUserInfoRes;
-        res.json({ success: true, result: { email, user_name, user_img, github, blog } });
+        const { email, user_name, user_img, github, blog, type } = getUserInfoRes;
+        res.json({ success: true, result: { email, user_name, user_img, github, blog, type } });
     } catch (error) {
         res.json({ success: false, result: error });
     }

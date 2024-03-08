@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 
 var fs = require("fs");
 const { default: axios } = require("axios");
+const { type } = require("os");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
     const file = req.file;
@@ -389,12 +390,11 @@ exports.addProjectMember = async (req, res) => {
     let userId;
     let result = [];
 
-    if (typeof member_id === "object") {
+    if (typeof member_id === "object" || typeof member_id === "array") {
         userId = member_id;
     } else if (typeof member_id === "string") {
         userId = JSON.parse(member_id);
     }
-
     try {
         //프로젝트 멤버DB에 없으면 추가
         for (let i = 0; i < userId.length; i++) {
@@ -511,6 +511,7 @@ exports.updateProjectGithub = async (req, res) => {
     }
 };
 
+//프로젝트 파일 삭제
 exports.deleteFile = async (req, res) => {
     const id = req.projectId;
     const { type, project_file } = req.body;
@@ -565,6 +566,7 @@ exports.deleteFile = async (req, res) => {
     }
 };
 
+//이미지 삭제 함수
 async function deleteImg(projectId) {
     try {
         const getProjectInfotResult = await Project.findOne({
@@ -579,6 +581,7 @@ async function deleteImg(projectId) {
     }
 }
 
+//토큰 업데이트 함수
 exports.UpdateToken = async (req, res) => {
     const { projectId } = req.body;
     console.log(projectId);
