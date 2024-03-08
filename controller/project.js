@@ -9,7 +9,7 @@ exports.createProject = async (req, res) => {
     const my_id = req.userId;
 
     const { project_name, start_date, end_date, overview, rule, member_id, send_img } = req.body;
-    let userId;
+    let userId = [];
 
     //사진을 보냈는데 이미지 파일이 아니면 보드 생성 실패
 
@@ -303,11 +303,11 @@ exports.projectLog = async (req, res) => {
 exports.updateProjectName = async (req, res) => {
     const id = req.projectId;
     const { project_name } = req.body;
-
     try {
         const updateProjectResult = await Project.update({ project_name }, { where: { id } });
-        res.json({ success: true, result: updateProjectName });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
