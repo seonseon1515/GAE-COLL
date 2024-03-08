@@ -4,8 +4,6 @@ const token = localStorage.getItem("token");
 //이슈 id
 const ids = document.location.href.split("project/issue_content/");
 const id = ids[1];
-//project id
-// const projectId = localStorage.getItem("projectId");
 
 //댓글 작성
 async function addCommentFunc() {
@@ -125,7 +123,7 @@ async function addCommentFunc() {
             // div가 사이즈 관리하기 편리한데 출력이 안 돼서 img태그로 바꿈
             const userImage = document.createElement("img");
             userImage.classList.add("user_img");
-            userImage.src = `/public/uploads/profile/${user_img}`; // 이미지 소스
+            userImage.src = `../../public/uploads/profile/${user_img}`; // 이미지 소스
 
             // 작성자 이름 표시
             const userName = document.createElement("div");

@@ -2,6 +2,7 @@ const { Project, ProjectFile, Board, ProjectMember, User } = require("../models"
 const jwt = require("jsonwebtoken");
 
 var fs = require("fs");
+const { default: axios } = require("axios");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
     const file = req.file;
@@ -180,7 +181,7 @@ exports.getMyTeamBoard = async (req, res) => {
                         where: { id: myProjects[j].projectId },
                         attributes: ["project_img", "project_name"],
                     });
-                    console.log(projectImg);
+
                     const board = {
                         deadline: boardResult.deadline,
                         description: boardResult.description,
@@ -218,20 +219,17 @@ exports.getProjectInfo = async (req, res) => {
         const getProjectMembertResult = await ProjectMember.findAll({
             where: { projectId: id },
         });
-        console.log("getProjectMemebertResult", getProjectMembertResult.length);
 
         for (let i = 0; i < getProjectMembertResult.length; i++) {
             const getUserInfo = await User.findOne(
                 { attributes: ["user_name", "user_img"] },
                 { where: { id: getProjectMembertResult[i].id } }
             );
-            console.log(getUserInfo);
             const data = {
                 user_name: getUserInfo.user_name,
                 user_img: getUserInfo.user_img,
                 id: getProjectMembertResult[i].id,
             };
-            console.log("userData : ", data);
             memberData.push(data);
         }
         const { project_name, status, start_date, end_date, github, overview, rule, project_img } =
@@ -270,13 +268,33 @@ exports.getProjectFile = async (req, res) => {
 //프로젝트 로그 조회
 exports.projectLog = async (req, res) => {
     const id = req.projectId;
-
+    const teamLog = [];
     try {
-        const getBoardLogResult = await Board.findOne({
-            where: { id },
+        const getBoardLogResult = await Board.findAll({
+            where: { projectId: id },
         });
-        res.json({ success: true, result: getBoardLogResult });
+        console.log(getBoardLogResult);
+        for (let board of getBoardLogResult) {
+            const userData = await User.findOne({
+                where: { id: Number(board.userId) },
+                attributes: ["user_img", "user_name"],
+            });
+            const data = {
+                boardId: board.id,
+                title: board.title,
+                boardStatus: board.status,
+                deadline: board.deadline,
+                description: board.description,
+                updatedAt: board.updatedAt,
+                user_img: userData.user_img,
+                user_name: userData.user_name,
+            };
+            teamLog.push(data);
+        }
+        console.log("teamLog", teamLog);
+        res.json({ success: true, result: teamLog });
     } catch (error) {
+        console.log(error);
         res.json({ success: true, result: error });
     }
 };
@@ -357,11 +375,7 @@ exports.updateProjectRule = async (req, res) => {
     const { rule } = req.body;
     console.log(req.body);
     try {
-        const findProjectRule = await Project.findOne({ where: { id } });
-        const beforeRule = JSON.parse(findProjectRule.rule);
-        beforeRule.push(rule);
-        const updateProjectResult = await Project.update({ rule: JSON.stringify(beforeRule) }, { where: { id } });
-
+        const updateProjectResult = await Project.update({ rule: JSON.stringify(rule) }, { where: { id } });
         res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
@@ -564,10 +578,6 @@ async function deleteImg(projectId) {
         console.log(error);
     }
 }
-
-//내 모든 작업 조회
-
-//
 
 exports.UpdateToken = async (req, res) => {
     const { projectId } = req.body;

@@ -6,14 +6,16 @@ const middleware = require("../middleware/auth");
 
 //search = 검색 params
 // 프로젝트 이슈 검색
+router.get("/search", middleware.auth, controller.searchProjectIssues);
 
-// id = 프로젝트 아이디 params
 // 프로젝트 이슈 작성 + 조회
 router.post("/", middleware.auth, uploadIssueFiles, controller.createProjectIssue);
-router.get("/", middleware.auth, controller.getProjectIssues);
-router.get("/:id/search", middleware.auth, controller.searchProjectIssues);
+// router.get("/", middleware.auth, controller.getProjectIssues); 페지네이션 구현 후 필요없어짐
+//list = 페지네이션 요청 넘버
+router.get("/list", middleware.auth, controller.getProjectIssuesPage);
 
 // 프로젝트 이슈 상세 조회 + 수정 + 삭제
+//:id = 이슈 id
 router.get("/detail/:id", middleware.auth, controller.getProjectIssueDetail);
 router.patch("/detail/:id", middleware.auth, uploadIssueFiles, controller.updateProjectIssueDetail);
 router.delete("/detail/:id", middleware.auth, controller.deleteProjectIssueDetail);

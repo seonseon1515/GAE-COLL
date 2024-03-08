@@ -20,6 +20,9 @@
         <%-include('../../views/common/header.ejs') %> <%-include('header.ejs')%>
         <main>
             <form id="issue-contain">
+                <div id="write">
+                    <a href="../../../project/issue_write" class="issue-write-a">글쓰기</a>
+                </div>
                 <div id="issue-search-contain">
                     <select name="type" id="type" class="search-values">
                         <option class="type" value="0">제목</option>
@@ -42,31 +45,17 @@
                     </table>
                 </div>
 
-                <div id="write">
-                    <a href="../../../project/issue_write" class="issue-write-a">글쓰기</a>
-                </div>
-
                 <!--페이지네이션-->
-                <div id="page-number">
-                    <div class="page-img-div2"><img class="page-img" src="../../public/img/backward-solid.svg" /></div>
-                    <div class="page-img-div">
-                        <img class="page-img" src="../../public/img/caret-left-solid.svg" />
-                    </div>
-                    <li class="li">1</li>
-                    <li class="li">2</li>
-                    <li class="li">3</li>
-                    <li class="li">4</li>
-                    <li class="li">5</li>
-                    <div class="page-img-div">
-                        <img class="page-img" src="../../public/img/caret-right-solid.svg" />
-                    </div>
-                    <div class="page-img-div2">
-                        <img class="page-img" src="../../public/img/forward-solid.svg" />
-                    </div>
+                <div id="paginationBox">
+                    <button type="button" id="preButton" class="prevButton" style="display: none">이전</button>
+                    <!-- 페이지 이동할 수 있는 버튼-->
+                    <div class="pageNumber" id="pageNumber"></div>
+                    <!--오른쪽으로 1페이지씩 이동시켜주는 버튼-->
+                    <button type="button" id="nextButton" class="nextButton" style="display: none">다음</button>
                 </div>
             </form>
         </main>
         <%-include('../../views/common/footer.ejs')%>
     </body>
-    <script src="../../public/js/project/issue_main.js"></script>
+    <script src="/../../public/js/project/issue_main.js"></script>
 </html>
