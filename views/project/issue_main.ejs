@@ -5,21 +5,31 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Document</title>
         <link rel="stylesheet" href="../../public/css/project/issue_main.css" />
-        <link rel="stylesheet" href="../public/css/main.css" />
-        <link rel="stylesheet" href="../public/css/common/font.css" />
+        <link rel="stylesheet" href="../../public/css/common/font.css" />
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+            integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+            crossorigin="anonymous"
+            referrerpolicy="no-referrer"
+        ></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     </head>
     <body>
         <%-include('../../views/common/header.ejs') %> <%-include('header.ejs')%>
         <main>
             <form id="issue-contain">
+                <div id="write">
+                    <a href="../../../project/issue_write" class="issue-write-a">글쓰기</a>
+                </div>
                 <div id="issue-search-contain">
-                    <select name="values" id="vules" class="search-values">
-                        <option class="value" value="1">제목</option>
-                        <option class="value" value="2">작성자</option>
+                    <select name="type" id="type" class="search-values">
+                        <option class="type" value="0">제목</option>
+                        <option class="type" value="1">작성자</option>
                     </select>
-                    <input type="text" placeholder="검색" id="serch-text" />
-                    <button type="submit" id="search">검색</button>
+                    <input type="search" name="keyword" placeholder="검색" id="keyword" />
+                    <button type="button" id="search" onclick="searchFunc()">검색</button>
                 </div>
                 <div id="issue-contain-main">
                     <table>
@@ -31,39 +41,21 @@
                                 <th class="issue">작성시간</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr id="issue-con">
-                                <td id="issue-number">10</td>
-                                <td id="issue-title">제목</td>
-                                <td class="issue">작성자</td>
-                                <td class="issue">작성시간</td>
-                            </tr>
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
-                <div id="write">
-                    <a href="../../../project/issue_write" class="issue-write-a">글쓰기</a>
-                </div>
-                <div id="page-number">
-                    <div class="page-img-div2"><img class="page-img" src="../../public/img/backward-solid.svg" /></div>
-                    <div class="page-img-div">
-                        <img class="page-img" src="../../public/img/caret-left-solid.svg" />
-                    </div>
-                    <li class="li">1</li>
-                    <li class="li">2</li>
-                    <li class="li">3</li>
-                    <li class="li">4</li>
-                    <li class="li">5</li>
-                    <div class="page-img-div">
-                        <img class="page-img" src="../../public/img/caret-right-solid.svg" />
-                    </div>
-                    <div class="page-img-div2">
-                        <img class="page-img" src="../../public/img/forward-solid.svg" />
-                    </div>
+
+                <!--페이지네이션-->
+                <div id="paginationBox">
+                    <button type="button" id="preButton" class="prevButton" style="display: none">이전</button>
+                    <!-- 페이지 이동할 수 있는 버튼-->
+                    <div class="pageNumber" id="pageNumber"></div>
+                    <!--오른쪽으로 1페이지씩 이동시켜주는 버튼-->
+                    <button type="button" id="nextButton" class="nextButton" style="display: none">다음</button>
                 </div>
             </form>
         </main>
         <%-include('../../views/common/footer.ejs')%>
     </body>
-    <script src="../../public/js/project/issue_main.js"></script>
+    <script src="/../../public/js/project/issue_main.js"></script>
 </html>

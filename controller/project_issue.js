@@ -1,12 +1,14 @@
 const { Issue, IssueComment, User } = require("../models");
 const { Op } = require("sequelize");
 const fs = require("fs");
+const { project } = require("./page");
 
 // 프로젝트 이슈 작성 (글 + 파일)
 exports.createProjectIssue = async (req, res) => {
     const files = req.files;
     console.log("file", files);
-    const { title, content, projectId, issue_date } = req.body;
+    const projectId = req.projectId;
+    const { title, content, issue_date } = req.body;
     const userId = req.userId;
 
     try {
@@ -30,26 +32,73 @@ exports.createProjectIssue = async (req, res) => {
 // 프로젝트 이슈 검색
 exports.searchProjectIssues = async (req, res) => {
     try {
-        const { keyword } = req.query;
-        const { type } = req.body;
+        const { keyword, type } = req.query;
+        const projectId = req.projectId;
+
         //제목이면 type = 0, 작성자면 type = 1
         if (type !== "0" && type !== "1") {
             return res.json({ success: false, result: "올바른 검색 유형을 지정하세요." });
         }
+
+        if (!Number.isInteger(page) || page < 1) {
+            page = 1;
+        }
+
+        let { page, pageSize } = req.query;
+        page = JSON.parse(page);
+        pageSize = JSON.parse(pageSize);
+
+        const offset = (page - 1) * pageSize;
+
         let projectIssues;
         if (type === "0") {
-            projectIssues = await Issue.findAll({ where: { title: { [Op.like]: `%${keyword}%` } } });
+            projectIssues = await Issue.findAndCountAll({
+                where: { projectId, title: { [Op.like]: `%${keyword}%` } },
+                limit: pageSize,
+                offset: offset,
+                order: [["updatedAt", "DESC"]],
+                //issue_date는 초단위가 없어서 같은 값이 생겼을 때 어떤 걸 더 우선순위에 두어야 할지 따로 설정해줘야 함
+            });
+            const totalIssues = projectIssues.count;
+            const totalPages = Math.ceil(totalIssues / pageSize);
+            return res.json({
+                success: true,
+                result: projectIssues.rows,
+                pagination: {
+                    currentPage: page,
+                    pageSize: pageSize,
+                    totalPages: totalPages,
+                    totalItems: totalIssues,
+                },
+            });
         }
 
         if (type === "1") {
-            const user = await User.findOne({ where: { user_name: keyword } });
+            const user = await User.findOne({ where: { user_name: { [Op.like]: `%${keyword}%` } } });
             if (user) {
-                projectIssues = await Issue.findAll({ where: { userId: user.id } });
+                projectIssues = await Issue.findAll({
+                    where: { projectId, userId: user.id },
+                    limit: pageSize,
+                    offset: offset,
+                    order: [["updatedAt", "DESC"]],
+                });
+                const totalIssues = projectIssues.count;
+                const totalPages = Math.ceil(totalIssues / pageSize);
+                return res.json({
+                    success: true,
+                    result: projectIssues.rows,
+                    pagination: {
+                        currentPage: page,
+                        pageSize: pageSize,
+                        totalPages: totalPages,
+                        totalItems: totalIssues,
+                    },
+                });
             } else {
                 return res.json({ success: false, result: "존재하지 않는 회원입니다." });
             }
         }
-        res.json({ success: true, result: projectIssues });
+        console.log("projectIssues결과 출력", projectIssues);
     } catch (error) {
         console.error("이슈 검색 오류:", error);
         res.json({ success: false, result: error });
@@ -57,15 +106,75 @@ exports.searchProjectIssues = async (req, res) => {
 };
 
 // 프로젝트 이슈 조회 (모든 프로젝트 이슈)
+// 사용 안함
 exports.getProjectIssues = async (req, res) => {
     try {
-        const { project_id: projectId } = req.body; // 프로젝트 ID
+        const projectId = req.projectId; // 프로젝트 ID
         const userId = req.userId; // 작성자 ID
         console.log(projectId, userId);
-        const projectIssues = await Issue.findAll({ where: { projectId } });
+
+        // const { currentPage: limit, pageSize: offset } = req.query;
+
+        const projectIssues = await Issue.findAll({ offset: 0, limit: 5, where: { projectId } });
         res.json({ success: true, result: projectIssues });
     } catch (error) {
-        console.error("이슈 조회 오류:", error);
+        console.log("이슈 조회 오류:", error);
+        res.json({ success: false, result: error });
+    }
+};
+
+// 페이지별로 이슈 조회
+exports.getProjectIssuesPage = async (req, res) => {
+    try {
+        const projectId = req.projectId;
+        const userId = req.userId;
+        console.log(projectId, userId);
+
+        let { page, pageSize } = req.query;
+        page = JSON.parse(page); // offset / pagesize + 1
+        pageSize = JSON.parse(pageSize); // limit
+
+        // 에러 처리:
+        // 페이지 번호와 페이지 크기가 정수가 아니거나 1보다 작을 때 초기 페이지로 설정
+        if (!Number.isInteger(page) || page < 1) {
+            page = 1;
+        }
+
+        // pageSize는 항상 5로 고정되어 들어옴  (pageSzie = limit)
+        // if (!Number.isInteger(pageSize) || pageSize < 1) {
+        //     pageSize = 5;
+        // }
+
+        // offset 계산
+        const offset = (page - 1) * pageSize;
+
+        //
+        const projectIssues = await Issue.findAndCountAll({
+            where: { projectId },
+            limit: pageSize,
+            offset: offset,
+            order: [["updatedAt", "DESC"]],
+            //issue_date는 초단위가 없어서 같은 값이 생겼을 때 어떤 걸 더 우선순위에 두어야 할지 따로 설정해줘야 함
+        });
+
+        const totalIssues = projectIssues.count; // 전체 이슈 개수
+        const totalPages = Math.ceil(totalIssues / pageSize); // 전체 페이지 수
+        // Math.ceil 올림
+        // count 원소 갯수 세주는 메소드
+
+        res.json({
+            success: true,
+            result: projectIssues.rows,
+            // 프론트에서 처리할 때 프로젝트 이슈랑 페지네이션 구분하기 좋게 result에서 빼서 보냄
+            pagination: {
+                currentPage: page,
+                pageSize: pageSize,
+                totalPages: totalPages,
+                totalItems: totalIssues,
+            },
+        });
+    } catch (error) {
+        console.log("이슈 조회 오류:", error);
         res.json({ success: false, result: error });
     }
 };
@@ -91,6 +200,7 @@ exports.getProjectIssueDetail = async (req, res) => {
 // 프로젝트 이슈 수정
 exports.updateProjectIssueDetail = async (req, res) => {
     const files = req.files;
+    console.log(files);
     //id(이슈id), user_id(작성자), req.userId(현재 사용자)
     const { id } = req.params;
     const userId = req.userId;
@@ -108,7 +218,7 @@ exports.updateProjectIssueDetail = async (req, res) => {
         let issueFiles = issue.files;
         //파일 편집할 수도 있고 안 할 수도 있고
         //첨부한 파일이 있다면
-        if (files) {
+        if (files.length > 0) {
             const updatedFileNames = files.map((file) => file.filename).join(", ");
             console.log("업데이트 한 파일명", updatedFileNames);
             //기존에 파일이 있다면 이어서 추가, 없다면 새로 추가
@@ -128,7 +238,9 @@ exports.deleteProjectIssueFile = async (req, res) => {
         const { id } = req.params;
         const userId = req.userId;
         const { fileName } = req.body; // 삭제할 파일의 이름
-
+        console.log("이슈아이디:", id);
+        console.log("유저아이디:", userId);
+        console.log("파일이름:", fileName);
         // 작성자 본인인지 확인
         const issue = await Issue.findOne({ where: { id } });
         if (issue.userId !== userId) {
@@ -175,18 +287,24 @@ exports.deleteProjectIssueDetail = async (req, res) => {
         await IssueComment.destroy({ where: { issueId: issue.id } });
 
         let issueFilesName = issue.files.split(", ");
-        // 실제 파일 삭제
-        for (let i = 0; i < issueFilesName.length; i++) {
-            let filePath = "./public/uploads/issue/" + issueFilesName[i];
-            if (fs.existsSync(filePath)) {
-                fs.unlinkSync(filePath);
-                console.log("파일 삭제 성공");
-            } else {
-                console.log("파일이 이미 삭제되었거나 존재하지 않습니다.");
+        console.log(issueFilesName[0] === "");
+
+        //파일이 존재하면
+        if (issueFilesName.length === 1 && issueFilesName[0] === "") {
+        } else {
+            // 실제 파일 삭제
+            for (let i = 0; i < issueFilesName.length; i++) {
+                let filePath = "./public/uploads/issue/" + issueFilesName[i];
+                if (fs.existsSync(filePath)) {
+                    fs.unlinkSync(filePath);
+                    console.log("파일 삭제 성공");
+                } else {
+                    console.log("파일이 이미 삭제되었거나 존재하지 않습니다.");
+                }
             }
         }
 
-        //마지막 이슈글 삭제
+        //마지막으로 이슈글 삭제
         await Issue.destroy({ where: { id } });
 
         res.json({ success: true, result: "이슈가 삭제되었습니다." });
