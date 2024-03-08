@@ -12,7 +12,7 @@
     <body>
         <%-include('common/header.ejs') %>
         <main>
-            <p class="hi">안녕하세요 <span id="username"></span></p>
+            <p class="hi">안녕하세요 <span id="username" style="font-size: 40px"></span></p>
             <div class="main_link">
                 <div class="github_link">
                     <a id="github"><img class="main_github_img" src="../public/img/github.png" /></a>
@@ -52,9 +52,9 @@
                     <div class="profiles">
                         <div class="create_myproject_profile">
                             <a href="/project/newProject" style="text-decoration: none; color: black"
-                                ><div class="main_myproject_generate">+</div></a
+                                ><div class="main_myproject_generate">+</div>
+                                <div class="main_myproject_generTxt">프로젝트 생성</div></a
                             >
-                            <div class="main_myproject_generTxt">프로젝트 생성</div>
                         </div>
                     </div>
                 </div>
@@ -62,8 +62,21 @@
 
             <div class="main_lower_block">
                 <p class="main_team_txt">팀 활동</p>
+                <div class="team_board">
+                    <table class="team_board_table" border="1" cellspacing="0">
+                        <thead>
+                            <tr>
+                                <th class="team_th1">프로젝트</th>
+                                <th class="team_th2">활동내역</th>
+                            </tr>
+                        </thead>
+                        <tbody id="team_board-tbody"></tbody>
+                    </table>
+                </div>
             </div>
         </main>
+        <%-include('common/footer.ejs') %>
+
         <script src="../public/js/main.js"></script>
     </body>
 </html>
