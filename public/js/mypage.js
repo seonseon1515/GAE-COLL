@@ -128,6 +128,8 @@ async function updatePassword() {
         const response = await axios({
             method: "PATCH",
             url: "/api/user/update/pw",
+            method: "PATCH",
+            url: "/api/user/update/pw",
             data: {
                 password: newPwd,
             },

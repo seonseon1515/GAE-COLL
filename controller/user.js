@@ -48,7 +48,8 @@ exports.emailAuth = async (req, res) => {
         const findUserResult = await User.findOne({
             where: { email },
         });
-        if (findUserResult) {
+        console.log("finduser", findUserResult);
+        if (findUserResult === null) {
             res.json({ success: false, result: { message: "사용하실 수 없는 아이디 입니다." } });
             return;
         }

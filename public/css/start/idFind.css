@@ -4,7 +4,7 @@
     margin: 0;
 }
 body {
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
 }
 
 #contain {
@@ -54,7 +54,7 @@ body {
     border-radius: 40px;
     text-align: center;
 }
-.input {
+.find {
     width: 100%;
     background-color: white;
     border: none;
