@@ -5,6 +5,7 @@
 }
 body {
     font-family: "IBM Plex Sans KR", sans-serif;
+    background-color: #ffda31;
 }
 main {
     width: 100%;
@@ -342,4 +343,3 @@ label {
 input {
     text-align: center;
 }
-
