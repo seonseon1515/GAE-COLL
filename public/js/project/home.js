@@ -10,16 +10,26 @@
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log(response);
+        console.log("나 ", response);
         const { success, result } = response.data;
         if (success) {
+            //project overview 관리
             document.getElementById("overview-text").textContent = result.overview;
-            // document.getElementById("member-main").textContent = result.;
-            if (result.rule !== null && result.rule !== "") {
-                // const rule = JSON.parse(result.rule);
-                const rule = result.rule.split(" ");
 
-                console.log("프로젝트 규칙 : ", rule);
+            // 멤버
+            var memberDivs = "";
+            for (var i = 0; i < result.member.length; i++) {
+                memberDivs += `
+                <div id="pro-img-div" data-id="${result.member[i].user_id}">
+                    <img src="../../public/img/mypage.png" id="pen-img" />
+                    <div onclick="deleteMember(event);">${result.member[i].user_name}</div>
+                </div>`;
+            }
+            document.getElementById("member-main").innerHTML = memberDivs;
+
+            // 규칙
+            if (result.rule !== null && result.rule !== "") {
+                const rule = result.rule.split(" ");
                 for (let i = 0; i < rule.length; i++) {
                     let div = document.createElement("div");
                     div.id = `ruleList${i}`;
@@ -157,7 +167,7 @@
 
         if (success) {
             for (let i = 0; i < organizedTeamLog.length; i++) {
-                console.log(organizedTeamLog);
+                // console.log(organizedTeamLog);
                 // `${changeStatusKor(organizedTeamLog[i].boardStatus)}`가 '피드백 요청'이 아닌 경우에만 div를 생성하고 추가합니다.
                 if (changeStatusKor(organizedTeamLog[i].boardStatus) !== "피드백 요청") {
                     let div = document.createElement("div");
@@ -275,6 +285,7 @@ async function projectRuleGeneration() {
         }
     };
 }
+
 //규칙 삭제
 async function deleteProjectRuleFunc(i) {
     const divTag = document.querySelector(`#ruleList${[i]}`);
@@ -433,35 +444,62 @@ async function uploadAPI() {
 
 //멤버 추가
 async function addMember() {
-    let newMemberId = prompt("회원님의 아이디를 입력해주세요:");
-    if (!newMemberId) {
+    let inputMemberEmail = prompt("회원님의 이메일을 입력해주세요:");
+    if (!inputMemberEmail) {
         return;
     }
 
-    let member_id = [newMemberId];
-    console.log(member_id);
+    let email = inputMemberEmail;
+    console.log(email);
     const token = localStorage.getItem("token");
+
     try {
+        //유저조회
         const response = await axios({
             method: "POST",
-            url: "/api/project/add/member",
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+            url: "/api/user/find",
             data: {
-                member_id,
+                email,
             },
         });
+
         console.log("post", response);
+        console.log(response.data);
+
         const { result, success } = response.data;
         if (success) {
-            let div = document.createElement("div");
-            div.innerHTML = `
-                    <div id="pro-img-div"><img src="../../public/img/mypage.png" id="pen-img" /></div>
-                    ${result.member_id}`;
-            document.getElementById("member-main").appendChild(div);
-            console.log(result);
+            const member_id = [result.id];
+            console.log("id", member_id);
+            //멤버 초대
+            const userInvite = await axios({
+                method: "POST",
+                url: "/api/project/add/member",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                data: {
+                    member_id,
+                },
+            });
+
+            console.log("멤버 초대 응답", userInvite);
+            const inviteResult = userInvite.data.result; // 결과값을 새로운 변수에 저장
+            if (inviteResult.success) {
+                let div = document.createElement("div");
+                div.classList.add("memberDiv");
+                div.setAttribute("data-id", member_id[0]); // div에 data-id 속성 추가
+                div.onclick = deleteMember; // div에 클릭 이벤트를 바인딩
+                div.innerHTML = `
+                        <div id="pro-img-div">
+                            <img src="../../public/img/mypage.png" id="pen-img" />
+                            <div>${result.member.user_name}</div>
+                            <div>${member_id[0]}</div>
+                        </div>`;
+                document.getElementById("member-main").appendChild(div);
+            }
             console.log("멤버 추가 성공 : ", result);
+        } else {
+            alert("이메일을 다시 확인해주세요");
         }
     } catch (error) {
         console.error("멤버 추가 도중에 오류가 발생하였습니다. ", error);
@@ -469,6 +507,39 @@ async function addMember() {
 }
 
 //멤버 강퇴
+async function deleteMember(e) {
+    let element = e.target;
+    while (element && !element.getAttribute("data-id")) {
+        element = element.parentNode;
+    }
+    if (element) {
+        let member_id = element.getAttribute("data-id");
+        console.log(member_id);
+
+        const token = localStorage.getItem("token");
+        try {
+            const response = await axios({
+                method: "delete",
+                url: "/api/project/delete/member",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                data: {
+                    member_id,
+                },
+            });
+            console.log(response);
+            const { result, success } = response.data;
+            if (success) {
+                e.target.parentNode.remove();
+                console.log(" 나 : ", result);
+            } else {
+            }
+        } catch (error) {
+            console.error("멤버 강퇴 도중에 오류가 발생하였습니다. ", error);
+        }
+    }
+}
 
 //project overview 수정
 let projectId = localStorage.getItem("project_id");
