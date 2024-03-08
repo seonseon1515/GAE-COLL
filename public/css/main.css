@@ -5,29 +5,38 @@
 }
 
 body {
+    background-color: #ffda31;
     font-family: "IBM Plex Sans KR", sans-serif;
+    display: flex;
+    flex-direction: column;
+}
+main {
+    padding-top: 140px;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 50px;
 }
 
 .hi {
     font-weight: 700;
     font-size: 1.5em;
-    margin-top: 10vw;
     text-align: center;
-}
-main {
-    background-color: #ffda31;
 }
 
 .main_link {
-    width: 100vw;
+    width: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
     margin-top: 3vw;
 }
 
 .main_github_img {
-    width: 2.5vw;
-    height: 2.5vw;
+    width: 40px;
+    height: 40px;
     object-fit: fill;
     border-radius: 50%;
 }
@@ -36,89 +45,93 @@ main {
     font-family: "Bebas Neue", sans-serif;
     font-weight: 800;
     font-style: normal;
-    font-size: 2vw;
+    font-size: 30px;
     font-style: oblique;
     margin-left: 3vw;
+}
+a {
+    cursor: pointer;
 }
 
 .main_middle_block {
     margin-top: 5vw;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
+    width: 100%;
+}
+.main_middle_block > * {
+    min-height: 200px;
 }
 
 .main_mywork {
     background-color: white;
-    width: 47vw;
-    height: 25vw;
+    width: 45%;
     border-radius: 1.5vw;
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
-
+.main_mywork > * {
+    width: 100%;
+}
 .main_myproject {
     background-color: white;
-    width: 47vw;
+    width: 40%;
     border-radius: 1.5vw;
-}
-
-.profiles {
-    padding: 20px;
+    padding: 20px 30px;
     display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.main-mywork-txt-box {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    padding: 5px 0;
+}
+.main_status {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 5px 0;
+}
+.profiles {
+    /* padding: 20px; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     flex-direction: row;
     flex-wrap: wrap;
 }
 .profiles > * {
-    width: 25%;
-    padding-bottom: 10px;
+    width: 30%;
+    padding-top: 10px;
 }
 
 .main_mywork_txt {
     font-size: 2vw;
     font-weight: 700;
-    padding-left: 2vw;
-    padding-top: 1vw;
 }
 
 .main_myproject_projectTxt {
     font-size: 2vw;
     font-weight: 700;
-    padding-left: 2vw;
-    padding-top: 1vw;
 }
 
 .main_status {
     display: flex;
-    padding-left: 1vw;
-    padding-top: 1vw;
 }
 
 .main_status_txt {
-    padding-left: 1vw;
+    cursor: pointer;
+    white-space: nowrap;
 }
-
 .main_board {
-    padding-top: 1vw;
-    padding-left: 2vw;
+    padding: 5px 0;
 }
-
 .main_board_table {
-    width: 42vw;
-}
-
-.th1 {
-    width: 24vw;
-}
-
-.th2 {
-    width: 8vw;
-}
-
-.th3 {
-    width: 9vw;
-}
-
-.create_myproject_profile {
-    display: flex;
-    justify-content: space-between;
+    width: 100%;
 }
 .main_myproject_profile {
     width: 100%;
@@ -138,16 +151,22 @@ main {
     display: flex;
     cursor: pointer;
 }
-
+.create_myproject_profile > a {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
 .main_myproject_generate {
     box-sizing: border-box;
     border-radius: 1vw;
     border: dashed 2px gray;
-    width: 3vw;
-    height: 3vw;
     font-size: 2vw;
     font-weight: 700;
     text-align: center;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
 }
 
 .main_myproject_generTxt {
@@ -157,31 +176,32 @@ main {
     color: gray;
     text-align: center;
     font-weight: 600;
-    font-size: 10px;
+    font-size: 12px;
     padding-right: 10px;
+    white-space: nowrap;
 }
 
 .main_myproject_show {
     border-radius: 1vw;
-    width: 3vw;
-    height: 3vw;
+    width: 50px;
+    height: 50px;
     background-color: violet;
 }
 
 .main_lower_block {
     background-color: white;
     border-radius: 2vw;
-    width: 96vw;
-    height: 25vw;
+    width: 100%;
+    min-height: 300px;
     margin-top: 6vw;
-    margin-left: 2.5vw;
+    padding: 20px 30px;
+    box-sizing: border-box;
 }
 
 .main_team_txt {
     font-size: 2vw;
     font-weight: 700;
-    padding-left: 2vw;
-    padding-top: 1vw;
+    padding-bottom: 10px;
 }
 
 .main_myproject_name {
@@ -205,10 +225,63 @@ main {
 }
 
 .main_plus {
-    padding-top: 1vw;
+    padding-top: 10px;
     color: gray;
-    font-size: 0.9vw;
-    font-weight: 800;
+    font-size: 14px;
+    background-color: unset;
+    border: 0;
+    cursor: pointer;
+}
+.selected {
+    font-weight: bold;
+}
+thead th {
+    white-space: nowrap;
+}
+tbody td:not(.main_myproject_name) {
+    text-align: center;
+    white-space: nowrap;
+}
+.main_myproject_name {
+    white-space: wrap;
+}
+.hidden {
+    display: none;
 }
 
-/* ------------------------------------------------여기까지 구조 작업 */
+.th1 {
+    width: 50%;
+}
+.th2 {
+    width: 25%;
+}
+.th3 {
+    width: 25%;
+}
+tr {
+    cursor: pointer;
+}
+td > img {
+    width: 30px;
+    height: 30px;
+}
+.teamTd {
+    padding: 10px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+}
+.teamLogTd {
+    padding: 10px 30px;
+    text-align: left;
+}
+.team_board_table {
+    width: 100%;
+}
+.team_th1 {
+    width: 30%;
+}
+.team_th2 {
+    width: 70%;
+}
