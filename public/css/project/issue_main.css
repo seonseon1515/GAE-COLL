@@ -2,42 +2,125 @@ body {
     font-family: "IBM Plex Sans KR", sans-serif;
 }
 #issue-contain {
-    height: auto;
+    height: 1170px;
     z-index: 99;
     width: auto;
     font-size: 20px;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     top: 160px;
     background-color: white;
     border-radius: 20px;
-    margin: 0 50px 240px 50px;
+    margin: 0 50px 180px 50px;
+}
+
+li {
+    list-style: none;
+}
+
+.pageNumber {
+    display: flex;
+    justify-content: space-between;
+    width: 250px;
+}
+
+.pageNumber > span {
+    cursor: pointer;
+}
+.pageNumber > span:hover {
+    cursor: pointer;
+    color: #badbb3;
+}
+
+#paginationBox {
+    position: absolute;
+    /* margin: 0 auto; */
+    bottom: 50px;
+    display: flex;
+    width: auto;
+    /* right: 40px; */
+    justify-content: center;
+    align-items: flex-end;
+}
+
+.prevButton,
+.nextButton {
+    border: 0 solid;
+    background-color: #dbf2cf;
+    border-radius: 4px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+    margin: 0 20px;
+}
+
+.prevButton:hover {
+    background-color: none;
 }
 
 #issue-contain-main {
+    position: absolute;
+    top: 134px;
     display: flex;
     justify-content: center;
     width: 100vw;
     margin: 0 5px; /* 좌우 간격 설정 */
 }
 
+/* HTML CSSResult Skip Results Iframe EDIT ON body {
+    padding: 1.5em;
+    background: #f5f5f5;
+} */
+
 table {
-    border-collapse: collapse; /* 테이블 셀 경계를 합침 */
-    width: 100%; /* 테이블이 부모 요소에 꽉 차게 함 */
+    position: absolute;
+    border: 1px #a39485 solid;
+    font-size: 0.9em;
+    box-shadow: 0 1px 2px rgba(74, 73, 69, 0.25);
+    width: 80%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
 }
-th,
+
+#issue-title {
+    text-align: left;
+}
+
+thead {
+    font-weight: bold;
+    color: #fff;
+    background: #474e3d;
+}
+
+td:nth-child(1),
+td:nth-child(3),
+td:nth-child(4) {
+    text-align: center;
+}
+
+td,
+th {
+    padding: 1em 0.5em;
+    vertical-align: middle;
+}
+
 td {
-    padding: 5px; /* 위아래 패딩 설정 */
-    text-align: left; /* th 제목 왼쪽 정렬 */
-    border-bottom: 1px solid #ddd; /* 셀 아래 경계선 설정 */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    background: #fff;
 }
-th#issue-number {
-    width: 50px; /* No 열 너비 설정 */
-}
-th#issue-title {
-    width: 50%; /* 제목 열 너비 설정 */
+
+a {
+    color: #73685d;
 }
 
 #issue-search-contain {
+    right: 150px;
+    top: 30px;
+    height: 30px;
+    position: absolute;
     display: flex;
     justify-content: flex-end;
     padding: 25px;
@@ -45,18 +128,15 @@ th#issue-title {
 .search-values {
     cursor: pointer;
 }
+
 #search {
     width: 50px;
-    height: 25px;
+    height: 30px;
     cursor: pointer;
 }
 #serch-text {
     margin: 0 10px;
     width: 450px;
-}
-
-table {
-    width: auto;
 }
 
 #issue-con {
@@ -90,12 +170,13 @@ table {
     cursor: pointer;
 }
 #write {
+    position: absolute;
+    top: 50px;
+    right: 40px;
     width: 100px;
     height: 40px;
     border-radius: 10px;
     text-align: center;
-    margin-top: 5px;
-    position: sticky;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -106,7 +187,7 @@ table {
 }
 .issue-write-a {
     text-decoration: none;
-    color: white;
+    color: rgb(62, 62, 62);
 }
 .li {
     list-style: none;
