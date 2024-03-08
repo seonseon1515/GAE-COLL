@@ -15,6 +15,7 @@ router.get("/header/project", controller.projectheader);
 router.get("/project/home", controller.project);
 router.get("/mypage", controller.mypage);
 router.get("/project/board_write", controller.board_write);
+router.get("/project/board_content/:id", controller.board_content);
 router.get("/footer", controller.footer);
 router.get("/project/board_main", controller.board_main);
 router.get("/project/issue_main", controller.issue);

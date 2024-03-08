@@ -10,7 +10,9 @@
   <link rel="stylesheet" href="../../public/css/main.css" />
   <link rel="stylesheet" href="../../public/css/common/font.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
 </head>
 
 <body>
@@ -28,13 +30,18 @@
             <input type="text" id="projectName" class="txtBox" required />
           </div>
           <br />
-          <div class="project-div">
+          <div class="proejctDates">
             <div class="subtxt" for="setProDate">프로젝트 날짜</div>
-            <label for="start_date">시작일</label>
-            <input type="date" name="nowDateName" id="start_date" min="2012-06-05" max="2050-06-20" class="txtBox" />
-            <label for="end_date">마감일</label>
-            <input type="date" name="nowDateName" id="end_date" min="2012-06-05" max="2050-06-20" class="txtBox" />
+            <div class="projectStartBox">
+                <label for="start_date">시작일</label>
+                <input type="text" name="nowDateName" id="start_date" min="2012-06-05" max="2050-06-20" class="txtBox" />
+            </div>
+            <div class="projectEndBox">
+                  <label for="end_date">마감일</label>
+                  <input type="text" name="nowDateName" id="end_date" min="2012-06-05" max="2050-06-20" class="txtBox" />
+            </div>
           </div>
+
           <br />
          
             <span class="subtxt" for="proInvite">프로젝트 멤버 초대</span><button type="button" id="proInvite" class="invi inviButton" onclick="openPopup()" style="display: inline;">초대</button>
@@ -76,5 +83,7 @@
     <%-include('../../views/common/footer.ejs')%>
 </body>
 <script src="../../public/js/project/newProject2.js"></script>
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 </html>

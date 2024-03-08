@@ -30,7 +30,6 @@ async function emailLogin() {
             localStorage.setItem("save", "true");
         }
         localStorage.setItem("token", loginResult.data.token);
-        alert(loginResult.data.token);
         document.location.href = "/";
     } else {
         alert("아이디 또는 비밀번호를 확인해 주세요.");

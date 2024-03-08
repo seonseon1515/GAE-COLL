@@ -27,7 +27,6 @@ exports.createProject = async (req, res) => {
         userId = member_id;
     }
     userId.push(my_id);
-
     try {
         const result = [];
         let project_img;
@@ -68,6 +67,7 @@ exports.createProject = async (req, res) => {
     }
 };
 
+// 내 모든 작업 조회
 exports.getMyBoard = async (req, res) => {
     try {
         const userId = req.userId;
@@ -97,6 +97,7 @@ exports.getMyBoard = async (req, res) => {
                 getMyBoard.set(projectId, {
                     projectName,
                     board,
+                    projectId,
                 });
             }
         }
@@ -153,14 +154,14 @@ exports.getMyTeamBoard = async (req, res) => {
         const userId = req.userId;
 
         // 현재 사용자가 참여 중인 프로젝트 조회
-        const projects = await ProjectMember.findAll({
+        const myProjects = await ProjectMember.findAll({
             where: { userId },
             attributes: ["projectId"],
         });
 
         // 해당 프로젝트에 참여 중인 모든 팀원의 정보를 찾기
         const projectMembers = await ProjectMember.findAll({
-            where: { projectId: projects.map((project) => project.projectId) },
+            where: { projectId: myProjects.map((project) => project.projectId) },
             include: { model: User, attributes: ["user_name"] }, // 멤버의 이름을 가져오기 위해 User 모델을 include
         });
 
@@ -168,16 +169,39 @@ exports.getMyTeamBoard = async (req, res) => {
         let teamBoards = [];
 
         // 각 팀원별로 프로젝트의 보드 조회
-        for (let i = 0; i < projectMembers.length; i++) {
-            const member = projectMembers[i];
-            const boards = await Board.findAll({
-                where: { projectId: member.projectId },
-            });
-            teamBoards.push({ member, boards });
+        for (let j = 0; j < myProjects.length; j++) {
+            for (let i = 0; i < projectMembers.length; i++) {
+                const member = projectMembers[i];
+                const getBoardResult = await Board.findAll({
+                    where: { projectId: myProjects[j].projectId, userId: projectMembers[i].id },
+                });
+                for (let boardResult of getBoardResult) {
+                    const projectImg = await Project.findOne({
+                        where: { id: myProjects[j].projectId },
+                        attributes: ["project_img", "project_name"],
+                    });
+                    console.log(projectImg);
+                    const board = {
+                        deadline: boardResult.deadline,
+                        description: boardResult.description,
+                        id: boardResult.id,
+                        projectId: boardResult.projectId,
+                        status: boardResult.status,
+                        title: boardResult.title,
+                        userId: boardResult.userId,
+                        user_name: member.user.user_name,
+                        project_img: projectImg.project_img,
+                        updatedAt: boardResult.updatedAt,
+                        project_name: projectImg.project_name,
+                    };
+                    teamBoards.push(board);
+                }
+            }
         }
 
         res.json({ success: true, result: teamBoards });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: "팀 보드 조회 실패" });
     }
 };
@@ -261,11 +285,11 @@ exports.projectLog = async (req, res) => {
 exports.updateProjectName = async (req, res) => {
     const id = req.projectId;
     const { project_name } = req.body;
-
     try {
         const updateProjectResult = await Project.update({ project_name }, { where: { id } });
-        res.json({ success: true, result: updateProjectName });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };

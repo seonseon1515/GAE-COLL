@@ -50,6 +50,9 @@ exports.footer = (req, res) => {
 exports.board_main = (req, res) => {
     res.render("project/board_main");
 };
+exports.board_content = (req, res) => {
+    res.render("project/board_write");
+};
 exports.issue_write = (req, res) => {
     res.render("project/issue_write");
 };
@@ -78,17 +81,22 @@ exports.write = (req, res) => {
 const kakaoOpt = {
     clientId: process.env.KAKAO_CLIENT_ID,
     clientSecret: process.env.KAKAO_CLIENT_SECRET,
-    redirectUri: process.env.DEVEL_KAKAO_REDIRECT_URI,
-    //redirectUri: process.env.KAKAO_REDIRECT_URI,
+    develRedirectUri: process.env.DEVEL_KAKAO_REDIRECT_URI,
+    prodRedirectUri: process.env.KAKAO_REDIRECT_URI,
 };
 const googleOpt = {
     clientId: process.env.GOOGLE_CLIENT_ID,
-    redirectUri: process.env.DEVEL_GOOGLE_REDIRECT_URI,
-    //redirectUri: process.env.GOOGLE_REDIRECT_URI,
+    develRedirectUri: process.env.DEVEL_GOOGLE_REDIRECT_URI,
+    prodRedirectUri: process.env.GOOGLE_REDIRECT_URI,
 };
 //카카오 로그인
 exports.getKakaoAuth = async (req, res) => {
-    const kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.redirectUri}&response_type=code`;
+    let kakaoLoginURL = "";
+    if (process.env.NODE_ENV === "production") {
+        kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.develRedirectUri}&response_type=code`;
+    } else {
+        kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.prodRedirectUri}&response_type=code`;
+    }
     res.redirect(kakaoLoginURL);
 };
 
@@ -117,6 +125,11 @@ exports.getKakaoAuthCallback = async (req, res) => {
 };
 
 exports.getGoogleAuth = (req, res) => {
-    const googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?scope=email profile&response_type=token&state=state_parameter_passthrough_value&redirect_uri=${googleOpt.redirectUri}&client_id=${googleOpt.clientId}`;
+    let googleLoginURL = "";
+    if (process.env.NODE_ENV === "production") {
+        googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?scope=email profile&response_type=token&state=state_parameter_passthrough_value&redirect_uri=${googleOpt.prodRedirectUri}&client_id=${googleOpt.clientId}`;
+    } else {
+        googleLoginURL = `https://accounts.google.com/o/oauth2/v2/auth?scope=email profile&response_type=token&state=state_parameter_passthrough_value&redirect_uri=${googleOpt.develRedirectUri}&client_id=${googleOpt.clientId}`;
+    }
     res.redirect(googleLoginURL);
 };

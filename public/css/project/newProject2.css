@@ -142,7 +142,7 @@ body {
 .txtBox {
     background-color: #f6f4f4;
     border: 0.5px solid hwb(0 82% 18%);
-    width: 300px;
+    /* width: 300px; */
     height: 40px;
     text-align: center;
     line-height: 40px;
@@ -202,7 +202,106 @@ il:hover {
     font-size: 15px;
 }
 
-@media screen and (max-width: 768px){  }
+@media screen and (max-width: 768px) {
+}
 
+/*datepicker css*/
+HTML CSS JSResult Skip Results Iframe EDIT ON .ui-widget.ui-widget-content {
+    /* 전체 박스 */
+    background-color: #ccc;
+    border: 0px;
+    box-shadow: 5px 5px 10px #ccc;
+    padding: 0;
+}
+.ui-datepicker-calendar {
+    background-color: #f6f4f4;
+}
 
+.ui-widget-header {
+    /* 헤더 (화살표/날짜표시 영역) */
+    background: #f3bd3e;
+    border: 0px;
+    border-radius: 0px;
+}
+.ui-widget-header .ui-icon {
+    /* 이전,다음 화살표 */
+    background: none;
+}
+.ui-datepicker-prev {
+    /* 이전 화살표 */
+    text-align: center;
+    line-height: 2em;
+}
+.ui-datepicker-prev::before {
+    font: var(--fa-font-solid);
+    content: "\f0d9";
+    color: #fff;
+}
+.ui-datepicker-next {
+    /* 다음 화살표 */
+    text-align: center;
+    line-height: 2em;
+}
+/*font-awesome 이용해서 화살표 변경*/
+.ui-datepicker-next::before {
+    font: var(--fa-font-solid);
+    content: "\f0da";
+    color: #fff;
+}
+.ui-datepicker .ui-datepicker-title {
+    /* 년월 텍스트 묶음 */
+    color: #fff;
+}
+.ui-datepicker .ui-datepicker-title .ui-datepicker-year {
+    /* 년도 숫자만 */
+    color: gold;
+}
+.ui-datepicker .ui-datepicker-title .ui-datepicker-month {
+    /* *월 */
+    color: gold;
+}
+.ui-datepicker th {
+    /* 요일 영역 */
+    background: grey;
+}
+.ui-datepicker th span {
+    /* 요일 텍스트 */
+    font-size: 18px;
+    color: #fff;
+}
 
+.ui-state-default,
+.ui-widget-content .ui-state-default,
+.ui-widget-header .ui-state-default,
+.ui-button,
+html .ui-button.ui-state-disabled:hover,
+html .ui-button.ui-state-disabled:active {
+    /* 일자 기본영역 */
+    border: 0px;
+    background: none;
+    text-align: center;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 100%;
+    padding: 0;
+    margin: 0 auto;
+}
+.ui-state-highlight,
+.ui-widget-content .ui-state-highlight,
+.ui-widget-header .ui-state-highlight {
+    /* 오늘일자 */
+    border: 0px;
+    background: #ccc;
+    color: #fff;
+}
+.ui-state-active,
+.ui-widget-content .ui-state-active,
+.ui-widget-header .ui-state-active,
+a.ui-button:active,
+.ui-button:active,
+.ui-button.ui-state-active:hover {
+    /* 선택 일자 */
+    background: gold;
+    color: #000;
+}
