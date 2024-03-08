@@ -5,7 +5,11 @@
 }
 body {
     background-color: #ffda31;
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: "IBM Plex Sans KR", sans-serif;
+}
+
+a:link {
+    font-weight: 700px;
 }
 
 #project_header {
@@ -81,8 +85,250 @@ body {
 
 .pro_header2_link:active {
     border-bottom: 2px solid;
+    font-weight: 700;
 }
 
 .pro_header2_link:hover {
     border-bottom: 2px solid;
+    font-weight: 700;
+}
+
+/* .startDate input[type='date']::before {
+    content: attr(data-placeholder);
+    width: 100%;
+  } */
+
+.projectSchedule {
+    outline: none;
+    border: none;
+    font-size: 15px;
+}
+
+.pro_edit:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.addLink {
+    background-color: #fefefe !important;
+    border: 1px solid #888;
+    font-size: 20px;
+    border-radius: 10px;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 250px;
+    height: 25px;
+    position: fixed;
+
+    flex-direction: row;
+}
+
+.xImg {
+    width: 10px;
+    height: 10px;
+    margin-left: 240px;
+    margin-bottom: 10px;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.right_wrap1 {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+#githubLinkInput {
+    width: 200px;
+}
+
+.addBtn {
+    width: 31px;
+    height: 20px;
+    font-size: 13px !important;
+    font-weight: 400;
+    border: 1px solid gray;
+    border-radius: 3px;
+    margin-left: 4px;
+    padding: 0 !important;
+    margin-left: 5px;
+}
+
+.txtLink {
+    position: absolute;
+    top: 7px;
+    font-weight: 300;
+    font-size: 13px;
+}
+
+.pro_name {
+    border-style: none;
+    width: 80px;
+    overflow: auto;
+}
+
+/* select 박스 css */
+/* .status_modify {
+    margin-top: 0.5vw;
+    margin-left: 5vw;
+    background-color: #b8b4b4;
+    border-radius: 2vw;
+    width: 13vw;
+    height: 3vw;
+    line-height: 3vw;
+    text-align: center;
+    font-weight: 700;
+    font-size: 13px;
+    border: none;
+}
+
+.status_modify:hover {
+    opacity: 0.7;
+    cursor: pointer;
+} */
+
+.placement_status {
+    margin-left: 1.5vw;
+    margin-top: 0.5vw;
+    margin-bottom: 1vw;
+    display: flex;
+    justify-content: center;
+    border-radius: 1vw;
+    width: 10vw;
+    height: 2vw;
+    line-height: 2vw;
+    align-items: center;
+}
+
+#bg_blue {
+    background-color: hsl(199, 74%, 85%);
+}
+
+#bg_yellow {
+    background-color: #f9f9c1;
+}
+
+#bg_purple {
+    background-color: #f8d6f8;
+}
+
+#bg_green {
+    background-color: #d2f5d2;
+}
+
+#bg_red {
+    background-color: #f8cfcf;
+}
+
+#bg_black {
+    background-color: #d1d0d0;
+}
+
+.circle {
+    border-radius: 50%;
+    width: 1vw;
+    height: 1vw;
+
+    margin-right: 0.5vw;
+}
+
+#blue {
+    background-color: hsl(198, 60%, 70%);
+}
+
+#yellow {
+    background-color: #eaea5e;
+}
+#purple {
+    background-color: purple;
+}
+#green {
+    background-color: #328d32;
+}
+#red {
+    background-color: #f25c5c;
+}
+#black {
+    background-color: #504e4e;
+}
+
+.status_txt {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.select_box {
+    position: relative;
+    width: 15vw;
+    height: 3vw;
+    border-radius: 4px;
+    border: none;
+    background: white;
+    /* background-size: 20px; */
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+/* .select_box .status_modify {
+    display: flex;
+    align-items: start;
+    width: 15vw;
+    height: 3vw;
+    border: 0 none;
+    outline: 0 none;
+    padding-left: 2px;
+    background: transparent;
+    cursor: pointer;
+} */
+
+.select_box .option_list {
+    top: 4vw;
+    position: absolute;
+    width: 13vw;
+    background: #bfbfbf;
+    color: black;
+    list-style: none;
+    padding-left: 0px;
+    border-radius: 6px;
+    overflow: hidden;
+    max-height: 0;
+    transition: 0.3s ease-in;
+}
+
+.select_box.active .option_list {
+    max-height: 500px;
+}
+
+.select_box .option_item {
+    border-bottom: 1px dashed black;
+    transition: 0.1s;
+}
+
+.option_item {
+    padding-right: 5vw;
+    list-style: none;
+    padding-left: 0;
+}
+.option_item:hover {
+    opacity: 0.7;
+}
+
+.select_box .option_item:last-child {
+    border-bottom: 0 none;
+}
+
+/* 스크롤 커스텀 */
+.select_box .option_list::-webkit-scrollbar {
+    width: 6px;
+}
+.select_box .option_list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.select_box .option_list::-webkit-scrollbar-thumb {
+    background: #303030;
+    border-radius: 45px;
+}
+.select_box .option_list::-webkit-scrollbar-thumb:hover {
+    background: #303030;
 }

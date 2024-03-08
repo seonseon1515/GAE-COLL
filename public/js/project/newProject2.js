@@ -1,3 +1,22 @@
+$(function () {
+    $("#start_date").datepicker({
+        lang: "ko",
+        dateFormat: "yy-mm-dd",
+        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"], //달력의 월 부분 텍스트
+        monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"], //달력의 월 부분 Tooltip
+        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"], //달력의 요일 텍스트
+        dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"], //달력의 요일 Tooltip
+    });
+    $("#end_date").datepicker({
+        lang: "ko",
+        dateFormat: "yy-mm-dd",
+        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"], //달력의 월 부분 텍스트
+        monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"], //달력의 월 부분 Tooltip
+        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"], //달력의 요일 텍스트
+        dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"], //달력의 요일 Tooltip
+    });
+});
+
 function openPopup() {
     document.querySelector(".popup-overlay").style.display = "block";
     document.querySelector(".popup-content").style.display = "block";
@@ -61,9 +80,28 @@ async function createProject() {
     let imgSelected = false;
 
     if (projectName === "") {
-        alert("프로젝트 이름을 작성하세요.");
+        alert("프로젝트 이름을 작성해주세요.");
         return;
     }
+    if (projectDateStart === "") {
+        alert("프로젝트 시작 날짜를 입력해주세요.");
+        return;
+    }
+    if (projectDateEnd === "") {
+        alert("프로젝트 마감 날짜를 입력해주세요.");
+        return;
+    }
+
+    if (projectImg.files[0] === undefined) {
+        alert("프로젝트 이미지를 첨부해주세요.");
+        return;
+    }
+
+    if (projectOverview === "") {
+        alert("프로젝트 소개글을 작성해주세요.");
+        return;
+    }
+
     const formData = new FormData();
     if (projectImg.files[0] !== undefined) {
         imgSelected = true;
@@ -77,8 +115,6 @@ async function createProject() {
     // 임의로 넣어준 값
     formData.append("send_img", imgSelected);
     formData.append("overview", projectOverview);
-    try {
-    } catch (error) {}
 
     const careateProjectResponse = await axios({
         method: "post",
