@@ -24,7 +24,7 @@
 
     //해당하는 email이 없으면 회원가입
     if (!findUser.data.success) {
-        const signupKakaoResult = await axios({
+        const signupGoogleResult = await axios({
             method: "POST",
             url: "/api/user/signup",
             data: {
@@ -35,7 +35,9 @@
                 thumb_img: picture,
             },
         });
-        console.log(signupKakaoResult);
+        localStorage.setItem("token", signupGoogleResult.data.token);
+    } else {
+        localStorage.setItem("token", findUser.data.token);
     }
     //회원가입 또는 로그인 완료시 메인페이지로 이동
     document.location.href = "/";
