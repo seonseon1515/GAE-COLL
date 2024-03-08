@@ -14,7 +14,7 @@ exports.getBoardAll = async (req, res) => {
         const teamBoards = [];
         for (let boardResult of getBoardAllResult) {
             const userInfoResult = await User.findOne({
-                where: { id: projectId },
+                where: { id: Number(boardResult.userId) },
                 attributes: ["user_name"],
             });
 
@@ -41,11 +41,10 @@ exports.getBoardAll = async (req, res) => {
 
 //보드작성
 exports.boardWrite = async (req, res) => {
-    userId = req.userId;
     const projectId = req.projectId;
 
     try {
-        const { title, description, status, deadline } = req.body;
+        const { title, description, status, deadline, userId } = req.body;
 
         const boardWriteResult = await Board.create({
             projectId: Number(projectId),
@@ -100,10 +99,9 @@ exports.getBoardMonth = async (req, res) => {
 };
 //보드 수정
 exports.updateBoard = async (req, res) => {
-    userId = req.userId;
     try {
-        const { title, description, status, deadline, board_id: id } = req.body;
-
+        const { title, description, status, deadline, board_id: id, userId } = req.body;
+        console.log(userId);
         const boardWriteResult = await Board.update(
             {
                 title,

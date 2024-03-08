@@ -220,16 +220,17 @@ exports.getProjectInfo = async (req, res) => {
         const getProjectMembertResult = await ProjectMember.findAll({
             where: { projectId: id },
         });
-
         for (let i = 0; i < getProjectMembertResult.length; i++) {
+            console.log("getProjectMembertResult[i].userId", getProjectMembertResult[i].userId);
             const getUserInfo = await User.findOne(
-                { attributes: ["user_name", "user_img"] },
-                { where: { id: getProjectMembertResult[i].id } }
+                { where: { id: Number(getProjectMembertResult[i].userId) } },
+                { attributes: ["user_name", "user_img"] }
             );
+            console.log(getUserInfo.user_img);
             const data = {
                 user_name: getUserInfo.user_name,
                 user_img: getUserInfo.user_img,
-                id: getProjectMembertResult[i].id,
+                id: getProjectMembertResult[i].userId,
             };
             memberData.push(data);
         }

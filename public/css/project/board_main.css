@@ -181,7 +181,7 @@ click {
     display: flex;
 }
 
-.placement_status {
+.placement_status_new {
     box-sizing: border-box;
     border: 0;
     border-radius: 10px;
@@ -360,13 +360,6 @@ click {
     max-height: 500px;
 }
 
-.option_item {
-    list-style: none;
-}
-.option_item:hover {
-    opacity: 0.7;
-}
-
 .select_box .option_item:last-child {
     border-bottom: 0 none;
 }
@@ -458,7 +451,9 @@ form > ul > div {
 .flex {
     display: flex;
 }
-
+.flex-direction-column {
+    flex-direction: column;
+}
 .justify-between {
     justify-content: space-between;
 }
@@ -475,4 +470,30 @@ form > ul > div {
     border: 0;
     height: 100%;
     background-color: unset;
+}
+#selectMember {
+    box-sizing: border-box;
+    width: 300px;
+    height: 400px;
+    padding: 30px 50px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+#selectMember form {
+    display: flex;
+    flex-direction: column;
+    padding: 10px 10px 20px 10px;
+}
+#selectMember form div {
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+#selectMember button {
+    width: 100%;
+    height: fit-content;
+    display: flex;
+    align-items: center;
 }

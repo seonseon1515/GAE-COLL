@@ -7,8 +7,8 @@
     <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <link rel="stylesheet" href="../../public/css/project/board_main.css" />
     <link rel="stylesheet" href="../../public/css/common/font.css" /><link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="../../public/css/project/board_main.css" />
   </head>
   <body>
     <%- include('../common/header.ejs') %> <%- include('./header.ejs') %>
@@ -33,7 +33,7 @@
             <caption>
               <div class="status_wrap">
                 <div class="toggle_open"></div>
-                <div id="bg_blue" class="placement_status">
+                <div id="bg_blue" class="placement_status_new">
                   <div id="blue" class="circle"></div>
                   <div class="status_txt">계획중</div>
                 </div>
@@ -49,7 +49,7 @@
             <caption>
                     <div class="status_wrap">
                       <div class="toggle_open"></div>
-                      <div id="bg_yellow" class="placement_status">
+                      <div id="bg_yellow" class="placement_status_new">
                         <div id="yellow" class="circle"></div>
                         <div class="status_txt">진행중</div>
                       </div>
@@ -65,7 +65,7 @@
                     <caption>
                       <div class="status_wrap">
                         <div class="toggle_open"></div>
-                        <div id="bg_purple" class="placement_status">
+                        <div id="bg_purple" class="placement_status_new">
                           <div id="purple" class="circle"></div>
                           <div class="status_txt">중단됨</div>
                         </div>
@@ -82,7 +82,7 @@
                     <caption>
                       <div class="status_wrap">
                         <div class="toggle_open"></div>
-                        <div id="bg_green" class="placement_status">
+                        <div id="bg_green" class="placement_status_new">
                           <div id="green" class="circle"></div>
                           <div class="status_txt">완료</div>
                         </div>
@@ -99,7 +99,7 @@
                     <caption class="">
                       <div class="status_wrap">
                         <div class="toggle_open"></div>
-                        <div id="bg_red" class="placement_status">
+                        <div id="bg_red" class="placement_status_new">
                           <div id="red" class="circle"></div>
                           <div class="status_txt">피드백 요청</div>
                         </div>
@@ -117,7 +117,7 @@
                     <caption>
                       <div class="status_wrap">
                         <div class="toggle_open"></div>
-                        <div id="bg_black" class="placement_status">
+                        <div id="bg_black" class="placement_status_new">
                           <div id="black" class="circle"></div>
                           <div class="status_txt">피드백 완료</div>
                         </div>
@@ -137,70 +137,63 @@
       <ul>
       <div>
         <button value="planning" class="modal-btn">
-          <li class="option_item">
-                    <div id="bg_blue" class="placement_status">
+                    <div id="bg_blue" class="placement_status_new">
                       <div id="blue" class="circle1"></div>
                       <div class="status_txt1">계획중</div>
                     </div>
-          </li>
         </button>
       </div>
       <div>
         <button value="progress" class="modal-btn">
 
-          <li class="option_item">
-                    <div id="bg_yellow" class="placement_status">
+                    <div id="bg_yellow" class="placement_status_new">
                         <div id="yellow" class="circle1"></div>
                         <div class="status_txt1">진행중</div>
                     </div>
       
-          </li>
           </button>
       </div>
       <div>
         <button value="suspend" class="modal-btn">
 
-          <li class="option_item">
-                    <div id="bg_purple" class="placement_status">
+                    <div id="bg_purple" class="placement_status_new">
                         <div id="purple" class="circle1"></div>
                         <div class="status_txt1">중단됨</div>
                     </div>
-          </li>
           </button>
       </div>
       <div>
         <button value="finish" class="modal-btn">
-          <li class="option_item">
-                    <div id="bg_green" class="placement_status">
+                    <div id="bg_green" class="placement_status_new">
                         <div id="green" class="circle1"></div>
                         <div class="status_txt1">완료</div>
                     </div>
-          </li>
         </button>
       </div>
       <div>
-        <button value="needFeedback" class="modal-btn">
-          <li class="option_item">                                
-                    <div id="bg_red" class="placement_status">
+        <button value="needFeedback" class="modal-btn">                               
+                    <div id="bg_red" class="placement_status_new">
                         <div id="red" class="circle1"></div>
                         <div class="status_txt1">피드백 요청</div>
                     </div>
-          </li>
           </button>
       </div>
       <div>
         <button value="finishFeedback" class="modal-btn">
-          <li class="option_item">
 
-                    <div id="bg_black" class="placement_status">
+                    <div id="bg_black" class="placement_status_new">
                         <div id="black" class="circle1"></div>
                         <div class="status_txt1">피드백 완료</div>
                     </div>
-          </li>
         </button>
       </div>
     </form>
   </ul>
+  </dialog>
+  <dialog id="selectMember">
+    <div>작업 담당자 선택</div>
+    <form method="dialog" id="selectMemberForm" class="flex justify-between">
+    </form>
   </dialog>
         <script src="../../public/js/project/board_main.js"></script>
 

@@ -1,6 +1,7 @@
 const toggleDiv = document.querySelectorAll(".toggle_open");
 let changedBoardId = 0;
 let boardData = [];
+let projectMember = [];
 
 for (let i = 0; i < toggleDiv.length; i++) {
     toggleDiv[i].addEventListener("click", clickToggle);
@@ -14,27 +15,63 @@ function clickToggle(e) {
 }
 
 (async function () {
-    const token = localStorage.getItem("token");
-    const getBoardResult = await axios({
-        method: "get",
-        url: "/api/project/board/get",
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-    });
-    const { result, success } = getBoardResult.data;
-    if (success) {
-        //계획에 해당하는 부분 테이블에 구현
-        //deadline 오름차순변경
-        boardData = result.sort((a, b) => {
-            if (a.deadline > b.deadline) return -1;
-            if (a.deadline < b.deadline) return 1;
-            return 0;
+    try {
+        const token = localStorage.getItem("token");
+        const getBoardResult = await axios({
+            method: "get",
+            url: "/api/project/board/get",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
         });
-        drawTable(boardData);
+        const { result, success } = getBoardResult.data;
+        if (success) {
+            //계획에 해당하는 부분 테이블에 구현
+            //deadline 오름차순변경
+            boardData = result.sort((a, b) => {
+                if (a.deadline > b.deadline) return -1;
+                if (a.deadline < b.deadline) return 1;
+                return 0;
+            });
+            drawTable(boardData);
+        }
+        //프로젝트 정보조회(유저 데이터 불러옴)
+        const getProjectInfo = await axios({
+            method: "post",
+            url: "/api/project/get/info",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        const { success: getProjectSuccess, result: getProjectResult } = getProjectInfo.data;
+        if (getProjectSuccess) {
+            for (let i = 0; i < getProjectResult.member.length; i++) {
+                //프로젝트 멤버 데이터 저장
+                projectMember.push(getProjectResult.member[i]);
+                //모달안에 유저 만들어주기!
+                const div = document.createElement("div");
+                div.classList.add("flex");
+                div.classList.add("justify-between");
+                div.classList.add(".align-center");
+                div.innerHTML = `
+                <button value="${getProjectResult.member[i].id}" class="modal-btn">   
+                    <div style="width:50%;">
+                        <img src = "../../../public/uploads/profile/${getProjectResult.member[i].user_img}" style="width:30px;height:30px; border-radius:5px"/>
+                    </div>
+                    <div style="width:50%;">
+                        <span>${getProjectResult.member[i].user_name}</span>
+                    </div>
+                </button
+                `;
+                selectMemberForm.appendChild(div);
+            }
+        }
+    } catch (error) {
+        console.log(error);
     }
 })();
 function drawTable(data) {
+    console.log(data);
     const planningTbody = document.getElementById("planning-tbody");
     const progessTbody = document.getElementById("progress-tbody");
     const suspendTbody = document.getElementById("suspend-tbody");
@@ -59,7 +96,7 @@ function drawTable(data) {
             </div>
         </td>
         <td class="td3"><input type="text" id="datepicker${data[i].id}" class="${data[i].id} datepicker" value="${data[i].deadline}"></td>
-        <td class="td4"><button class="work_managers" type="button" onclick="">${data[i].user_name}</button></td>
+        <td class="td4"><button class="work_managers" type="button" onclick="showUserSelectModal(event,${data[i].id})">${data[i].user_name}</button></td>
 
         `;
 
@@ -125,7 +162,7 @@ function addJob() {
       <td class="td3"><input type="text" id="datepicker" placeholder="마감일"></td>
 
       
-      <td class="td4"><button class="work_managers" type="button" onclick="">작업자선택</button></td>
+      <td class="td4"><button class="work_managers" type="button" onclick="showUserSelectModal(event, 0)">작업자선택</button></td>
 
     `;
 
@@ -157,9 +194,16 @@ $(function () {
 });
 
 const modal = document.querySelector("#dialog");
+const userSelectModal = document.querySelector("#selectMember");
+const selectMemberForm = document.querySelector("#selectMemberForm");
+
 function showModal(event, boardId) {
     changedBoardId = boardId;
     modal.showModal();
+}
+function showUserSelectModal(event, boardId) {
+    changedBoardId = boardId;
+    userSelectModal.showModal();
 }
 //소켓
 modal.addEventListener("close", (event) => {
@@ -177,6 +221,10 @@ modal.addEventListener("close", (event) => {
     } else if (modal.returnValue === "finish") {
         boardStatusUpdate("finish");
     }
+});
+userSelectModal.addEventListener("close", (event) => {
+    // event.returnValue는 close이벤트에 대한 리턴 값으로 true를 반환한다.
+    boardJobMebmberUpdate(userSelectModal.returnValue);
 });
 // backdrop 클릭시 닫히는 이벤트 함수
 modal.addEventListener("click", function (event) {
@@ -196,6 +244,59 @@ modal.addEventListener("click", function (event) {
         modal.close();
     }
 });
+userSelectModal.addEventListener("click", function (event) {
+    /**
+     * target === this 조건으로 close를 한다면 dialog 상자 안에 빈 곳을 클릭해도 닫힌다.(this 바인딩에 주의)
+     * 정확하게 dialog 바깥인 backdrop 클릭시에만 이벤트를 호출하려면 클릭 포인트가
+     * 상자 내부에 있는지를 체크하기 위해 left right top bottom을 확인해야한다.
+     */
+    const target = event.target;
+    const rect = target.getBoundingClientRect();
+    if (
+        rect.left > event.clientX ||
+        rect.right < event.clientX ||
+        rect.top > event.clientY ||
+        rect.bottom < event.clientY
+    ) {
+        userSelectModal.close();
+    }
+});
+//보드 작업담당자 업데이트
+async function boardJobMebmberUpdate(member_id) {
+    console.log("HIHIHIHI");
+    console.log(changedBoardId, member_id);
+    try {
+        if (changedBoardId === 0) {
+        } else {
+            console.log("boardData", boardData);
+            const board = boardData.filter((data) => data.id == changedBoardId);
+            console.log("board", board);
+            const data = {
+                board_id: changedBoardId,
+                title: board[0].title,
+                description: board[0].description,
+                status: board[0].status,
+                deadline: board[0].deadline,
+                userId: member_id,
+            };
+            console.log("data", data);
+            const token = localStorage.getItem("token");
+            const boardJobMemberUpdateResult = await axios({
+                method: "patch",
+                url: "/api/project/board/update",
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                data,
+            });
+            if (boardJobMemberUpdateResult.data.success) {
+                document.location.reload();
+            } else {
+                alert("담당자변경에 실패하였습니다.");
+            }
+        }
+    } catch (error) {}
+}
 //보드 마감일 업데이트
 async function boardDeadlineUpdate(board_id, deadline) {
     try {
@@ -209,6 +310,7 @@ async function boardDeadlineUpdate(board_id, deadline) {
                 description: board[0].description,
                 status: board[0].status,
                 deadline,
+                userId: board[0].userId,
             };
             console.log("data", data);
             const token = localStorage.getItem("token");
@@ -244,6 +346,7 @@ async function boardStatusUpdate(status) {
                 description: board[0].description,
                 status,
                 deadline: board[0].deadline,
+                userId: board[0].userId,
             };
             console.log("data", data);
             const token = localStorage.getItem("token");
