@@ -357,11 +357,7 @@ exports.updateProjectRule = async (req, res) => {
     const { rule } = req.body;
     console.log(req.body);
     try {
-        const findProjectRule = await Project.findOne({ where: { id } });
-        const beforeRule = JSON.parse(findProjectRule.rule);
-        beforeRule.push(rule);
-        const updateProjectResult = await Project.update({ rule: JSON.stringify(beforeRule) }, { where: { id } });
-
+        const updateProjectResult = await Project.update({ rule: JSON.stringify(rule) }, { where: { id } });
         res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
