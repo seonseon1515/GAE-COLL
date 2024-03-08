@@ -18,7 +18,7 @@
                     <div id="overview">
                         <div id="overview-header">Project Overview</div>
                         <div id="overview-main">
-                            <span id="overview-text">안녕하세요</span>
+                            <span id="overview-text"></span>
                             <input
                                 type="text"
                                 id="overview-input"
@@ -75,14 +75,17 @@
                         <!--issue note 시작-->
                         <div id="project-issue-contain">
                             <div id="issue-header">ISSUE NOTES</div>
-                            <div class="issue-text-day-contain">
-                                <div class="issue-text"></div>
-                                <div class="issue-day"></div>
-                            </div>
-                            <div class="issue-text-day-contain">
-                                <div class="issue-text"></div>
-                                <div class="issue-day"></div>
-                            </div>
+                            <table id="issueTable">
+                                <thead id="issueThead">
+                                    <tr>
+                                        <th class="td1">번호</th>
+                                        <th class="td2">제목</th>
+                                        <th class="td3">작성자</th>
+                                        <th class="td4">작성일시</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="issueTbody"></tbody>
+                            </table>
                         </div>
                     </div>
 
@@ -135,7 +138,6 @@
                                 <div class="erd-file-contain"></div>
                             </div>
                         </div>
-
                         <input type="file" id="fileInput" style="display: none" />
 
                         <div class="file-contain">
@@ -168,10 +170,7 @@
                             <div id="team-work-header">팀 활동</div>
                         </div>
                         <div id="line"></div>
-                        <div class="team-work-list">
-                            <img src="../../public/img/kakao-login.png" class="img" />
-                            <div id="team-work-list-text">하나 올렸습니다.</div>
-                        </div>
+                        <div class="team-work-list"></div>
                     </div>
                     <div id="feedback-work-contain">
                         <div id="feedback">

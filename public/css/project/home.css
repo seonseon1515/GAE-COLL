@@ -254,7 +254,7 @@ li:hover .rule-icon {
 }
 .issue-text-day-contain {
     display: flex;
-    padding: 0 25px 25px 75px;
+    padding: 0 25px 25px 50px;
     align-items: center;
     height: 90px;
     text-align: center;
@@ -266,7 +266,7 @@ li:hover .rule-icon {
     cursor: pointer;
 }
 .issue-day {
-    width: auto;
+    width: 23%;
     word-wrap: break-word;
 }
 
@@ -289,6 +289,8 @@ li:hover .rule-icon {
     height: auto;
     margin-bottom: 20px;
     margin-left: 20px;
+    height: 400px;
+    overflow-y: auto;
 }
 #team-work,
 #feedback,
@@ -304,11 +306,21 @@ li:hover .rule-icon {
     display: flex;
     align-items: center;
     cursor: pointer;
+    width: calc(100% - 100px);
+    border-bottom: solid gray;
+    /* padding: 11px; */
+    margin-left: 35px;
 }
 #team-work-list-text {
     padding-left: 20px;
+    width: 80%;
+    text-align: center;
 }
-
+.teamDiv {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
 /*피드백 요청 목록*/
 #feedback-work-contain {
     margin: 0 20px 20px 20px;
@@ -339,4 +351,43 @@ li:hover .rule-icon {
 }
 #overview-input:focus {
     outline: none;
+}
+.issueNoteDiv {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+    border-style: none;
+    /* border-radius: 20px; */
+    border-bottom: solid;
+    border-color: gray;
+    justify-content: center;
+    align-items: center;
+}
+#issueTable {
+    width: calc(100% - 60px);
+    height: auto;
+    text-align: center;
+    /* border-style: solid; */
+    margin: 30px;
+    border-collapse: collapse;
+}
+.td1 {
+    width: 10%;
+    border: 1px solid;
+}
+.td2 {
+    text-decoration: none;
+    color: black;
+    width: 50%;
+    border: 1px solid;
+}
+.td3 {
+    width: 20%;
+    border: 1px solid;
+}
+.td4 {
+    width: 20%;
+    border: 1px solid;
 }
