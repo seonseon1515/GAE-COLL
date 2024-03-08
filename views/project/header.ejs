@@ -20,12 +20,22 @@
                     <div class="pro_status"></div>
                 </div>
                 <div class="mid_wrap1">
-                    <div class="pro_date"></div>
+                    <div class="pro_date">
+                        <button type="button" class="projectSchedule" id="projectStartDate" onclick="doEdit()">
+                        <button type="button" class="projectSchedule"  id="projectEndDate" onclick="doEdit()">
+                    </div>
                     <div class="pro_deadline">(D-20)</div>
-                    <img class="pro_edit" src="../public/img/edit.png"></img>
+                    <label for="projectStartDate">
+                    <img class="pro_edit" src="../public/img/edit.png" onclick="doEdit()"></img></label>
                 </div>
                 <div class="right_wrap1">
-                    <a href="https://github.com/Hyunkyung-Nam/Gae-Call"><img class="pro_github" src="../public/img/github.png"></img></a>
+                    <a class="github_link" onclick="addLink()"><img class="pro_github" src="../public/img/github.png"></img></a>
+
+                    <div class="addLink" id="popup" >
+                        <input type="text" placeholder="https://github.com/">
+                        <button type="button">확인</button>
+
+                    </div>
                 </div>
             </div>
 
@@ -39,3 +49,4 @@
         <script src="../../public/js/project/header.js"></script>
     </body>
 </html>
+

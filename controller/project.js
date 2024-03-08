@@ -8,7 +8,7 @@ exports.createProject = async (req, res) => {
     const my_id = req.userId;
 
     const { project_name, start_date, end_date, overview, rule, member_id, send_img } = req.body;
-    let userId;
+    let userId = [];
 
     //사진을 보냈는데 이미지 파일이 아니면 보드 생성 실패
 
@@ -16,7 +16,7 @@ exports.createProject = async (req, res) => {
         res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
         return;
     }
-    userId.push(my_id);
+
     //멤버가 object타입인지 string타입인지 구별 -> 포스트맨 테스트로 인해 처리
     if (typeof member_id === "object") {
         userId = member_id;
@@ -26,6 +26,7 @@ exports.createProject = async (req, res) => {
     } else if (typeof member_id === "array") {
         userId = member_id;
     }
+    userId.push(my_id);
 
     try {
         const result = [];
