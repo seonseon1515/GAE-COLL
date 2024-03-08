@@ -1,4 +1,4 @@
-const { Board, BoardComment } = require("../models");
+const { Board, BoardComment, User } = require("../models");
 const { Op } = require("sequelize");
 
 //보드 전체 조회
@@ -11,8 +11,28 @@ exports.getBoardAll = async (req, res) => {
             order: [["id", "DESC"]],
             where: { projectId: Number(projectId) },
         });
+        const teamBoards = [];
+        for (let boardResult of getBoardAllResult) {
+            const userInfoResult = await User.findOne({
+                where: { id: Number(boardResult.userId) },
+                attributes: ["user_name"],
+            });
 
-        res.json({ success: true, result: getBoardAllResult });
+            const board = {
+                deadline: boardResult.deadline,
+                description: boardResult.description,
+                id: boardResult.id,
+                projectId: boardResult.projectId,
+                status: boardResult.status,
+                title: boardResult.title,
+                userId: boardResult.userId,
+                user_name: userInfoResult.user_name,
+                updatedAt: boardResult.updatedAt,
+            };
+            teamBoards.push(board);
+        }
+
+        res.json({ success: true, result: teamBoards });
     } catch (error) {
         console.log(error);
         res.json({ success: false, result: error });
@@ -21,11 +41,10 @@ exports.getBoardAll = async (req, res) => {
 
 //보드작성
 exports.boardWrite = async (req, res) => {
-    userId = req.userId;
     const projectId = req.projectId;
 
     try {
-        const { title, description, status, deadline } = req.body;
+        const { title, description, status, deadline, userId } = req.body;
 
         const boardWriteResult = await Board.create({
             projectId: Number(projectId),
@@ -80,10 +99,9 @@ exports.getBoardMonth = async (req, res) => {
 };
 //보드 수정
 exports.updateBoard = async (req, res) => {
-    userId = req.userId;
     try {
-        const { title, description, status, deadline, board_id: id } = req.body;
-
+        const { title, description, status, deadline, board_id: id, userId } = req.body;
+        console.log(userId);
         const boardWriteResult = await Board.update(
             {
                 title,
@@ -98,7 +116,7 @@ exports.updateBoard = async (req, res) => {
                 },
             }
         );
-
+        console.log(boardWriteResult);
         res.json({ success: true, result: "" });
     } catch (error) {
         console.log(error);
