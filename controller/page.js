@@ -82,20 +82,20 @@ const kakaoOpt = {
     clientId: process.env.KAKAO_CLIENT_ID,
     clientSecret: process.env.KAKAO_CLIENT_SECRET,
     develRedirectUri: process.env.DEVEL_KAKAO_REDIRECT_URI,
-    prodRedirectUri: process.env.KAKAO_REDIRECT_URI,
+    prodRedirectUri: process.env.PROD.KAKAO_REDIRECT_URI,
 };
 const googleOpt = {
     clientId: process.env.GOOGLE_CLIENT_ID,
     develRedirectUri: process.env.DEVEL_GOOGLE_REDIRECT_URI,
-    prodRedirectUri: process.env.GOOGLE_REDIRECT_URI,
+    prodRedirectUri: process.env.PROD.GOOGLE_REDIRECT_URI,
 };
 //카카오 로그인
 exports.getKakaoAuth = async (req, res) => {
     let kakaoLoginURL = "";
     if (process.env.NODE_ENV === "production") {
-        kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.develRedirectUri}&response_type=code`;
-    } else {
         kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.prodRedirectUri}&response_type=code`;
+    } else {
+        kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.develRedirectUri}&response_type=code`;
     }
     res.redirect(kakaoLoginURL);
 };
