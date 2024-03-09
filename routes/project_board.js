@@ -16,7 +16,7 @@ router.post("/write", auth, controller.boardWrite);
 //보드 1개 조회
 router.get("/detail", auth, controller.getBoardDetail);
 //보드 댓글 조회
-router.get("/get/comment", auth, controller.getComment);
+router.get("/get/comment/:id", auth, controller.getComment);
 //보드 댓글 작성
 router.post("/write/comment", auth, controller.writeCommnet);
 //보드 댓글 삭제
