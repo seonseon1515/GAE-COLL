@@ -1,4 +1,5 @@
 // 프로젝트 규칙, 멤버 조회, project overview 조회
+const ruleData = [];
 (async function loadProjectInfo() {
     const token = localStorage.getItem("token");
 
@@ -19,8 +20,9 @@
             // 멤버
             var memberDivs = "";
             for (var i = 0; i < result.member.length; i++) {
+                console.log(result.member[i]);
                 memberDivs += `
-                <div id="pro-img-div" data-id="${result.member[i].user_id}">
+                <div id="pro-img-div" data-id="${result.member[i].id}">
                     <img src="../../public/img/mypage.png" id="pen-img" />
                     <div onclick="deleteMember(event);">${result.member[i].user_name}</div>
                 </div>`;
@@ -29,18 +31,21 @@
 
             // 규칙
             if (result.rule !== null && result.rule !== "") {
-                const rule = result.rule.split(" ");
+                console.log(result.rule);
+                const rule = JSON.parse(result.rule);
+                console.log("rule type", typeof rule);
                 for (let i = 0; i < rule.length; i++) {
                     let div = document.createElement("div");
                     div.id = `ruleList${i}`;
                     div.innerHTML = `
                     <li class="li" style = "background : white;">
                         <span class="text-element" >${rule[i]}</span>
-                        <span class="rule-icon" onclick="deleteProjectRuleFunc(i)">
+                        <span class="rule-icon" onclick="deleteProjectRuleFunc(${i})">
                         <img src="../../public/img/trash.png" class="rule-img delete-icon" />
                     </span>
                     </li>
                     `;
+                    ruleData.push(rule[i]);
                     document.getElementById("rule-list").appendChild(div);
                 }
             }
@@ -70,11 +75,14 @@
             for (let i = 0; i < plan.length; i++) {
                 let div = document.createElement("div");
                 div.innerHTML = `
-            <div class="plan-file-name">
+            <div class="plan-file-name" data-id="${plan[i]}">
                 <div class="plan-file-img">
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                 </div>
+                <a href="../../public/uploads/project_file/${plan[i]}" download>
                 <div>${plan[i]}</div>
+            </a>
+            <button onclick="deleteFile(event, ${i}, 'plan')"  class = "fileButton" >삭제<button>
             </div>
         `;
                 document.getElementsByClassName("plan-file-contain")[0].appendChild(div);
@@ -86,11 +94,14 @@
             for (let i = 0; i < erd.length; i++) {
                 let div = document.createElement("div");
                 div.innerHTML = `
-            <div class="erd-file-name">
+            <div class="erd-file-name" data-id="${erd[i]}">
                 <div class="erd-file-img">
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                     </div>
-                    <div>${erd[i]}</div>
+                    <a href="../../public/uploads/project_file/${erd[i]}" download>
+                <div>${erd[i]}</div>
+            </a>
+            <button class = "fileButton" onclick="deleteFile(event, ${i}, 'erd')">삭제<button>
             </div>
             `;
                 document.getElementsByClassName("erd-file-contain")[0].appendChild(div);
@@ -102,11 +113,15 @@
             for (let i = 0; i < api.length; i++) {
                 let div = document.createElement("div");
                 div.innerHTML = `
-            <div class="api-file-name">
+            <div class="api-file-name" data-id="${api[i]}">
+            
                 <div class="api-file-img">
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                     </div>
-                    <div>${api[i]}</div>
+                    <a href="../../public/uploads/project_file/${api[i]}" download>
+                <div>${api[i]}</div>
+            </a>
+            <button class = "fileButton" onclick="deleteFile(event, ${i}, 'api')">삭제<button>
             </div>
             `;
                 document.getElementsByClassName("api-file-contain")[0].appendChild(div);
@@ -133,8 +148,10 @@
                 console.log("ddd", result);
                 tr.innerHTML = `
                         <td class="td1">${i + 1}</td>
-                        <a href="/project/issue_content/${result[i].id}> <td class="td2" style = "text-decoration: none;
-                        color: black; cursor: pointer;">${result[i].title}</td></a>
+                        <td class="td2" style = "text-decoration: none;
+                        color: black; cursor: pointer;"><a href="/project/issue_content/${result[i].id}">${
+                    result[i].title
+                }</td></a>
                         <td class="td3">${result[i].userId}</td>
                         <td class="td4">${result[i].issue_date}</td>
                 `;
@@ -175,9 +192,12 @@
                     div.classList.add("teamDiv");
                     div.innerHTML = `
                                 ${organizedTeamLog[i].user_img}
-                                <div id="team-work-list-text">${organizedTeamLog[i].user_name}님이 ${
-                        organizedTeamLog[i].title
-                    }을 ${changeStatusKor(organizedTeamLog[i].boardStatus)}으로 변경하였습니다.</div>
+                                <div id="team-work-list-text"><a href="/project/board_content/${
+                                    organizedTeamLog[i].id
+                                }" class = "poject-a">
+                                ${organizedTeamLog[i].user_name}님이 ${organizedTeamLog[i].title}을 ${changeStatusKor(
+                        organizedTeamLog[i].boardStatus
+                    )}으로 변경하였습니다.</div>
                                 `;
                     document.getElementsByClassName("team-work-list")[0].appendChild(div);
                 }
@@ -188,7 +208,9 @@
                     div.classList.add("needFeedDiv");
                     div.innerHTML = `
                     ${organizedTeamLog[i].user_img}
-                    <div id="feedback-list-text">${organizedTeamLog[i].user_name}님이 ${
+                    <div id="feedback-list-text"><a href="/project/board_content/${
+                        organizedTeamLog[i].id
+                    }" class = "poject-a">${organizedTeamLog[i].user_name}님이 ${
                         organizedTeamLog[i].title
                     }을 ${changeStatusKor(organizedTeamLog[i].boardStatus)}으로 변경하였습니다.</div></a>
                         `;
@@ -261,13 +283,14 @@ async function projectRuleGeneration() {
     input.onkeydown = async function (event) {
         if (event.key !== "Enter") return;
         const rule = input.value;
+        ruleData.push(rule);
         const token = localStorage.getItem("token");
         try {
             const response = await axios({
                 method: "PATCH",
                 url: "/api/project/update/rule",
                 data: {
-                    rule,
+                    rule: ruleData,
                 },
                 headers: { Authorization: `Bearer ${token}` },
             });
@@ -286,18 +309,18 @@ async function projectRuleGeneration() {
 }
 
 //규칙 삭제
-async function deleteProjectRuleFunc(i) {
-    const divTag = document.querySelector(`#ruleList${[i]}`);
+async function deleteProjectRuleFunc(ruleIndex) {
+    const divTag = document.querySelector(`#ruleList${[ruleIndex]}`);
     divTag.remove();
-    const rule = document.querySelector("#rule-list");
-    console.log(divTag);
     const token = localStorage.getItem("token");
+    ruleData.splice(ruleIndex, 1);
+
     try {
         const response = await axios({
             method: "PATCH",
             url: "/api/project/update/rule",
             data: {
-                rule,
+                rule: ruleData,
             },
             headers: { Authorization: `Bearer ${token}` },
         });
@@ -305,7 +328,7 @@ async function deleteProjectRuleFunc(i) {
         const { success, result } = response.data;
         if (success) {
             console.log("규칙 추가 성공 : ", result);
-            // location.reload(true);
+            location.reload(true);
         } else {
             console.log("규칙 추가 실패");
         }
@@ -346,15 +369,17 @@ async function uploadPlan() {
                 <div class="plan-file-name">
                     <div class="plan-file-img">
                         <img src="../../public/img/file-icon.png" class="file-icon" />
-                    </div>
+                    </div>>
                     <div>${file.name}</div>
                 </div>
             `;
+        console.log("s", success);
         document.getElementsByClassName("plan-file-contain")[0].appendChild(div);
     } else {
         console.log("파일 업로드에 실패하였습니다.");
     }
 }
+
 //파일 업로드(ERD)
 async function uploadERD() {
     const fileInput = document.getElementById("file-upload");
@@ -398,6 +423,7 @@ async function uploadERD() {
         console.log("파일 업로드에 실패하였습니다.");
     }
 }
+
 //파일 업로드(API)
 async function uploadAPI() {
     const fileInput = document.getElementById("file-upload");
@@ -427,6 +453,7 @@ async function uploadAPI() {
     const { result, success } = response.data;
     if (success) {
         let div = document.createElement("div");
+        div.classList.add("fileDeleteButton");
         div.innerHTML = `
                 <div class="api-file-name">
                     <div class="api-file-img">
@@ -438,6 +465,40 @@ async function uploadAPI() {
         document.getElementsByClassName("api-file-contain")[0].appendChild(div);
     } else {
         console.log("파일 업로드에 실패하였습니다.");
+    }
+}
+//파일 삭제
+async function deleteFile(e, fileIndex, type) {
+    let element = e.target;
+    const token = localStorage.getItem("token");
+    while (element && !element.getAttribute("data-id")) {
+        element = element.parentNode;
+    }
+    if (element) {
+        let project_file = element.getAttribute("data-id");
+        console.log("s", project_file);
+        if (confirm("파일 삭제 하시겠습니까?")) {
+            try {
+                const response = await axios({
+                    method: "DELETE",
+                    url: "/api/project/delete/file",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    data: { project_file: fileIndex, type },
+                });
+                console.log(response);
+                const { result, success } = response.data;
+                if (success) {
+                    e.target.parentNode.remove();
+                    console.log("파일 삭제에 성공하였습니다.", result);
+                } else {
+                    console.log("파일 삭제에 실패하였습니다.");
+                }
+            } catch (error) {
+                console.log("규칙 추가 중 에러 발생 : ", error);
+            }
+        }
     }
 }
 
@@ -518,26 +579,28 @@ async function deleteMember(e) {
         console.log(member_id);
 
         const token = localStorage.getItem("token");
-        try {
-            const response = await axios({
-                method: "delete",
-                url: "/api/project/delete/member",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-                data: {
-                    member_id,
-                },
-            });
-            console.log(response);
-            const { result, success } = response.data;
-            if (success) {
-                e.target.parentNode.remove();
-                console.log(" 나 : ", result);
-            } else {
+        if (confirm("강퇴하시겠습니까?")) {
+            try {
+                const response = await axios({
+                    method: "delete",
+                    url: "/api/project/delete/member",
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                    data: {
+                        member_id,
+                    },
+                });
+                console.log(response);
+                const { result, success } = response.data;
+                if (success) {
+                    e.target.parentNode.remove();
+                    console.log(" 나 : ", result);
+                } else {
+                }
+            } catch (error) {
+                console.error("멤버 강퇴 도중에 오류가 발생하였습니다. ", error);
             }
-        } catch (error) {
-            console.error("멤버 강퇴 도중에 오류가 발생하였습니다. ", error);
         }
     }
 }
