@@ -14,13 +14,14 @@ const tbody = document.querySelector("tbody");
 
         tbody.innerHTML = ""; //페이지 번호에 해당하는 issue들 할당해주기 위한 초기 테이블값 초기화
 
-        //issue에 있는 userId로 작성자 이름 가져오기
+        //issue[i].userId = i번째 이슈 작성자
         for (let i = 0; i < res.data.result.length; i++) {
             const userId = res.data.result[i].userId;
+            console.log("res. userId값: ", res.data.result[i].userId);
 
             const res2 = await axios({
                 method: "POST",
-                url: "/api/user/info",
+                url: "/api/user/findInfo",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -29,8 +30,9 @@ const tbody = document.querySelector("tbody");
                 },
             });
 
-            //issue[i] 작성자
+            //issue[i].userId를 가진 작성자
             const userName = res2.data.result.user_name;
+            console.log("res2:", res2.data.result);
 
             //[i]번째 이슈글 출력
             const html = `
@@ -47,23 +49,12 @@ const tbody = document.querySelector("tbody");
     const prevGroupButt = document.getElementById("prevGroupButton");
     const nextGroupButt = document.getElementById("nextGroupButton");
 
-    document.getElementById("prevGroupButton").addEventListener("click", function () {
+    prevGroupButt.addEventListener("click", function () {
         goToPrev(pageGroup);
     });
-    document.getElementById("nextGroupButton").addEventListener("click", function () {
+    nextGroupButt.addEventListener("click", function () {
         goToNext(pageGroup);
     });
-
-    // if (pageGroup > 1 || pageGroup <= totalPages) {
-    //     nextGroupButt.style.display = "block";
-    // } else {
-    //     nextGroupButt.style.display = "none";
-    // }
-    // if (pageGroup < 2) {
-    //     prevGroupButt.style.display = "none";
-    // } else {
-    //     prevGroupButt.style.display = "block";
-    // }
 
     //goToPrev 함수 정의
     const goToPrev = (pageGroup) => {
@@ -133,14 +124,6 @@ const tbody = document.querySelector("tbody");
     // const table = document.querySelectorAll("table");
     const tableBox = document.getElementById("issue-contain-main");
     console.log("이슈 개수:", totalIssues);
-    const announceTxt = document.querySelector("#announceTxt");
-    if (totalIssues === "" || totalIssues === null || totalIssues === undefined || totalIssues === 0) {
-        tableBox.style.display = "none";
-        announceTxt.textContent = "작성된 이슈가 없습니다.";
-    } else {
-        tableBox.style.display = "block";
-        announceTxt.textContent = "";
-    }
 
     let pageGroup = Math.ceil(page / pageSize); // 페이지 그룹
     //어떤 한 페이지 그룹의 첫번째 페이지 번호 = ((페이지 그룹 - 1) * 한 화면에 보여질 페이지 개수) + 1
@@ -149,6 +132,22 @@ const tbody = document.querySelector("tbody");
     let lastPageOfGroup = pageGroup * 5;
     if (lastPageOfGroup > totalPages) {
         lastPageOfGroup = totalPages;
+    }
+
+    const paginationBox = document.getElementById("paginationBox");
+    const announceTxt = document.querySelector("#announceTxt");
+    if (totalIssues === "" || totalIssues === null || totalIssues === undefined || totalIssues === 0) {
+        announceTxt.textContent = "작성된 이슈가 없습니다.";
+        tableBox.style.visibility = "hidden";
+        nextGroupButt.style.visibility = "hidden";
+        prevGroupButt.style.visibility = "hidden";
+        paginationBox.style.visibility = "hidden";
+    } else {
+        tableBox.style.visibility = "visible";
+        announceTxt.textContent = "";
+        nextGroupButt.style.visibility = "visible";
+        prevGroupButt.style.visibility = "visible";
+        paginationBox.style.visibility = "visible";
     }
 
     const pageNumberBox = document.getElementById("pageNumber");

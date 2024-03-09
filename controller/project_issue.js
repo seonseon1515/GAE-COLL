@@ -166,8 +166,8 @@ exports.getProjectIssuesPage = async (req, res) => {
             result: projectIssues.rows,
             // 프론트에서 처리할 때 프로젝트 이슈랑 페지네이션 구분하기 좋게 result에서 빼서 보냄
             pagination: {
-                page,
                 totalIssues,
+                page,
                 pageSize,
                 totalPages,
             },
@@ -199,7 +199,7 @@ exports.getProjectIssueDetail = async (req, res) => {
 // 프로젝트 이슈 수정
 exports.updateProjectIssueDetail = async (req, res) => {
     const files = req.files;
-    console.log(files);
+    // console.log(files);
     //id(이슈id), user_id(작성자), req.userId(현재 사용자)
     const { id } = req.params;
     const userId = req.userId;
@@ -207,7 +207,7 @@ exports.updateProjectIssueDetail = async (req, res) => {
 
     //작성자 본인인지 확인
     const issue = await Issue.findOne({ where: { id } });
-    console.log(issue.userId, userId, id);
+    // console.log(issue.userId, userId, id);
     if (issue.userId !== userId) {
         return res.json({ success: false, result: "작성자만 수정할 수 있습니다." });
     }

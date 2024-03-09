@@ -17,25 +17,33 @@
 
         <header id="project_header">
             <div class="pro_header1">
-                <div class="left_wrap1">
-                    <img class="projectProfile" id="projectImg" onclick="openPopupProfile()"></img>
-                    <div class="pro_name" id="pro_name" contenteditable="true"></div>
-
+                <div class="left_wrap1_profile">
+                    <div class="projectNameWrap">
+                        <img class="projectProfile" id="projectImg" onclick="openPopupProfile()"></img>
+                        <div class="pro_name" id="pro_name" contenteditable="true">
+                    </div>    
+                        <div class="gapProfile"></div>
+                    </div>
+                    
+                    
 <!-- 이미지 수정 팝업 뜨기 -->
-<div class="addLink profileUploadPop" onclick="openPopupProfile()" id="popup" style="display: none;">
-    <span class="txt">수정할 이미지를 업로드해주세요.</span>
-    <div class="profileUploads">
-        <form id="profileForm">
-            <label for="files">
-                <span id="profileUploadBtn" class="button_white_yellow">파일 선택</span>
-            </label>
-            <p id="profileName"></p>
-            <input id="profileUpload" type="file" name="issue_files"/>
-            <button type="button" onclick="updateProfileImg()">수정</button>
-        </form>
-    </div>
-</div>
-                    <div>
+                <div class="addLink profileUploadPop" id="popup2" style="display: none;">
+                    <span class="txt">수정할 이미지를 업로드해주세요.</span>
+                    <div class="profileUploads">
+                        <form id="profileForm">
+                                <!-- <span id="profileUploadBtn" class="button_white_yellow">파일 선택</span> -->
+                                <img class="xImg" src="../public/img/close.png" alt="" onclick="closePopupProfile()"/>
+                            
+                            <div class="profilePopContents">
+                                <label class="button_white_yellow fs" for="profileUpload">파일 선택</label>
+                                <input id="profileUpload" type="file" name="issue_files" style="display: none;"/>
+                                <p id="profileName"></p>
+                                <button class="uploadsBtn" type="button" onclick="updateProfileImg()">업로드</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                    
                         <div class="select_box"> 
                             <!-- left_wrap -->
                             <div id="bg" class="placement_status">
@@ -43,7 +51,7 @@
                                 <div id="pro_status" class="status_txt"></div>
                             </div>
 
-                            <ul class="option_list">
+                            <ul class="option_list_profile">
                                 <li class="option_item" onclick="changeStatusToPlan()">
                                     <div id="bg_blue" class="placement_status">
                                         <div id="blue" class="circle"></div>
@@ -81,25 +89,28 @@
                                     </div>
                                 </li>
                             </ul>
-                        </div>                   
-                    </div>
-                </div>
-                <div class="mid_wrap1">
+                        </div>  
+                    </div>     
+                
+                
+                <div class="mid_wrap1_profile">
 
                     <!--프로젝트 시작일, 마감일-->
                     <div class="pro_date">
                         <input type="date" id="startDate" class="dateBox" /><span class="betweenMark"> ~ </span>
                         <input type="date" id="endDate" class="dateBox"/>
-                        <!-- <button type="button" class="projectSchedule" id="projectStartDate" onclick="doEdit()">
-                        <button type="button" class="projectSchedule"  id="projectEndDate" onclick="doEdit()"> -->
+                        <div class="projectMidIconWrap">
+                            <div class="pro_deadline"></div>
+                            <img class="pro_edit" id="dateEdit" src="../public/img/edit.png" onclick="dateEdit()"></img>
+                        </div>
+                  
                     </div>
-                    <div class="pro_deadline"></div>
-                    <img class="pro_edit" id="dateEdit" src="../public/img/edit.png" onclick="dateEdit()"></img></label>
+                    
                 </div>
                 
-                <div class="right_wrap1">
+                <div class="right_wrap1_profile">
 
-                    <div class="rightLogoWrap">
+                    <div class="rightLogoWrap" id="mediaLogoFade">
                         <a class="github_link"><img class="pro_github" src="../public/img/github.png"></img></a>
                         <img class="pro_edit" id="githubEdit" src="../public/img/edit.png" onclick="openPopup()">
                     </div>    
@@ -114,13 +125,20 @@
             </div>
 
             <div class="pro_header2">
-                <a id="home" class="pro_header2_link" href="../../project/home">홈</a>
-                <!-- <button type="button" id="linkBold1" class="pro_header2_link" onclick="bold1Func()">홈</button> -->
-                <a id="board_main" class="pro_header2_link" href="../../project/board_main">보드</a>
-                <a id="calender" class="pro_header2_link" href="../../project/calender">캘린더</a>
-                <a id="issue_main" class="pro_header2_link" href="../../project/issue_main">이슈 관리</a>
+                <div class="projectLinkWrap">
+                    <a id="home" class="pro_header2_link" href="../../project/home">홈</a>
+                    <!-- <button type="button" id="linkBold1" class="pro_header2_link" onclick="bold1Func()">홈</button> -->
+                    <a id="board_main" class="pro_header2_link" href="../../project/board_main">보드</a>
+                    <a id="calender" class="pro_header2_link" href="../../project/calender">캘린더</a>
+                    <a id="issue_main" class="pro_header2_link" href="../../project/issue_main">이슈 관리</a>
+                </div>
+                <div class="rightLogoWrap2" id="mediaLogoWrap" style="display: none;">
+                    <a class="github_link"><img class="pro_github" src="../public/img/github.png"></img></a>
+                    <img class="pro_edit" id="githubEdit" src="../public/img/edit.png" onclick="openPopup()">
+                </div>  
             </div>
         </header>
+       
         <script src="../../public/js/project/header.js"></script>
     </body>
 </html>
