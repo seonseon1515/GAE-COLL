@@ -17,9 +17,11 @@
 
         <header id="project_header">
             <div class="pro_header1">
-                <div class="left_wrap1">
-                    <img class="projectProfile" id="projectImg" onclick="openPopupProfile()"></img>
-                    <div class="pro_name" id="pro_name" contenteditable="true">
+                <div class="left_wrap1_profile">
+                    <div class="projectNameWrap">
+                        <img class="projectProfile" id="projectImg" onclick="openPopupProfile()"></img>
+                        <div class="pro_name" id="pro_name" contenteditable="true">
+                    </div>    
                         <div class="gapProfile"></div>
                     </div>
                     
@@ -91,21 +93,24 @@
                     </div>     
                 
                 
-                <div class="mid_wrap1">
+                <div class="mid_wrap1_profile">
 
                     <!--프로젝트 시작일, 마감일-->
                     <div class="pro_date">
                         <input type="date" id="startDate" class="dateBox" /><span class="betweenMark"> ~ </span>
                         <input type="date" id="endDate" class="dateBox"/>
-                        <div class="pro_deadline"></div>
-                    <img class="pro_edit" id="dateEdit" src="../public/img/edit.png" onclick="dateEdit()"></img></label>
+                        <div class="projectMidIconWrap">
+                            <div class="pro_deadline"></div>
+                            <img class="pro_edit" id="dateEdit" src="../public/img/edit.png" onclick="dateEdit()"></img>
+                        </div>
+                  
                     </div>
                     
                 </div>
                 
-                <div class="right_wrap1">
+                <div class="right_wrap1_profile">
 
-                    <div class="rightLogoWrap">
+                    <div class="rightLogoWrap" id="mediaLogoFade">
                         <a class="github_link"><img class="pro_github" src="../public/img/github.png"></img></a>
                         <img class="pro_edit" id="githubEdit" src="../public/img/edit.png" onclick="openPopup()">
                     </div>    
@@ -120,11 +125,17 @@
             </div>
 
             <div class="pro_header2">
-                <a id="home" class="pro_header2_link" href="../../project/home">홈</a>
-                <!-- <button type="button" id="linkBold1" class="pro_header2_link" onclick="bold1Func()">홈</button> -->
-                <a id="board_main" class="pro_header2_link" href="../../project/board_main">보드</a>
-                <a id="calender" class="pro_header2_link" href="../../project/calender">캘린더</a>
-                <a id="issue_main" class="pro_header2_link" href="../../project/issue_main">이슈 관리</a>
+                <div class="projectLinkWrap">
+                    <a id="home" class="pro_header2_link" href="../../project/home">홈</a>
+                    <!-- <button type="button" id="linkBold1" class="pro_header2_link" onclick="bold1Func()">홈</button> -->
+                    <a id="board_main" class="pro_header2_link" href="../../project/board_main">보드</a>
+                    <a id="calender" class="pro_header2_link" href="../../project/calender">캘린더</a>
+                    <a id="issue_main" class="pro_header2_link" href="../../project/issue_main">이슈 관리</a>
+                </div>
+                <div class="rightLogoWrap2" id="mediaLogoWrap" style="display: none;">
+                    <a class="github_link"><img class="pro_github" src="../public/img/github.png"></img></a>
+                    <img class="pro_edit" id="githubEdit" src="../public/img/edit.png" onclick="openPopup()">
+                </div>  
             </div>
         </header>
        
