@@ -536,6 +536,9 @@ async function addMember() {
         const response = await axios({
             method: "POST",
             url: "/api/user/find",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
             data: {
                 email,
             },
@@ -574,7 +577,11 @@ async function addMember() {
             alert("멤버가 추가 되었습니다.");
             location.reload(true);
         } else {
-            alert("이메일을 다시 확인해주세요");
+            if (result.message) {
+                alert(result.message);
+            } else {
+                alert("이메일을 다시 확인해주세요");
+            }
         }
     } catch (error) {
         console.error("멤버 추가 도중에 오류가 발생하였습니다. ", error);

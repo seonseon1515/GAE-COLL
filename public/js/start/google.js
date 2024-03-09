@@ -15,7 +15,7 @@
     //회원가입 여부 확인
     const findUser = await axios({
         method: "POST",
-        url: "/api/user/find",
+        url: "/api/check/user",
         data: {
             email,
             isSignup: true,
