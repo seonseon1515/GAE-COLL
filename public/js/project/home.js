@@ -79,8 +79,8 @@ const ruleData = [];
                 <div class="plan-file-img">
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                 </div>
-                <a href="../../public/uploads/project_file/${plan[i]}" download>
-                <div>${plan[i]}</div>
+                <a href="../../public/uploads/project_file/${plan[i]}" download >
+                <div style="text-decoration: none; color: black;">${plan[i]}</div>
             </a>
             <button onclick="deleteFile(event, ${i}, 'plan')"  class = "fileButton" >삭제<button>
             </div>
@@ -99,7 +99,7 @@ const ruleData = [];
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                     </div>
                     <a href="../../public/uploads/project_file/${erd[i]}" download>
-                <div>${erd[i]}</div>
+                <div style="text-decoration: none; color: black;">${erd[i]}</div>
             </a>
             <button class = "fileButton" onclick="deleteFile(event, ${i}, 'erd')">삭제<button>
             </div>
@@ -119,7 +119,7 @@ const ruleData = [];
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                     </div>
                     <a href="../../public/uploads/project_file/${api[i]}" download>
-                <div>${api[i]}</div>
+                <div style="text-decoration: none; color: black;">${api[i]}</div>
             </a>
             <button class = "fileButton" onclick="deleteFile(event, ${i}, 'api')">삭제<button>
             </div>
@@ -191,7 +191,7 @@ const ruleData = [];
                     let div = document.createElement("div");
                     div.classList.add("teamDiv");
                     div.innerHTML = `
-                                ${organizedTeamLog[i].user_img}
+                    <img src="${organizedTeamLog[i].user_img}">
                                 <div id="team-work-list-text"><a href="/project/board_content/${
                                     organizedTeamLog[i].id
                                 }" class = "poject-a">
@@ -206,8 +206,7 @@ const ruleData = [];
                     let div = document.createElement("div");
                     console.log("divdiv", result);
                     div.classList.add("needFeedDiv");
-                    div.innerHTML = `
-                    ${organizedTeamLog[i].user_img}
+                    div.innerHTML = `<img src="${organizedTeamLog[i].user_img}">
                     <div id="feedback-list-text"><a href="/project/board_content/${
                         organizedTeamLog[i].id
                     }" class = "poject-a">${organizedTeamLog[i].user_name}님이 ${
@@ -353,6 +352,7 @@ async function uploadPlan() {
     formData.append("project_files", file);
     const type = "plan";
     formData.append("type", type);
+    location.reload(true);
     const response = await axios({
         method: "PATCH",
         url: "/api/project/update/file",
@@ -396,6 +396,7 @@ async function uploadERD() {
     formData.append("project_files", file);
     const type = "erd";
     formData.append("type", type);
+    location.reload(true);
     const response = await axios({
         method: "PATCH",
         url: "/api/project/update/file",
@@ -440,6 +441,7 @@ async function uploadAPI() {
     formData.append("project_files", file);
     const type = "api";
     formData.append("type", type);
+    location.reload(true);
     const response = await axios({
         method: "PATCH",
         url: "/api/project/update/file",
