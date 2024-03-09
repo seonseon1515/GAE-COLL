@@ -11,7 +11,6 @@ const ruleData = [];
                 Authorization: `Bearer ${token}`,
             },
         });
-        console.log("나 ", response);
         const { success, result } = response.data;
         if (success) {
             //project overview 관리
@@ -20,7 +19,6 @@ const ruleData = [];
             // 멤버
             var memberDivs = "";
             for (var i = 0; i < result.member.length; i++) {
-                console.log(result.member[i]);
                 memberDivs += `
                 <div id="pro-img-div" data-id="${result.member[i].id}">
                     <img src="../../public/img/mypage.png" id="pen-img" />
@@ -31,9 +29,7 @@ const ruleData = [];
 
             // 규칙
             if (result.rule !== null && result.rule !== "") {
-                console.log(result.rule);
                 const rule = JSON.parse(result.rule);
-                console.log("rule type", typeof rule);
                 for (let i = 0; i < rule.length; i++) {
                     let div = document.createElement("div");
                     div.id = `ruleList${i}`;
@@ -145,11 +141,9 @@ const ruleData = [];
         if (success) {
             for (let i = 0; i < result.length; i++) {
                 let tr = document.createElement("tr");
-                console.log("ddd", result);
                 tr.innerHTML = `
                         <td class="td1">${i + 1}</td>
-                        <td class="td2" style = "text-decoration: none;
-                        color: black; cursor: pointer;"><a href="/project/issue_content/${result[i].id}">${
+                        <td class="td2"><a href="/project/issue_content/${result[i].id}" class = "issue-a">${
                     result[i].title
                 }</td></a>
                         <td class="td3">${result[i].userId}</td>
@@ -178,40 +172,68 @@ const ruleData = [];
         });
         const { result, success } = response.data;
         let organizedTeamLog = result.sort((a, b) => {
-            if (a.updatedAt > b.updatedAt) return 1;
-            if (a.updatedAt < b.updatedAt) return -1;
+            if (a.updatedAt > b.updatedAt) return -1;
+            if (a.updatedAt < b.updatedAt) return 1;
             return 0;
         });
 
         if (success) {
             for (let i = 0; i < organizedTeamLog.length; i++) {
-                // console.log(organizedTeamLog);
                 // `${changeStatusKor(organizedTeamLog[i].boardStatus)}`가 '피드백 요청'이 아닌 경우에만 div를 생성하고 추가합니다.
                 if (changeStatusKor(organizedTeamLog[i].boardStatus) !== "피드백 요청") {
                     let div = document.createElement("div");
                     div.classList.add("teamDiv");
-                    div.innerHTML = `
-                    <img src="${organizedTeamLog[i].user_img}">
-                                <div id="team-work-list-text"><a href="/project/board_content/${
-                                    organizedTeamLog[i].id
-                                }" class = "poject-a">
-                                ${organizedTeamLog[i].user_name}님이 ${organizedTeamLog[i].title}을 ${changeStatusKor(
+                    console.log("organizedTeamLog[i].user_img", typeof organizedTeamLog[i].user_img);
+                    console.log(organizedTeamLog[i].user_img);
+                    let userImage = "";
+                    if (
+                        organizedTeamLog[i].user_img !== null &&
+                        (organizedTeamLog[i].user_img.includes("http://") ||
+                            organizedTeamLog[i].user_img.includes("https://"))
+                    ) {
+                        userImage = organizedTeamLog[i].user_img;
+                    } else {
+                        userImage = organizedTeamLog[i].user_img
+                            ? "../../public/uploads/profile/" + organizedTeamLog[i].user_img
+                            : "../../public/img/user-solid.svg";
+                    }
+
+                    div.innerHTML = `<div class = "teamDivImg">
+                    <img src="${userImage}" class = "teamImg"></div>
+                    <div id="team-work-list-text"><a href="/project/board_content/${
+                        organizedTeamLog[i].boardId
+                    }" class = "poject-a">  
+                    ${organizedTeamLog[i].user_name}님이 ${organizedTeamLog[i].title}을 ${changeStatusKor(
                         organizedTeamLog[i].boardStatus
                     )}으로 변경하였습니다.</div>
-                                `;
+                    `;
                     document.getElementsByClassName("team-work-list")[0].appendChild(div);
                 }
 
                 if (organizedTeamLog[i].boardStatus === "needFeedback") {
                     let div = document.createElement("div");
-                    console.log("divdiv", result);
+
+                    let userImage = "";
+                    if (
+                        organizedTeamLog[i].user_img !== null &&
+                        (organizedTeamLog[i].user_img.includes("http://") ||
+                            organizedTeamLog[i].user_img.includes("https://"))
+                    ) {
+                        userImage = organizedTeamLog[i].user_img;
+                    } else {
+                        userImage = organizedTeamLog[i].user_img
+                            ? "../../public/uploads/profile/" + organizedTeamLog[i].user_img
+                            : "../../public/img/user-solid.svg";
+                    }
+
                     div.classList.add("needFeedDiv");
-                    div.innerHTML = `<img src="${organizedTeamLog[i].user_img}">
-                    <div id="feedback-list-text"><a href="/project/board_content/${
-                        organizedTeamLog[i].id
-                    }" class = "poject-a">${organizedTeamLog[i].user_name}님이 ${
-                        organizedTeamLog[i].title
-                    }을 ${changeStatusKor(organizedTeamLog[i].boardStatus)}으로 변경하였습니다.</div></a>
+                    div.innerHTML = `<div class = "teamDivImg"> <img src="${userImage}" class = "teamImg"></div>
+                    <div id="feedback-list-text">
+                    <a href="/project/board_content/${organizedTeamLog[i].boardId}" class = "poject-a">${
+                        organizedTeamLog[i].user_name
+                    }님이 ${organizedTeamLog[i].title}을 ${changeStatusKor(
+                        organizedTeamLog[i].boardStatus
+                    )}으로 변경하였습니다.</div></a>
                         `;
                     document.getElementsByClassName("feedback-list")[0].appendChild(div);
                     if (organizedTeamLog.length.length === 5) {
@@ -293,7 +315,6 @@ async function projectRuleGeneration() {
                 },
                 headers: { Authorization: `Bearer ${token}` },
             });
-            console.log(response);
             const { success, result } = response.data;
             if (success) {
                 console.log("규칙 추가 성공 : ", result);
@@ -373,7 +394,6 @@ async function uploadPlan() {
                     <div>${file.name}</div>
                 </div>
             `;
-        console.log("s", success);
         document.getElementsByClassName("plan-file-contain")[0].appendChild(div);
     } else {
         console.log("파일 업로드에 실패하였습니다.");
@@ -408,7 +428,6 @@ async function uploadERD() {
     });
 
     const { result, success } = response.data;
-    console.log(response);
     if (success) {
         let div = document.createElement("div");
         div.innerHTML = `
@@ -478,7 +497,6 @@ async function deleteFile(e, fileIndex, type) {
     }
     if (element) {
         let project_file = element.getAttribute("data-id");
-        console.log("s", project_file);
         if (confirm("파일 삭제 하시겠습니까?")) {
             try {
                 const response = await axios({
@@ -489,7 +507,6 @@ async function deleteFile(e, fileIndex, type) {
                     },
                     data: { project_file: fileIndex, type },
                 });
-                console.log(response);
                 const { result, success } = response.data;
                 if (success) {
                     e.target.parentNode.remove();
@@ -512,7 +529,6 @@ async function addMember() {
     }
 
     let email = inputMemberEmail;
-    console.log(email);
     const token = localStorage.getItem("token");
 
     try {
@@ -524,14 +540,9 @@ async function addMember() {
                 email,
             },
         });
-
-        console.log("post", response);
-        console.log(response.data);
-
         const { result, success } = response.data;
         if (success) {
             const member_id = [result.id];
-            console.log("id", member_id);
             //멤버 초대
             const userInvite = await axios({
                 method: "POST",
@@ -578,7 +589,6 @@ async function deleteMember(e) {
     }
     if (element) {
         let member_id = element.getAttribute("data-id");
-        console.log(member_id);
 
         const token = localStorage.getItem("token");
         if (confirm("강퇴하시겠습니까?")) {
@@ -593,11 +603,9 @@ async function deleteMember(e) {
                         member_id,
                     },
                 });
-                console.log(response);
                 const { result, success } = response.data;
                 if (success) {
                     e.target.parentNode.remove();
-                    console.log(" 나 : ", result);
                 } else {
                 }
             } catch (error) {
