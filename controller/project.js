@@ -270,7 +270,6 @@ exports.projectLog = async (req, res) => {
     const teamLog = [];
     try {
         const getBoardLogResult = await Board.findAll({
-<<<<<<< Updated upstream
             where: { projectId: id },
         });
         console.log(getBoardLogResult);
@@ -293,12 +292,6 @@ exports.projectLog = async (req, res) => {
         }
         console.log("teamLog", teamLog);
         res.json({ success: true, result: teamLog });
-=======
-            where: { id },
-        });
-        console.log(getBoardLogResult);
-        res.json({ success: true, result: getBoardLogResult });
->>>>>>> Stashed changes
     } catch (error) {
         console.log(error);
         res.json({ success: true, result: error });
@@ -586,10 +579,7 @@ async function deleteImg(projectId) {
     }
 }
 
-<<<<<<< Updated upstream
 //토큰 업데이트 함수
-=======
->>>>>>> Stashed changes
 exports.UpdateToken = async (req, res) => {
     const { projectId } = req.body;
     console.log(projectId);
