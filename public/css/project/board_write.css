@@ -5,6 +5,15 @@
     pointer-events: auto;
 }
 
+nav {
+    position: relative;
+    margin-top: 103px;
+}
+
+section {
+    position: relative;
+}
+
 .status_modify {
     margin-top: 0.5vw;
     margin-left: 5vw;
@@ -161,17 +170,15 @@
     display: flex;
 }
 
-.manager_generate,
-.open_calender,
+.manager_generate .open_calender,
 .select_project {
-    margin-left: 2vw;
+    background-color: #f3f2f2;
+    margin-left: -9vw;
+    width: 125px;
     margin-top: 2vw;
     color: gray;
     display: flex;
-}
-
-.manager_generate {
-    padding-left: 1vw;
+    box-shadow: 1px 1px #d7d7d7;
 }
 
 .manager_generate:hover,
