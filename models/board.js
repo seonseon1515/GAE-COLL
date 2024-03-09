@@ -10,7 +10,7 @@ const BoardModel = (sequelize) => {
         },
         title: {
             type: DataTypes.STRING,
-            allowNull: false,
+            allowNull: true,
         },
         status: {
             type: DataTypes.STRING,
@@ -19,7 +19,7 @@ const BoardModel = (sequelize) => {
         },
         deadline: {
             type: DataTypes.STRING(10),
-            allowNull: false,
+            allowNull: true,
         },
         description: {
             type: DataTypes.TEXT,

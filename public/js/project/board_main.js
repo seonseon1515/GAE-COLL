@@ -159,16 +159,41 @@ function addJob() {
           </button>
           </div>
       </td>
-      <td class="td3"><input type="text" id="datepicker" placeholder="마감일"></td>
-
-      
-      <td class="td4"><button class="work_managers" type="button" onclick="showUserSelectModal(event, 0)">작업자선택</button></td>
+      <td class="td3"><input type="text" id="datepicker-new" placeholder="마감일"></td>
+      <td class="td4"><button class="work_managers" id="new-work-member" type="button" onclick="showUserSelectModal(event, 0)">작업자선택</button></td>
 
     `;
 
     addJobTbody.appendChild(tr);
+    //작업추가중이면 추가 작업안되게 버튼 disabled
+    document.getElementById("addJob").setAttribute("disabled", "disabled");
+    //input에 이벤트 추가
+    document.getElementById("writeBoardTitle").addEventListener("blur", writeBoard("planning"));
+    document.getElementById("writeBoardTitle").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            writeBoard("planning");
+        }
+    });
     $("#datepicker").datepicker();
     // document.getElementById("ui-datepicker-div").style.zIndex = 999;
+}
+//input태그 작성완료시 보드 작성 요청
+async function writeBoard(status, userId) {
+    try {
+        const boardTitle = document.querySelector("#writeBoardTitle");
+        const deadline = document.querySelector("#datepicker-new");
+
+        const writeBoardResult = await axios({
+            method: "post",
+            url: "/api/project/board/write",
+            data: {
+                title: boardTitle.value,
+                status,
+                deadline,
+                userId,
+            },
+        });
+    } catch (error) {}
 }
 $(function () {
     //input을 datepicker로 선언
@@ -208,18 +233,25 @@ function showUserSelectModal(event, boardId) {
 //소켓
 modal.addEventListener("close", (event) => {
     // event.returnValue는 close이벤트에 대한 리턴 값으로 true를 반환한다.
-    if (modal.returnValue === "planning") {
-        boardStatusUpdate("planning");
-    } else if (modal.returnValue === "progress") {
-        boardStatusUpdate("progress");
-    } else if (modal.returnValue === "needFeedback") {
-        boardStatusUpdate("needFeedback");
-    } else if (modal.returnValue === "finishFeedback") {
-        boardStatusUpdate("finishFeedback");
-    } else if (modal.returnValue === "suspend") {
-        boardStatusUpdate("suspend");
-    } else if (modal.returnValue === "finish") {
-        boardStatusUpdate("finish");
+    //보드 새로 추가
+    if (changedBoardId === 0) {
+        writeBoard(modal.returnValue);
+    }
+    // 기존 보드 수정
+    else {
+        if (modal.returnValue === "planning") {
+            boardStatusUpdate("planning");
+        } else if (modal.returnValue === "progress") {
+            boardStatusUpdate("progress");
+        } else if (modal.returnValue === "needFeedback") {
+            boardStatusUpdate("needFeedback");
+        } else if (modal.returnValue === "finishFeedback") {
+            boardStatusUpdate("finishFeedback");
+        } else if (modal.returnValue === "suspend") {
+            boardStatusUpdate("suspend");
+        } else if (modal.returnValue === "finish") {
+            boardStatusUpdate("finish");
+        }
     }
 });
 userSelectModal.addEventListener("close", (event) => {
