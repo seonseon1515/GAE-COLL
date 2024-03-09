@@ -1,4 +1,4 @@
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
 // const token =
 // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzM4NDQ0LCJleHAiOjE3MDk4MjQ4NDR9.s7E14MGuxf73cKcaexLyg9OWSTiNZT4A31yLH4m_GcY";
 //이슈 id
