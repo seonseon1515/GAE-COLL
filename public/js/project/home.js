@@ -369,7 +369,7 @@ async function uploadPlan() {
                 <div class="plan-file-name">
                     <div class="plan-file-img">
                         <img src="../../public/img/file-icon.png" class="file-icon" />
-                    </div>>
+                    </div>
                     <div>${file.name}</div>
                 </div>
             `;
