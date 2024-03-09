@@ -172,8 +172,8 @@ const ruleData = [];
         });
         const { result, success } = response.data;
         let organizedTeamLog = result.sort((a, b) => {
-            if (a.updatedAt > b.updatedAt) return 1;
-            if (a.updatedAt < b.updatedAt) return -1;
+            if (a.updatedAt > b.updatedAt) return -1;
+            if (a.updatedAt < b.updatedAt) return 1;
             return 0;
         });
 
@@ -183,9 +183,19 @@ const ruleData = [];
                 if (changeStatusKor(organizedTeamLog[i].boardStatus) !== "피드백 요청") {
                     let div = document.createElement("div");
                     div.classList.add("teamDiv");
-                    let userImage = organizedTeamLog[i].user_img
-                        ? "../../public/uploads/profile/" + organizedTeamLog[i].user_img
-                        : "../../public/img/user-solid.svg";
+
+                    let userImage = "";
+                    if (
+                        organizedTeamLog[i].user_img.includes("http://") ||
+                        organizedTeamLog[i].user_img.includes("https://")
+                    ) {
+                        userImage = organizedTeamLog[i].user_img;
+                    } else {
+                        userImage = organizedTeamLog[i].user_img
+                            ? "../../public/uploads/profile/" + organizedTeamLog[i].user_img
+                            : "../../public/img/user-solid.svg";
+                    }
+
                     div.innerHTML = `<div class = "teamDivImg">
                     <img src="${userImage}" class = "teamImg"></div>
                     <div id="team-work-list-text"><a href="/project/board_content/${
@@ -201,9 +211,17 @@ const ruleData = [];
                 if (organizedTeamLog[i].boardStatus === "needFeedback") {
                     let div = document.createElement("div");
 
-                    let userImage = organizedTeamLog[i].user_img
-                        ? "../../public/uploads/profile/" + organizedTeamLog[i].user_img
-                        : "../../public/img/user-solid.svg";
+                    let userImage = "";
+                    if (
+                        organizedTeamLog[i].user_img.includes("http://") ||
+                        organizedTeamLog[i].user_img.includes("https://")
+                    ) {
+                        userImage = organizedTeamLog[i].user_img;
+                    } else {
+                        userImage = organizedTeamLog[i].user_img
+                            ? "../../public/uploads/profile/" + organizedTeamLog[i].user_img
+                            : "../../public/img/user-solid.svg";
+                    }
 
                     div.classList.add("needFeedDiv");
                     div.innerHTML = `<div class = "teamDivImg"> <img src="${userImage}" class = "teamImg"></div>
