@@ -1,5 +1,5 @@
-const token = localStorage.getItem("token");
 const tbody = document.querySelector("tbody");
+// const token = localStorage.getItem("token");
 
 (async function () {
     //페지네이션 goToPage 함수 정의
@@ -67,17 +67,14 @@ const tbody = document.querySelector("tbody");
 
     //goToPrev 함수 정의
     const goToPrev = (pageGroup) => {
-        console.log("이전 함수", pageGroup, firstPageOfGroup, lastPageOfGroup);
         if (pageGroup > 1) {
             pageGroup -= 1;
-            console.log("pagegroup이 1보다 클 때", pageGroup, firstPageOfGroup, lastPageOfGroup);
         }
         firstPageOfGroup = (pageGroup - 1) * 5 + 1;
         lastPageOfGroup = pageGroup * 5;
         if (lastPageOfGroup > totalPages) {
             lastPageOfGroup = totalPages;
         }
-        console.log("pagegroup이 1보다 작을 때", pageGroup, firstPageOfGroup, lastPageOfGroup);
 
         pageNumberBox.replaceChildren();
 
@@ -103,7 +100,7 @@ const tbody = document.querySelector("tbody");
                 lastPageOfGroup = totalPages;
             }
 
-            console.log(pageGroup, firstPageOfGroup, lastPageOfGroup);
+            // console.log(pageGroup, firstPageOfGroup, lastPageOfGroup);
 
             pageNumberBox.replaceChildren();
 
@@ -127,17 +124,22 @@ const tbody = document.querySelector("tbody");
             Authorization: `Bearer ${token}`,
         },
     });
+    console.log("re3.data", res3.data);
     const page = res3.data.pagination.page; // 현재 페이지
     const pageSize = res3.data.pagination.pageSize; // limit
     const totalPages = res3.data.pagination.totalPages; // 페이지 전체 개수
     const totalIssues = res3.data.pagination.totalIssues;
 
-    const table = document.querySelector("table");
-    console.log(table);
-    if (totalIssues === 0) {
-        table.style.display = "none";
+    // const table = document.querySelectorAll("table");
+    const tableBox = document.getElementById("issue-contain-main");
+    console.log("이슈 개수:", totalIssues);
+    const announceTxt = document.querySelector("#announceTxt");
+    if (totalIssues === "" || totalIssues === null || totalIssues === undefined || totalIssues === 0) {
+        tableBox.style.display = "none";
+        announceTxt.textContent = "작성된 이슈가 없습니다.";
     } else {
-        table.style.display = "block";
+        tableBox.style.display = "block";
+        announceTxt.textContent = "";
     }
 
     let pageGroup = Math.ceil(page / pageSize); // 페이지 그룹
@@ -170,15 +172,15 @@ async function searchFunc() {
     const type = document.getElementById("type").value;
     const keyword = document.getElementById("keyword").value;
 
-    console.log(type, keyword);
+    // console.log(type, keyword);
 
     async function goToPage(page) {
         const res = await axios({
             method: "get",
             url: `/api/project/issue/search?page=${page}&pageSize=10&type=${type}&keyword=${keyword}`,
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+            // headers: {
+            //     Authorization: `Bearer ${token}`,
+            // },
         });
 
         tbody.innerHTML = "";
@@ -189,9 +191,9 @@ async function searchFunc() {
             const res2 = await axios({
                 method: "POST",
                 url: "/api/user/info",
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
+                // headers: {
+                //     Authorization: `Bearer ${token}`,
+                // },
                 data: {
                     userId: userId,
                 },
@@ -221,17 +223,14 @@ async function searchFunc() {
 
     //goToPrev 함수 정의
     const goToPrev = (pageGroup) => {
-        console.log("이전 함수", pageGroup, firstPageOfGroup, lastPageOfGroup);
         if (pageGroup > 1) {
             pageGroup -= 1;
-            console.log("pagegroup이 1보다 클 때", pageGroup, firstPageOfGroup, lastPageOfGroup);
         }
         firstPageOfGroup = (pageGroup - 1) * 5 + 1;
         lastPageOfGroup = pageGroup * 5;
         if (lastPageOfGroup > totalPages) {
             lastPageOfGroup = totalPages;
         }
-        console.log("pagegroup이 1보다 작을 때", pageGroup, firstPageOfGroup, lastPageOfGroup);
 
         pageNumberBox.replaceChildren();
 
@@ -257,8 +256,6 @@ async function searchFunc() {
                 lastPageOfGroup = totalPages;
             }
 
-            console.log(pageGroup, firstPageOfGroup, lastPageOfGroup);
-
             pageNumberBox.replaceChildren();
 
             for (let i = firstPageOfGroup; i <= lastPageOfGroup; i++) {
@@ -276,13 +273,10 @@ async function searchFunc() {
     const res3 = await axios({
         method: "get",
         url: `/api/project/issue/search?page=1&pageSize=10&type=${type}&keyword=${keyword}`,
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
+        // headers: {
+        //     Authorization: `Bearer ${token}`,
+        // },
     });
-
-    console.log("콘솔 출력:", page, pageSize, totalPages);
-    console.log("백에서 받느거 출력:", res3.data);
 
     const page = res3.data.pagination.page;
     const pageSize = res3.data.pagination.pageSize;

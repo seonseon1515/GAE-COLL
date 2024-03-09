@@ -56,7 +56,19 @@ const token = localStorage.getItem("token");
     // document.querySelector("#projectEndDate").textContent = `${result.end_date}`;
     document.querySelector(".github_link").href = result.github;
     document.querySelector(".pro_name").textContent = result.project_name;
-    // planning progress needFeedback finishFeedback suspend finish
+
+    // const projectImg = document.querySelector(".projectProfile");
+    // projectImg.src = `../../public/uploads/project/${result.project_img}`
+    // 이미지 십입
+    console.log("파일명", result.project_img);
+    const imgSrc = `../../public/uploads/project/${result.project_img}`;
+    // document.querySelector("#userImg").innerHTML = `<img src=${imgSrc}></img>`;
+
+    $(".projectProfile").attr({
+        src: imgSrc,
+        width: 100,
+        height: 100,
+    });
 
     console.log("작업상태 변경", result.status);
     const circle = document.querySelector("#blue");
@@ -91,8 +103,8 @@ const token = localStorage.getItem("token");
     }
 
     const getDateDiff = (d1, d2) => {
-        const date1 = new Date(d1);
-        const date2 = new Date(d2);
+        const date1 = new Date(formattedStartDate);
+        const date2 = new Date(formattedEndDate);
 
         const diffDate = date1.getTime() - date2.getTime();
 
@@ -108,6 +120,22 @@ async function dateEdit() {
     const changedStartDate = document.querySelector("#startDate").value;
     const changeEndDate = document.querySelector("#endDate").value;
 
+    const date = new Date(changedStartDate);
+    const date2 = new Date(changeEndDate);
+    const startYearNum = date.getFullYear();
+    const startMonthNum = date.getMonth();
+    const startDateNum = date.getDate();
+
+    const endYearNum = date2.getFullYear();
+    const endMonthNum = date2.getMonth();
+    const endDateNum = date2.getDate();
+
+    if (date > date2) {
+        alert("프로젝트 기간을 다시 설정해 주세요.");
+        location.reload();
+        return;
+    }
+
     const res = await axios({
         method: "patch",
         url: "/api/project/update/period",
@@ -119,9 +147,19 @@ async function dateEdit() {
             end_date: changeEndDate,
         },
     });
-    if (res.data.success) {
+    // console.log("startYearNum", typeof startYearNum);
+    // console.log("endYearNum", endYearNum);
+
+    // 다중 조건문
+    if (res.data.success && startYearNum < endYearNum) {
         alert("날짜가 변경되었습니다.");
-        location.reload();
+        return location.reload();
+    } else if (startMonthNum < endMonthNum || (startMonthNum === endMonthNum && startDateNum < endDateNum)) {
+        alert("날짜가 변경되었습니다.");
+        return location.reload();
+    } else {
+        alert("날짜가 변경되었습니다.");
+        return location.reload();
     }
 }
 
@@ -374,3 +412,67 @@ if (nowLocatedPath === "issue_main") {
     const boldLink = document.getElementById("issue_main");
     boldLink.style.fontWeight = "700";
 }
+
+//프로젝트 프로필 이미지 수정
+async function updateProfileImg() {
+    const project_img = document.getElementById("profileUpload");
+
+    const formData = new FormData();
+
+    let imgSelected = false;
+    // console.log("이미지 변경 테스트 전", projectImg);
+    if (project_img !== undefined) {
+        console.log("이미지 변경 테스트 후");
+        imgSelected = true;
+        console.log(project_img);
+        formData.append("project_img", project_img.files[0]);
+    }
+    console.log("이미지 변경 테스트 끝", formData);
+
+    const projectImgResult = await axios({
+        method: "patch",
+        url: "/api/project/update/img",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+    });
+    const { success, result } = projectImgResult.data;
+    console.log(projectImgResult.data);
+    // if (success) {
+    //     alert("이미지 변경이 완료되었습니다.");
+    // } else {
+    //     console.log(error);
+    //     alert("이미지 변경에 실패하였습니다.");
+    // }
+    // console.log("data: ", userImgResult.data);
+}
+
+function openPopupProfile() {
+    document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    console.log("close");
+}
+
+window.onload = function () {
+    target = document.getElementById("profileUpload"); // file 아이디 선언
+    target.addEventListener("change", function () {
+        // change 함수
+
+        if (target.value.length) {
+            // 파일 첨부인 상태일경우 파일명 출력
+            let filenames = "";
+            for (let i = 0; i < target.files.length; i++) {
+                filenames += target.files[i].name + "&nbsp&nbsp&nbsp&nbsp";
+            }
+            $("#profileName").html(filenames);
+        } else {
+            //버튼 클릭후 취소(파일 첨부 없을 경우)할때 파일명값 안보이게
+            $("#profileName").html("");
+        }
+    });
+};

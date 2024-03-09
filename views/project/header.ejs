@@ -9,13 +9,33 @@
         <link rel="stylesheet" href="../../public/css/common/font.css" />
         <link href="https://fonts.googleapis.com/css2?family=Poor+Story&display=swap" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <script
+        src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+        crossorigin="anonymous"></script>
     </head>
     <body>
 
         <header id="project_header">
             <div class="pro_header1">
                 <div class="left_wrap1">
+                    <img class="projectProfile" id="projectImg" onclick="openPopupProfile()"></img>
                     <div class="pro_name" id="pro_name" contenteditable="true"></div>
+
+<!-- 이미지 수정 팝업 뜨기 -->
+<div class="addLink profileUploadPop" onclick="openPopupProfile()" id="popup" style="display: none;">
+    <span class="txt">수정할 이미지를 업로드해주세요.</span>
+    <div class="profileUploads">
+        <form id="profileForm">
+            <label for="files">
+                <span id="profileUploadBtn" class="button_white_yellow">파일 선택</span>
+            </label>
+            <p id="profileName"></p>
+            <input id="profileUpload" type="file" name="issue_files"/>
+            <button type="button" onclick="updateProfileImg()">수정</button>
+        </form>
+    </div>
+</div>
                     <div>
                         <div class="select_box"> 
                             <!-- left_wrap -->
@@ -63,26 +83,26 @@
                                 </li>
                             </ul>
                         </div>                   
-                </div>
+                    </div>
                 </div>
                 <div class="mid_wrap1">
 
                     <!--프로젝트 시작일, 마감일-->
                     <div class="pro_date">
-                        <input type="date" id="startDate" />
-                        <input type="date" id="endDate" />
+                        <input type="date" id="startDate" class="dateBox" /><span class="betweenMark"> ~ </span>
+                        <input type="date" id="endDate" class="dateBox"/>
                         <!-- <button type="button" class="projectSchedule" id="projectStartDate" onclick="doEdit()">
                         <button type="button" class="projectSchedule"  id="projectEndDate" onclick="doEdit()"> -->
                     </div>
                     <div class="pro_deadline"></div>
-                    <img class="pro_edit" src="../public/img/edit.png" onclick="dateEdit()"></img></label>
+                    <img class="pro_edit" id="dateEdit" src="../public/img/edit.png" onclick="dateEdit()"></img></label>
                 </div>
                 
                 <div class="right_wrap1">
 
                     <div class="rightLogoWrap">
                         <a class="github_link"><img class="pro_github" src="../public/img/github.png"></img></a>
-                        <img class="pro_edit" id="dateEdit" src="../public/img/edit.png" onclick="openPopup()">
+                        <img class="pro_edit" id="githubEdit" src="../public/img/edit.png" onclick="openPopup()">
                     </div>    
                     <div class="addLink" id="popup" style="display: none;">
                         <p class="txtLink">주소를 입력하세요</p>
