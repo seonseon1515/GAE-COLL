@@ -133,8 +133,10 @@
                 console.log("ddd", result);
                 tr.innerHTML = `
                         <td class="td1">${i + 1}</td>
-                        <a href="/project/issue_content/${result[i].id}> <td class="td2" style = "text-decoration: none;
-                        color: black; cursor: pointer;">${result[i].title}</td></a>
+                        <td class="td2" style = "text-decoration: none;
+                        color: black; cursor: pointer;"><a href="/project/issue_content/${result[i].id}">${
+                    result[i].title
+                }</td></a>
                         <td class="td3">${result[i].userId}</td>
                         <td class="td4">${result[i].issue_date}</td>
                 `;
@@ -175,9 +177,12 @@
                     div.classList.add("teamDiv");
                     div.innerHTML = `
                                 ${organizedTeamLog[i].user_img}
-                                <div id="team-work-list-text">${organizedTeamLog[i].user_name}님이 ${
-                        organizedTeamLog[i].title
-                    }을 ${changeStatusKor(organizedTeamLog[i].boardStatus)}으로 변경하였습니다.</div>
+                                <div id="team-work-list-text"><a href="/project/board_content/${
+                                    organizedTeamLog[i].id
+                                }" class = "poject-a">
+                                ${organizedTeamLog[i].user_name}님이 ${organizedTeamLog[i].title}을 ${changeStatusKor(
+                        organizedTeamLog[i].boardStatus
+                    )}으로 변경하였습니다.</div>
                                 `;
                     document.getElementsByClassName("team-work-list")[0].appendChild(div);
                 }
@@ -188,7 +193,9 @@
                     div.classList.add("needFeedDiv");
                     div.innerHTML = `
                     ${organizedTeamLog[i].user_img}
-                    <div id="feedback-list-text">${organizedTeamLog[i].user_name}님이 ${
+                    <div id="feedback-list-text"><a href="/project/board_content/${
+                        organizedTeamLog[i].id
+                    }" class = "poject-a">${organizedTeamLog[i].user_name}님이 ${
                         organizedTeamLog[i].title
                     }을 ${changeStatusKor(organizedTeamLog[i].boardStatus)}으로 변경하였습니다.</div></a>
                         `;

@@ -399,3 +399,8 @@ li:hover .rule-icon {
 .saveButton {
     cursor: pointer;
 }
+.poject-a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
