@@ -18,7 +18,7 @@ exports.createProject = async (req, res) => {
         res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
         return;
     }
-
+    userId.push(my_id);
     //멤버가 object타입인지 string타입인지 구별 -> 포스트맨 테스트로 인해 처리
     if (typeof member_id === "object") {
         userId = member_id;
@@ -28,7 +28,7 @@ exports.createProject = async (req, res) => {
     } else if (typeof member_id === "array") {
         userId = member_id;
     }
-    userId.push(my_id);
+
     try {
         const result = [];
         let project_img;
@@ -69,7 +69,6 @@ exports.createProject = async (req, res) => {
     }
 };
 
-// 내 모든 작업 조회
 exports.getMyBoard = async (req, res) => {
     try {
         const userId = req.userId;
@@ -99,7 +98,6 @@ exports.getMyBoard = async (req, res) => {
                 getMyBoard.set(projectId, {
                     projectName,
                     board,
-                    projectId,
                 });
             }
         }
@@ -156,14 +154,14 @@ exports.getMyTeamBoard = async (req, res) => {
         const userId = req.userId;
 
         // 현재 사용자가 참여 중인 프로젝트 조회
-        const myProjects = await ProjectMember.findAll({
+        const projects = await ProjectMember.findAll({
             where: { userId },
             attributes: ["projectId"],
         });
 
         // 해당 프로젝트에 참여 중인 모든 팀원의 정보를 찾기
         const projectMembers = await ProjectMember.findAll({
-            where: { projectId: myProjects.map((project) => project.projectId) },
+            where: { projectId: projects.map((project) => project.projectId) },
             include: { model: User, attributes: ["user_name"] }, // 멤버의 이름을 가져오기 위해 User 모델을 include
         });
 
@@ -203,7 +201,6 @@ exports.getMyTeamBoard = async (req, res) => {
 
         res.json({ success: true, result: teamBoards });
     } catch (error) {
-        console.log(error);
         res.json({ success: false, result: "팀 보드 조회 실패" });
     }
 };
@@ -273,6 +270,7 @@ exports.projectLog = async (req, res) => {
     const teamLog = [];
     try {
         const getBoardLogResult = await Board.findAll({
+<<<<<<< Updated upstream
             where: { projectId: id },
         });
         console.log(getBoardLogResult);
@@ -295,6 +293,12 @@ exports.projectLog = async (req, res) => {
         }
         console.log("teamLog", teamLog);
         res.json({ success: true, result: teamLog });
+=======
+            where: { id },
+        });
+        console.log(getBoardLogResult);
+        res.json({ success: true, result: getBoardLogResult });
+>>>>>>> Stashed changes
     } catch (error) {
         console.log(error);
         res.json({ success: true, result: error });
@@ -582,7 +586,10 @@ async function deleteImg(projectId) {
     }
 }
 
+<<<<<<< Updated upstream
 //토큰 업데이트 함수
+=======
+>>>>>>> Stashed changes
 exports.UpdateToken = async (req, res) => {
     const { projectId } = req.body;
     console.log(projectId);
