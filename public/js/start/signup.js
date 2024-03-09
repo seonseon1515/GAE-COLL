@@ -10,6 +10,7 @@ async function emailAuth() {
         url: "/api/user/emailAuth",
         data: {
             email,
+            isSignup: true,
         },
     });
     const { success, result } = emailSendResult.data;
