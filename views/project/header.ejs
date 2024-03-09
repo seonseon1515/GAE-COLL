@@ -15,26 +15,94 @@
         <header id="project_header">
             <div class="pro_header1">
                 <div class="left_wrap1">
-                    <div class="pro_name"></div>
-                    <div class="pro_status"></div>
+                    <div class="pro_name" id="pro_name" contenteditable="true"></div>
+                    <div>
+                        <div class="select_box"> 
+                            <!-- left_wrap -->
+                            <div id="bg" class="placement_status">
+                                <div id="blue" class="circle"></div>
+                                <div id="pro_status" class="status_txt"></div>
+                            </div>
+
+                            <ul class="option_list">
+                                <li class="option_item" onclick="changeStatusToPlan()">
+                                    <div id="bg_blue" class="placement_status">
+                                        <div id="blue" class="circle"></div>
+                                        <div id="planning" class="status_txt">계획중</div>
+                                    </div>
+                                </li>
+                                <li class="option_item" onclick="changeStatusToProg()">
+                                    <div id="bg_yellow" class="placement_status">
+                                        <div id="yellow" class="circle"></div>
+                                        <div  class="status_txt">진행중</div>
+                                    </div>
+                                </li>
+                                <li class="option_item" onclick="changeStatusToSus()">
+                                    <div id="bg_purple" class="placement_status">
+                                        <div id="purple" class="circle"></div>
+                                        <div class="status_txt">중단됨</div>
+                                    </div>
+                                </li>
+                                <li class="option_item" onclick="changeStatusToFin()">
+                                    <div id="bg_green" class="placement_status">
+                                        <div id="green" class="circle"></div>
+                                        <div class="status_txt">완료</div>
+                                    </div>
+                                </li>
+                                <li class="option_item" onclick="changeStatusToNeedFeed()">                                
+                                    <div id="bg_red" class="placement_status">
+                                        <div id="red" class="circle"></div>
+                                        <div class="status_txt">피드백 요청</div>
+                                    </div>
+                                </li>
+                                <li class="option_item" onclick="changeStatusToFinishFeed()">
+                                    <div id="bg_black" class="placement_status">
+                                        <div id="black" class="circle"></div>
+                                        <div class="status_txt">피드백 완료</div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>                   
+                </div>
                 </div>
                 <div class="mid_wrap1">
-                    <div class="pro_date"></div>
-                    <div class="pro_deadline">(D-20)</div>
-                    <img class="pro_edit" src="../../public/img/edit.png"></img>
+
+                    <!--프로젝트 시작일, 마감일-->
+                    <div class="pro_date">
+                        <input type="date" id="startDate" />
+                        <input type="date" id="endDate" />
+                        <!-- <button type="button" class="projectSchedule" id="projectStartDate" onclick="doEdit()">
+                        <button type="button" class="projectSchedule"  id="projectEndDate" onclick="doEdit()"> -->
+                    </div>
+                    <div class="pro_deadline"></div>
+                    <img class="pro_edit" src="../public/img/edit.png" onclick="dateEdit()"></img></label>
                 </div>
+                
                 <div class="right_wrap1">
-                    <a href="https://github.com/Hyunkyung-Nam/Gae-Call"><img class="pro_github" src="../../public/img/github.png"></img></a>
+
+                    <div class="rightLogoWrap">
+                        <a class="github_link"><img class="pro_github" src="../public/img/github.png"></img></a>
+                        <img class="pro_edit" id="dateEdit" src="../public/img/edit.png" onclick="openPopup()">
+                    </div>    
+                    <div class="addLink" id="popup" style="display: none;">
+                        <p class="txtLink">주소를 입력하세요</p>
+                        <img class="xImg" src="../public/img/close.png" alt="" onclick="closePopup()"/>
+                        <input id="githubLinkInput" type="text" placeholder="https://github.com/">
+                        <button class="addBtn" type="button" onclick="githubSend()">변경</button>
+                    
+                    </div>
                 </div>
             </div>
 
             <div class="pro_header2">
-                <a class="pro_header2_link" href="../../project/home">홈</a>
-                <a class="pro_header2_link" href="../../project/board_main">보드</a>
-                <a class="pro_header2_link" href="../../project/calender">캘린더</a>
-                <a class="pro_header2_link" href="../../project/issue_main">이슈 관리</a>
+                <a id="home" class="pro_header2_link" href="../../project/home">홈</a>
+                <!-- <button type="button" id="linkBold1" class="pro_header2_link" onclick="bold1Func()">홈</button> -->
+                <a id="board_main" class="pro_header2_link" href="../../project/board_main">보드</a>
+                <a id="calender" class="pro_header2_link" href="../../project/calender">캘린더</a>
+                <a id="issue_main" class="pro_header2_link" href="../../project/issue_main">이슈 관리</a>
             </div>
         </header>
         <script src="../../public/js/project/header.js"></script>
     </body>
 </html>
+

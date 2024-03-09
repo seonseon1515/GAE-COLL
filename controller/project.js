@@ -2,13 +2,15 @@ const { Project, ProjectFile, Board, ProjectMember, User } = require("../models"
 const jwt = require("jsonwebtoken");
 
 var fs = require("fs");
+const { default: axios } = require("axios");
+const { type } = require("os");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
     const file = req.file;
     const my_id = req.userId;
 
     const { project_name, start_date, end_date, overview, rule, member_id, send_img } = req.body;
-    let userId;
+    let userId = [];
 
     //사진을 보냈는데 이미지 파일이 아니면 보드 생성 실패
 
@@ -180,7 +182,7 @@ exports.getMyTeamBoard = async (req, res) => {
                         where: { id: myProjects[j].projectId },
                         attributes: ["project_img", "project_name"],
                     });
-                    console.log(projectImg);
+
                     const board = {
                         deadline: boardResult.deadline,
                         description: boardResult.description,
@@ -218,20 +220,18 @@ exports.getProjectInfo = async (req, res) => {
         const getProjectMembertResult = await ProjectMember.findAll({
             where: { projectId: id },
         });
-        console.log("getProjectMemebertResult", getProjectMembertResult.length);
-
         for (let i = 0; i < getProjectMembertResult.length; i++) {
+            console.log("getProjectMembertResult[i].userId", getProjectMembertResult[i].userId);
             const getUserInfo = await User.findOne(
-                { attributes: ["user_name", "user_img"] },
-                { where: { id: getProjectMembertResult[i].id } }
+                { where: { id: Number(getProjectMembertResult[i].userId) } },
+                { attributes: ["user_name", "user_img"] }
             );
-            console.log(getUserInfo);
+            console.log(getUserInfo.user_img);
             const data = {
                 user_name: getUserInfo.user_name,
                 user_img: getUserInfo.user_img,
-                id: getProjectMembertResult[i].id,
+                id: getProjectMembertResult[i].userId,
             };
-            console.log("userData : ", data);
             memberData.push(data);
         }
         const { project_name, status, start_date, end_date, github, overview, rule, project_img } =
@@ -270,13 +270,33 @@ exports.getProjectFile = async (req, res) => {
 //프로젝트 로그 조회
 exports.projectLog = async (req, res) => {
     const id = req.projectId;
-
+    const teamLog = [];
     try {
-        const getBoardLogResult = await Board.findOne({
-            where: { id },
+        const getBoardLogResult = await Board.findAll({
+            where: { projectId: id },
         });
-        res.json({ success: true, result: getBoardLogResult });
+        console.log(getBoardLogResult);
+        for (let board of getBoardLogResult) {
+            const userData = await User.findOne({
+                where: { id: Number(board.userId) },
+                attributes: ["user_img", "user_name"],
+            });
+            const data = {
+                boardId: board.id,
+                title: board.title,
+                boardStatus: board.status,
+                deadline: board.deadline,
+                description: board.description,
+                updatedAt: board.updatedAt,
+                user_img: userData.user_img,
+                user_name: userData.user_name,
+            };
+            teamLog.push(data);
+        }
+        console.log("teamLog", teamLog);
+        res.json({ success: true, result: teamLog });
     } catch (error) {
+        console.log(error);
         res.json({ success: true, result: error });
     }
 };
@@ -285,11 +305,11 @@ exports.projectLog = async (req, res) => {
 exports.updateProjectName = async (req, res) => {
     const id = req.projectId;
     const { project_name } = req.body;
-
     try {
         const updateProjectResult = await Project.update({ project_name }, { where: { id } });
-        res.json({ success: true, result: updateProjectName });
+        res.json({ success: true, result: updateProjectResult });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
@@ -357,11 +377,7 @@ exports.updateProjectRule = async (req, res) => {
     const { rule } = req.body;
     console.log(req.body);
     try {
-        const findProjectRule = await Project.findOne({ where: { id } });
-        const beforeRule = JSON.parse(findProjectRule.rule);
-        beforeRule.push(rule);
-        const updateProjectResult = await Project.update({ rule: JSON.stringify(beforeRule) }, { where: { id } });
-
+        const updateProjectResult = await Project.update({ rule: JSON.stringify(rule) }, { where: { id } });
         res.json({ success: true, result: updateProjectResult });
     } catch (error) {
         res.json({ success: false, result: error });
@@ -375,12 +391,11 @@ exports.addProjectMember = async (req, res) => {
     let userId;
     let result = [];
 
-    if (typeof member_id === "object") {
+    if (typeof member_id === "object" || typeof member_id === "array") {
         userId = member_id;
     } else if (typeof member_id === "string") {
         userId = JSON.parse(member_id);
     }
-
     try {
         //프로젝트 멤버DB에 없으면 추가
         for (let i = 0; i < userId.length; i++) {
@@ -497,6 +512,7 @@ exports.updateProjectGithub = async (req, res) => {
     }
 };
 
+//프로젝트 파일 삭제
 exports.deleteFile = async (req, res) => {
     const id = req.projectId;
     const { type, project_file } = req.body;
@@ -551,6 +567,7 @@ exports.deleteFile = async (req, res) => {
     }
 };
 
+//이미지 삭제 함수
 async function deleteImg(projectId) {
     try {
         const getProjectInfotResult = await Project.findOne({
@@ -565,10 +582,7 @@ async function deleteImg(projectId) {
     }
 }
 
-//내 모든 작업 조회
-
-//
-
+//토큰 업데이트 함수
 exports.UpdateToken = async (req, res) => {
     const { projectId } = req.body;
     console.log(projectId);

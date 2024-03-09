@@ -172,8 +172,10 @@ function goJobDeatil(projectId, boardId) {
                             ${myteamLogData[i].project_name}
                         </td>
                         <td class = "teamLogTd">
-                            ${myteamLogData[i].user_name}님 작업 : 
-                            ${myteamLogData[i].title}
+                            ${myteamLogData[i].user_name}님이 
+                            ${myteamLogData[i].title}를 ${
+                    switchStatus(myteamLogData[i].status).status
+                }로 변경하였습니다.
                         </td>
                 `;
                 teamBoardTbody.appendChild(tr);
@@ -183,6 +185,38 @@ function goJobDeatil(projectId, boardId) {
         console.log(error);
     }
 })();
+
+function switchStatus(status) {
+    let data = { color: "", status: "" };
+
+    switch (status) {
+        case "planning":
+            data.color = "blue";
+            data.status = "계획중";
+            break;
+        case "progress":
+            data.color = "yellow";
+            data.status = "진행중";
+            break;
+        case "suspend":
+            data.color = "purple";
+            data.status = "중단됨";
+            break;
+        case "finish":
+            data.color = "green";
+            data.status = "완료";
+            break;
+        case "needFeedback":
+            data.color = "red";
+            data.status = "피드백 요청";
+            break;
+        case "finishFeedback":
+            data.color = "black";
+            data.status = "피드백 완료";
+            break;
+    }
+    return data;
+}
 
 //프로젝트나 팀 로그 누르면  해당프로젝트 홈으로 이동
 async function goProjectPage(projectId, location) {

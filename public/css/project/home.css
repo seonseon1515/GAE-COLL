@@ -37,13 +37,17 @@ main {
 }
 #pro-img-div {
     padding-right: 20px;
-    width: 20px;
     height: 20px;
+    display: flex;
+    font-size: 20px;
+    align-items: center;
+    cursor: pointer;
 }
 
 #pen-img {
-    width: 100%;
-    height: 100%;
+    width: 20px;
+    height: 20px;
+    padding-right: 10px;
 }
 #overview-main {
     display: flex;
@@ -68,10 +72,6 @@ main {
     padding-left: 20px;
     width: 20px;
     height: 20px;
-}
-#pen-img {
-    width: 100%;
-    height: 100%;
 }
 #member-main {
     display: flex;
@@ -141,9 +141,9 @@ li:hover .rule-icon {
     display: block;
 }
 .rule-img {
-    width: 3vw;
-    height: 3vw;
-    padding-right: 2vw;
+    width: 25px;
+    height: 25px;
+    padding-right: 20px;
 }
 /*파일 업로드 부분 큰 틀*/
 #file-upload-contain {
@@ -229,6 +229,7 @@ li:hover .rule-icon {
     white-space: nowrap;
     word-break: break-all;
     margin-right: 20px;
+    cursor: pointer;
 }
 .file-icon {
     height: 100%;
@@ -254,7 +255,7 @@ li:hover .rule-icon {
 }
 .issue-text-day-contain {
     display: flex;
-    padding: 0 25px 25px 75px;
+    padding: 0 25px 25px 50px;
     align-items: center;
     height: 90px;
     text-align: center;
@@ -266,7 +267,7 @@ li:hover .rule-icon {
     cursor: pointer;
 }
 .issue-day {
-    width: auto;
+    width: 23%;
     word-wrap: break-word;
 }
 
@@ -274,11 +275,6 @@ li:hover .rule-icon {
 #under-contain {
     display: flex;
     width: 100%;
-}
-#line {
-    height: 3px;
-    background-color: gray;
-    margin: 0 20px;
 }
 
 /*팀 활동 시작*/
@@ -289,7 +285,12 @@ li:hover .rule-icon {
     height: auto;
     margin-bottom: 20px;
     margin-left: 20px;
+    height: 400px;
+    overflow-y: auto;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
 }
+
 #team-work,
 #feedback,
 #issue-header {
@@ -299,16 +300,37 @@ li:hover .rule-icon {
     font-size: 25px;
     font-weight: bold;
 }
-.team-work-list {
+.team-work-list,
+.feedback-list {
     padding: 10px 0 10px 25px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    cursor: pointer;
+    width: calc(100% - 100px);
+    margin-left: 35px;
+    font-size: 20px;
 }
-#team-work-list-text {
+#team-work-list-text,
+#feedback-list-text {
     padding-left: 20px;
+    width: 80%;
+    /* border-left: solid; */
+    text-align: center;
 }
-
+.teamDiv,
+.needFeedDiv {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    padding-bottom: 20px;
+    /* text-align: center; */
+    height: 60px;
+    justify-content: center;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0px 3px 5px #c4c4c4;
+    margin-bottom: 7px;
+}
 /*피드백 요청 목록*/
 #feedback-work-contain {
     margin: 0 20px 20px 20px;
@@ -316,15 +338,9 @@ li:hover .rule-icon {
     border-radius: 30px;
     width: 50%;
     height: auto;
-}
-.feedback-list {
-    padding: 1vw 0 1vw 3vw;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-#feedback-list-text {
-    padding-left: 2vw;
+    overflow-y: auto;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
 }
 .img {
     width: 40px;
@@ -339,4 +355,47 @@ li:hover .rule-icon {
 }
 #overview-input:focus {
     outline: none;
+}
+.issueNoteDiv {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+    text-align: center;
+    border-style: none;
+    /* border-radius: 20px; */
+    border-bottom: solid;
+    border-color: gray;
+    justify-content: center;
+    align-items: center;
+}
+#issueTable {
+    width: calc(100% - 60px);
+    height: auto;
+    text-align: center;
+    /* border-style: solid; */
+    margin: 30px;
+    border-collapse: collapse;
+    border: solid;
+}
+.td1 {
+    width: 10%;
+    border: 1px solid;
+}
+.td2 {
+    text-decoration: none;
+    color: black;
+    width: 50%;
+    border: 1px solid;
+}
+.td3 {
+    width: 20%;
+    border: 1px solid;
+}
+.td4 {
+    width: 20%;
+    border: 1px solid;
+}
+.saveButton {
+    cursor: pointer;
 }
