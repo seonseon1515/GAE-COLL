@@ -9,6 +9,7 @@ async function emailAuthPW() {
         url: "/api/user/emailAuth",
         data: {
             email,
+            isSignup: false,
         },
     });
     const { success, result } = emailSendResult.data;

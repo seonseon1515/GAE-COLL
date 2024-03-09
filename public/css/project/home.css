@@ -200,11 +200,14 @@ li:hover .rule-icon {
     display: flex;
     flex-wrap: wrap;
     overflow: overlay;
-    height: auto;
+    height: 150px;
     background-color: #ffda31;
     border-radius: 30px;
     padding: 20px 20px 50px 20px;
     margin: 10px;
+    overflow-x: auto;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 .plan-file-img,
 .api-file-img,
@@ -219,7 +222,6 @@ li:hover .rule-icon {
 .erd-file-name {
     height: 50px;
     width: 150px;
-    /* background: beige; */
     border-radius: 10px;
     display: flex;
     margin-bottom: 10px;
@@ -230,7 +232,28 @@ li:hover .rule-icon {
     word-break: break-all;
     margin-right: 20px;
     cursor: pointer;
+    position: relative;
 }
+.plan-file-name:hover .fileButton,
+.api-file-name:hover .fileButton,
+.erd-file-name:hover .fileButton {
+    display: block;
+}
+.fileButton {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 50px;
+    background-color: #f00; /* 원하는 색상으로 변경 가능 */
+    color: #fff; /* 원하는 색상으로 변경 가능 */
+    text-align: center;
+    line-height: 50px; /* 버튼의 높이와 동일하게 설정 */
+    border-radius: 0 10px 10px 0; /* 오른쪽 모서리만 둥글게 */
+    cursor: pointer;
+}
+
 .file-icon {
     height: 100%;
 }
@@ -314,7 +337,6 @@ li:hover .rule-icon {
 #feedback-list-text {
     padding-left: 20px;
     width: 80%;
-    /* border-left: solid; */
     text-align: center;
 }
 .teamDiv,
@@ -323,7 +345,6 @@ li:hover .rule-icon {
     width: 100%;
     align-items: center;
     padding-bottom: 20px;
-    /* text-align: center; */
     height: 60px;
     justify-content: center;
     border: none;
@@ -397,5 +418,10 @@ li:hover .rule-icon {
     border: 1px solid;
 }
 .saveButton {
+    cursor: pointer;
+}
+.poject-a {
+    text-decoration: none;
+    color: black;
     cursor: pointer;
 }

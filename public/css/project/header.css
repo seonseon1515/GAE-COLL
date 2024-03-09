@@ -54,9 +54,21 @@ a:link {
 }
 
 .pro_edit {
-    width: 2vw;
-    height: 2vw;
-    padding-left: 1vw;
+    width: 15px;
+    height: 15px;
+    position: relative;
+}
+
+#githubEdit {
+    width: 15px;
+    height: 15px;
+    position: relative;
+    bottom: 45px;
+    left: 17px;
+}
+
+.rightLogoWrap {
+    position: relative;
 }
 
 .pro_github {
@@ -64,8 +76,12 @@ a:link {
     height: 100%;
 }
 
+.pro_github:hover {
+    opacity: 0.7;
+}
+
 .pro_date {
-    padding-left: 1vw;
+    position: relative;
 }
 .pro_deadline {
     padding-left: 1vw;
@@ -164,8 +180,9 @@ a:link {
 
 .pro_name {
     border-style: none;
-    width: 80px;
+    width: 50%;
     overflow: auto;
+    font-size: 20px;
 }
 
 /* select 박스 css */
@@ -189,13 +206,10 @@ a:link {
 } */
 
 .placement_status {
-    margin-left: 1.5vw;
-    margin-top: 0.5vw;
-    margin-bottom: 1vw;
     display: flex;
     justify-content: center;
     border-radius: 1vw;
-    width: 10vw;
+    width: 50%;
     height: 2vw;
     line-height: 2vw;
     align-items: center;
@@ -332,3 +346,31 @@ a:link {
 .select_box .option_list::-webkit-scrollbar-thumb:hover {
     background: #303030;
 }
+
+.dateBox {
+    border: 0;
+    font-weight: 900;
+    font-size: 20px;
+    width: 140px;
+}
+
+.betweenMark {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.pro_deadline {
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.dateBox:hover {
+    opacity: 0.7;
+    cursor: auto;
+}
+
+#dateEdit {
+    width: 20px;
+    height: 20px;
+}
+

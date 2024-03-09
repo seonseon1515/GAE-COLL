@@ -42,9 +42,10 @@ exports.getBoardAll = async (req, res) => {
 //보드작성
 exports.boardWrite = async (req, res) => {
     const projectId = req.projectId;
+    const userId = req.userId;
 
     try {
-        const { title, description, status, deadline, userId } = req.body;
+        const { title, description, status, deadline } = req.body;
 
         const boardWriteResult = await Board.create({
             projectId: Number(projectId),
@@ -141,13 +142,33 @@ exports.deleteBoard = async (req, res) => {
 //보드에 해당하는 댓글 가져오기
 exports.getComment = async (req, res) => {
     try {
-        const { board_id: id } = req.params;
+        const { id } = req.params;
+        const boardData = [];
 
         const getCommentAllResult = await BoardComment.findAll({
             order: [["id", "DESC"]],
-            where: { id },
+            where: { boardId: id },
         });
-        res.json({ success: true, result: getCommentAllResult.data });
+        console.log(getCommentAllResult);
+        //포문돌려서 유저 아이디에 해당하는 유저 이름, 프로필, 가져오기!
+
+        for (result of getCommentAllResult) {
+            console.log(result);
+            const findUserInfoResult = await User.findOne({
+                where: { id: result.userId },
+                attributes: ["user_name", "user_img"],
+            });
+            const data = {
+                id: result.id,
+                comment: result.comment,
+                userId: result.userId,
+                user_name: findUserInfoResult.user_name,
+                user_img: findUserInfoResult.user_img,
+            };
+            boardData.push(data);
+        }
+        console.log("boardData", boardData);
+        res.json({ success: true, result: boardData });
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -155,7 +176,7 @@ exports.getComment = async (req, res) => {
 //댓글 작성
 exports.writeCommnet = async (req, res) => {
     try {
-        userId = req.userId;
+        const userId = req.userId;
 
         const { comment, board_id: boardId } = req.body;
         const createCommentResult = await BoardComment.create({

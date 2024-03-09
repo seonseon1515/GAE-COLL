@@ -1,8 +1,3 @@
-const token = localStorage.getItem("token");
-// const token =
-// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzA5NTM4LCJleHAiOjE3MDk3OTU5Mzh9.19k54e46mtRxLcleMCGomka1IDJKcUpDQCg_tvP3jM0";
-// const id = localStorage.getItem('porjectId')
-
 (function () {
     axios({
         method: "POST",
@@ -11,7 +6,7 @@ const token = localStorage.getItem("token");
             Authorization: `Bearer ${token}`,
         },
     }).then((res) => {
-        console.log(res.data.result.user_name);
+        console.log("res data결과", res.data);
         const { user_name, id } = res.data.result;
         document.querySelector(".userId").value = id;
         document.querySelector(".writer_box").innerHTML = user_name;
@@ -53,7 +48,8 @@ async function submitFunc() {
             formData.append("issue_files", fileInput.files[i]);
         }
 
-        // console.log(fileInput.files[0]);
+        // console.log("files", fileInput.files[0]);
+        // console.log("formData", formData);
 
         const res = await axios({
             method: "POST",
@@ -64,7 +60,7 @@ async function submitFunc() {
                 "Content-Type": "multipart/form-data",
             },
         });
-        console.log(res);
+        // console.log(res);
         document.location.href = "issue_main";
     } catch (error) {
         console.error(error);
