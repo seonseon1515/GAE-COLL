@@ -91,7 +91,7 @@ function goJobDeatil(projectId, boardId) {
                 : (document.getElementById("github").href = result.github);
             // 블로그 링크 보여주기
             result.blog === null || result.blog === ""
-                ? (document.getElementById("blog").placeholder = "/blog")
+                ? (document.getElementById("blog").href = "/mypage")
                 : (document.getElementById("blog").href = result.blog);
 
             for (i = 0; i < result.projectResult.length; i++) {
