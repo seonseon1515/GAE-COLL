@@ -1,25 +1,3 @@
-// let pro_deadline = ``;
-
-// function deadlineCalc() {
-//     const projectStartDate = document.querySelector("#projectStartDate").value;
-//     const projectEndDate = document.querySelector("#projectEndDate").value;
-
-//     console.log(projectStartDate);
-
-//     // if (projectStartDate == !null && projectEndDate == !null) {
-//     //     `${diff(projectStartDate, "days")}`;
-
-//     //     document.querySelector(".pro_deadline").innerHTML = pro_deadline;
-//     // }
-// }
-
-// projectStartDate.setAttribute("dateType2", "YYYY-MM-dd");
-
-// const projectStartDate = document.querySelector("#projectStartDate").value;
-
-// 서버에서 가져와서 시행하는 것은 즉시실행 함수?
-// 함수에서 굳이 직접 넣어 실행할 필요 없음
-
 // 프로젝트 생성 시 날짜 불러오기
 
 const token = localStorage.getItem("token");
@@ -66,8 +44,8 @@ const token = localStorage.getItem("token");
 
     $(".projectProfile").attr({
         src: imgSrc,
-        width: 100,
-        height: 100,
+        width: 25,
+        height: 25,
     });
 
     console.log("작업상태 변경", result.status);
@@ -440,21 +418,22 @@ async function updateProfileImg() {
     });
     const { success, result } = projectImgResult.data;
     console.log(projectImgResult.data);
-    // if (success) {
-    //     alert("이미지 변경이 완료되었습니다.");
-    // } else {
-    //     console.log(error);
-    //     alert("이미지 변경에 실패하였습니다.");
-    // }
-    // console.log("data: ", userImgResult.data);
+    if (success) {
+        alert("이미지 변경이 완료되었습니다.");
+        location.reload();
+    } else {
+        console.log(error);
+        alert("이미지 변경에 실패하였습니다.");
+    }
+    console.log("data: ", userImgResult.data);
 }
 
 function openPopupProfile() {
-    document.getElementById("popup").style.display = "block";
+    document.querySelector("#popup2").style.display = "block";
 }
 
-function closePopup() {
-    document.getElementById("popup").style.display = "none";
+function closePopupProfile() {
+    document.querySelector("#popup2").style.display = "none";
     console.log("close");
 }
 
