@@ -338,6 +338,9 @@ li:hover .rule-icon {
     padding-left: 20px;
     width: 80%;
     text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    word-break: break-all;
 }
 .teamDiv,
 .needFeedDiv {

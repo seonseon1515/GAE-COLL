@@ -33,7 +33,7 @@ const ruleData = [];
                 for (let i = 0; i < rule.length; i++) {
                     let div = document.createElement("div");
                     div.id = `ruleList${i}`;
-                    div.innerHTML = `
+                    div.innerHTML = `   
                     <li class="li" style = "background : white;">
                         <span class="text-element" >${rule[i]}</span>
                         <span class="rule-icon" onclick="deleteProjectRuleFunc(${i})">
