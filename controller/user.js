@@ -42,14 +42,14 @@ exports.signup = async (req, res) => {
 exports.emailAuth = async (req, res) => {
     const number = generateRandomNumber(111111, 999999);
 
-    const { email } = req.body; //사용자가 입력한 이메일
+    const { email, isSignup } = req.body; //사용자가 입력한 이메일
 
     try {
         const findUserResult = await User.findOne({
             where: { email },
         });
-        console.log("finduser", findUserResult);
-        if (findUserResult === null) {
+
+        if ((findUserResult !== null && isSignup) || (findUserResult === null && !isSignup)) {
             res.json({ success: false, result: { message: "사용하실 수 없는 아이디 입니다." } });
             return;
         }
