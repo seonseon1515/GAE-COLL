@@ -37,6 +37,7 @@ a:link {
 .left_wrap1 {
     display: flex;
     flex-wrap: nowrap;
+    margin-top: 8px;
 }
 
 .pro_status {
@@ -46,6 +47,8 @@ a:link {
 .mid_wrap1 {
     display: flex;
     align-items: center;
+    justify-content: center;
+    margin-right: 15%;
 }
 
 .right_wrap1 {
@@ -53,18 +56,13 @@ a:link {
     height: 3vw;
 }
 
-.pro_edit {
-    width: 15px;
-    height: 15px;
-    position: relative;
-}
-
 #githubEdit {
     width: 15px;
     height: 15px;
     position: relative;
-    bottom: 45px;
-    left: 17px;
+    position: fixed;
+    top: 143px;
+    right: 60px;
 }
 
 .rightLogoWrap {
@@ -81,7 +79,7 @@ a:link {
 }
 
 .pro_date {
-    position: relative;
+    display: flex;
 }
 .pro_deadline {
     padding-left: 1vw;
@@ -180,9 +178,13 @@ a:link {
 
 .pro_name {
     border-style: none;
-    width: 50%;
+    width: 55%;
     overflow: auto;
     font-size: 20px;
+}
+
+.gapProfile {
+    width: 5%;
 }
 
 /* select 박스 css */
@@ -209,7 +211,7 @@ a:link {
     display: flex;
     justify-content: center;
     border-radius: 1vw;
-    width: 50%;
+    width: auto;
     height: 2vw;
     line-height: 2vw;
     align-items: center;
@@ -296,10 +298,11 @@ a:link {
     cursor: pointer;
 } */
 
-.select_box .option_list {
-    top: 4vw;
+.select_box .option_list_profile {
+    top: 3vw;
     position: absolute;
-    width: 13vw;
+    width: 11vw;
+    /* select 박스 회색창 가로 길어 */
     background: #bfbfbf;
     color: black;
     list-style: none;
@@ -310,17 +313,19 @@ a:link {
     transition: 0.3s ease-in;
 }
 
-.select_box.active .option_list {
+.select_box.active .option_list_profile {
     max-height: 500px;
 }
 
 .select_box .option_item {
-    border-bottom: 1px dashed black;
+    /* border-bottom: 1px dashed black; */
     transition: 0.1s;
+    margin-bottom: 10px;
+    margin-top: 10px;
 }
 
 .option_item {
-    padding-right: 5vw;
+    padding-right: 0;
     list-style: none;
     padding-left: 0;
 }
@@ -333,17 +338,17 @@ a:link {
 }
 
 /* 스크롤 커스텀 */
-.select_box .option_list::-webkit-scrollbar {
+.select_box .option_list_profile::-webkit-scrollbar {
     width: 6px;
 }
-.select_box .option_list::-webkit-scrollbar-track {
+.select_box .option_list_profile::-webkit-scrollbar-track {
     background: transparent;
 }
-.select_box .option_list::-webkit-scrollbar-thumb {
+.select_box .option_list_profile::-webkit-scrollbar-thumb {
     background: #303030;
     border-radius: 45px;
 }
-.select_box .option_list::-webkit-scrollbar-thumb:hover {
+.select_box .option_list_profile::-webkit-scrollbar-thumb:hover {
     background: #303030;
 }
 
@@ -352,6 +357,8 @@ a:link {
     font-weight: 900;
     font-size: 20px;
     width: 140px;
+    background-color: transparent;
+    margin-top: 3px;
 }
 
 .betweenMark {
@@ -372,5 +379,62 @@ a:link {
 #dateEdit {
     width: 20px;
     height: 20px;
+    margin-top: 4px;
 }
 
+#dateEdit:hover {
+    border: gray 1px solid;
+    border-radius: 5px;
+}
+
+/* 프로젝트 이미지 수정팝업 css */
+.profileUploadPop {
+    width: 270px;
+    height: 60px;
+    position: absolute;
+    top: 52px;
+}
+
+.profilePopContents {
+    display: flex;
+    align-items: center;
+}
+
+.txt {
+    margin-bottom: 10px;
+}
+.fs {
+    font-size: 15px !important;
+    height: 23px !important;
+}
+
+.uploadsBtn {
+    position: fixed;
+    top: 10px;
+}
+
+#profileName {
+    margin-left: 5px;
+}
+
+.uploadsBtn {
+    position: absolute;
+    top: 74px;
+    left: 238px;
+    width: 50px;
+    height: 25px;
+    font-size: 15px;
+    background-color: #ffda31;
+    color: black;
+    border-radius: 10px;
+    padding-left: 1px;
+}
+
+.uploadsBtn:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+.projectProfile {
+    border-radius: 20%;
+}
