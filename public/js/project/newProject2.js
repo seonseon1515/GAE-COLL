@@ -111,7 +111,7 @@ async function createProject() {
     formData.append("project_name", projectName);
     formData.append("start_date", projectDateStart);
     formData.append("end_date", projectDateEnd);
-    formData.append("member_id", JSON.stringify(inviteUser));
+    formData.append("member_id", inviteUser);
     // 임의로 넣어준 값
     formData.append("send_img", imgSelected);
     formData.append("overview", projectOverview);

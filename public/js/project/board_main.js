@@ -2,7 +2,8 @@ const toggleDiv = document.querySelectorAll(".toggle_open");
 let changedBoardId = 0;
 let boardData = [];
 let projectMember = [];
-
+let selectedMember = undefined;
+let boardStatus = undefined;
 for (let i = 0; i < toggleDiv.length; i++) {
     toggleDiv[i].addEventListener("click", clickToggle);
 }
@@ -155,7 +156,7 @@ function addJob() {
         </td>
         <td id="td2" class="td2"> 
         <div class="button-wrap">
-          <button type="button" id="bg_blue" class="placement_status_inner" onclick="showModal(event,0)">
+          <button type="button" id="bg_blue" id="status-content" class="placement_status_inner" onclick="showModal(event,0)">
               <div id="blue" class="circle1"></div>
               <div class="status_txt1">계획중</div>
           </button>
@@ -196,26 +197,32 @@ function addJob() {
     document.getElementById("writeBoardTitle").addEventListener("blur", function () {
         //생성될때 자동으로 blur되어서 writeBoard함수로 넘어가는거 막음
         if (document.getElementById("writeBoardTitle").value !== "") {
-            writeBoard("planning");
+            writeBoard();
         }
     });
     document.getElementById("writeBoardTitle").addEventListener("keypress", function (e) {
         if (e.key === "Enter") {
-            writeBoard("planning");
+            writeBoard();
         }
     });
 }
 
 //input태그 작성완료시 보드 작성 요청
-async function writeBoard(status, userId) {
+async function writeBoard() {
     try {
         const boardTitle = document.querySelector("#writeBoardTitle").value;
         const deadlineValue = document.querySelector("#datepicker").value;
         const token = localStorage.getItem("token");
         let deadline = "";
-        console.log("deadlineValue", deadlineValue);
+        let getBoardStatus = "";
         deadlineValue === null || deadlineValue === "" ? (deadline = getToday()) : (deadline = deadlineValue);
-        console.log("deadline", deadline);
+        boardStatus !== undefined ? (getBoardStatus = boardStatus) : (getBoardStatus = "planning");
+
+        //상태 변경해주기
+        if (boardStatus !== "planning") {
+            const statusContentDiv = document.getElementById("status-content");
+        }
+
         const writeBoardResult = await axios({
             method: "post",
             url: "/api/project/board/write",
@@ -224,14 +231,15 @@ async function writeBoard(status, userId) {
             },
             data: {
                 title: boardTitle,
-                status,
+                status: getBoardStatus,
                 deadline,
-                userId,
+                userId: selectedMember,
             },
         });
         const { success } = writeBoardResult.data;
         if (success) {
             document.location.reload();
+            selectedMember = undefined;
         } else {
             alert("보드 생성에 실패하였습니다.");
         }
@@ -254,31 +262,32 @@ function showUserSelectModal(event, boardId) {
 //소켓
 modal.addEventListener("close", (event) => {
     // event.returnValue는 close이벤트에 대한 리턴 값으로 true를 반환한다.
-    //보드 새로 추가
-    if (changedBoardId === 0) {
-        console.log(modal.returnValue);
-        writeBoard(modal.returnValue);
-    }
-    // 기존 보드 수정
-    else {
-        if (modal.returnValue === "planning") {
-            boardStatusUpdate("planning");
-        } else if (modal.returnValue === "progress") {
-            boardStatusUpdate("progress");
-        } else if (modal.returnValue === "needFeedback") {
-            boardStatusUpdate("needFeedback");
-        } else if (modal.returnValue === "finishFeedback") {
-            boardStatusUpdate("finishFeedback");
-        } else if (modal.returnValue === "suspend") {
-            boardStatusUpdate("suspend");
-        } else if (modal.returnValue === "finish") {
-            boardStatusUpdate("finish");
-        }
+    if (modal.returnValue === "planning") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+    } else if (modal.returnValue === "progress") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("progress");
+    } else if (modal.returnValue === "needFeedback") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("needFeedback");
+    } else if (modal.returnValue === "finishFeedback") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("finishFeedback");
+    } else if (modal.returnValue === "suspend") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("suspend");
+    } else if (modal.returnValue === "finish") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("finish");
     }
 });
 userSelectModal.addEventListener("close", (event) => {
     // event.returnValue는 close이벤트에 대한 리턴 값으로 true를 반환한다.
-    boardJobMebmberUpdate(userSelectModal.returnValue);
+    if (changedBoardId === 0) {
+        writeBoard();
+    } else if (userSelectModal.returnValue !== "") {
+        boardJobMebmberUpdate(userSelectModal.returnValue);
+    }
 });
 // backdrop 클릭시 닫히는 이벤트 함수
 modal.addEventListener("click", function (event) {
