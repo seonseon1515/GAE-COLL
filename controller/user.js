@@ -134,9 +134,23 @@ exports.findUser = async (req, res) => {
 exports.getUserInfo = async (req, res) => {
     const userId = req.userId;
     console.log("유저프로필 조회", userId);
+    const user_Id = req.body;
     try {
         const getUserInfoRes = await User.findOne({ where: { id: Number(userId) } });
         const { email, user_name, user_img, github, blog, type } = getUserInfoRes;
+        res.json({ success: true, result: { email, user_name, user_img, github, blog, type } });
+    } catch (error) {
+        res.json({ success: false, result: error });
+    }
+};
+
+//body로 유저 프로필 조회용
+exports.getUserInfoBody = async (req, res) => {
+    const { userId } = req.body;
+    try {
+        const getUserInfo = await User.findOne({ where: { id: Number(userId) } });
+        const { email, user_name, user_img, github, blog, type } = getUserInfo;
+        console.log(getUserInfo);
         res.json({ success: true, result: { email, user_name, user_img, github, blog, type } });
     } catch (error) {
         res.json({ success: false, result: error });

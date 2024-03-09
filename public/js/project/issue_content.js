@@ -1,4 +1,4 @@
-const token = localStorage.getItem("token");
+// const token = localStorage.getItem("token");
 // const token =
 // "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzM4NDQ0LCJleHAiOjE3MDk4MjQ4NDR9.s7E14MGuxf73cKcaexLyg9OWSTiNZT4A31yLH4m_GcY";
 //이슈 id
@@ -78,7 +78,7 @@ async function addCommentFunc() {
     const user_Id = document.querySelector(".userId").value;
     const res2 = await axios({
         method: "POST",
-        url: "/api/user/info",
+        url: "/api/user/findInfo",
         headers: {
             Authorization: `Bearer ${token}`,
         },
@@ -103,18 +103,18 @@ async function addCommentFunc() {
     comments.forEach(async (comment) => {
         try {
             // 각각의 댓글 작성자, 이미지 가져오기
-            const userRes = await axios({
+            const commentUserRes = await axios({
                 method: "post",
-                url: "/api/user/info",
+                url: "/api/user/findInfo",
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
                 data: {
-                    id: comment.userId,
+                    userId: comment.userId,
                 },
             });
             // 유저 정보에서 이미지와 이름 가져오기
-            const { user_img, user_name } = userRes.data.result;
+            const { user_img, user_name } = commentUserRes.data.result;
 
             // 댓글을 표시할 HTML 요소 생성
             const li = document.createElement("li");
@@ -123,7 +123,8 @@ async function addCommentFunc() {
             // div가 사이즈 관리하기 편리한데 출력이 안 돼서 img태그로 바꿈
             const userImage = document.createElement("img");
             userImage.classList.add("user_img");
-            if (user_img === null || user_img === "") {
+            //파일 삭제한 경우엔 액박 뜸
+            if (user_img === null || user_img === "" || user_img === undefined) {
                 userImage.src = `../../public/img/user-solid.svg;`; //
             } else {
                 userImage.src = `../../public/uploads/profile/${user_img}`;
@@ -274,7 +275,7 @@ async function saveFunc() {
         formData.append("content", content);
         formData.append("issue_date", issue_date);
         formData.append("title", title);
-        formData.append("projectId", "1"); //로컬 스토리지에서 가져오기
+        // formData.append("projectId", "1"); //로컬 스토리지에서 가져오기
         formData.append("userId", userId);
 
         if (fileInput.files.length > 0) {

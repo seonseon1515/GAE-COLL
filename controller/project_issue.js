@@ -166,8 +166,8 @@ exports.getProjectIssuesPage = async (req, res) => {
             result: projectIssues.rows,
             // 프론트에서 처리할 때 프로젝트 이슈랑 페지네이션 구분하기 좋게 result에서 빼서 보냄
             pagination: {
-                page,
                 totalIssues,
+                page,
                 pageSize,
                 totalPages,
             },

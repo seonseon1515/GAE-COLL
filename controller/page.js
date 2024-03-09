@@ -51,7 +51,7 @@ exports.board_main = (req, res) => {
     res.render("project/board_main");
 };
 exports.board_content = (req, res) => {
-    res.render("project/board_write");
+    res.render("project/board_content");
 };
 exports.issue_write = (req, res) => {
     res.render("project/issue_write");
