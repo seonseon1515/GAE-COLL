@@ -111,7 +111,7 @@ async function createProject() {
     formData.append("project_name", projectName);
     formData.append("start_date", projectDateStart);
     formData.append("end_date", projectDateEnd);
-    formData.append("member_id", inviteUser);
+    formData.append("member_id", JSON.stringify(inviteUser));
     // 임의로 넣어준 값
     formData.append("send_img", imgSelected);
     formData.append("overview", projectOverview);
@@ -142,17 +142,19 @@ const inviteUser = [];
 async function addEmail() {
     const projectEmail = document.getElementById("email-write").value;
 
-    let isSignup = false;
+    const token = localStorage.getItem("token");
 
     const emailInviteRespond = await axios({
         method: "post",
         url: "/api/user/find",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
         data: {
             email: projectEmail,
-            isSignup,
         },
     });
-    console.log(emailInviteRespond);
+    console.log("emailInviteRespond", emailInviteRespond);
     console.log("projectEmail: ", projectEmail);
     const { success, result } = emailInviteRespond.data;
 
@@ -165,7 +167,12 @@ async function addEmail() {
         emailList2.appendChild(listItem);
         emailInput.value = "";
     } else {
-        alert("등록되지 않은 사용자 입니다.");
+        console.log(result.message);
+        if (result.message) {
+            alert(result.message);
+        } else {
+            alert("등록되지 않은 사용자 입니다.");
+        }
     }
 }
 

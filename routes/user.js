@@ -6,6 +6,8 @@ const { uploadProfileImg } = require("../middleware/multer");
 
 //회원가입
 router.post("/signup", controller.signup);
+//회원가입시 이메일 조회
+router.post("/check/user", controller.checkUser);
 //카카오 회원가입
 router.get("/auth/kakao", controller.getKakaoAuth);
 //이메일 확인
@@ -36,7 +38,7 @@ router.patch("/update/profileimg", middleware.auth, uploadProfileImg, controller
 router.delete("/drop", middleware.auth, controller.userDrop);
 
 //이메일용 유저조회
-router.post("/find", controller.findUser);
+router.post("/find", middleware.auth, controller.findUser);
 //userId용 유저조회
 router.post("/findInfo", controller.getUserInfoBody);
 

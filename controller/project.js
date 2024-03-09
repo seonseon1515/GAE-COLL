@@ -168,15 +168,15 @@ exports.getMyTeamBoard = async (req, res) => {
         let teamBoards = [];
 
         // 각 팀원별로 프로젝트의 보드 조회
-        for (let j = 0; j < myProjects.length; j++) {
+        for (let j = 0; j < projects.length; j++) {
             for (let i = 0; i < projectMembers.length; i++) {
                 const member = projectMembers[i];
                 const getBoardResult = await Board.findAll({
-                    where: { projectId: myProjects[j].projectId, userId: projectMembers[i].id },
+                    where: { projectId: projects[j].projectId, userId: projectMembers[i].id },
                 });
                 for (let boardResult of getBoardResult) {
                     const projectImg = await Project.findOne({
-                        where: { id: myProjects[j].projectId },
+                        where: { id: projects[j].projectId },
                         attributes: ["project_img", "project_name"],
                     });
 
@@ -200,6 +200,7 @@ exports.getMyTeamBoard = async (req, res) => {
 
         res.json({ success: true, result: teamBoards });
     } catch (error) {
+        console.log("팀보드조회 실패", error);
         res.json({ success: false, result: "팀 보드 조회 실패" });
     }
 };
