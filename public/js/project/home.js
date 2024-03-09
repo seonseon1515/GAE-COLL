@@ -183,11 +183,13 @@ const ruleData = [];
                 if (changeStatusKor(organizedTeamLog[i].boardStatus) !== "피드백 요청") {
                     let div = document.createElement("div");
                     div.classList.add("teamDiv");
-
+                    console.log("organizedTeamLog[i].user_img", typeof organizedTeamLog[i].user_img);
+                    console.log(organizedTeamLog[i].user_img);
                     let userImage = "";
                     if (
-                        organizedTeamLog[i].user_img.includes("http://") ||
-                        organizedTeamLog[i].user_img.includes("https://")
+                        organizedTeamLog[i].user_img !== null &&
+                        (organizedTeamLog[i].user_img.includes("http://") ||
+                            organizedTeamLog[i].user_img.includes("https://"))
                     ) {
                         userImage = organizedTeamLog[i].user_img;
                     } else {
@@ -213,8 +215,9 @@ const ruleData = [];
 
                     let userImage = "";
                     if (
-                        organizedTeamLog[i].user_img.includes("http://") ||
-                        organizedTeamLog[i].user_img.includes("https://")
+                        organizedTeamLog[i].user_img !== null &&
+                        (organizedTeamLog[i].user_img.includes("http://") ||
+                            organizedTeamLog[i].user_img.includes("https://"))
                     ) {
                         userImage = organizedTeamLog[i].user_img;
                     } else {
