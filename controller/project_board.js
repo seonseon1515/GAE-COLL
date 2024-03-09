@@ -42,11 +42,14 @@ exports.getBoardAll = async (req, res) => {
 //보드작성
 exports.boardWrite = async (req, res) => {
     const projectId = req.projectId;
-    const userId = req.userId;
+    let userId = 0;
 
     try {
-        const { title, description, status, deadline } = req.body;
-
+        const { title, description, status, deadline, userId: member_id } = req.body;
+        member_id === null || member_id === undefined ? (userId = req.userId) : (userId = member_id);
+        console.log(member_id, typeof member_id);
+        console.log(deadline, typeof deadline);
+        console.log("userId", userId);
         const boardWriteResult = await Board.create({
             projectId: Number(projectId),
             title,
@@ -57,13 +60,14 @@ exports.boardWrite = async (req, res) => {
         });
         res.json({ success: true, result: "" });
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
 //보드 1개조회
 exports.getBoardDetail = async (req, res) => {
     try {
-        userId = req.userId;
+        const userId = req.userId;
 
         const { board_id: id } = req.query;
 
