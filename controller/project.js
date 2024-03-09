@@ -318,7 +318,7 @@ exports.updateProjectImg = async (req, res) => {
     const id = req.projectId;
 
     const file = req.file;
-
+    console.log("프로젝트 이미지", req.file);
     if (file === undefined) {
         res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
         return;

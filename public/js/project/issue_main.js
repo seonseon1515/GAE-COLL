@@ -134,7 +134,7 @@ const tbody = document.querySelector("tbody");
     const tableBox = document.getElementById("issue-contain-main");
     console.log("이슈 개수:", totalIssues);
     const announceTxt = document.querySelector("#announceTxt");
-    if (totalIssues === "" || totalIssues === null || totalIssues === undefined) {
+    if (totalIssues === "" || totalIssues === null || totalIssues === undefined || totalIssues === 0) {
         tableBox.style.display = "none";
         announceTxt.textContent = "작성된 이슈가 없습니다.";
     } else {

@@ -57,10 +57,18 @@ const token = localStorage.getItem("token");
     document.querySelector(".github_link").href = result.github;
     document.querySelector(".pro_name").textContent = result.project_name;
 
+    // const projectImg = document.querySelector(".projectProfile");
+    // projectImg.src = `../../public/uploads/project/${result.project_img}`
     // 이미지 십입
-    const imgSrc = `../../uploads/project/${result.project_img}`;
+    console.log("파일명", result.project_img);
+    const imgSrc = `../../public/uploads/project/${result.project_img}`;
     // document.querySelector("#userImg").innerHTML = `<img src=${imgSrc}></img>`;
-    $(".projectProfile").attr({ src: imgSrc });
+
+    $(".projectProfile").attr({
+        src: imgSrc,
+        width: 100,
+        height: 100,
+    });
 
     console.log("작업상태 변경", result.status);
     const circle = document.querySelector("#blue");
@@ -122,6 +130,12 @@ async function dateEdit() {
     const endMonthNum = date2.getMonth();
     const endDateNum = date2.getDate();
 
+    if (date > date2) {
+        alert("프로젝트 기간을 다시 설정해 주세요.");
+        location.reload();
+        return;
+    }
+
     const res = await axios({
         method: "patch",
         url: "/api/project/update/period",
@@ -133,23 +147,19 @@ async function dateEdit() {
             end_date: changeEndDate,
         },
     });
-    console.log("startYearNum", typeof startYearNum);
-    console.log("endYearNum", endYearNum);
+    // console.log("startYearNum", typeof startYearNum);
+    // console.log("endYearNum", endYearNum);
 
     // 다중 조건문
     if (res.data.success && startYearNum < endYearNum) {
         alert("날짜가 변경되었습니다.");
-        location.reload();
+        return location.reload();
     } else if (startMonthNum < endMonthNum || (startMonthNum === endMonthNum && startDateNum < endDateNum)) {
         alert("날짜가 변경되었습니다.");
-        location.reload();
-    } else if (startDateNum < endDateNum) {
-        alert("날짜가 변경되었습니다.");
-        location.reload();
+        return location.reload();
     } else {
-        alert("마감일을 다시 설정하여 주세요.");
-        // 밸류값 변경 코드
-        return;
+        alert("날짜가 변경되었습니다.");
+        return location.reload();
     }
 }
 
@@ -403,28 +413,41 @@ if (nowLocatedPath === "issue_main") {
     boldLink.style.fontWeight = "700";
 }
 
-//프로젝트 프로필 이미지 불러오기
-// async function profileImg() {
-//     const user_img = document.getElementById("userImg");
+//프로젝트 프로필 이미지 수정
+async function updateProfileImg() {
+    const project_img = document.getElementById("profileUpload");
 
-//     const formData = new FormData();
+    const formData = new FormData();
 
-//     let imgSelected = false;
-//     if (projectImg.files[0] !== undefined) {
-//         imgSelected = true;
-//         formData.append("user_img", user_img.files[0]);
-//     }
-//     const userImgResult = await axios({
-//         method: "patch",
-//         url: "api/user/update/profileimg",
-//         headers: {
-//             Authorization: `Bearer ${token}`,
-//             "Content-Type": "multipart/form-data",
-//         },
-//         data: formData,
-//     });
-//     console.log("data: ", userImgResult.data);
-// }
+    let imgSelected = false;
+    // console.log("이미지 변경 테스트 전", projectImg);
+    if (project_img !== undefined) {
+        console.log("이미지 변경 테스트 후");
+        imgSelected = true;
+        console.log(project_img);
+        formData.append("project_img", project_img.files[0]);
+    }
+    console.log("이미지 변경 테스트 끝", formData);
+
+    const projectImgResult = await axios({
+        method: "patch",
+        url: "/api/project/update/img",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data",
+        },
+        data: formData,
+    });
+    const { success, result } = projectImgResult.data;
+    console.log(projectImgResult.data);
+    // if (success) {
+    //     alert("이미지 변경이 완료되었습니다.");
+    // } else {
+    //     console.log(error);
+    //     alert("이미지 변경에 실패하였습니다.");
+    // }
+    // console.log("data: ", userImgResult.data);
+}
 
 function openPopupProfile() {
     document.getElementById("popup").style.display = "block";

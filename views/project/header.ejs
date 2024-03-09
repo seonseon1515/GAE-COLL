@@ -19,11 +19,11 @@
         <header id="project_header">
             <div class="pro_header1">
                 <div class="left_wrap1">
-                    <img class="projectProfile" id="userImg" onclick="openPopupProfile()"></img>
+                    <img class="projectProfile" id="projectImg" onclick="openPopupProfile()"></img>
                     <div class="pro_name" id="pro_name" contenteditable="true"></div>
 
 <!-- 이미지 수정 팝업 뜨기 -->
-<div class="addLink profileUploadPop" onclick="openPopupProfile()" id="popup" style="display:>
+<div class="addLink profileUploadPop" onclick="openPopupProfile()" id="popup" style="display: none;">
     <span class="txt">수정할 이미지를 업로드해주세요.</span>
     <div class="profileUploads">
         <form id="profileForm">
@@ -32,6 +32,7 @@
             </label>
             <p id="profileName"></p>
             <input id="profileUpload" type="file" name="issue_files"/>
+            <button type="button" onclick="updateProfileImg()">수정</button>
         </form>
     </div>
 </div>
