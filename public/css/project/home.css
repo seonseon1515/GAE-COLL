@@ -41,6 +41,7 @@ main {
     display: flex;
     font-size: 20px;
     align-items: center;
+    cursor: pointer;
 }
 
 #pen-img {
@@ -286,7 +287,10 @@ li:hover .rule-icon {
     margin-left: 20px;
     height: 400px;
     overflow-y: auto;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
 }
+
 #team-work,
 #feedback,
 #issue-header {
@@ -303,8 +307,6 @@ li:hover .rule-icon {
     flex-direction: column;
     align-items: center;
     width: calc(100% - 100px);
-    border-bottom: solid gray;
-    /* padding: 11px; */
     margin-left: 35px;
     font-size: 20px;
 }
@@ -336,6 +338,9 @@ li:hover .rule-icon {
     border-radius: 30px;
     width: 50%;
     height: auto;
+    overflow-y: auto;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
 }
 .img {
     width: 40px;

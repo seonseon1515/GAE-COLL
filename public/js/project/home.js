@@ -130,6 +130,7 @@
         if (success) {
             for (let i = 0; i < result.length; i++) {
                 let tr = document.createElement("tr");
+                console.log("ddd", result);
                 tr.innerHTML = `
                         <td class="td1">${i + 1}</td>
                         <a href="/project/issue_content/${result[i].id}> <td class="td2" style = "text-decoration: none;
@@ -183,15 +184,13 @@
 
                 if (organizedTeamLog[i].boardStatus === "needFeedback") {
                     let div = document.createElement("div");
+                    console.log("divdiv", result);
                     div.classList.add("needFeedDiv");
                     div.innerHTML = `
-                    
                     ${organizedTeamLog[i].user_img}
-                    <a href="/project/issue_content/${result[i].id}><div id="feedback-list-text">${
-                        organizedTeamLog[i].user_name
-                    }님이 ${organizedTeamLog[i].title}을 ${changeStatusKor(
-                        organizedTeamLog[i].boardStatus
-                    )}으로 변경하였습니다.</div></a>
+                    <div id="feedback-list-text">${organizedTeamLog[i].user_name}님이 ${
+                        organizedTeamLog[i].title
+                    }을 ${changeStatusKor(organizedTeamLog[i].boardStatus)}으로 변경하였습니다.</div></a>
                         `;
                     document.getElementsByClassName("feedback-list")[0].appendChild(div);
                     if (organizedTeamLog.length.length === 5) {
@@ -498,6 +497,8 @@ async function addMember() {
                 document.getElementById("member-main").appendChild(div);
             }
             console.log("멤버 추가 성공 : ", result);
+            alert("멤버가 추가 되었습니다.");
+            location.reload(true);
         } else {
             alert("이메일을 다시 확인해주세요");
         }
