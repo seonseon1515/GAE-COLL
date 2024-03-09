@@ -2,7 +2,7 @@ body {
     font-family: "IBM Plex Sans KR", sans-serif;
 }
 #issue-contain {
-    height: 1170px;
+    height: 930px;
     z-index: 99;
     width: auto;
     font-size: 20px;
@@ -15,7 +15,6 @@ body {
     border-radius: 20px;
     margin: 0 50px 180px 50px;
 }
-
 li {
     list-style: none;
 }
@@ -29,6 +28,7 @@ li {
 .pageNumber > span {
     cursor: pointer;
 }
+
 .pageNumber > span:hover {
     cursor: pointer;
     color: #badbb3;

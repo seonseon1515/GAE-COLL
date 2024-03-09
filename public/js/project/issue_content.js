@@ -123,7 +123,11 @@ async function addCommentFunc() {
             // div가 사이즈 관리하기 편리한데 출력이 안 돼서 img태그로 바꿈
             const userImage = document.createElement("img");
             userImage.classList.add("user_img");
-            userImage.src = `../../public/uploads/profile/${user_img}`; // 이미지 소스
+            if (user_img === null || user_img === "") {
+                userImage.src = `../../public/img/user-solid.svg;`; //
+            } else {
+                userImage.src = `../../public/uploads/profile/${user_img}`;
+            }
 
             // 작성자 이름 표시
             const userName = document.createElement("div");

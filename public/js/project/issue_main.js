@@ -6,7 +6,7 @@ const tbody = document.querySelector("tbody");
     async function goToPage(page) {
         const res = await axios({
             method: "get",
-            url: `/api/project/issue/list?page=${page}&pageSize=14`,
+            url: `/api/project/issue/list?page=${page}&pageSize=${pageSize}`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -35,7 +35,7 @@ const tbody = document.querySelector("tbody");
             //[i]번째 이슈글 출력
             const html = `
                 <tr>
-                    <td>${(page - 1) * 14 + i + 1}</td>
+                    <td>${(page - 1) * 10 + i + 1}</td>
                     <td><a href="/project/issue_content/${res.data.result[i].id}">${res.data.result[i].title}</a></td>
                     <td>${userName}님</td>
                     <td>${res.data.result[i].issue_date}</td>
@@ -43,18 +43,116 @@ const tbody = document.querySelector("tbody");
             tbody.insertAdjacentHTML("beforeend", html);
         }
     }
+
+    const prevGroupButt = document.getElementById("prevGroupButton");
+    const nextGroupButt = document.getElementById("nextGroupButton");
+
+    document.getElementById("prevGroupButton").addEventListener("click", function () {
+        goToPrev(pageGroup);
+    });
+    document.getElementById("nextGroupButton").addEventListener("click", function () {
+        goToNext(pageGroup);
+    });
+
+    // if (pageGroup > 1 || pageGroup <= totalPages) {
+    //     nextGroupButt.style.display = "block";
+    // } else {
+    //     nextGroupButt.style.display = "none";
+    // }
+    // if (pageGroup < 2) {
+    //     prevGroupButt.style.display = "none";
+    // } else {
+    //     prevGroupButt.style.display = "block";
+    // }
+
+    //goToPrev 함수 정의
+    const goToPrev = (pageGroup) => {
+        console.log("이전 함수", pageGroup, firstPageOfGroup, lastPageOfGroup);
+        if (pageGroup > 1) {
+            pageGroup -= 1;
+            console.log("pagegroup이 1보다 클 때", pageGroup, firstPageOfGroup, lastPageOfGroup);
+        }
+        firstPageOfGroup = (pageGroup - 1) * 5 + 1;
+        lastPageOfGroup = pageGroup * 5;
+        if (lastPageOfGroup > totalPages) {
+            lastPageOfGroup = totalPages;
+        }
+        console.log("pagegroup이 1보다 작을 때", pageGroup, firstPageOfGroup, lastPageOfGroup);
+
+        pageNumberBox.replaceChildren();
+
+        for (let i = firstPageOfGroup; i <= lastPageOfGroup; i++) {
+            const pageNumber = document.createElement("span");
+            pageNumber.innerText = i;
+            pageNumber.addEventListener("click", () => {
+                goToPage(i);
+            });
+            pageNumberBox.appendChild(pageNumber);
+        }
+        return goToPage(firstPageOfGroup);
+    };
+
+    //goToNext 함수 정의
+    const goToNext = (pageGroup) => {
+        if (pageGroup < totalPages) {
+            pageGroup += 1;
+            firstPageOfGroup = (pageGroup - 1) * 5 + 1;
+            lastPageOfGroup = pageGroup * 5;
+
+            if (lastPageOfGroup > totalPages) {
+                lastPageOfGroup = totalPages;
+            }
+
+            console.log(pageGroup, firstPageOfGroup, lastPageOfGroup);
+
+            pageNumberBox.replaceChildren();
+
+            for (let i = firstPageOfGroup; i <= lastPageOfGroup; i++) {
+                const pageNumber = document.createElement("span");
+                pageNumber.innerText = i;
+                pageNumber.addEventListener("click", () => {
+                    goToPage(i);
+                });
+                pageNumberBox.appendChild(pageNumber);
+            }
+        }
+        return goToPage(firstPageOfGroup);
+    };
+
     // 페이지 갯수만큼 페이지 숫자 버튼 생성
     const res3 = await axios({
         method: "get",
-        url: `/api/project/issue/list?page=1&pageSize=14`,
+        url: `/api/project/issue/list?page=1&pageSize=10`,
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
+    const page = res3.data.pagination.page; // 현재 페이지
+    const pageSize = res3.data.pagination.pageSize; // limit
     const totalPages = res3.data.pagination.totalPages; // 페이지 전체 개수
-    const pageNumberBox = document.getElementById("pageNumber");
+    const totalIssues = res3.data.pagination.totalIssues;
 
-    for (let i = 1; i <= totalPages; i++) {
+    const table = document.querySelector("table");
+    console.log(table);
+    if (totalIssues === 0) {
+        table.style.display = "none";
+    } else {
+        table.style.display = "block";
+    }
+
+    let pageGroup = Math.ceil(page / pageSize); // 페이지 그룹
+    //어떤 한 페이지 그룹의 첫번째 페이지 번호 = ((페이지 그룹 - 1) * 한 화면에 보여질 페이지 개수) + 1
+    let firstPageOfGroup = (pageGroup - 1) * 5 + 1;
+    //어떤 한 페이지 그룹의 마지막 페이지 번호 = 페이지 그룹 * 한 화면에 보여질 페이지 개수
+    let lastPageOfGroup = pageGroup * 5;
+    if (lastPageOfGroup > totalPages) {
+        lastPageOfGroup = totalPages;
+    }
+
+    const pageNumberBox = document.getElementById("pageNumber");
+    pageNumberBox.replaceChildren(); // 페이지 버튼 초기화
+
+    for (let i = firstPageOfGroup; i <= lastPageOfGroup; i++) {
         const pageNumber = document.createElement("span");
         pageNumber.innerText = i;
         pageNumber.addEventListener("click", () => {
@@ -67,16 +165,17 @@ const tbody = document.querySelector("tbody");
     goToPage(1);
 })();
 
+//검색
 async function searchFunc() {
     const type = document.getElementById("type").value;
     const keyword = document.getElementById("keyword").value;
 
     console.log(type, keyword);
-    //keyword를 서버에서는 req.query로 받는다고 했는데 어떻게 보내주지
+
     async function goToPage(page) {
         const res = await axios({
             method: "get",
-            url: `/api/project/issue/search?page=${page}&pageSize=14&type=${type}&keyword=${keyword}`,
+            url: `/api/project/issue/search?page=${page}&pageSize=10&type=${type}&keyword=${keyword}`,
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -102,7 +201,7 @@ async function searchFunc() {
 
             const html = `
                     <tr>
-                        <td>${(page - 1) * 14 + i + 1}</td>
+                        <td>${(page - 1) * 10 + i + 1}</td>
                         <td><a href="/project/issue_content/${res.data.result[i].id}">${
                 res.data.result[i].title
             }</a></td>
@@ -113,16 +212,93 @@ async function searchFunc() {
         }
     }
 
+    document.getElementById("prevGroupButton").addEventListener("click", function () {
+        goToPrev(pageGroup);
+    });
+    document.getElementById("nextGroupButton").addEventListener("click", function () {
+        goToNext(pageGroup);
+    });
+
+    //goToPrev 함수 정의
+    const goToPrev = (pageGroup) => {
+        console.log("이전 함수", pageGroup, firstPageOfGroup, lastPageOfGroup);
+        if (pageGroup > 1) {
+            pageGroup -= 1;
+            console.log("pagegroup이 1보다 클 때", pageGroup, firstPageOfGroup, lastPageOfGroup);
+        }
+        firstPageOfGroup = (pageGroup - 1) * 5 + 1;
+        lastPageOfGroup = pageGroup * 5;
+        if (lastPageOfGroup > totalPages) {
+            lastPageOfGroup = totalPages;
+        }
+        console.log("pagegroup이 1보다 작을 때", pageGroup, firstPageOfGroup, lastPageOfGroup);
+
+        pageNumberBox.replaceChildren();
+
+        for (let i = firstPageOfGroup; i <= lastPageOfGroup; i++) {
+            const pageNumber = document.createElement("span");
+            pageNumber.innerText = i;
+            pageNumber.addEventListener("click", () => {
+                goToPage(i);
+            });
+            pageNumberBox.appendChild(pageNumber);
+        }
+        return goToPage(firstPageOfGroup);
+    };
+
+    //goToNext 함수 정의
+    const goToNext = (pageGroup) => {
+        if (pageGroup < totalPages) {
+            pageGroup += 1;
+            firstPageOfGroup = (pageGroup - 1) * 5 + 1;
+            lastPageOfGroup = pageGroup * 5;
+
+            if (lastPageOfGroup > totalPages) {
+                lastPageOfGroup = totalPages;
+            }
+
+            console.log(pageGroup, firstPageOfGroup, lastPageOfGroup);
+
+            pageNumberBox.replaceChildren();
+
+            for (let i = firstPageOfGroup; i <= lastPageOfGroup; i++) {
+                const pageNumber = document.createElement("span");
+                pageNumber.innerText = i;
+                pageNumber.addEventListener("click", () => {
+                    goToPage(i);
+                });
+                pageNumberBox.appendChild(pageNumber);
+            }
+        }
+        return goToPage(firstPageOfGroup);
+    };
+
     const res3 = await axios({
         method: "get",
-        url: `/api/project/issue/search?page=1&pageSize=14&type=${type}&keyword=${keyword}`,
+        url: `/api/project/issue/search?page=1&pageSize=10&type=${type}&keyword=${keyword}`,
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
+
+    console.log("콘솔 출력:", page, pageSize, totalPages);
+    console.log("백에서 받느거 출력:", res3.data);
+
+    const page = res3.data.pagination.page;
+    const pageSize = res3.data.pagination.pageSize;
     const totalPages = res3.data.pagination.totalPages;
+
+    let pageGroup = Math.ceil(page / pageSize); // 페이지 그룹
+    //어떤 한 페이지 그룹의 첫번째 페이지 번호 = ((페이지 그룹 - 1) * 한 화면에 보여질 페이지 개수) + 1
+    let firstPageOfGroup = (pageGroup - 1) * 5 + 1;
+    //어떤 한 페이지 그룹의 마지막 페이지 번호 = 페이지 그룹 * 한 화면에 보여질 페이지 개수
+    let lastPageOfGroup = pageGroup * 5;
+    if (lastPageOfGroup > totalPages) {
+        lastPageOfGroup = totalPages;
+    }
+
     const pageNumberBox = document.getElementById("pageNumber");
-    pageNumberBox.innerHTML = ""; // 페이지 버튼 초기화
+    pageNumberBox.replaceChildren(); // 페이지 버튼 초기화
 
     for (let i = 1; i <= totalPages; i++) {
         const pageNumber = document.createElement("span");

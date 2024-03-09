@@ -32,7 +32,7 @@ exports.createProjectIssue = async (req, res) => {
 // 프로젝트 이슈 검색
 exports.searchProjectIssues = async (req, res) => {
     try {
-        const { keyword, type } = req.query;
+        const { keyword, type, page, pageSize } = req.query;
         const projectId = req.projectId;
 
         //제목이면 type = 0, 작성자면 type = 1
@@ -40,11 +40,10 @@ exports.searchProjectIssues = async (req, res) => {
             return res.json({ success: false, result: "올바른 검색 유형을 지정하세요." });
         }
 
-        if (!Number.isInteger(page) || page < 1) {
-            page = 1;
-        }
+        // if (!Number.isInteger(page) || page < 1) {
+        //     page = 1;
+        // }
 
-        let { page, pageSize } = req.query;
         page = JSON.parse(page);
         pageSize = JSON.parse(pageSize);
 
@@ -59,16 +58,19 @@ exports.searchProjectIssues = async (req, res) => {
                 order: [["updatedAt", "DESC"]],
                 //issue_date는 초단위가 없어서 같은 값이 생겼을 때 어떤 걸 더 우선순위에 두어야 할지 따로 설정해줘야 함
             });
+
             const totalIssues = projectIssues.count;
             const totalPages = Math.ceil(totalIssues / pageSize);
+
+            console.log("백 출력", totalIssues, totalPages);
+
             return res.json({
                 success: true,
                 result: projectIssues.rows,
                 pagination: {
-                    currentPage: page,
-                    pageSize: pageSize,
-                    totalPages: totalPages,
-                    totalItems: totalIssues,
+                    page,
+                    pageSize,
+                    totalPages,
                 },
             });
         }
@@ -84,23 +86,25 @@ exports.searchProjectIssues = async (req, res) => {
                 });
                 const totalIssues = projectIssues.count;
                 const totalPages = Math.ceil(totalIssues / pageSize);
+
+                // console.log(totalIssues, totalPages);
+
                 return res.json({
                     success: true,
                     result: projectIssues.rows,
                     pagination: {
-                        currentPage: page,
-                        pageSize: pageSize,
-                        totalPages: totalPages,
-                        totalItems: totalIssues,
+                        page,
+                        pageSize,
+                        totalPages,
                     },
                 });
             } else {
                 return res.json({ success: false, result: "존재하지 않는 회원입니다." });
             }
         }
-        console.log("projectIssues결과 출력", projectIssues);
+        // console.log("projectIssues결과 출력", projectIssues);
     } catch (error) {
-        console.error("이슈 검색 오류:", error);
+        console.error("이슈 검색 오류:", error, req.query);
         res.json({ success: false, result: error });
     }
 };
@@ -140,11 +144,6 @@ exports.getProjectIssuesPage = async (req, res) => {
             page = 1;
         }
 
-        // pageSize는 항상 5로 고정되어 들어옴  (pageSzie = limit)
-        // if (!Number.isInteger(pageSize) || pageSize < 1) {
-        //     pageSize = 5;
-        // }
-
         // offset 계산
         const offset = (page - 1) * pageSize;
 
@@ -157,20 +156,19 @@ exports.getProjectIssuesPage = async (req, res) => {
             //issue_date는 초단위가 없어서 같은 값이 생겼을 때 어떤 걸 더 우선순위에 두어야 할지 따로 설정해줘야 함
         });
 
+        // page: 현재 페이지, 5: 한 화면에 보여질 페이지 개수
+        // count 원소 갯수 세주는 메소드, Math.ceil 올림
         const totalIssues = projectIssues.count; // 전체 이슈 개수
         const totalPages = Math.ceil(totalIssues / pageSize); // 전체 페이지 수
-        // Math.ceil 올림
-        // count 원소 갯수 세주는 메소드
 
         res.json({
             success: true,
             result: projectIssues.rows,
             // 프론트에서 처리할 때 프로젝트 이슈랑 페지네이션 구분하기 좋게 result에서 빼서 보냄
             pagination: {
-                currentPage: page,
-                pageSize: pageSize,
-                totalPages: totalPages,
-                totalItems: totalIssues,
+                page,
+                pageSize,
+                totalPages,
             },
         });
     } catch (error) {
