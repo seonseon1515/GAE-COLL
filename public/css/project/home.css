@@ -342,8 +342,9 @@ li:hover .rule-icon {
 .teamDiv,
 .needFeedDiv {
     display: flex;
-    width: 100%;
+    width: calc(100% - 100px);
     align-items: center;
+    margin-bottom: 25px;
     padding-bottom: 20px;
     height: 60px;
     justify-content: center;
@@ -384,7 +385,6 @@ li:hover .rule-icon {
     font-size: 20px;
     text-align: center;
     border-style: none;
-    /* border-radius: 20px; */
     border-bottom: solid;
     border-color: gray;
     justify-content: center;
@@ -394,7 +394,6 @@ li:hover .rule-icon {
     width: calc(100% - 60px);
     height: auto;
     text-align: center;
-    /* border-style: solid; */
     margin: 30px;
     border-collapse: collapse;
     border: solid;
@@ -421,6 +420,20 @@ li:hover .rule-icon {
     cursor: pointer;
 }
 .poject-a {
+    text-decoration: none;
+    color: black;
+    cursor: pointer;
+}
+.teamDivImg {
+    width: 60px;
+    height: 60px;
+}
+.teamImg {
+    width: 100%;
+    height: 100%;
+}
+.issue-a,
+#team-work-header {
     text-decoration: none;
     color: black;
     cursor: pointer;
