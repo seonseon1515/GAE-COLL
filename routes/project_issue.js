@@ -10,7 +10,7 @@ router.get("/search", middleware.auth, controller.searchProjectIssues);
 
 // 프로젝트 이슈 작성 + 조회
 router.post("/", middleware.auth, uploadIssueFiles, controller.createProjectIssue);
-// router.get("/", middleware.auth, controller.getProjectIssues); 페지네이션 구현 후 필요없어짐
+router.get("/", middleware.auth, controller.getProjectIssues);
 //list = 페지네이션 요청 넘버
 router.get("/list", middleware.auth, controller.getProjectIssuesPage);
 
