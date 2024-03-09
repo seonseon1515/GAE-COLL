@@ -43,7 +43,7 @@ async function emailSignup() {
     const user_name = document.querySelector("#user-name").value;
     const email = document.querySelector("#email").value;
     const password = document.querySelector("#password").value;
-    const passwordCheck = document.querySelector("#password-check");
+    const passwordCheck = document.querySelector("#password-check").value;
     const question = document.querySelector("#question");
     const selectedQuestion = question.options[question.selectedIndex].value;
 
@@ -61,6 +61,7 @@ async function emailSignup() {
     }
     if (passwordCheck !== password) {
         alert("비밀번호가 일치하지 않습니다.");
+        return;
     }
 
     const signupResult = await axios({
