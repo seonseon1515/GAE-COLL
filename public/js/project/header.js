@@ -56,7 +56,11 @@ const token = localStorage.getItem("token");
     // document.querySelector("#projectEndDate").textContent = `${result.end_date}`;
     document.querySelector(".github_link").href = result.github;
     document.querySelector(".pro_name").textContent = result.project_name;
-    // planning progress needFeedback finishFeedback suspend finish
+
+    // 이미지 십입
+    const imgSrc = `../../uploads/project/${result.project_img}`;
+    // document.querySelector("#userImg").innerHTML = `<img src=${imgSrc}></img>`;
+    $(".projectProfile").attr({ src: imgSrc });
 
     console.log("작업상태 변경", result.status);
     const circle = document.querySelector("#blue");
@@ -91,8 +95,8 @@ const token = localStorage.getItem("token");
     }
 
     const getDateDiff = (d1, d2) => {
-        const date1 = new Date(d1);
-        const date2 = new Date(d2);
+        const date1 = new Date(formattedStartDate);
+        const date2 = new Date(formattedEndDate);
 
         const diffDate = date1.getTime() - date2.getTime();
 
@@ -108,6 +112,16 @@ async function dateEdit() {
     const changedStartDate = document.querySelector("#startDate").value;
     const changeEndDate = document.querySelector("#endDate").value;
 
+    const date = new Date(changedStartDate);
+    const date2 = new Date(changeEndDate);
+    const startYearNum = date.getFullYear();
+    const startMonthNum = date.getMonth();
+    const startDateNum = date.getDate();
+
+    const endYearNum = date2.getFullYear();
+    const endMonthNum = date2.getMonth();
+    const endDateNum = date2.getDate();
+
     const res = await axios({
         method: "patch",
         url: "/api/project/update/period",
@@ -119,9 +133,23 @@ async function dateEdit() {
             end_date: changeEndDate,
         },
     });
-    if (res.data.success) {
+    console.log("startYearNum", typeof startYearNum);
+    console.log("endYearNum", endYearNum);
+
+    // 다중 조건문
+    if (res.data.success && startYearNum < endYearNum) {
         alert("날짜가 변경되었습니다.");
         location.reload();
+    } else if (startMonthNum < endMonthNum || (startMonthNum === endMonthNum && startDateNum < endDateNum)) {
+        alert("날짜가 변경되었습니다.");
+        location.reload();
+    } else if (startDateNum < endDateNum) {
+        alert("날짜가 변경되었습니다.");
+        location.reload();
+    } else {
+        alert("마감일을 다시 설정하여 주세요.");
+        // 밸류값 변경 코드
+        return;
     }
 }
 
@@ -374,3 +402,54 @@ if (nowLocatedPath === "issue_main") {
     const boldLink = document.getElementById("issue_main");
     boldLink.style.fontWeight = "700";
 }
+
+//프로젝트 프로필 이미지 불러오기
+// async function profileImg() {
+//     const user_img = document.getElementById("userImg");
+
+//     const formData = new FormData();
+
+//     let imgSelected = false;
+//     if (projectImg.files[0] !== undefined) {
+//         imgSelected = true;
+//         formData.append("user_img", user_img.files[0]);
+//     }
+//     const userImgResult = await axios({
+//         method: "patch",
+//         url: "api/user/update/profileimg",
+//         headers: {
+//             Authorization: `Bearer ${token}`,
+//             "Content-Type": "multipart/form-data",
+//         },
+//         data: formData,
+//     });
+//     console.log("data: ", userImgResult.data);
+// }
+
+function openPopupProfile() {
+    document.getElementById("popup").style.display = "block";
+}
+
+function closePopup() {
+    document.getElementById("popup").style.display = "none";
+    console.log("close");
+}
+
+window.onload = function () {
+    target = document.getElementById("profileUpload"); // file 아이디 선언
+    target.addEventListener("change", function () {
+        // change 함수
+
+        if (target.value.length) {
+            // 파일 첨부인 상태일경우 파일명 출력
+            let filenames = "";
+            for (let i = 0; i < target.files.length; i++) {
+                filenames += target.files[i].name + "&nbsp&nbsp&nbsp&nbsp";
+            }
+            $("#profileName").html(filenames);
+        } else {
+            //버튼 클릭후 취소(파일 첨부 없을 경우)할때 파일명값 안보이게
+            $("#profileName").html("");
+        }
+    });
+};
