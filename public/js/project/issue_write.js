@@ -1,7 +1,4 @@
 const token = localStorage.getItem("token");
-// const token =
-// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywiaWF0IjoxNzA5NzA5NTM4LCJleHAiOjE3MDk3OTU5Mzh9.19k54e46mtRxLcleMCGomka1IDJKcUpDQCg_tvP3jM0";
-// const id = localStorage.getItem('porjectId')
 
 (function () {
     axios({
