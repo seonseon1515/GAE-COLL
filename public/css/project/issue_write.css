@@ -491,6 +491,9 @@ button {
 }
 
 @media screen and (max-width: 525px) {
+    form {
+        padding: 10px 10px 20px 10px;
+    }
     .writer_date {
         white-space: nowrap;
         font-size: 15px;
@@ -502,9 +505,14 @@ button {
     .writer_box {
         white-space: nowrap;
         font-size: 15px;
+        height: 28px;
+        margin-bottom: 7px;
     }
     .issueDate {
         white-space: nowrap;
+        font-size: 15px;
+    }
+    label {
         font-size: 15px;
     }
     .issueDate {
@@ -514,11 +522,27 @@ button {
     }
     #submitButt {
         display: block;
-        top: 96px;
+        top: 73px;
+        font-size: 15px !important;
+        width: 65px !important;
     }
     h1 {
         white-space: nowrap;
         display: block;
         margin-bottom: 50px;
+    }
+    .txtSmall {
+        font-size: 20px !important;
+    }
+    .title_box {
+        font-size: 15px;
+    }
+    #filesButt {
+        font-size: 15px !important;
+        height: 20px;
+        line-height: 20px;
+    }
+    .content_box_inner {
+        height: 150px;
     }
 }
