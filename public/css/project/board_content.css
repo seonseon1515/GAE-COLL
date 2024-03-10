@@ -524,3 +524,25 @@ nav {
 .boradComments {
     margin-left: 5vw;
 }
+
+.deleteCommentIcon {
+    color: rgb(208, 208, 208);
+    margin-left: 2vw;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    border-style: none;
+    background-image: url("../../img/trash.png");
+}
+.deleteCommentIcon:hover {
+    color: rgb(118, 118, 118);
+    width: 15px;
+    height: 15px;
+}
+
+.comment {
+    margin-left: 2vw;
+}
