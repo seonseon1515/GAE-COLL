@@ -65,3 +65,34 @@ body {
 #GAECO {
     background-color: #d9e9bf;
 }
+
+@media (max-width: 960px) {
+    #left {
+        display: block;
+        padding-left: 50px;
+    }
+    #US {
+        margin: 0;
+    }
+    #email {
+        padding: 0;
+        margin: 10px 0;
+    }
+}
+@media (max-width: 600px) {
+    #contain {
+        font-size: 15px;
+        display: block;
+    }
+    #left {
+        display: flex;
+        padding-bottom: 20px;
+        width: 80vw;
+        flex-wrap: wrap;
+        flex-direction: row;
+        justify-content: space-evenly;
+    }
+    #email {
+        margin: 10px 12px;
+    }
+}
