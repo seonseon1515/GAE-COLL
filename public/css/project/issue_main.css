@@ -45,6 +45,7 @@ li {
     /* right: 40px; */
     justify-content: center;
     align-items: flex-end;
+    white-space: norwap;
 }
 
 .prevButton,
@@ -78,11 +79,11 @@ li {
 } */
 
 table {
-    position: absolute;
+    /* position: absolute; */
     border: 1px #a39485 solid;
     font-size: 0.9em;
     box-shadow: 0 1px 2px rgba(74, 73, 69, 0.25);
-    width: 80%;
+    width: 100%;
     border-collapse: collapse;
     border-radius: 10px;
     overflow: hidden;
@@ -196,4 +197,111 @@ a {
     list-style: none;
     margin: 0 10px;
     cursor: pointer;
+}
+
+.table_width {
+    width: 80%;
+}
+
+/* 반응형 */
+
+@media screen and (max-width: 675px) {
+    #issue-contain {
+        font-size: 15px;
+    }
+    .issue-write-a {
+        font-size: 15px;
+    }
+    #write {
+        width: 70px;
+    }
+    #issue-search-contain {
+        padding-right: 0;
+        width: 51%;
+        white-space: nowrap;
+    }
+    td > a {
+        white-space: nowrap;
+        overflow: ellipsis;
+    }
+    table {
+        width: fit-content;
+    }
+    .table_width {
+        display: flex;
+        justify-content: center;
+    }
+    #issue-contain {
+        height: 768px;
+    }
+}
+
+@media screen and (max-width: 580px) {
+    #issue-contain {
+        font-size: 12px;
+    }
+    .issue-write-a {
+        font-size: 12px;
+    }
+    #write {
+        width: 48px;
+    }
+    #issue-search-contain {
+        padding-right: 0;
+        width: 51%;
+        white-space: nowrap;
+    }
+    td > a {
+        white-space: nowrap;
+        overflow: ellipsis;
+    }
+    #issue-contain {
+        min-width: 275px;
+    }
+    #issue-contain-title {
+        width: 600px;
+    }
+    #keyword {
+        width: 40%;
+    }
+    .table_width {
+        display: flex;
+        justify-content: center;
+    }
+    #issue-contain {
+        height: 684px;
+    }
+}
+
+@media screen and (max-width: 450px) {
+    .table_width {
+        width: 53%;
+    }
+    #issue-contain {
+        margin-bottom: 30px;
+    }
+    #issue-search-contain {
+        right: 46px;
+        top: 75px;
+    }
+    #write {
+        right: 18px;
+    }
+    #issue-contain {
+        height: 800px;
+    }
+}
+@media screen and (max-width: 450px) {
+    #issue-contain {
+        height: 967px;
+    }
+    #nextGroupButton {
+        white-space: nowrap;
+    }
+    #prevGroupButton {
+        white-space: nowrap;
+    }
+    .pageNumber {
+        width: 175px;
+    }
 }
