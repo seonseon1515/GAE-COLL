@@ -245,7 +245,7 @@ async function submitFunc() {
         });
         if (res.data.success) {
             alert("새로운 일정이 추가되었습니다.");
-            document.location.href = "board_main";
+            return (document.location.href = "board_main");
         }
     } catch (error) {
         console.error(error);
