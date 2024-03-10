@@ -65,9 +65,10 @@ const ruleData = [];
     });
     const { success, result } = getProjectFile.data;
     if (success) {
-        document.getElementsByClassName("plan-file-contain").textContent = result.plan;
+        console.log("result", result);
         if (result.plan !== null && result.plan !== "") {
             const plan = JSON.parse(result.plan);
+            // document.getElementsByClassName("plan-file-contain").textContent = result.plan;
             for (let i = 0; i < plan.length; i++) {
                 let div = document.createElement("div");
                 div.innerHTML = `
@@ -84,7 +85,7 @@ const ruleData = [];
                 document.getElementsByClassName("plan-file-contain")[0].appendChild(div);
             }
         }
-        document.getElementsByClassName("erd-file-contain").textContent = result.erd;
+        // document.getElementsByClassName("erd-file-contain").textContent = result.erd;
         if (result.erd !== null && result.erd !== "") {
             const erd = JSON.parse(result.erd);
             for (let i = 0; i < erd.length; i++) {
@@ -103,7 +104,7 @@ const ruleData = [];
                 document.getElementsByClassName("erd-file-contain")[0].appendChild(div);
             }
         }
-        document.getElementsByClassName("api-file-contain").textContent = result.api;
+        // document.getElementsByClassName("api-file-contain").textContent = result.api;
         if (result.api !== null && result.api !== "") {
             const api = JSON.parse(result.api);
             for (let i = 0; i < api.length; i++) {
@@ -373,13 +374,42 @@ async function deleteProjectRuleFunc(ruleIndex) {
         console.log("규칙 추가 중 에러 발생 : ", error);
     }
 }
+window.onload = function () {
+    target1 = document.getElementById("file-upload-plan"); // file 아이디 선언
+    target1.addEventListener("change", function () {
+        // change 함수
+
+        if (target1.value.length) {
+            // 파일 첨부인 상태일경우 파일명 출력
+            uploadPlan();
+        }
+    });
+    target2 = document.getElementById("file-upload-erd"); // file 아이디 선언
+    target2.addEventListener("change", function () {
+        // change 함수
+
+        if (target2.value.length) {
+            // 파일 첨부인 상태일경우 파일명 출력
+            uploadERD();
+        }
+    });
+    target3 = document.getElementById("file-upload-api"); // file 아이디 선언
+    target3.addEventListener("change", function () {
+        // change 함수
+
+        if (target3.value.length) {
+            // 파일 첨부인 상태일경우 파일명 출력
+            uploadAPI();
+        }
+    });
+};
 
 //파일 업로드
 async function uploadPlan() {
-    const fileInput = document.getElementById("file-upload");
+    const fileInput = document.getElementById("file-upload-plan");
     const file = fileInput.files[0];
     const token = localStorage.getItem("token");
-
+    console.log("first");
     if (!file) {
         alert("파일을 선택해주세요");
         console.log("파일을 선택해주세요.");
@@ -390,7 +420,7 @@ async function uploadPlan() {
     formData.append("project_files", file);
     const type = "plan";
     formData.append("type", type);
-    location.reload(true);
+    // location.reload(true);
     const response = await axios({
         method: "PATCH",
         url: "/api/project/update/file",
@@ -401,6 +431,7 @@ async function uploadPlan() {
         },
     });
     const { result, success } = response.data;
+    console.log("success", success);
     if (success) {
         let div = document.createElement("div");
         div.innerHTML = `
@@ -412,14 +443,16 @@ async function uploadPlan() {
                 </div>
             `;
         document.getElementsByClassName("plan-file-contain")[0].appendChild(div);
+        alert("파일이 업로드 되었습니다.");
     } else {
+        alert("파일이 업로드에 실패하였습니다.");
         console.log("파일 업로드에 실패하였습니다.");
     }
 }
 
 //파일 업로드(ERD)
 async function uploadERD() {
-    const fileInput = document.getElementById("file-upload");
+    const fileInput = document.getElementById("file-upload-erd");
     const file = fileInput.files[0];
     const token = localStorage.getItem("token");
 
@@ -433,7 +466,7 @@ async function uploadERD() {
     formData.append("project_files", file);
     const type = "erd";
     formData.append("type", type);
-    location.reload(true);
+    // location.reload(true);
     const response = await axios({
         method: "PATCH",
         url: "/api/project/update/file",
@@ -456,43 +489,46 @@ async function uploadERD() {
                 </div>
             `;
         document.getElementsByClassName("erd-file-contain")[0].appendChild(div);
+        alert("파일이 업로드 되었습니다.");
     } else {
+        alert("파일이 업로드에 실패하였습니다.");
         console.log("파일 업로드에 실패하였습니다.");
     }
 }
 
 //파일 업로드(API)
 async function uploadAPI() {
-    const fileInput = document.getElementById("file-upload");
-    const file = fileInput.files[0];
-    const token = localStorage.getItem("token");
+    try {
+        const fileInput = document.getElementById("file-upload-api");
+        const file = fileInput.files[0];
+        const token = localStorage.getItem("token");
 
-    if (!file) {
-        alert("파일을 선택해주세요");
-        console.log("파일을 선택해주세요.");
-        return;
-    }
+        if (!file) {
+            alert("파일을 선택해주세요");
+            console.log("파일을 선택해주세요.");
+            return;
+        }
 
-    const formData = new FormData();
-    formData.append("project_files", file);
-    const type = "api";
-    formData.append("type", type);
-    location.reload(true);
-    const response = await axios({
-        method: "PATCH",
-        url: "/api/project/update/file",
-        data: formData,
-        headers: {
-            Authorization: `Bearer ${token}`,
-            "Content-Type": "multipart/form-data",
-        },
-    });
+        const formData = new FormData();
+        formData.append("project_files", file);
+        const type = "api";
+        formData.append("type", type);
+        // location.reload(true);
+        const response = await axios({
+            method: "PATCH",
+            url: "/api/project/update/file",
+            data: formData,
+            headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "multipart/form-data",
+            },
+        });
 
-    const { result, success } = response.data;
-    if (success) {
-        let div = document.createElement("div");
-        div.classList.add("fileDeleteButton");
-        div.innerHTML = `
+        const { result, success } = response.data;
+        if (success) {
+            let div = document.createElement("div");
+            div.classList.add("fileDeleteButton");
+            div.innerHTML = `
                 <div class="api-file-name">
                     <div class="api-file-img">
                         <img src="../../public/img/file-icon.png" class="file-icon" />
@@ -500,11 +536,17 @@ async function uploadAPI() {
                     <div>${file.name}</div>
                 </div>
             `;
-        document.getElementsByClassName("api-file-contain")[0].appendChild(div);
-    } else {
-        console.log("파일 업로드에 실패하였습니다.");
+            document.getElementsByClassName("api-file-contain")[0].appendChild(div);
+            alert("파일이 업로드 되었습니다.");
+        } else {
+            alert("파일이 업로드에 실패하였습니다.");
+            console.log("파일 업로드에 실패하였습니다.");
+        }
+    } catch (error) {
+        console.log(error);
     }
 }
+
 //파일 삭제
 async function deleteFile(e, fileIndex, type) {
     let element = e.target;
