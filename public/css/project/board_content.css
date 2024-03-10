@@ -115,7 +115,7 @@
 .commentBox {
     display: flex;
     margin: 14px 0;
-    align-items: center;
+    align-items: flex-start;
     justify-content: flex-start;
 }
 
@@ -543,6 +543,6 @@ nav {
     height: 15px;
 }
 
-.comment {
-    margin-left: 2vw;
+.commentBox > div {
+    width: 80vw;
 }

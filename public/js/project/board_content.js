@@ -141,8 +141,8 @@ const board_id = ids[1];
 
             //댓글 작성자 이름 + 댓글
             const commentBox = document.createElement("div");
-            const commentWriter = document.createElement("span");
-            const comment = document.createElement("span");
+            const commentWriter = document.createElement("div");
+            const comment = document.createElement("div");
             commentWriter.textContent = getComments.data.result[i].user_name;
             comment.textContent = getComments.data.result[i].comment;
             comment.className = `comment ${getComments.data.result[i].id}`;
