@@ -345,6 +345,8 @@ click {
     box-sizing: border-box;
 }
 .select_box {
+    left: 527px;
+    display: flex;
     position: relative;
     width: 15vw;
     height: 3vw;

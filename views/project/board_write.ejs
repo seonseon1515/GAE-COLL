@@ -20,20 +20,51 @@
         <nav>
             <div class="top_bar">
                 <div class="select_box"> 
-                    <label for="boardStatus">작업 상태</label>
-                    <select id="boardStatus">
-                        <option value="planning">계획 중</option>
-                        <option value="needFeedback">피드백 요청</option>
-                        <option value="finishFeedback">피드백 완료</option>
-                        <option value="suspend">중단</option>
-                        <option value="finish">완료</option>
-                    </select>
-                <!-- <div class="right_wrap">
-                    <div class="managers">
-                        <div class="profile_empty"></div>
-                        <a href="javascript:history.back();"><img src="../../public/img/back_icon.webp" class="back_icon"></img></a>
+                    <!-- left_wrap -->
+                    <div id="bg" class="placement_status">
+                        <div id="blue" class="circle"></div>
+                        <div id="pro_status" class="status_txt">작업 상태</div>
                     </div>
-                </div> -->
+
+                    <ul class="option_list_profile">
+                        <li class="option_item" onclick="changeStatusToPlan()">
+                            <div id="bg_blue" class="placement_status">
+                                <div id="blue" class="circle"></div>
+                                <div id="planning" class="status_txt">계획중</div>
+                            </div>
+                        </li>
+                        <li class="option_item" onclick="changeStatusToProg()">
+                            <div id="bg_yellow" class="placement_status">
+                                <div id="yellow" class="circle"></div>
+                                <div class="status_txt">진행중</div>
+                            </div>
+                        </li>
+                        <li class="option_item" onclick="changeStatusToSus()">
+                            <div id="bg_purple" class="placement_status">
+                                <div id="purple" class="circle"></div>
+                                <div class="status_txt">중단됨</div>
+                            </div>
+                        </li>
+                        <li class="option_item" onclick="changeStatusToFin()">
+                            <div id="bg_green" class="placement_status">
+                                <div id="green" class="circle"></div>
+                                <div class="status_txt">완료</div>
+                            </div>
+                        </li>
+                        <li class="option_item" onclick="changeStatusToNeedFeed()">                                
+                            <div id="bg_red" class="placement_status">
+                                <div id="red" class="circle"></div>
+                                <div class="status_txt">피드백 요청</div>
+                            </div>
+                        </li>
+                        <li class="option_item" onclick="changeStatusToFinishFeed()">
+                            <div id="bg_black" class="placement_status">
+                                <div id="black" class="circle"></div>
+                                <div class="status_txt">피드백 완료</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>  
             </div>
         </nav>
 
