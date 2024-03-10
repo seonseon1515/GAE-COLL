@@ -10,9 +10,32 @@ main {
 .calender {
     box-sizing: border-box;
     border-radius: 30px;
-    margin: 30px 0px;
+    margin: 20px 0px;
     padding: 30px 30px;
     background-color: #f5f5f5;
+    width: 100%;
+}
+.calender_right {
+    box-sizing: border-box;
+    width: 100%;
+    margin-top: 20px;
+    background-color: #f5f5f5;
+    border-radius: 20px;
+    padding: 20px;
+}
+.calender_name {
+    font-weight: bold;
+}
+.top_wrap {
+    margin-bottom: 10px;
+}
+.check_wrap {
+    display: flex;
+}
+.check_wrap > * {
+    margin-right: 10px;
+}
+.select_calender {
     width: 100%;
 }
 .calender_wrap {
@@ -22,6 +45,17 @@ main {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    padding: 10px 0;
+}
+.all_button_wrap > * {
+    width: calc(100% / 3);
+    display: flex;
+}
+.center {
+    justify-content: center;
+}
+.end {
+    justify-content: end;
 }
 .date_wrap {
     width: 100%;
@@ -61,6 +95,7 @@ td {
 }
 table {
     height: 700px;
+    background-color: white;
 }
 .inner {
     width: 100%;
@@ -74,4 +109,24 @@ table {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+}
+.prev,
+.next,
+.today,
+#make_calender,
+.job-btn {
+    padding: 5px;
+    border-radius: 10px;
+    border: 2px solid;
+    background-color: #ffda31;
+    cursor: pointer;
+}
+.prev,
+.next {
+    width: 30px;
+}
+
+.calender_title {
+    border: 0;
+    font-weight: bold;
 }

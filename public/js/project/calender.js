@@ -1,7 +1,9 @@
 /* 375최소 사이즈 */
 const now = new Date();
+let job = [];
+let isSelectedMyJob = false;
 
-const make_calender = (now) => {
+const make_calender = (now, isFirst) => {
     // date 객체에서 다양한 월을 가져올 수 있으면 해당하는 월에 대한 일, 요일 정보 가져올 수 있을듯?
     // 현재 월에 있는 일을 모두 가져올 수 있다면?
     const this_year = now.getFullYear();
@@ -51,21 +53,23 @@ const make_calender = (now) => {
 
     document.querySelector(`.date_board`).innerHTML = container;
     document.querySelector(`.calender_title`).innerText = `${this_year}년 ${this_month + 1}월`;
-    setBoard();
+    if (isFirst) {
+        setBoard(now);
+    }
 };
 
-make_calender(now);
+make_calender(now, true);
 
 // 이전 달
 
 document.querySelector(".prev").onclick = () => {
-    make_calender(new Date(now.setMonth(now.getMonth() - 1)));
+    make_calender(new Date(now.setMonth(now.getMonth() - 1)), true);
 };
 
 // 다음 달
 
 document.querySelector(".next").onclick = () => {
-    make_calender(new Date(now.setMonth(now.getMonth() + 1)));
+    make_calender(new Date(now.setMonth(now.getMonth() + 1)), true);
 };
 
 //  팝업 달력
@@ -78,31 +82,31 @@ function closePop() {
     document.getElementById("pop_info_1").style.display = "none";
 }
 
-const openModalBtn = document.getElementById("openModalBtn");
-const modal = document.getElementById("pop_info_1");
-const closeBtn = document.getElementsByClassName("close")[0];
+// const openModalBtn = document.getElementById("openModalBtn");
+// const modal = document.getElementById("pop_info_1");
+// const closeBtn = document.getElementsByClassName("close")[0];
 
-openModalBtn.addEventListener("click", function () {
-    modal.style.display = "block";
-});
+// openModalBtn.addEventListener("click", function () {
+//     modal.style.display = "block";
+// });
 
-closeBtn.addEventListener("click", function () {
-    modal.style.display = "none";
-});
+// closeBtn.addEventListener("click", function () {
+//     modal.style.display = "none";
+// });
 
-window.addEventListener("click", function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-});
+// window.addEventListener("click", function (event) {
+//     if (event.target == modal) {
+//         modal.style.display = "none";
+//     }
+// });
 
 let todayMark = now.getDate();
 
-document.querySelector(".today").onclick = () => {
-    make_calender(new Date(now.setMonth(now.getMonth())));
-};
+// document.querySelector(".today").onclick = () => {
+//     make_calender(new Date(now.setMonth(now.getMonth())), true);
+// };
 
-async function setBoard() {
+async function setBoard(now) {
     const this_year = now.getFullYear();
     const this_month = now.getMonth();
     let yearMonth = ""; //이번 년도 + 달
@@ -111,6 +115,7 @@ async function setBoard() {
     } else {
         yearMonth = `${String(this_year)}-${String(this_month + 1)}-`;
     }
+    console.log(yearMonth);
     //현재 달의 보드 가져오기
     try {
         const token = localStorage.getItem("token");
@@ -127,7 +132,13 @@ async function setBoard() {
         });
         const { success, result } = getBoardMonthResult.data;
         if (success) {
-            drawBoard(result, yearMonth);
+            job = result;
+            isSelectedMyJob
+                ? drawBoard(
+                      job.filter((data) => data.is_mine === true),
+                      yearMonth
+                  )
+                : drawBoard(result, yearMonth);
         }
     } catch (error) {
         console.log("캘린더 이번달 보드 가져오기 오류", error);
@@ -165,10 +176,51 @@ function switchStatus(status) {
     }
     return data;
 }
+function showMyJob() {
+    isSelectedMyJob = true;
+    let yearMonth = document.getElementById("openModalBtn").textContent;
+    console.log(typeof yearMonth, yearMonth);
+    yearMonth = yearMonth.replace("년 ", "-");
+    yearMonth = yearMonth.replace("월", "-");
 
+    if (yearMonth.length === 7) {
+        yearMonth = yearMonth.replace("-", "-0");
+    }
+    const myJob = job.filter((data) => data.is_mine === true);
+    removeBoard(false);
+    drawBoard(myJob, yearMonth);
+}
+function showTeamJob() {
+    isSelectedMyJob = false;
+    let yearMonth = document.getElementById("openModalBtn").textContent;
+    console.log(typeof yearMonth, yearMonth);
+    yearMonth = yearMonth.replace("년 ", "-");
+    yearMonth = yearMonth.replace("월", "-");
+
+    if (yearMonth.length === 7) {
+        yearMonth = yearMonth.replace("-", "-0");
+    }
+    removeBoard(false);
+    drawBoard(job, yearMonth);
+}
+
+function removeBoard(set) {
+    let yearMonth = document.getElementById("openModalBtn").textContent;
+    console.log(typeof yearMonth, yearMonth);
+    yearMonth = yearMonth.replace("월", "");
+    const year = yearMonth.split("년 ")[0];
+    const month = yearMonth.split("년 ")[1];
+
+    const current_last_date = new Date(year, month, 0); // 요번 달 일 수
+
+    make_calender(current_last_date, set);
+}
+function goToday() {
+    make_calender(new Date(), true);
+}
 function drawBoard(result, yearMonth) {
+    console.log("보드 가져옴!");
     for (let i = 0; i < result.length; i++) {
-        console.log(result[i]);
         const day = Number(result[i].deadline.replace(yearMonth, ""));
         const dayBox = document.getElementById(`td-inner${day}`);
         console.log(dayBox);
@@ -183,6 +235,9 @@ function drawBoard(result, yearMonth) {
         dayBox.appendChild(newDiv);
     }
 }
-async function goBoardContent(boardId) {
+function goBoardContent(boardId) {
     document.location.href = `/project/board_content/${boardId}`;
+}
+function writeBoard() {
+    document.location.href = "/project/board_write";
 }
