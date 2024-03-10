@@ -21,10 +21,12 @@ async function codeBlockFunc() {
     const span = document.createElement("span");
 
     span.innerHTML = "&nbsp&nbsp";
-    newCode.textContent = "코드를 입력하세요.";
-    content.appendChild(newCode);
+    newCode.innerHTML = "&nbsp코드를 입력하세요.&nbsp";
+    span.style.color = "black";
+    span.style.backgroundColor = "none";
+    content.append(newCode);
     content.insertBefore(span, newCode);
-    content.appendChild(span);
+    content.append(span);
 }
 
 async function submitFunc() {
