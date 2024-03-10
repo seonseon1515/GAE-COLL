@@ -125,9 +125,11 @@ async function addCommentFunc() {
             userImage.classList.add("user_img");
             //파일 삭제한 경우엔 액박 뜸
             if (user_img === null || user_img === "" || user_img === undefined) {
-                userImage.src = `../../public/img/user-solid.svg;`; //
+                userImage.src = `../../../public/img/user-solid.svg;`; //
+            } else if (user_img.includes("http:") || user_img.includes("https://")) {
+                userImage.src = user_img;
             } else {
-                userImage.src = `../../public/uploads/profile/${user_img}`;
+                userImage.src = `../../../public/uploads/profile/${user_img}`;
             }
 
             // 작성자 이름 표시
