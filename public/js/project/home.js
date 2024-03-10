@@ -22,7 +22,7 @@ const ruleData = [];
                 memberDivs += `
                 <div id="pro-img-div" data-id="${result.member[i].id}">
                     <img src="../../public/img/mypage.png" id="pen-img" />
-                    <div onclick="deleteMember(event);">${result.member[i].user_name}</div>
+                    <div class="member-div" onclick="deleteMember(event);">${result.member[i].user_name}</div>
                 </div>`;
             }
             document.getElementById("member-main").innerHTML = memberDivs;
@@ -76,7 +76,7 @@ const ruleData = [];
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                 </div>
                 <a href="../../public/uploads/project_file/${plan[i]}" download >
-                <div style="text-decoration: none; color: black;">${plan[i]}</div>
+                <div class="fileDeleteBox">${plan[i]}</div>
             </a>
             <button onclick="deleteFile(event, ${i}, 'plan')"  class = "fileButton" >삭제<button>
             </div>
@@ -95,7 +95,7 @@ const ruleData = [];
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                     </div>
                     <a href="../../public/uploads/project_file/${erd[i]}" download>
-                <div style="text-decoration: none; color: black;">${erd[i]}</div>
+                <div class="fileDeleteBox">${erd[i]}</div>
             </a>
             <button class = "fileButton" onclick="deleteFile(event, ${i}, 'erd')">삭제<button>
             </div>
@@ -115,7 +115,7 @@ const ruleData = [];
                     <img src="../../public/img/file-icon.png" class="file-icon" />
                     </div>
                     <a href="../../public/uploads/project_file/${api[i]}" download>
-                <div style="text-decoration: none; color: black;">${api[i]}</div>
+                <div class="fileDeleteBox">${api[i]}</div>
             </a>
             <button class = "fileButton" onclick="deleteFile(event, ${i}, 'api')">삭제<button>
             </div>
@@ -140,16 +140,35 @@ const ruleData = [];
         const { success, result } = response.data;
         if (success) {
             for (let i = 0; i < result.length; i++) {
-                let tr = document.createElement("tr");
-                tr.innerHTML = `
-                        <td class="td1">${i + 1}</td>
-                        <td class="td2"><a href="/project/issue_content/${result[i].id}" class = "issue-a">${
-                    result[i].title
-                }</td></a>
-                        <td class="td3">${result[i].userId}</td>
-                        <td class="td4">${result[i].issue_date}</td>
-                `;
-                document.getElementById("issueTbody").appendChild(tr);
+                console.log("!", result);
+                try {
+                    const userResponse = await axios({
+                        method: "POST",
+                        url: "/api/user/findInfo",
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                        data: { userId: result[i].userId },
+                    });
+                    const { success: userSuccess, result: userInfo } = userResponse.data;
+                    console.log("ss", userSuccess);
+                    if (userSuccess) {
+                        let tr = document.createElement("tr");
+                        tr.innerHTML = `
+                            <td class="td1">${i + 1}</td>
+                            <td class="td2"><a href="/project/issue_content/${result[i].id}" class = "issue-a">${
+                            result[i].title
+                        }</td></a>
+                            <td class="td3">${userInfo.user_name}</td>
+                            <td class="td4">${result[i].issue_date}</td>
+                        `;
+                        document.getElementById("issueTbody").appendChild(tr);
+                    } else {
+                        console.error("사용자 정보 요청 실패:", userResponse.data);
+                    }
+                } catch (error) {
+                    console.error("사용자 정보 요청 중 오류 발생:", error);
+                }
             }
         } else {
             console.error("API 요청 실패:", response.data);
@@ -183,8 +202,6 @@ const ruleData = [];
                 if (changeStatusKor(organizedTeamLog[i].boardStatus) !== "피드백 요청") {
                     let div = document.createElement("div");
                     div.classList.add("teamDiv");
-                    console.log("organizedTeamLog[i].user_img", typeof organizedTeamLog[i].user_img);
-                    console.log(organizedTeamLog[i].user_img);
                     let userImage = "";
                     if (
                         organizedTeamLog[i].user_img !== null &&
