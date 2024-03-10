@@ -60,9 +60,8 @@ a:link {
     width: 15px;
     height: 15px;
     position: relative;
-    position: fixed;
-    top: 143px;
-    right: 60px;
+    bottom: 23px;
+    right: -2em;
 }
 
 .rightLogoWrap {
@@ -358,7 +357,8 @@ a:link {
     border: 0;
     font-weight: 900;
     font-size: 20px;
-    width: 140px;
+    width: fit-content;
+    white-space: nowrap;
     background-color: transparent;
     margin-top: 3px;
 }
@@ -447,6 +447,8 @@ a:link {
 
 .projectMidIconWrap {
     display: flex;
+    white-space: nowrap;
+    width: fit-content;
 }
 
 /* 폰트크기 바뀌는 구간 */
@@ -470,9 +472,6 @@ a:link {
     .pro_deadline {
         font-size: 17px !important;
     }
-    .dateBox {
-        width: 121px;
-    }
 }
 
 @media screen and (max-width: 870px) {
@@ -494,9 +493,6 @@ a:link {
 
     .pro_deadline {
         font-size: 15px !important;
-    }
-    .dateBox {
-        width: 121px;
     }
 
     .pro_edit {
@@ -532,6 +528,9 @@ a:link {
         width: 10px;
         height: 10px;
     }
+    #githubEdit {
+        right: -1.5em;
+    }
 }
 
 @media screen and (max-width: 715px) {
@@ -557,7 +556,9 @@ a:link {
         height: 30px;
     }
     #githubEdit {
-        top: 174px;
+        right: -1.5em;
+        width: 10px;
+        height: 10px;
     }
 }
 
@@ -580,9 +581,6 @@ a:link {
 
     .pro_deadline {
         font-size: 12px !important;
-    }
-    .dateBox {
-        width: 100px;
     }
 
     .pro_edit {
@@ -613,8 +611,8 @@ a:link {
     }
 
     #dateEdit {
-        width: 15px;
-        height: 15px;
+        width: 10px;
+        height: 10px;
     }
 
     .pro_header1 {
