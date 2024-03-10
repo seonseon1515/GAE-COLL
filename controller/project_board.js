@@ -47,9 +47,9 @@ exports.boardWrite = async (req, res) => {
     try {
         const { title, description, status, deadline, userId: member_id } = req.body;
         member_id === null || member_id === undefined ? (userId = req.userId) : (userId = member_id);
-        console.log(member_id, typeof member_id);
-        console.log(deadline, typeof deadline);
-        console.log("userId", userId);
+        // console.log(member_id, typeof member_id);
+        // console.log(deadline, typeof deadline);
+        // console.log("userId", userId);
         const boardWriteResult = await Board.create({
             projectId: Number(projectId),
             title,
@@ -69,7 +69,7 @@ exports.getBoardDetail = async (req, res) => {
     try {
         const userId = req.userId;
 
-        const { board_id: id } = req.query;
+        const { board_id: id } = req.params;
 
         const getBoardDatail = await Board.findOne({
             order: [["id", "DESC"]],
@@ -89,14 +89,28 @@ exports.getBoardDetail = async (req, res) => {
 //보드 월별조회
 exports.getBoardMonth = async (req, res) => {
     try {
+        const my_id = req.userId;
         const projectId = req.projectId;
         const { YYYYMM } = req.query;
+        let is_mine = false;
+        const boardData = [];
 
         const getBoardAllResult = await Board.findAll({
             order: [["id", "DESC"]],
             where: { projectId, deadline: { [Op.like]: `${YYYYMM}%` } },
         });
-        res.json({ success: true, result: getBoardAllResult });
+        for (let board of getBoardAllResult) {
+            board.userId === my_id ? (is_mine = true) : (is_mine = false);
+            const data = {
+                deadline: board.deadline,
+                id: board.id,
+                status: board.status,
+                title: board.title,
+                is_mine,
+            };
+            boardData.push(data);
+        }
+        res.json({ success: true, result: boardData });
     } catch (error) {
         console.log(error);
         res.json({ success: false, result: error });

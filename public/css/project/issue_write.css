@@ -478,4 +478,71 @@ button {
 .comment_box:hover .comments > li > .delete_icon {
     display: inline;
 }
+@media screen and (max-width: 525px) {
+    #submitButt {
+        display: block;
+        top: 96px;
+    }
+    h1 {
+        white-space: nowrap;
+        display: block;
+        margin-bottom: 50px;
+    }
+}
 
+@media screen and (max-width: 525px) {
+    form {
+        padding: 10px 10px 20px 10px;
+    }
+    .writer_date {
+        white-space: nowrap;
+        font-size: 15px;
+        width: fit-content;
+        display: flex;
+        flex-wrap: wrap;
+        align-content: space-between;
+    }
+    .writer_box {
+        white-space: nowrap;
+        font-size: 15px;
+        height: 28px;
+        margin-bottom: 7px;
+    }
+    .issueDate {
+        white-space: nowrap;
+        font-size: 15px;
+    }
+    label {
+        font-size: 15px;
+    }
+    .issueDate {
+        text-align: center;
+        white-space: nowrap;
+        line-height: 30px;
+    }
+    #submitButt {
+        display: block;
+        top: 73px;
+        font-size: 15px !important;
+        width: 65px !important;
+    }
+    h1 {
+        white-space: nowrap;
+        display: block;
+        margin-bottom: 50px;
+    }
+    .txtSmall {
+        font-size: 20px !important;
+    }
+    .title_box {
+        font-size: 15px;
+    }
+    #filesButt {
+        font-size: 15px !important;
+        height: 20px;
+        line-height: 20px;
+    }
+    .content_box_inner {
+        height: 150px;
+    }
+}

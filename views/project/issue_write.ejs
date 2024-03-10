@@ -23,7 +23,7 @@
             <div class="bg_white">
                 <form name="issue_write_form" enctype="multipart/form-data">
                     <div class="form_top">
-                        <h1>프로젝트 이슈</h1>
+                        <h1 class="txtSmall">프로젝트 이슈</h1>
                     </div>
                     <!--제목 출력 위치-->
                     <div class="title_boxes">
@@ -34,13 +34,16 @@
                     <div class="writer_date">
                         <input type="text" class="userId" style="display: none;"/>
                       <span>작성자</span><div class="writer_box"></div>
+                      <div class="dateWrap_issue">
                       <label for="issue_date">작성일</label><input type="date" id="issue_date" class="issueDate">
                     </div>
+                    </div>
+
 
                     <hr />
                     <!--글 출력 위치-->
                     <div class="content_box">
-                        <div class="icon coding_icon" id="codingIcon" onclick="codeBlockFunc()"></div>
+                        <div class="icon coding_icon" id="codingIcon" onclick="codeBlockFunc.bind(null, 2)()"></div>
                         <div class="content_box_inner" id="content" contenteditable="true">내용을 작성해주세요.
                         </div>
                     </div>
@@ -54,9 +57,11 @@
                             <input id="files" type="file" name="issue_files" multiple />
                         </form>
                     </div>
+                    
                       <button type="button" id="submitButt" class="button_yellow_white" onclick="submitFunc()">
                         글쓰기
                     </button>
+                    
 
         </main>
         <%-include('../../views/common/footer.ejs') %>

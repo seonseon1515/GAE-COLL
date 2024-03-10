@@ -225,7 +225,7 @@ exports.updateProjectIssueDetail = async (req, res) => {
         }
         const updateResult = await Issue.update({ title, content, files: issueFiles }, { where: { id } });
 
-        res.json({ success: true, result: updateResult });
+        res.json({ success: true, result: "updateResult" });
     } catch (error) {
         console.error("이슈 수정 오류:", error);
         res.json({ success: false, result: error });

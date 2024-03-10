@@ -37,7 +37,6 @@
 .write_board_name {
     margin-top: 2vw;
     color: black;
-    margin-left: 5vw;
     width: 90vw;
     height: 4vw;
     border: none;
@@ -53,8 +52,7 @@
 
 .board_manager,
 .board_deadline,
-.board_project,
-.board_explain {
+.board_project {
     width: 20vw;
     color: gray;
     font-weight: 700;
@@ -62,21 +60,32 @@
     margin-top: 3vw;
 }
 
+.board_explain {
+    width: 20vw;
+    color: gray;
+    font-weight: 700;
+    /* margin-left: 5vw;
+    margin-top: 30px; */
+    position: absolute;
+}
+
 .write_explain {
-    margin-left: 5vw;
-    margin-top: 2vw;
+    margin: 0 auto;
     font-weight: 900;
-    width: 90vw;
+    width: 80vw;
     height: 20vw;
     /* background-color: bisque; */
+    margin-top: 40px;
     margin-bottom: 2vw;
     padding-left: 2vw;
     padding-top: 2vw;
     color: black;
-    border: 0;
+    border: 2px solid rgb(233, 233, 233);
     font-size: 15px;
     outline: none;
     line-height: 30px;
+    border-radius: 1vw;
+    resize: none;
 }
 
 .write_explain::placeholder {
@@ -88,7 +97,6 @@
 .write_explain:hover {
     border: 0.1vw solid gray;
     cursor: pointer;
-    border-radius: 1vw;
 }
 
 .top_bar_line2 {
@@ -99,25 +107,29 @@
     border: 0;
 }
 
-.board_comment {
-    background-color: hsl(0, 3%, 93%);
-    padding-bottom: 3.5vw;
-    padding-top: 2vw;
-    height: 10vw;
-    position: relative;
+.boradComments {
+    display: flex;
+    flex-direction: column;
+}
+
+.commentBox {
+    display: flex;
+    margin: 14px 0;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .member_profile_img {
-    background-color: blueviolet;
-    width: 3vw;
-    height: 3vw;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
+    margin-right: 1vw;
 }
 
 .comment_area {
     border-radius: 1vw;
-    width: 78vw;
-    height: 8vw;
+    width: 74vw;
+    height: 30px;
     background-color: white;
     border: 0.5px solid gray;
     margin-left: 2vw;
@@ -129,6 +141,7 @@
     outline: none;
     font-size: 15px;
     line-height: 30px;
+    resize: none;
 }
 
 .comment_area::placeholder {
@@ -139,10 +152,6 @@
 
 .wrap_comment {
     display: flex;
-}
-
-.member_profile_img {
-    margin-left: 5vw;
 }
 
 .wirte_button {
@@ -341,6 +350,7 @@ click {
     position: relative;
     width: 15vw;
     height: 3vw;
+    left: 581px;
     border-radius: 4px;
     border: none;
     background: white;
@@ -410,4 +420,107 @@ click {
 }
 .select_box .option_list::-webkit-scrollbar-thumb:hover {
     background: #303030;
+}
+
+#board1 {
+    display: flex;
+}
+
+#boardManager {
+    margin-left: 23px;
+    width: 100px;
+    border-radius: 6px;
+    text-align: center;
+    background-color: #e7e6e6;
+}
+
+nav {
+    position: relative;
+    margin-top: 112px;
+}
+
+.board3 {
+    display: flex;
+}
+
+#myProject {
+    background-color: #e7e6e6;
+    margin-left: 10px;
+    width: 100px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+#boardDeadline {
+    margin-left: 20px;
+    border-style: none;
+}
+
+#projectInfo {
+    margin-left: 15px;
+}
+.editButt {
+    width: 85px;
+    height: 34px;
+    border-radius: 10px;
+    border: 2px solid #ffda31;
+    color: rgb(42, 42, 42);
+    background-color: #ffda31;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.editButt:hover {
+    color: #3c3c3c;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+#explainBox {
+    margin-left: 20px;
+}
+
+#projectInfo,
+#explainBox {
+    margin-left: 5vw;
+}
+
+.board_comment {
+    background-color: hsl(0, 3%, 93%);
+    padding-bottom: 30px;
+    padding-top: 20px;
+    height: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.boardCommentButt {
+    /* position: absolute; */
+    /* right: 0; */
+    width: 58px;
+    height: 35px;
+    border-radius: 10px;
+    background-color: rgb(77, 76, 76);
+    color: #ffda31;
+    text-shadow: #997e06;
+    font-weight: bold;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.boardCommentButt:hover {
+    background-color: #ffda31;
+    color: rgb(77, 76, 76);
+    cursor: pointer;
+}
+
+.boradComments {
+    margin-left: 5vw;
 }

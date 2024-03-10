@@ -218,11 +218,6 @@ async function writeBoard() {
         deadlineValue === null || deadlineValue === "" ? (deadline = getToday()) : (deadline = deadlineValue);
         boardStatus !== undefined ? (getBoardStatus = boardStatus) : (getBoardStatus = "planning");
 
-        //상태 변경해주기
-        if (boardStatus !== "planning") {
-            const statusContentDiv = document.getElementById("status-content");
-        }
-
         const writeBoardResult = await axios({
             method: "post",
             url: "/api/project/board/write",

@@ -35,8 +35,6 @@
     width: 210px;
     text-align: center;
     font-weight: bold;
-
-    /* 가운데에 오게하는 코드? */
 }
 .header_menu3 {
     width: 210px;
@@ -66,4 +64,93 @@
     text-decoration: none;
     color: black;
     cursor: pointer;
+}
+
+@media (min-width: 550px) and (max-width: 710px) {
+    .header_menu1 {
+        width: 210px;
+    }
+    #header {
+        font-size: 15px;
+    }
+    .header_menu2 {
+        padding-left: 30px;
+    }
+    #now_date {
+        width: 84px;
+    }
+}
+@media (min-width: 460px) and (max-width: 550px) {
+    .header_menu1 {
+        width: 190px;
+    }
+    #header {
+        font-size: 15px;
+    }
+    .header_menu2 {
+        padding-left: 30px;
+    }
+    #now_date {
+        width: 84px;
+    }
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+    .big_txt {
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 400px) and (max-width: 460px) {
+    .header_menu1 {
+        width: 190px;
+    }
+    .header-menu2,
+    #now_date {
+        display: none;
+    }
+    #header {
+        font-size: 15px;
+    }
+    #now_date {
+        width: 84px;
+    }
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+    .big_txt {
+        font-size: 25px;
+    }
+    .mypage_logo {
+        width: 40px;
+        height: 40px;
+    }
+}
+@media (min-width: 370px) and (max-width: 400px) {
+    .header_menu1 {
+        width: 170px;
+    }
+    .header-menu2,
+    #now_date {
+        display: none;
+    }
+    #header {
+        font-size: 15px;
+    }
+    #now_date {
+        width: 62px;
+    }
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+    .big_txt {
+        font-size: 25px;
+    }
+    .mypage_logo {
+        width: 40px;
+        height: 40px;
+    }
 }

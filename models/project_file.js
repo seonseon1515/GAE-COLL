@@ -1,7 +1,7 @@
-const { DataTypes } = require('sequelize');
+const { DataTypes } = require("sequelize");
 
 const ProjectFileModel = (sequelize) => {
-    return sequelize.define('project_file', {
+    return sequelize.define("project_file", {
         id: {
             type: DataTypes.INTEGER,
             autoIncrement: true,

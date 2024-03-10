@@ -12,24 +12,20 @@
     <body>
         <%- include('./header.ejs')%> <%- include('../common/header.ejs')%>
 
-        <div class="bg">
+        <main>
             
             <div class="calender_right">
-              <div class="select_calender">
               <div class="top_wrap">
-                <div class="top_left">
                   <div class="calender_name">캘린더</div>
-                </div>
-                <div class="top_right">
-                </div>
-              </div>  
+              </div> 
               <div class="check_wrap">
-                <input id="private" type="checkbox"></input>
-                <label for="private">내 캘린더</label></br>
-                <input id="team" class="team" type="checkbox"></input>
-                <label for="team">팀 캘린더</label>
+                <div>
+                  <button class="job-btn" onclick="showMyJob()">내 작업</button>
+                </div>
+                <div>
+                  <button class="job-btn" onclick="showTeamJob()">팀 작업</button>
+                </div>
               </div>
-             </div>
           </div>  
 
           <div class="calender">
@@ -38,36 +34,39 @@
               <div class="button_wrap">
                 <button class="prev" type="button"><</button>
                 <button class="next" type="button">></button>
-                <button type="button" class="today">오늘</button>
-                <button type="button" id="openModalBtn" class="calender_title"></button>
-                
-                
+                <button type="button" class="today" onclick="goToday()">오늘</button>
               </div>
-              <div class="right_wrap">
-                <button id="make_calender" class="prev" type="">일정 만들기</button>
+              <div class="center">             
+                  <button type="button" id="openModalBtn" class="calender_title"></button>
+              </div>
+              <div class="right_wrap end">
+                <button id="make_calender" type="button" onclick="writeBoard()">일정 만들기</button>
               </div>
             </div>
 
-              <div class="date_wrap">
-                <div class="grid date_head">
-                  <div>일</div>
-                  <div>월</div>
-                  <div>화</div>
-                  <div>수</div>
-                  <div>목</div>
-                  <div>금</div>
-                  <div>토</div>
-                </div>
+              <table class="date_wrap" border="1" style="table-layout: fixed;">
+                <thead class="date_head">
+                  <tr>
+                    <th>일</th>
+                    <th>월</th>
+                    <th>화</th>
+                    <th>수</th>
+                    <th>목</th>
+                    <th>금</th>
+                    <th>토</th>
+                  </tr>
+
+                </thead>
             
-                <div class="grid date_board">
-                </div>
-              </div>
+                <tbody class="date_board">
+                </tbody>
+              </table>
             </div>  
           </div>
         </div>
       
 <!-- 달력 팝업 띄우기 -->
-<div id="pop_info_1" class="background" style="display:hidden;">
+<!-- <div id="pop_info_1" class="background" style="display:hidden;">
   <div class="window">
   <div class="popup">
     <div class="modal-content">
@@ -104,7 +103,8 @@
 </div>
 </div>
 </div>
-</div>
+</div> -->
+</main>
       
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
       <script src="../../public/js/project/calender.js"></script>

@@ -14,7 +14,7 @@ router.delete("/delete", auth, controller.deleteBoard);
 //보드 작성
 router.post("/write", auth, controller.boardWrite);
 //보드 1개 조회
-router.get("/detail", auth, controller.getBoardDetail);
+router.get("/:board_id", auth, controller.getBoardDetail);
 //보드 댓글 조회
 router.get("/get/comment/:id", auth, controller.getComment);
 //보드 댓글 작성
