@@ -29,6 +29,14 @@ const token = localStorage.getItem("token");
 
     let formattedEndDate = `${endYear}-${endMonth.toString().padStart(2, "0")}-${endDate.toString().padStart(2, "0")}`;
 
+    // 오늘 날짜 값 format 구하기
+    let now = new Date(); // 현재
+    let nowYear = now.getFullYear();
+    let nowMonth = now.getMonth() + 1;
+    let nowDate = now.getDate();
+
+    let formattedNowDate = `${nowYear}-${nowMonth.toString().padStart(2, "0")}-${nowDate.toString().padStart(2, "0")}`;
+
     document.querySelector("#startDate").value = formattedStartDate;
     document.querySelector("#endDate").value = formattedEndDate;
     // document.querySelector("#projectEndDate").textContent = `${result.end_date}`;
@@ -81,7 +89,7 @@ const token = localStorage.getItem("token");
     }
 
     const getDateDiff = (d1, d2) => {
-        const date1 = new Date(formattedStartDate);
+        const date1 = new Date(formattedNowDate);
         const date2 = new Date(formattedEndDate);
 
         const diffDate = date1.getTime() - date2.getTime();
@@ -89,7 +97,7 @@ const token = localStorage.getItem("token");
         return Math.abs(diffDate / (1000 * 60 * 60 * 24)); // 밀리세컨 * 초 * 분 * 시 = 일
     };
 
-    let deadlineCalc = getDateDiff(`${formattedStartDate}`, `${formattedEndDate}`);
+    let deadlineCalc = getDateDiff(`${formattedNowDate}`, `${formattedEndDate}`);
     document.querySelector(".pro_deadline").textContent = `D-${deadlineCalc}`;
 })();
 
