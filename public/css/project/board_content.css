@@ -37,7 +37,6 @@
 .write_board_name {
     margin-top: 2vw;
     color: black;
-    margin-left: 5vw;
     width: 90vw;
     height: 4vw;
     border: none;
@@ -53,8 +52,7 @@
 
 .board_manager,
 .board_deadline,
-.board_project,
-.board_explain {
+.board_project {
     width: 20vw;
     color: gray;
     font-weight: 700;
@@ -62,13 +60,22 @@
     margin-top: 3vw;
 }
 
+.board_explain {
+    width: 20vw;
+    color: gray;
+    font-weight: 700;
+    /* margin-left: 5vw;
+    margin-top: 30px; */
+    position: absolute;
+}
+
 .write_explain {
-    margin-left: 5vw;
-    margin-top: 2vw;
+    margin: 0 auto;
     font-weight: 900;
-    width: 90vw;
+    width: 80vw;
     height: 20vw;
     /* background-color: bisque; */
+    margin-top: 40px;
     margin-bottom: 2vw;
     padding-left: 2vw;
     padding-top: 2vw;
@@ -77,6 +84,7 @@
     font-size: 15px;
     outline: none;
     line-height: 30px;
+    resize: none;
 }
 
 .write_explain::placeholder {
@@ -341,6 +349,7 @@ click {
     position: relative;
     width: 15vw;
     height: 3vw;
+    left: 581px;
     border-radius: 4px;
     border: none;
     background: white;
@@ -410,4 +419,73 @@ click {
 }
 .select_box .option_list::-webkit-scrollbar-thumb:hover {
     background: #303030;
+}
+
+#board1 {
+    display: flex;
+}
+
+#boardManager {
+    margin-left: 23px;
+    width: 100px;
+    border-radius: 6px;
+    text-align: center;
+    background-color: #e7e6e6;
+}
+
+nav {
+    position: relative;
+    margin-top: 112px;
+}
+
+.board3 {
+    display: flex;
+}
+
+#myProject {
+    background-color: #e7e6e6;
+    margin-left: 10px;
+    width: 100px;
+    border-radius: 6px;
+    text-align: center;
+}
+
+#boardDeadline {
+    margin-left: 20px;
+    border-style: none;
+}
+
+#projectInfo {
+    margin-left: 15px;
+}
+.editButt {
+    position: absolute;
+    margin: 30px 20px;
+    bottom: -38px;
+    right: 0;
+    width: 85px;
+    height: 34px;
+    border-radius: 10px;
+    border: 2px solid #ffda31;
+    color: rgb(42, 42, 42);
+    background-color: #ffda31;
+    font-size: 16px;
+    line-height: 25px;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.editButt:hover {
+    color: #3c3c3c;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+}
+
+#explainBox {
+    margin-left: 20px;
+}
+
+#projectInfo,
+#explainBox {
+    margin-left: 50px;
 }

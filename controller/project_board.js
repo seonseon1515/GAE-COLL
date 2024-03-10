@@ -47,9 +47,9 @@ exports.boardWrite = async (req, res) => {
     try {
         const { title, description, status, deadline, userId: member_id } = req.body;
         member_id === null || member_id === undefined ? (userId = req.userId) : (userId = member_id);
-        console.log(member_id, typeof member_id);
-        console.log(deadline, typeof deadline);
-        console.log("userId", userId);
+        // console.log(member_id, typeof member_id);
+        // console.log(deadline, typeof deadline);
+        // console.log("userId", userId);
         const boardWriteResult = await Board.create({
             projectId: Number(projectId),
             title,
@@ -69,7 +69,7 @@ exports.getBoardDetail = async (req, res) => {
     try {
         const userId = req.userId;
 
-        const { board_id: id } = req.query;
+        const { board_id: id } = req.params;
 
         const getBoardDatail = await Board.findOne({
             order: [["id", "DESC"]],
