@@ -136,7 +136,20 @@ const board_id = ids[1];
         for (let i = 0; i < getComments.data.result.length; i++) {
             //댓글 작성자 프로필 이미지
             const commentWriterImg = document.createElement("img");
-            commentWriterImg.src = `../../public/uploads/profile/${getComments.data.result[i].user_img}`;
+            if (
+                getComments.data.result[i].user_img === null ||
+                getComments.data.result[i].user_img === "" ||
+                getComments.data.result[i].user_img === undefined
+            ) {
+                commentWriterImg.src = `../../../public/img/user-solid.svg;`; //
+            } else if (
+                getComments.data.result[i].user_img.includes("http:") ||
+                getComments.data.result[i].user_img.includes("https://")
+            ) {
+                commentWriterImg.src = getComments.data.result[i].user_img;
+            } else {
+                commentWriterImg.src = `../../../public/uploads/profile/${getComments.data.result[i].user_img}`;
+            }
             commentWriterImg.className = "member_profile_img";
 
             //댓글 작성자 이름 + 댓글

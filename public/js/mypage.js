@@ -29,18 +29,12 @@ let type = "";
             ? (document.getElementById("blog").placeholder = "블로그주소를 입력해주세요")
             : (document.getElementById("blog").value = result.blog);
 
-        if (result.type === "email") {
-            result.user_img === null || result.user_img === ""
-                ? (document.getElementById("profileImageDisplay").src = `../../public/img/user-solid.svg`)
-                : (document.getElementById(
-                      "profileImageDisplay"
-                  ).src = `../../public/uploads/profile/${result.user_img}`);
-        }
-        if (result.type === "google" || result.type === "kakao") {
-            document.getElementById("changePW").classList.add("hidden");
-            result.user_img === null
-                ? (document.getElementById("profileImageDisplay").src = `../../public/img/user-solid.svg`)
-                : (document.getElementById("profileImageDisplay").src = `${result.user_img}`);
+        if (result.user_img === null || result.user_img === "" || result.user_img === undefined) {
+            document.getElementById("profileImageDisplay").src = `../../../public/img/user-solid.svg;`; //
+        } else if (result.user_img.includes("http:") || result.user_img.includes("https://")) {
+            document.getElementById("profileImageDisplay").src = result.user_img;
+        } else {
+            document.getElementById("profileImageDisplay").src = `../../../public/uploads/profile/${result.user_img}`;
         }
     }
 })();
@@ -231,6 +225,9 @@ async function changeProfile(e) {
         } else {
             // alert("프로필 변경이 실패했습니다");
             console.log("이미지 업로드 실패");
+        }
+        if (success || imgChangeResult.data.success) {
+            alert("프로필 업데이트에 성공하였습니다.");
         }
     } catch (error) {
         console.error("수정 하는 중 오류 발생 : ", error);
