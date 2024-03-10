@@ -57,6 +57,11 @@ exports.createProject = async (req, res) => {
             });
             console.log("addProjectMemberResult");
         }
+        //프로젝트 파일 생성
+        const createProjectFileResult = await ProjectFile.create({
+            projectId: Number(createProjectResult.id),
+        });
+
         //토큰에 projectID까지 넣어주기.
         const token = jwt.sign({ id: my_id, projectId: createProjectResult.id }, process.env.DEVEL_SECRET, {
             expiresIn: "24h",
@@ -259,7 +264,11 @@ exports.getProjectFile = async (req, res) => {
         const getProjectFileResult = await ProjectFile.findOne({
             where: { id },
         });
-        res.json({ success: true, result: getProjectFileResult });
+        if (getProjectFileResult !== null) {
+            res.json({ success: true, result: getProjectFileResult });
+        } else {
+            res.json({ success: true, result: { plan: "[]", erd: "[]", api: "[]" } });
+        }
     } catch (error) {
         res.json({ success: false, result: error });
     }
@@ -440,7 +449,7 @@ exports.updateProjectFile = async (req, res) => {
     const files = req.files;
     const id = req.projectId;
     const { type } = req.body;
-
+    console.log("type!!!!!!!", type);
     let fileName = [];
     try {
         const getProjectFileResult = await ProjectFile.findOne({
@@ -448,7 +457,7 @@ exports.updateProjectFile = async (req, res) => {
         });
         console.log("first", getProjectFileResult[type]);
         console.log(typeof getProjectFileResult[type]);
-        if (getProjectFileResult[type] !== "" && JSON.parse(getProjectFileResult[type]) !== null) {
+        if (JSON.parse(getProjectFileResult[type]) !== null && getProjectFileResult[type] !== "") {
             const beforeFiles = JSON.parse(getProjectFileResult[type]);
             console.log(typeof beforeFiles, beforeFiles);
             for (let i = 0; i < beforeFiles.length; i++) {
@@ -491,7 +500,7 @@ exports.updateProjectFile = async (req, res) => {
 
         res.json({ success: true, result: updateProjectFileResult });
     } catch (error) {
-        console.log(error);
+        console.log("파일업로드 에러", error);
         res.json({ success: false, result: error });
     }
 };

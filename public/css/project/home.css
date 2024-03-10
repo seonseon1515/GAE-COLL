@@ -184,7 +184,9 @@ li:hover .rule-icon {
 .file-upload-upload {
     display: flex;
 }
-.file-upload {
+.file-upload-api,
+.file-upload-plan,
+.file-upload-erd {
     width: 120px;
     height: 20px;
 }
