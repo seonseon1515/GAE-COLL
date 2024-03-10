@@ -284,3 +284,111 @@ td > img {
 .team_th2 {
     width: 70%;
 }
+
+@media (min-width: 650px) and (max-width: 1000px) {
+    .hi {
+        font-size: 20px;
+    }
+    .main_middle_block {
+        flex-direction: column;
+        margin-top: 15px;
+    }
+    .main_mywork,
+    .main_myproject {
+        margin-bottom: 20px;
+        width: calc(100% - 60px);
+        border-radius: 30px;
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .main_myproject_show {
+        border-radius: 10px;
+    }
+    .txt_place {
+        padding-left: 0;
+        width: 100px;
+    }
+    .main_myproject_name,
+    .main_myproject_stat {
+        font-size: 12px;
+        text-align: center;
+        line-height: normal;
+    }
+}
+
+@media (min-width: 370px) and (max-width: 650px) {
+    .hi {
+        font-size: 20px;
+    }
+    .main_middle_block {
+        flex-direction: column;
+        margin-top: 15px;
+    }
+    .main_mywork,
+    .main_myproject {
+        margin-bottom: 20px;
+        width: calc(100% - 60px);
+        border-radius: 30px;
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    .main_mywork_txt {
+        font-size: 15px;
+    }
+    .main_status {
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        font-size: 14px;
+    }
+    .main_status_txt {
+        padding-right: 10px;
+    }
+    .selected {
+        padding: 0 100px 0 0;
+    }
+    .main_board {
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+    tr {
+        height: 30px;
+    }
+    .main_team_txt,
+    .main_myproject_projectTxt {
+        font-size: 20px;
+    }
+    .profiles {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .profiles > * {
+        width: 150px;
+    }
+    .main_myproject_profile > button {
+        width: auto;
+        justify-content: flex-start;
+    }
+    .main_myproject_show {
+        border-radius: 10px;
+    }
+    .main_myproject_name,
+    .main_myproject_stat {
+        font-size: 12px;
+        text-align: center;
+        line-height: normal;
+    }
+    .txt_place {
+        padding-left: 0;
+        width: 100px;
+    }
+    .main_lower_block {
+        border-radius: 30px;
+        overflow-y: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+}
