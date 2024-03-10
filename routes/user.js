@@ -7,7 +7,7 @@ const { uploadProfileImg } = require("../middleware/multer");
 //회원가입
 router.post("/signup", controller.signup);
 //회원가입시 이메일 조회
-router.post("/check/user", controller.checkUser);
+router.post("/check", controller.checkUser);
 //카카오 회원가입
 router.get("/auth/kakao", controller.getKakaoAuth);
 //이메일 확인

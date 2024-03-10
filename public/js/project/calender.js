@@ -47,13 +47,13 @@ make_calender(now);
 
 // 이전 달
 
-document.querySelector('.prev').onclick = () => {
+document.querySelector(".prev").onclick = () => {
     make_calender(new Date(now.setMonth(now.getMonth() - 1)));
 };
 
 // 다음 달
 
-document.querySelector('.next').onclick = () => {
+document.querySelector(".next").onclick = () => {
     make_calender(new Date(now.setMonth(now.getMonth() + 1)));
 };
 
@@ -64,24 +64,24 @@ document.querySelector('.next').onclick = () => {
 
 // 팝업 닫기
 function closePop() {
-    document.getElementById('pop_info_1').style.display = 'none';
+    document.getElementById("pop_info_1").style.display = "none";
 }
 
-const openModalBtn = document.getElementById('openModalBtn');
-const modal = document.getElementById('pop_info_1');
-const closeBtn = document.getElementsByClassName('close')[0];
+const openModalBtn = document.getElementById("openModalBtn");
+const modal = document.getElementById("pop_info_1");
+const closeBtn = document.getElementsByClassName("close")[0];
 
-openModalBtn.addEventListener('click', function () {
-    modal.style.display = 'block';
+openModalBtn.addEventListener("click", function () {
+    modal.style.display = "block";
 });
 
-closeBtn.addEventListener('click', function () {
-    modal.style.display = 'none';
+closeBtn.addEventListener("click", function () {
+    modal.style.display = "none";
 });
 
-window.addEventListener('click', function (event) {
+window.addEventListener("click", function (event) {
     if (event.target == modal) {
-        modal.style.display = 'none';
+        modal.style.display = "none";
     }
 });
 
@@ -96,6 +96,6 @@ window.addEventListener('click', function (event) {
 // -> 요번달을 기준으로 하는 달력을 만드는 함수 + 오늘 날짜에 css 효과 추가
 let todayMark = now.getDate();
 
-document.querySelector('.today').onclick = () => {
+document.querySelector(".today").onclick = () => {
     make_calender(new Date(now.setMonth(now.getMonth())));
 };
