@@ -120,11 +120,44 @@ const board_id = ids[1];
             statusEl.textContent = "";
             console.log("작업상태 없음");
         }
+
+        //보드 댓글 가져오기
+        const id = board_id;
+        const getComments = await axios({
+            method: "get",
+            url: `/api/project/board/get/comment/${id}`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+
+        console.log("댓글가져온거", getComments.data.result);
+        const boardComments = document.querySelector(".boradComments");
+        for (let i = 0; i < getComments.data.result.length; i++) {
+            //댓글 작성자 프로필 이미지
+            const commentWriterImg = document.createElement("img");
+            commentWriterImg.src = `../../public/uploads/profile/${getComments.data.result[i].user_img}`;
+            commentWriterImg.className = "member_profile_img";
+
+            //댓글 작성자 이름 + 댓글
+            const commentBox = document.createElement("div");
+            const commentWriter = document.createElement("span");
+            const comment = document.createElement("span");
+            commentWriter.textContent = getComments.data.result[i].user_name;
+            comment.textContent = getComments.data.result[i].comment;
+            commentBox.appendChild(commentWriter);
+            commentBox.appendChild(comment);
+
+            const setBox = document.createElement("div");
+            setBox.className = `commentBox ${i}`;
+            setBox.appendChild(commentWriterImg);
+            setBox.appendChild(commentBox);
+
+            boardComments.appendChild(setBox);
+        }
     } catch (error) {
         console.log("error", error);
     }
-
-    // document.getElementById("pro_status").textContent = status;
 })();
 
 //보내기
@@ -202,7 +235,7 @@ async function editFunc() {
         });
         if (res.data.success) {
             alert("일정이 수정되었습니다.");
-            // location.reload();
+            location.reload();
         } else {
             alert("수정에 실패하였습니다.");
             return;
@@ -212,7 +245,7 @@ async function editFunc() {
     }
 }
 
-//작업상태 변경
+//작업상태 디자인 변경 함수 모음
 async function changeStatusToPlan() {
     const circle = document.querySelector("#blue");
     const status = document.getElementById("pro_status");
@@ -269,4 +302,55 @@ async function changeStatusToNeedFeed() {
     status.textContent = "피드백 요청";
     bg.style.backgroundColor = "#f8cfcf";
     circle.style.backgroundColor = "#f25c5c";
+}
+
+//보드 삭제
+async function deleteBoard() {
+    try {
+        const deleteBoard = await axios({
+            method: "delete",
+            url: `/api/project/board/delete`,
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                board_id,
+            },
+        });
+
+        // 보드 관련 댓글 삭제
+        // const deleteComment = await axios({
+        //     method: "delete",
+
+        // });
+        if (deleteBoard.data.success) {
+            alert("보드가 삭제되었습니다.");
+            return (document.location.href = "board_main");
+        } else {
+            alert("보드 삭제에 실패하였습니다.");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+//댓글 작성
+async function addComment() {
+    const comment = document.querySelector(".comment_area").value;
+    const addCommentRes = await axios({
+        method: "post",
+        url: "/api/project/board/write/comment",
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        data: {
+            board_id,
+            comment,
+        },
+    });
+    if (addCommentRes.data.success) {
+        return location.reload();
+    } else {
+        return alert("댓글 작성에 실패하였습니다.");
+    }
 }

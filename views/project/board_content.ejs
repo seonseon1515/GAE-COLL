@@ -68,7 +68,7 @@
             </div>
         </nav>
 
-        <hr class="top_bar_line1" />
+        <hr class="top_bar_line2" />
 
         <section id="projectInfo">
             <div class="board_name">
@@ -95,24 +95,27 @@
         <section id="explainBox">
             <span id="boardExplain" class="board_explain">설명</span>
             <textarea id="writeExplain" class="write_explain" placeholder="이 작업에 대해 설명해주세요"></textarea>
+            <div class="editButtonBox">
+                <button type="button" class="editButt" onclick="editFunc()">수정하기</button>
+            </div>
         </section>
-
-        
+        <br>
         <hr class="top_bar_line2" />
-        
-        <div class="editButtonBox">
-            <button type="button" class="editButt" onclick="editFunc()">수정하기</button>
-        </div>
-        
-        <br>
-        <br>
 
+        <br>
+        <!--댓글 출력-->
+        <div class="boradComments"></div>
+        <br>
+        <hr>
+        <!--댓글 작성-->
         <div class="board_comment">
             <div class="wrap_comment">
-                <div class="member_profile_img"></div>
-                <textarea class="comment_area" placeholder="댓글추가"></textarea>
+                <!-- <div class="member_profile_img"></div> -->
+                <textarea class="comment_area" placeholder="댓글 작성"></textarea>
             </div>
-            <button type="button" class="wirte_button">작성</button>
+            <div>
+                <button type="button" class="boardCommentButt" onclick="addComment()">작성</button>
+            </div>
         </div>
 
 

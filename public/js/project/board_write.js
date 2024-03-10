@@ -45,11 +45,7 @@ options.forEach((option) => {
             optionEl.value = member[i].user_name;
             optionEl.textContent = member[i].user_name;
             optionEl.className = `${member[i].id}`;
-            // memberID.classList.add(`${member[i].id}`);
-            // memberID.value = member[i].id;
-            // memberID.style.display = "none";
             boardManager.appendChild(optionEl);
-            // boardManager.appendChild(memberID);
         }
 
         myProjectBox.textContent = "";
@@ -131,7 +127,7 @@ async function submitFunc() {
         });
         if (res.data.success) {
             alert("새로운 일정이 추가되었습니다.");
-            document.location.href = "board_main";
+            return (document.location.href = "board_main");
         }
     } catch (error) {
         console.error(error);
