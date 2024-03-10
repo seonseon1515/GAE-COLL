@@ -23,23 +23,6 @@ options.forEach((option) => {
 //     }
 // });
 
-// 사용자 이름 조회
-// (function () {
-//     axios({
-//         method: "POST",
-//         url: "/api/user/info",
-//         headers: {
-//             Authorization: `Bearer ${token}`,
-//         },
-//     }).then((res) => {
-//         console.log("res data결과", res.data);
-//         const { user_name, id } = res.data.result;
-//         document.querySelector(".userId").value = id;
-//         document.querySelector(".writer_box").innerHTML = user_name;
-//         document.getElementById("issue_date").value = new Date().toISOString().slice(0, 10);
-//     });
-// })();
-
 //프로젝트명 불러오기
 (function () {
     axios({
@@ -82,7 +65,26 @@ async function submitFunc() {
         //작업 설명
         const description = document.getElementById("writeExplain").value;
         //상태
-        const status = document.getElementById("boardStatus").value;
+        // const status = document.getElementById("boardStatus").value;
+        const statusKor = document.getElementById("pro_status").textContent;
+        let status = "";
+        console.log(statusKor);
+        if (statusKor === "계획중") {
+            status = "planning";
+        } else if (statusKor === "피드백 요청") {
+            status = "needFeedback";
+        } else if (statusKor === "피드백 완료") {
+            status = "finishFeedback";
+        } else if (statusKor === "중단") {
+            status = "suspend";
+        } else if (statusKor === "완료") {
+            status = "finish";
+        } else if (statusKor === "진행중") {
+            status = "progress";
+        } else {
+            return console.log("status값 없음");
+        }
+
         //마감일
         const deadline = document.getElementById("boardDeadline").value;
         console.log(deadline, status, description, title);
@@ -134,4 +136,63 @@ async function submitFunc() {
     } catch (error) {
         console.error(error);
     }
+}
+
+//작업상태 변경
+async function changeStatusToPlan() {
+    const circle = document.querySelector("#blue");
+    const status = document.getElementById("pro_status");
+    const bg = document.getElementById("bg");
+
+    status.textContent = "";
+    status.textContent = "계획중";
+    bg.style.backgroundColor = "hsl(199, 74%, 85%)";
+    circle.style.backgroundColor = "hsl(198, 60%, 70%)";
+}
+async function changeStatusToProg() {
+    const circle = document.querySelector("#blue");
+    const status = document.getElementById("pro_status");
+    const bg = document.getElementById("bg");
+
+    status.textContent = "";
+    status.textContent = "진행중";
+    bg.style.backgroundColor = "#f9f9c1";
+    circle.style.backgroundColor = "#eaea5e";
+}
+async function changeStatusToSus() {
+    const circle = document.querySelector("#blue");
+    const status = document.getElementById("pro_status");
+    const bg = document.getElementById("bg");
+
+    status.textContent = "";
+    status.textContent = "중단";
+    bg.style.backgroundColor = "#f8d6f8";
+    circle.style.backgroundColor = "purple";
+}
+async function changeStatusToFin() {
+    const circle = document.querySelector("#blue");
+    const status = document.getElementById("pro_status");
+    const bg = document.getElementById("bg");
+    status.textContent = "";
+    status.textContent = "완료";
+    bg.style.backgroundColor = "#d2f5d2";
+    circle.style.backgroundColor = "#328d32";
+}
+async function changeStatusToNeedFeed() {
+    const circle = document.querySelector("#blue");
+    const status = document.getElementById("pro_status");
+    const bg = document.getElementById("bg");
+    status.textContent = "";
+    status.textContent = "피드백 완료";
+    bg.style.backgroundColor = "#d1d0d0";
+    circle.style.backgroundColor = "#504e4e";
+}
+async function changeStatusToNeedFeed() {
+    const circle = document.querySelector("#blue");
+    const status = document.getElementById("pro_status");
+    const bg = document.getElementById("bg");
+    status.textContent = "";
+    status.textContent = "피드백 요청";
+    bg.style.backgroundColor = "#f8cfcf";
+    circle.style.backgroundColor = "#f25c5c";
 }
