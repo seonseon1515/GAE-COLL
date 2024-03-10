@@ -141,17 +141,49 @@ const board_id = ids[1];
 
             //댓글 작성자 이름 + 댓글
             const commentBox = document.createElement("div");
-            const commentWriter = document.createElement("span");
-            const comment = document.createElement("span");
+            const commentWriter = document.createElement("div");
+            const comment = document.createElement("div");
             commentWriter.textContent = getComments.data.result[i].user_name;
             comment.textContent = getComments.data.result[i].comment;
+            comment.className = `comment ${getComments.data.result[i].id}`;
             commentBox.appendChild(commentWriter);
             commentBox.appendChild(comment);
+
+            //삭제
+            const deleteIcon = document.createElement("button");
+            // deleteIcon.src = "../../public/img/trash.png";
+            deleteIcon.className = "deleteCommentIcon";
+            deleteIcon.onclick = async function () {
+                try {
+                    if (!confirm("댓글을 삭제하시겠습니까?")) {
+                        return;
+                    }
+                    const deleteComment = await axios({
+                        method: "delete",
+                        url: "/api/project/board/delete/comment",
+                        headers: {
+                            Authorization: `Bearer ${token}`, // 토큰 추가
+                        },
+                        data: { comment_id: getComments.data.result[i].id },
+                    });
+                    console.log(deleteComment.data);
+                    if (deleteComment.data.success) {
+                        setBox.remove();
+                        location.reload();
+                    } else {
+                        alert("댓글 작성자만 삭제할 수 있습니다.");
+                        return;
+                    }
+                } catch (error) {
+                    console.log(error);
+                }
+            };
 
             const setBox = document.createElement("div");
             setBox.className = `commentBox ${i}`;
             setBox.appendChild(commentWriterImg);
             setBox.appendChild(commentBox);
+            setBox.appendChild(deleteIcon);
 
             boardComments.appendChild(setBox);
         }
@@ -307,6 +339,14 @@ async function changeStatusToNeedFeed() {
 //보드 삭제
 async function deleteBoard() {
     try {
+        if (!confirm("삭제하시겠습니까?")) {
+            return;
+        }
+
+        // 보드 댓글 삭제 , 외래키 옵션 설정해놨나..?ㅎㅋㅎㅋ
+        // const deleteCommentAll = await axios({
+        // })
+
         const deleteBoard = await axios({
             method: "delete",
             url: `/api/project/board/delete`,
@@ -318,14 +358,9 @@ async function deleteBoard() {
             },
         });
 
-        // 보드 관련 댓글 삭제
-        // const deleteComment = await axios({
-        //     method: "delete",
-
-        // });
         if (deleteBoard.data.success) {
             alert("보드가 삭제되었습니다.");
-            return (document.location.href = "board_main");
+            document.location.href = "/project/board_main";
         } else {
             alert("보드 삭제에 실패하였습니다.");
         }
@@ -354,3 +389,8 @@ async function addComment() {
         return alert("댓글 작성에 실패하였습니다.");
     }
 }
+
+// //댓글 삭제
+// async function deleteComment() {
+//     const
+// }
