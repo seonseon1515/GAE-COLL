@@ -35,6 +35,7 @@ exports.signup = async (req, res) => {
             res.json({ success: true, result, token });
         }
     } catch (error) {
+        console.log(error);
         res.json({ success: false, result: error });
     }
 };
@@ -106,9 +107,9 @@ exports.loginEmail = async (req, res) => {
     }
 };
 
-//유저이메일을 이용한 유저조회
-exports.findUser = async (req, res) => {
-    const { email, isSignup } = req.body;
+//회원가입시 이메일 조회
+exports.checkUser = async (req, res) => {
+    const { email } = req.body;
     try {
         const findUserResult = await User.findOne({
             where: { email },
@@ -118,6 +119,26 @@ exports.findUser = async (req, res) => {
             if (isSignup) {
                 const token = jwt.sign({ id: findUserResult.id }, process.env.DEVEL_SECRET, { expiresIn: "24h" });
                 res.json({ success: true, token });
+            }
+        } else {
+            res.json({ success: false });
+        }
+    } catch (error) {
+        console.log(error);
+        res.json({ success: false, result: error });
+    }
+};
+//유저이메일을 이용한 유저조회(프로젝트생성, 프로젝트 멤버추가)
+exports.findUser = async (req, res) => {
+    const { email } = req.body;
+    try {
+        const findUserResult = await User.findOne({
+            where: { email },
+        });
+
+        if (findUserResult) {
+            if (findUserResult.id === req.userId) {
+                res.json({ success: false, result: { message: "자기자신은 추가 불가합니다." } });
             } else {
                 res.json({ success: true, result: { id: findUserResult.id, email: findUserResult.email } });
             }
@@ -312,3 +333,21 @@ async function deleteImg(id) {
         console.log(error);
     }
 }
+
+const kakaoOpt = {
+    clientId: process.env.KAKAO_CLIENT_ID,
+    clientSecret: process.env.KAKAO_CLIENT_SECRET,
+    develRedirectUri: process.env.DEVEL_KAKAO_REDIRECT_URI,
+    prodRedirectUri: process.env.PROD_KAKAO_REDIRECT_URI,
+};
+
+//카카오 로그인
+exports.getKakaoAuth = async (req, res) => {
+    let kakaoLoginURL = "";
+    if (process.env.NODE_ENV === "production") {
+        kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.prodRedirectUri}&response_type=code`;
+    } else {
+        kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.develRedirectUri}&response_type=code`;
+    }
+    res.redirect(kakaoLoginURL);
+};

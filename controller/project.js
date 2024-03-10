@@ -6,30 +6,31 @@ const { default: axios } = require("axios");
 const { type } = require("os");
 //프로젝트 생성
 exports.createProject = async (req, res) => {
-    const file = req.file;
-    const my_id = req.userId;
-
-    const { project_name, start_date, end_date, overview, rule, member_id, send_img } = req.body;
-    let userId = [];
-
-    //사진을 보냈는데 이미지 파일이 아니면 보드 생성 실패
-
-    if (send_img === true && file === undefined) {
-        res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
-        return;
-    }
-    userId.push(my_id);
-    //멤버가 object타입인지 string타입인지 구별 -> 포스트맨 테스트로 인해 처리
-    if (typeof member_id === "object") {
-        userId = member_id;
-        console.log(userId.length);
-    } else if (typeof member_id === "string") {
-        userId = JSON.parse(member_id);
-    } else if (typeof member_id === "array") {
-        userId = member_id;
-    }
-
     try {
+        const file = req.file;
+        const my_id = req.userId;
+
+        const { project_name, start_date, end_date, overview, rule, member_id, send_img } = req.body;
+        let userId = [];
+
+        //사진을 보냈는데 이미지 파일이 아니면 보드 생성 실패
+
+        if (send_img === true && file === undefined) {
+            res.json({ success: false, result: { message: "파일업로드에 실패하였습니다." } });
+            return;
+        }
+        userId.push(my_id);
+        //멤버가 object타입인지 string타입인지 구별 -> 포스트맨 테스트로 인해 처리
+        if (typeof member_id === "object" || typeof member_id === "array") {
+            console.log(userId.length);
+            for (id of member_id) {
+                userId.push(id);
+            }
+        } else if (typeof member_id === "string") {
+            for (id of JSON.parse(member_id)) {
+                userId.push(id);
+            }
+        }
         const result = [];
         let project_img;
 
@@ -45,19 +46,16 @@ exports.createProject = async (req, res) => {
             overview,
             rule: JSON.stringify(rule),
         });
-        const createProjectFileResult = await ProjectFile.create({
-            projectId: Number(createProjectResult.id),
-        });
-
+        console.log("userId", userId);
         //프로젝트 멤버DB에 추가
         for (let i = 0; i < userId.length; i++) {
             console.log(userId, userId.length);
+            console.log("userId[i]", userId[i]);
             const addProjectMemberResult = await ProjectMember.create({
                 projectId: Number(createProjectResult.id),
                 userId: Number(userId[i]),
             });
-
-            result.push(addProjectMemberResult);
+            console.log("addProjectMemberResult");
         }
         //토큰에 projectID까지 넣어주기.
         const token = jwt.sign({ id: my_id, projectId: createProjectResult.id }, process.env.DEVEL_SECRET, {
@@ -65,7 +63,8 @@ exports.createProject = async (req, res) => {
         });
         res.json({ success: true, result: "", token });
     } catch (error) {
-        res.json({ success: true, result: error });
+        console.log("프로젝트생성에러", error);
+        res.json({ success: false, result: error });
     }
 };
 
@@ -169,15 +168,15 @@ exports.getMyTeamBoard = async (req, res) => {
         let teamBoards = [];
 
         // 각 팀원별로 프로젝트의 보드 조회
-        for (let j = 0; j < myProjects.length; j++) {
+        for (let j = 0; j < projects.length; j++) {
             for (let i = 0; i < projectMembers.length; i++) {
                 const member = projectMembers[i];
                 const getBoardResult = await Board.findAll({
-                    where: { projectId: myProjects[j].projectId, userId: projectMembers[i].id },
+                    where: { projectId: projects[j].projectId, userId: projectMembers[i].id },
                 });
                 for (let boardResult of getBoardResult) {
                     const projectImg = await Project.findOne({
-                        where: { id: myProjects[j].projectId },
+                        where: { id: projects[j].projectId },
                         attributes: ["project_img", "project_name"],
                     });
 
@@ -201,6 +200,7 @@ exports.getMyTeamBoard = async (req, res) => {
 
         res.json({ success: true, result: teamBoards });
     } catch (error) {
+        console.log("팀보드조회 실패", error);
         res.json({ success: false, result: "팀 보드 조회 실패" });
     }
 };
