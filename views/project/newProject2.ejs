@@ -31,14 +31,14 @@
           <br />
           <div class="proejctDates">
             <div class="subtxt" for="setProDate">프로젝트 날짜</div>
-            <div class="projectStartBox">
+            
                 <label for="start_date">시작일</label>
-                <input type="text" name="nowDateName" id="start_date" min="2012-06-05" max="2050-06-20" class="txtBox" />
-            </div>
-            <div class="projectEndBox">
+                <input type="date" id="start_date" class="txtBox"/>
+           
+        
                   <label for="end_date">마감일</label>
-                  <input type="text" name="nowDateName" id="end_date" min="2012-06-05" max="2050-06-20" class="txtBox" />
-            </div>
+                  <input type="date" id="end_date" class="txtBox" />
+           
           </div>
 
           <br />
@@ -53,7 +53,7 @@
               <h1 class="h1Css">이메일을 작성하세요</h1>
               <form name="email-write" id="member-invitation">
                 <label for="email-write">이메일 : </label>
-                <input type="email" name="email-write" id="email-write"/>
+                <input type="email" name="email-write" id="email-write" placeholder="이메일 형식으로 작성해주세요."/>
                 <ul id="emailList"></ul>
                 <div id="member-invi-button-div">
                   <button class="invi addButton" type="button" onclick="addEmail()" style="display: inline;">추가</button>
@@ -83,6 +83,6 @@
 </body>
 <script src="../../public/js/project/newProject2.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 </html>
