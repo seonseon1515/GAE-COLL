@@ -70,6 +70,7 @@ exports.getBoardDetail = async (req, res) => {
         const userId = req.userId;
 
         const { board_id: id } = req.params;
+        console.log("보드 잘 들어올까?", req.params);
 
         const getBoardDatail = await Board.findOne({
             order: [["id", "DESC"]],

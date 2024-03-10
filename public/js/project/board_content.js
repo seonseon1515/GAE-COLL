@@ -34,8 +34,9 @@ const board_id = ids[1];
             },
         });
         //deadline, userId, projectId, status, title, description
-
+        console.log("보드", getBoardDetail.data.result);
         const { deadline, userId, projectId, status, title, description } = getBoardDetail.data.result.data;
+
         console.log(deadline, userId, projectId, status, title, "설명", description);
 
         const getProjectName = await axios({
@@ -47,6 +48,16 @@ const board_id = ids[1];
         });
 
         const { project_name, member } = getProjectName.data.result;
+        const boardManager = document.getElementById("boardManager");
+
+        for (let i = 0; i < member.length; i++) {
+            const optionEl = document.createElement("option");
+            optionEl.value = member[i].user_name;
+            optionEl.textContent = member[i].user_name;
+            optionEl.className = `${member[i].id}`;
+            // console.log("아이디", member[i].user_name, member[i].id, optionEl.className);
+            boardManager.appendChild(optionEl);
+        }
 
         const getUserName = await axios({
             method: "POST",
@@ -67,9 +78,10 @@ const board_id = ids[1];
         const day = deadLine.getDate().toString().padStart(2, "0"); // 일
         const formattedDate = `${year}-${month}-${day}`;
         document.getElementById("boardDeadline").value = formattedDate;
-        document.getElementById("boardManager").textContent = user_name;
+        document.getElementById("boardManager").value = user_name;
         document.getElementById("myProject").textContent = project_name;
         document.getElementById("writeExplain").value = description;
+        document.getElementById("boardTitle").value = title;
 
         const circle = document.querySelector("#blue");
         const statusEl = document.getElementById("pro_status");
@@ -117,20 +129,86 @@ const board_id = ids[1];
 
 //보내기
 async function editFunc() {
-    const statusKor = document.getElementById("pro_status").textContent;
-    let status = "";
-    if (statusKor === "계획중") {
-        status = "planning";
-    } else if (statusKor === "피드백 요청") {
-        status = "needFeedback";
-    } else if (statusKor === "피드백 완료") {
-        status = "finishFeedback";
-    } else if (statusKor === "중단") {
-        status = "suspend";
-    } else if (statusKor === "완료") {
-        status = "finish";
-    } else {
-        return console.log("status값 없음");
+    try {
+        //제목
+        const title = document.getElementById("boardTitle").value;
+        //작업 설명
+        const description = document.getElementById("writeExplain").value;
+        //상태
+        // const status = document.getElementById("boardStatus").value;
+        const statusKor = document.getElementById("pro_status").textContent;
+        let status = "";
+        console.log(statusKor);
+        if (statusKor === "계획중") {
+            status = "planning";
+        } else if (statusKor === "피드백 요청") {
+            status = "needFeedback";
+        } else if (statusKor === "피드백 완료") {
+            status = "finishFeedback";
+        } else if (statusKor === "중단") {
+            status = "suspend";
+        } else if (statusKor === "완료") {
+            status = "finish";
+        } else if (statusKor === "진행중") {
+            status = "progress";
+        } else {
+            return console.log("status값 없음");
+        }
+
+        //마감일
+        const deadline = document.getElementById("boardDeadline").value;
+        console.log(deadline, status, description, title);
+        // //프로젝트 멤버id = 담당자 id (class이름에 저장)
+        const boardManager = document.getElementById("boardManager");
+        const selectedOption = boardManager.options[boardManager.selectedIndex];
+        const userId = selectedOption.className;
+
+        if (title === "" || title === undefined || title === null) {
+            alert("제목을 작성해주세요.");
+            return;
+        }
+        if (description === "" || description === undefined || description === null) {
+            alert("설명을 작성해주세요.");
+            return;
+        }
+        if (status === "" || status === undefined || status === null) {
+            alert("작업 상태를 선택해주세요.");
+            return;
+        }
+        if (userId === "" || userId === undefined || userId === null) {
+            alert("담당자를 선택해주세요");
+            return;
+        }
+        if (deadline === "" || deadline === undefined || deadline === null) {
+            alert("마감일을 설정해주세요.");
+            return;
+        }
+
+        const res = await axios({
+            method: "patch",
+            url: "/api/project/board/update",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                // title, description, status, deadline, board_id: id, userId
+                title,
+                description,
+                status,
+                deadline,
+                board_id,
+                userId,
+            },
+        });
+        if (res.data.success) {
+            alert("일정이 수정되었습니다.");
+            // location.reload();
+        } else {
+            alert("수정에 실패하였습니다.");
+            return;
+        }
+    } catch (error) {
+        console.error(error);
     }
 }
 
