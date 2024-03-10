@@ -90,14 +90,28 @@ exports.getBoardDetail = async (req, res) => {
 //보드 월별조회
 exports.getBoardMonth = async (req, res) => {
     try {
+        const my_id = req.userId;
         const projectId = req.projectId;
         const { YYYYMM } = req.query;
+        let is_mine = false;
+        const boardData = [];
 
         const getBoardAllResult = await Board.findAll({
             order: [["id", "DESC"]],
             where: { projectId, deadline: { [Op.like]: `${YYYYMM}%` } },
         });
-        res.json({ success: true, result: getBoardAllResult });
+        for (let board of getBoardAllResult) {
+            board.userId === my_id ? (is_mine = true) : (is_mine = false);
+            const data = {
+                deadline: board.deadline,
+                id: board.id,
+                status: board.status,
+                title: board.title,
+                is_mine,
+            };
+            boardData.push(data);
+        }
+        res.json({ success: true, result: boardData });
     } catch (error) {
         console.log(error);
         res.json({ success: false, result: error });
