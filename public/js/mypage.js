@@ -30,7 +30,7 @@ let type = "";
             : (document.getElementById("blog").value = result.blog);
 
         if (result.user_img === null || result.user_img === "" || result.user_img === undefined) {
-            document.getElementById("profileImageDisplay").src = `../../../public/img/user-solid.svg;`; //
+            document.getElementById("profileImageDisplay").src = `../../../public/img/user-solid.svg`; //
         } else if (result.user_img.includes("http:") || result.user_img.includes("https://")) {
             document.getElementById("profileImageDisplay").src = result.user_img;
         } else {

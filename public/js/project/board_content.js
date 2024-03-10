@@ -141,7 +141,7 @@ const board_id = ids[1];
                 getComments.data.result[i].user_img === "" ||
                 getComments.data.result[i].user_img === undefined
             ) {
-                commentWriterImg.src = `../../../public/img/user-solid.svg;`; //
+                commentWriterImg.src = `../../../public/img/user-solid.svg`; //
             } else if (
                 getComments.data.result[i].user_img.includes("http:") ||
                 getComments.data.result[i].user_img.includes("https://")
