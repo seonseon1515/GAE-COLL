@@ -2,7 +2,8 @@ const toggleDiv = document.querySelectorAll(".toggle_open");
 let changedBoardId = 0;
 let boardData = [];
 let projectMember = [];
-
+let selectedMember = undefined;
+let boardStatus = undefined;
 for (let i = 0; i < toggleDiv.length; i++) {
     toggleDiv[i].addEventListener("click", clickToggle);
 }
@@ -134,18 +135,20 @@ function drawTable(data) {
                 boardDeadlineUpdate(boardId, dateString);
             },
         });
-        //$(`#datepicker${data[i].id}`).datepicker("setDate", "2024-02-03");
+        // $(`#datepicker${data[i].id}`).datepicker("setDate", "2024-02-03");
     }
 }
-//작업추가
-const addJobTbody = document.getElementById("addJobTbody");
-function addJob() {
+function getToday() {
     const today = new Date();
     const year = today.getFullYear();
     const month = ("0" + (today.getMonth() + 1)).slice(-2);
     const day = ("0" + today.getDate()).slice(-2);
     const dateString = year + "-" + month + "-" + day;
-
+    return dateString;
+}
+//작업추가
+const addJobTbody = document.getElementById("addJobTbody");
+function addJob() {
     const tr = document.createElement("tr");
     tr.innerHTML = `
         <td class="td1">
@@ -153,57 +156,24 @@ function addJob() {
         </td>
         <td id="td2" class="td2"> 
         <div class="button-wrap">
-          <button type="button" id="bg_blue" class="placement_status_inner" onclick="showModal(event,0)">
+          <button type="button" id="bg_blue" id="status-content" class="placement_status_inner" onclick="showModal(event,0)">
               <div id="blue" class="circle1"></div>
               <div class="status_txt1">계획중</div>
           </button>
           </div>
       </td>
-      <td class="td3"><input type="text" id="datepicker-new" placeholder="마감일"></td>
+      <td class="td3"><input type="text" id="datepicker" placeholder="마감일"></td>
       <td class="td4"><button class="work_managers" id="new-work-member" type="button" onclick="showUserSelectModal(event, 0)">작업자선택</button></td>
 
     `;
 
     addJobTbody.appendChild(tr);
-    //작업추가중이면 추가 작업안되게 버튼 disabled
-    document.getElementById("addJob").setAttribute("disabled", "disabled");
-    //input에 이벤트 추가
-    document.getElementById("writeBoardTitle").addEventListener("blur", writeBoard("planning"));
-    document.getElementById("writeBoardTitle").addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-            writeBoard("planning");
-        }
-    });
-    $("#datepicker").datepicker();
-    // document.getElementById("ui-datepicker-div").style.zIndex = 999;
-}
-//input태그 작성완료시 보드 작성 요청
-async function writeBoard(status, userId) {
-    try {
-        const boardTitle = document.querySelector("#writeBoardTitle");
-        const deadline = document.querySelector("#datepicker-new");
-
-        const writeBoardResult = await axios({
-            method: "post",
-            url: "/api/project/board/write",
-            data: {
-                title: boardTitle.value,
-                status,
-                deadline,
-                userId,
-            },
-        });
-    } catch (error) {}
-}
-$(function () {
-    //input을 datepicker로 선언
     $("#datepicker").datepicker({
         dateFormat: "yy-mm-dd", //Input Display Format 변경
         showOtherMonths: true, //빈 공간에 현재월의 앞뒤월의 날짜를 표시
         showMonthAfterYear: true, //년도 먼저 나오고, 뒤에 월 표시
         changeYear: true, //콤보박스에서 년 선택 가능
         changeMonth: true, //콤보박스에서 월 선택 가능
-        showOn: "both", //button:버튼을 표시하고,버튼을 눌러야만 달력 표시 ^ both:버튼을 표시하고,버튼을 누르거나 input을 클릭하면 달력 표시
         buttonText: "선택", //버튼에 마우스 갖다 댔을 때 표시되는 텍스트
         yearSuffix: "년", //달력의 년도 부분 뒤에 붙는 텍스트
         monthNamesShort: ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"], //달력의 월 부분 텍스트
@@ -212,12 +182,71 @@ $(function () {
         dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"], //달력의 요일 부분 Tooltip 텍스트
         minDate: "-1M", //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
         maxDate: "+1M", //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
+        onSelect: function (dateString) {
+            //날짜 선택되었을때 업데이트되게 하기!
+            // const boardId = this.id.replace("datepicker", "");
+            // boardDeadlineUpdate(boardId, dateString);
+        },
     });
 
-    //초기값을 오늘 날짜로 설정
-    $("#datepicker").datepicker("setDate", "today"); //(-1D:하루전, -1M:한달전, -1Y:일년전), (+1D:하루후, -1M:한달후, -1Y:일년후)
-});
+    //작업추가중이면 추가 작업안되게 버튼 disabled
+    document.getElementById("addJob").setAttribute("disabled", "disabled");
+    document.getElementById("writeBoardTitle").focus();
 
+    //input에 이벤트 추가
+    document.getElementById("writeBoardTitle").addEventListener("blur", function () {
+        //생성될때 자동으로 blur되어서 writeBoard함수로 넘어가는거 막음
+        if (document.getElementById("writeBoardTitle").value !== "") {
+            writeBoard();
+        }
+    });
+    document.getElementById("writeBoardTitle").addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+            writeBoard();
+        }
+    });
+}
+
+//input태그 작성완료시 보드 작성 요청
+async function writeBoard() {
+    try {
+        const boardTitle = document.querySelector("#writeBoardTitle").value;
+        const deadlineValue = document.querySelector("#datepicker").value;
+        const token = localStorage.getItem("token");
+        let deadline = "";
+        let getBoardStatus = "";
+        deadlineValue === null || deadlineValue === "" ? (deadline = getToday()) : (deadline = deadlineValue);
+        boardStatus !== undefined ? (getBoardStatus = boardStatus) : (getBoardStatus = "planning");
+
+        //상태 변경해주기
+        if (boardStatus !== "planning") {
+            const statusContentDiv = document.getElementById("status-content");
+        }
+
+        const writeBoardResult = await axios({
+            method: "post",
+            url: "/api/project/board/write",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            data: {
+                title: boardTitle,
+                status: getBoardStatus,
+                deadline,
+                userId: selectedMember,
+            },
+        });
+        const { success } = writeBoardResult.data;
+        if (success) {
+            document.location.reload();
+            selectedMember = undefined;
+        } else {
+            alert("보드 생성에 실패하였습니다.");
+        }
+    } catch (error) {
+        console.log(error);
+    }
+}
 const modal = document.querySelector("#dialog");
 const userSelectModal = document.querySelector("#selectMember");
 const selectMemberForm = document.querySelector("#selectMemberForm");
@@ -233,30 +262,32 @@ function showUserSelectModal(event, boardId) {
 //소켓
 modal.addEventListener("close", (event) => {
     // event.returnValue는 close이벤트에 대한 리턴 값으로 true를 반환한다.
-    //보드 새로 추가
-    if (changedBoardId === 0) {
-        writeBoard(modal.returnValue);
-    }
-    // 기존 보드 수정
-    else {
-        if (modal.returnValue === "planning") {
-            boardStatusUpdate("planning");
-        } else if (modal.returnValue === "progress") {
-            boardStatusUpdate("progress");
-        } else if (modal.returnValue === "needFeedback") {
-            boardStatusUpdate("needFeedback");
-        } else if (modal.returnValue === "finishFeedback") {
-            boardStatusUpdate("finishFeedback");
-        } else if (modal.returnValue === "suspend") {
-            boardStatusUpdate("suspend");
-        } else if (modal.returnValue === "finish") {
-            boardStatusUpdate("finish");
-        }
+    if (modal.returnValue === "planning") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+    } else if (modal.returnValue === "progress") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("progress");
+    } else if (modal.returnValue === "needFeedback") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("needFeedback");
+    } else if (modal.returnValue === "finishFeedback") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("finishFeedback");
+    } else if (modal.returnValue === "suspend") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("suspend");
+    } else if (modal.returnValue === "finish") {
+        changedBoardId === 0 ? (boardStatus = modal.returnValue) : boardStatusUpdate("planning");
+        boardStatusUpdate("finish");
     }
 });
 userSelectModal.addEventListener("close", (event) => {
     // event.returnValue는 close이벤트에 대한 리턴 값으로 true를 반환한다.
-    boardJobMebmberUpdate(userSelectModal.returnValue);
+    if (changedBoardId === 0) {
+        writeBoard();
+    } else if (userSelectModal.returnValue !== "") {
+        boardJobMebmberUpdate(userSelectModal.returnValue);
+    }
 });
 // backdrop 클릭시 닫히는 이벤트 함수
 modal.addEventListener("click", function (event) {

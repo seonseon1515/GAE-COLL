@@ -24,7 +24,6 @@ router.get("/project/calender", controller.calender);
 router.get("/project/issue_write", controller.issue_write);
 router.get("/project/issue_content/:id", controller.issue_content);
 
-router.get("/auth/kakao", controller.getKakaoAuth);
 router.get("/auth/kakao/callback", controller.getKakaoAuthCallback);
 router.get("/auth/google", controller.getGoogleAuth);
 

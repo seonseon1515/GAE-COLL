@@ -91,7 +91,7 @@ function goJobDeatil(projectId, boardId) {
                 : (document.getElementById("github").href = result.github);
             // 블로그 링크 보여주기
             result.blog === null || result.blog === ""
-                ? (document.getElementById("blog").placeholder = "/blog")
+                ? (document.getElementById("blog").href = "/mypage")
                 : (document.getElementById("blog").href = result.blog);
 
             for (i = 0; i < result.projectResult.length; i++) {
@@ -152,22 +152,26 @@ function goJobDeatil(projectId, boardId) {
                 Authorization: `Bearer ${token}`,
             },
         });
+        console.log("getTeamLogResult.data", getTeamLogResult.data);
         if (getTeamLogResult.data.success) {
             myteamLogData = getTeamLogResult.data.result.sort((a, b) => {
                 if (a.updatedAt > b.updatedAt) return -1;
                 if (a.updatedAt < b.updatedAt) return 1;
                 return 0;
             });
-            console.log(myteamLogData);
+            console.log("myteamLogData", myteamLogData);
             const teamBoardTbody = document.querySelector("#team_board-tbody");
             for (let i = 0; teamBoardTbody.childNodes.length < 5; i++) {
                 const tr = document.createElement("tr");
                 tr.addEventListener("click", function () {
                     goProjectPage(myteamLogData[i].projectId, "board_main");
                 });
+                let projectImage = myteamLogData[i].user_img
+                    ? "../../public/uploads/profile/" + myteamLogData[i].user_img
+                    : "../../public/img/people-group-solid.svg";
                 tr.innerHTML = `
                         <td class = "teamTd">
-                            <img src = "./public/uploads/project/${myteamLogData[i].project_img}" />
+                            <img src = "${projectImage}" />
                             
                             ${myteamLogData[i].project_name}
                         </td>
@@ -270,7 +274,6 @@ async function goBoardContentPage(projectId, boardId) {
 
 //내작업에서 더보기 누르면 5개 더 보여주기
 function showMoreJob() {
-    console.log("hihi");
     const tbody = document.querySelector("#my-job-tbody");
     const before = document.querySelector("#my-job-tbody").childNodes.length;
     const selectedProjectStatus = document.querySelector(".selected").textContent;
@@ -297,29 +300,28 @@ function showMoreJob() {
             break;
     }
     console.log(projectstatus);
-    if (myjobdataByDate.length > tbody.childNodes.length) {
-        for (let i = tbody.childNodes.length; i < myjobdataByDate.length; i++) {
-            if (myjobdataByDate[i].projectStatus === projectstatus) {
-                const tr = document.createElement("tr");
-                tr.innerHTML = `
+    const datas = myjobdataByDate.filter((data) => data.projectStatus === projectstatus);
+    if (datas.length > tbody.childNodes.length) {
+        for (let i = tbody.childNodes.length; i < datas.length; i++) {
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
                 <td>
-                    ${myjobdataByDate[i].title}
+                    ${datas[i].title}
                 </td>
                 <td>
-                    ${myjobdataByDate[i].deadline}
+                    ${datas[i].deadline}
                 </td>
                 <td>
-                    ${myjobdataByDate[i].projectName}
+                    ${datas[i].projectName}
                 </td>
                 `;
-                tbody.appendChild(tr);
-                if (tbody.childNodes.length - before === 5) {
-                    break;
-                }
+            tbody.appendChild(tr);
+            if (tbody.childNodes.length - before === 5) {
+                break;
             }
         }
     }
-    if (tbody.childNodes.length === myjobdataByDate.length) {
+    if (tbody.childNodes.length === datas.length) {
         document.querySelector("#more-table").classList.add("hidden");
     }
 }

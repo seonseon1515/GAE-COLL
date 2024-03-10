@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>board_content page</title>
+        <link rel="stylesheet" href="../../public/css/project/board_write.css" />
+        
+    </head>
+    <body>
+        <div class="top_bar">
+            <div class="select_box"> 
+                <!-- left_wrap -->
+                <button type="button" class="status_modify">작업상태 변경</button>
+                <ul class="option_list">
+                    <li class="option_item">
+                    <div id="bg_blue" class="placement_status">
+                        <div id="blue" class="circle"></div>
+                        <div class="status_txt">계획중</div>
+                    </div>
+                    </li>
+                    <li class="option_item">
+                        <div id="bg_yellow" class="placement_status">
+                            <div id="yellow" class="circle"></div>
+                            <div class="status_txt">진행중</div>
+                        </div>
+      
+                    </li>
+                    <li class="option_item">
+                        <div id="bg_purple" class="placement_status">
+                            <div id="purple" class="circle"></div>
+                            <div class="status_txt">중단됨</div>
+                        </div>
+                    </li>
+                    <li class="option_item">
+                        <div id="bg_green" class="placement_status">
+                            <div id="green" class="circle"></div>
+                            <div class="status_txt">완료</div>
+                        </div>
+                    </li>
+                    <li class="option_item">                                
+                        <div id="bg_red" class="placement_status">
+                            <div id="red" class="circle"></div>
+                            <div class="status_txt">피드백 요청</div>
+                        </div>
+                    </li>
+                    <li class="option_item">
+                        <div id="bg_black" class="placement_status">
+                            <div id="black" class="circle"></div>
+                            <div class="status_txt">피드백 완료</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="right_wrap">
+                <div class="managers">
+                    <div class="profile_empty">+</div>
+                    <div class="profile_empty">+</div>
+                    <div class="profile_empty">+</div>
+                    <div class="profile_empty">+</div>
+                    <a href="javascript:history.back();"><img src="../../public/img/back_icon.webp" class="back_icon"></img></a>
+                </div>
+            </div>
+        </div>
+        <hr class="top_bar_line1" />
+
+        <div class="board_name">
+            <input type="text" class="write_board_name" placeholder="제목을 작성하세요."></input>
+        </div>
+        <div class="board_menu">
+            <div class="board_menu_wrap1">
+                <div class="board_manager">담당자</div>
+
+                <div class="manager_generate">
+                    <div class="profile_empty">+</div>
+                    <div class="name_empty">담당자 없음</div>
+                </div>
+            </div>
+            <div class="board_menu_wrap2">
+                <div class="board_deadline">마감일</div>
+                <div class="open_calender">마감일 없음</div>
+            </div>
+            <div class="board_menu_wrap3">
+                <div class="board_project">프로젝트</div>
+                <div class="select_project">프로젝트에 추가</div>
+            </div>
+            <div class="board_explain">설명</div>
+        </div>
+        <textarea class="write_explain" placeholder="이 작업에 대해 설명해주세요"></textarea>
+        <hr class="top_bar_line2" />
+
+        <div class="board_comment">
+            <div class="wrap_comment">
+                <div class="member_profile_img"></div>
+                <textarea class="comment_area" placeholder="댓글추가"></textarea>
+            </div>
+            <button type="button" class="wirte_button">작성</button>
+        </div>
+        <script src="../../public/js/project/board_write.js"></script>
+    </body>
+</html>

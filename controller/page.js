@@ -1,4 +1,5 @@
 const axios = require("axios");
+//쿼리스트링으로 바꿔주기 위한 npm패키지
 const qs = require("qs");
 const alertmove = require("../util/alert_move");
 
@@ -51,7 +52,7 @@ exports.board_main = (req, res) => {
     res.render("project/board_main");
 };
 exports.board_content = (req, res) => {
-    res.render("project/board_write");
+    res.render("project/board_content");
 };
 exports.issue_write = (req, res) => {
     res.render("project/issue_write");
@@ -89,27 +90,21 @@ const googleOpt = {
     develRedirectUri: process.env.DEVEL_GOOGLE_REDIRECT_URI,
     prodRedirectUri: process.env.PROD_GOOGLE_REDIRECT_URI,
 };
-//카카오 로그인
-exports.getKakaoAuth = async (req, res) => {
-    let kakaoLoginURL = "";
-    if (process.env.NODE_ENV === "production") {
-        kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.prodRedirectUri}&response_type=code`;
-    } else {
-        kakaoLoginURL = `https://kauth.kakao.com/oauth/authorize?client_id=${kakaoOpt.clientId}&redirect_uri=${kakaoOpt.develRedirectUri}&response_type=code`;
-    }
-    res.redirect(kakaoLoginURL);
-};
 
 exports.getKakaoAuthCallback = async (req, res) => {
     console.log(req.query.code);
     let token;
     try {
         const url = "https://kauth.kakao.com/oauth/token";
+        let redirectUri = "";
+        process.env.NODE_ENV === "production"
+            ? (redirectUri = kakaoOpt.prodRedirectUri)
+            : (redirectUri = kakaoOpt.develRedirectUri);
         const body = qs.stringify({
             grant_type: "authorization_code",
             client_id: kakaoOpt.clientId,
             client_secret: kakaoOpt.clientSecret,
-            redirectUri: kakaoOpt.redirectUri,
+            redirectUri,
             code: req.query.code,
         });
         const header = { "content-type": "application/x-www-form-urlencoded" };

@@ -82,7 +82,6 @@ a {
     padding: 20px 30px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 }
 .main-mywork-txt-box {
     display: flex;
