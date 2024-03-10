@@ -1,22 +1,3 @@
-$(function () {
-    $("#start_date").datepicker({
-        lang: "ko",
-        dateFormat: "yy-mm-dd",
-        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"], //달력의 월 부분 텍스트
-        monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"], //달력의 월 부분 Tooltip
-        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"], //달력의 요일 텍스트
-        dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"], //달력의 요일 Tooltip
-    });
-    $("#end_date").datepicker({
-        lang: "ko",
-        dateFormat: "yy-mm-dd",
-        monthNamesShort: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"], //달력의 월 부분 텍스트
-        monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"], //달력의 월 부분 Tooltip
-        dayNamesMin: ["일", "월", "화", "수", "목", "금", "토"], //달력의 요일 텍스트
-        dayNames: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"], //달력의 요일 Tooltip
-    });
-});
-
 function openPopup() {
     document.querySelector(".popup-overlay").style.display = "block";
     document.querySelector(".popup-content").style.display = "block";
@@ -28,25 +9,6 @@ function closePopup() {
     document.querySelector(".popup-overlay").style.display = "none";
     document.querySelector(".popup-content").style.display = "none";
 }
-
-// HTML 파일 내에 존재하는 모든 'memberClick' 클래스 요소를 가져옵니다.
-// var members = document.querySelectorAll('.memberClick');
-
-// // 각 요소에 대해 클릭 이벤트 리스너를 추가합니다.
-// members.forEach((member) => {
-//     member.addEventListener('click', function () {
-//         // 클릭된 요소에 'clicked' 클래스를 추가합니다.
-//         // 이 클래스는 CSS에서 미리 정의해둔 표식(예: 테두리 색상 변경)을 줄 수 있습니다.
-//         this.classList.add('clicked');
-//     });
-// });
-
-// const now = new Date();
-// const nowDate = `${now.getFullYear}-${now.getMonth + 1}-${now.getDate}`;
-
-// $(document).ready(function () {
-//     $('input[name="nowDateName"]').attr('placeholder', nowDate);
-// });
 
 window.onload = function () {
     target = document.getElementById("proImg"); // file 아이디 선언
@@ -163,18 +125,16 @@ async function addEmail() {
         const listItem = document.createElement("li");
         listItem.classList.add("liEmail");
         listItem.textContent = projectEmail;
-        emailList.appendChild(listItem);
         emailList2.appendChild(listItem);
+        alert("프로젝트 멤버를 초대하였습니다.");
         emailInput.value = "";
-    } else {
-        console.log(result.message);
-        if (result.message) {
-            alert(result.message);
-        } else {
-            alert("등록되지 않은 사용자 입니다.");
-        }
+    }
+    // } else {
+    //     console.log(result.message);
+    //     if (result.message) {
+    //         alert(result.message);
+    //     }
+    else {
+        alert("본인이나 등록되지 않은 사용자는 초대할 수 없습니다.");
     }
 }
-
-// const projectEmail = document.querySelectorAll(".liEmail").value;
-// console.log("projectEmail", projectEmail);
