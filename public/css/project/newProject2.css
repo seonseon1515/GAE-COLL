@@ -216,3 +216,43 @@ il:hover {
     display: flex;
     flex-direction: column;
 }
+
+@media (min-width: 620px) and (max-width: 650px) {
+    .project-div,
+    .proejctDates {
+        align-items: center;
+    }
+    #origin_name,
+    .txtBox {
+        width: 200px;
+    }
+}
+@media (min-width: 470px) and (max-width: 619px) {
+    #newProject-contain {
+        width: 70%;
+    }
+}
+
+@media (max-width: 470px) {
+    #newProject-contain {
+        width: 70%;
+    }
+    .project-div,
+    .proejctDates {
+        align-items: center;
+        text-align: center;
+    }
+    #origin_name,
+    .txtBox {
+        width: 200px;
+    }
+    .bar {
+        width: 80%;
+        margin-left: 25px;
+        margin-top: 25px;
+    }
+    #proejctMemberInvit {
+        padding-left: 10px;
+        padding-left: 15%;
+    }
+}
