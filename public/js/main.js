@@ -10,6 +10,7 @@ function click(e) {
         statusDiv[i].classList.remove("selected");
     }
     this.classList.add("selected");
+    document.querySelector("#more-table").classList.remove("hidden");
     getProjectStatusJob(this.textContent);
 }
 function getProjectStatusJob(selectedProjectStatus) {
