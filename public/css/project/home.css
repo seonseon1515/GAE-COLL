@@ -358,11 +358,13 @@ li:hover .rule-icon {
 }
 /*피드백 요청 목록*/
 #feedback-work-contain {
-    margin: 0 20px 20px 20px;
     background-color: white;
     border-radius: 30px;
-    width: 50%;
+    width: calc((100% - 50px) / 2);
     height: auto;
+    margin-bottom: 20px;
+    margin-left: 20px;
+    height: 400px;
     overflow-y: auto;
     -ms-overflow-style: none; /* 인터넷 익스플로러 */
     scrollbar-width: none; /* 파이어폭스 */
