@@ -484,6 +484,7 @@ li:hover .rule-icon {
         width: 100%;
         padding: 0;
         align-items: normal;
+        margin-left: 0;
     }
     .teamDiv,
     .needFeedDiv {
@@ -504,6 +505,7 @@ li:hover .rule-icon {
         width: 100%;
         padding: 0;
         align-items: normal;
+        margin-left: 0;
     }
     .teamDiv,
     .needFeedDiv {
@@ -635,6 +637,7 @@ li:hover .rule-icon {
         overflow-x: auto;
         width: 100%;
         overflow: hidden;
+        margin-left: 0;
     }
     #team-work-list-text,
     #feedback-list-text {
