@@ -347,7 +347,7 @@ li:hover .rule-icon {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: calc(100% - 100px);
+    width: 100%;
     margin-left: 35px;
     font-size: 20px;
 }
