@@ -32,16 +32,13 @@ app.use("/api/project/issue", projectIssueRouter);
 const projectBoardRouter = require("./routes/project_board");
 app.use("/api/project/board", projectBoardRouter);
 
-// db.sequelize
-//     .sync({ force: false })
-//     .then(() => {
-//         server.listen(PORT, () => {
-//             console.log(`http://localhost:${PORT}/start/`);
-//         });
-//     })
-//     .catch((e) => {
-//         console.log(`DB생성시오류 : `, e);
-//     });
-server.listen(PORT, () => {
-    console.log(`http://localhsot:${PORT}`);
-});
+db.sequelize
+    .sync({ force: false })
+    .then(() => {
+        server.listen(PORT, () => {
+            console.log(`http://localhost:${PORT}/start/`);
+        });
+    })
+    .catch((e) => {
+        console.log(`DB생성시오류 : `, e);
+    });
