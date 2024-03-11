@@ -1,3 +1,8 @@
+(function () {
+    if (localStorage.getItem("token") === null || localStorage.getItem("token") === "") {
+        document.location.href = "/start";
+    }
+})();
 const statusDiv = document.querySelectorAll(".main_status_txt");
 let myjobdataByDate = [];
 let myteamLogData = [];
