@@ -539,7 +539,18 @@ li:hover .rule-icon {
     }
 }
 
-@media (min-width: 375px) and (max-width: 800px) {
+@media (min-width: 370px) and (max-width: 800px) {
+    #project-rule-contain,
+    #project-issue-contain {
+        margin-bottom: 25px;
+        background-color: white;
+        border-radius: 30px;
+        height: auto;
+        padding-bottom: 20px;
+        overflow: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
     #overview-header {
         font-size: 20px;
     }
@@ -582,6 +593,7 @@ li:hover .rule-icon {
     }
     #rule-li {
         padding-top: 0;
+        width: 100%;
     }
     #project-issue-contain {
         overflow: auto;
@@ -618,11 +630,13 @@ li:hover .rule-icon {
         width: 100%;
         overflow: hidden;
     }
+    #team-work-list-text,
+    #feedback-list-text {
+        width: calc(100% - 80px);
+    }
     .teamDiv,
     .needFeedDiv {
         width: 100%;
-        margin-bottom: 0;
-        padding-bottom: 0;
     }
     .file-name {
         font-size: 20px;
